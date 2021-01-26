@@ -31,8 +31,9 @@
         <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Users Controls:</h6>
-                <a class="collapse-item" asp-area="" asp-page="/Index">Create User</a>
-                <a class="collapse-item" asp-area="" asp-page="/Privacy">User Profile</a>
+                <a class="collapse-item" asp-area="" asp-controller="Administration" asp-action="ListRole">Role Details</a>
+                <a class="collapse-item" asp-area="" >User Details</a>
+                @*<a class="collapse-item" asp-area="" asp-page="/Privacy">User Profile</a>*@
             </div>
         </div>
     </li>
