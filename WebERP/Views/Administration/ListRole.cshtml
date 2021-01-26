@@ -4,14 +4,14 @@
     ViewBag.Title = "All Roles";
 }
 
-<h1>List of Roles</h1>
+<h3>List of Roles</h3>
 
 @if (Model.Any())
 {
     <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
         Create Role
     </a>
-
+    <hr/>
     foreach (var role in Model)
     {
         <div class="card mb-3">
@@ -25,7 +25,54 @@
                 <a class="btn btn-primary" asp-action="EditRole" asp-controller="Administration" asp-route-id="@role.Id">Edit</a>
                 <a href="#" class="btn btn-primary">Delete</a>
             </div>
+        </div>       
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Role Details</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011/04/25</td>
+                                <td>$320,800</td>
+                                <td>Edit | Delete | Details</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+
     }
 }
 else
