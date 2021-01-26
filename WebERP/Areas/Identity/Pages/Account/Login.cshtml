@@ -90,8 +90,8 @@
     ViewData["Title"] = "Log in";
 }
 <div class="text-center">
-    <h4 class="display-4">ERP Smart Tool</h4>
-    <p>Login Below to Proceed Further</p>
+    <h6 class="display-4">ERP Smart Tool</h6>
+    <p>Login Here...</p>
 </div>
 <div class="container">
     <!-- Outer Row -->
@@ -103,25 +103,27 @@
                 <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
                     <div class="row">
-                        <div class="col-lg-6 d-none d-lg-block bg-register-image"></div>
+                        <div class="col-lg-6 d-none d-lg-block text-center">
+                            <img class="img-profile" src="~/layoutcss/img/login_page.jpg" style="height: 452px;width:100%;">
+                        </div>
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Welcome, Login Here!</h1>
                                     <hr />
-                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div style="font-size:initial;" asp-validation-summary="All" class="text-danger"></div>
                                 </div>
                                 <form class="user" id="account" method="post">
                                     <div class="form-group">
                                         <input asp-for="Input.Email" type="email" class="form-control form-control-user"
                                                id="exampleInputEmail" aria-describedby="emailHelp"
                                                placeholder="Enter Your Username...">
-                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                        <span style="font-size:initial;" asp-validation-for="Input.Email" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <input asp-for="Input.Password" type="password" class="form-control form-control-user"
                                                id="exampleInputPassword" placeholder="Password">
-                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                        <span style="font-size:initial;" asp-validation-for="Input.Password" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
@@ -143,7 +145,7 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </div>                                              
                     </div>
                 </div>
             </div>
@@ -153,3 +155,6 @@
     </div>
 
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

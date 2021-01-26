@@ -88,7 +88,16 @@
                     <span>About</span>
                 </a>
             </li>
-            @*<partial name="_MenuNavPartial" />*@
+
+            <hr class="sidebar-divider my-0">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" asp-area="" asp-page="/Tables">
+                    <i class="fas fa-fw fa-sign-out"></i>
+                    <span>Services</span>
+                </a>
+            </li>
+            <partial name="_MenuNavPartial" />
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
@@ -98,17 +107,9 @@
                     <span>Contact Us</span>
                 </a>
             </li>
-            <hr class="sidebar-divider my-0">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" asp-area="" asp-page="/Tables">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Grid</span>
-                </a>
-            </li>
+
         </ul>
         <!-- End of Sidebar -->
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
@@ -281,10 +282,10 @@
                         </li>
                         <div class="topbar-divider d-none d-sm-block"></div>
                         @*<li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link" role="button" asp-area="Identity" asp-page="/Account/Login">
-                                Login<i class="fas fa-sign-in fa-fw"></i>
-                            </a>
-                        </li>*@
+                                <a class="nav-link" role="button" asp-area="Identity" asp-page="/Account/Login">
+                                    Login<i class="fas fa-sign-in fa-fw"></i>
+                                </a>
+                            </li>*@
                         <partial name="_LoginPartial" />
                     </ul>
                 </nav>
@@ -292,6 +293,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
+                    <partial name="_CookieConsentPartial" />
                     <h1 class="h3 mb-4 text-gray-800">
                         @RenderBody()
                     </h1>
@@ -317,25 +319,27 @@
         <i class="fas fa-angle-up"></i>
     </a>
     <!-- Logout Modal-->
-
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout">
+                            <button type="submit" class="btn btn-primary">Logout</button>
+                        </form>
+                        @*<a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Login", "Account", new { area = "Identity" })">Logout</a>*@
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
