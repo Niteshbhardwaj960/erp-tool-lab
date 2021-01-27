@@ -3,91 +3,58 @@
 @{
     ViewBag.Title = "All Roles";
 }
-
-<h3>List of Roles</h3>
-
-@if (Model.Any())
-{
-    <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
-        Create Role
-    </a>
-    <hr/>
-    foreach (var role in Model)
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #a700ff 0%, #00189a 100%);"> <h3 style="color:white">List of Roles</h3></nav>
+   
+    @if (Model.Any())
     {
+        <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+            Create Role
+        </a>
+        <hr />
+        //foreach (var role in Model)
+        //{
         <div class="card mb-3">
-            <div class="card-header">
-                Role Id = @role.Id
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">@role.Name</h5>
-            </div>
-            <div class="card-footer">
-                <a class="btn btn-primary" asp-action="EditRole" asp-controller="Administration" asp-route-id="@role.Id">Edit</a>
-                <a href="#" class="btn btn-primary">Delete</a>
-            </div>
-        </div>       
-
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Role Details</h6>
-            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Role ID</th>
+                                <th>Role Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
                         <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,8000</td>
-                                <td>Edit | Delete | Details</td>
-                            </tr>
+                            @foreach (var role in Model)
+                            {
+                                <tr>
+                                    <td>@role.Id</td>
+                                    <td>@role.Name</td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-action="EditRole" asp-controller="Administration" asp-route-id="@role.Id">Edit</a>
+                                        <a href="#" class="btn btn-primary">Delete</a>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
     }
-}
-else
-{
-    <div class="card">
-        <div class="card-header">
-            No roles Created Yet
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                No roles Created Yet
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    Use the button below to create a Role
+                </h5>
+                <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                    Create Role
+                </a>
+            </div>
         </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                Use the button below to create a Role
-            </h5>
-            <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
-                Create Role
-            </a>
-        </div>
-    </div>
-}
+    }
