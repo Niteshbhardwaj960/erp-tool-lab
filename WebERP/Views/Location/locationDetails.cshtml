@@ -1,0 +1,88 @@
+﻿@model IEnumerable<WebERP.Models.countryModel>
+
+@{
+        ViewData["Title"] = "Location Master";
+    }
+
+<h1>Location Master</h1>
+<hr />
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#country" data-toggle="tab" aria-expanded="true">Country</a></li>
+    <li class=""><a href="#state" data-toggle="tab" aria-expanded="false">State</a></li>
+    <li class="active"><a href="#city" data-toggle="tab" aria-expanded="true">City</a></li>
+</ul>
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active in" id="country">
+        <div>
+            <h4>Country Details</h4>
+            <hr />
+            @if (Model.Any())
+            {
+                <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                    Create Country
+                </a>
+                <hr />
+                foreach (var mod in Model)
+                {
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            Country Name
+                        </dt>
+                        <dd class="col-sm-10">
+                            @mod.Name
+                        </dd>
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            Country Code
+                        </dt>
+                        <dd class="col-sm-10">
+                            @mod.CountryCode
+                        </dd>
+                    </dl>
+                }
+             }
+                </div>
+        @*<div>
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>*@
+    </div>
+    <div class="tab-pane fade" id="state">
+        @*<div>
+            <h4>State Details</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>*@
+    </div>
+    <div class="tab-pane fade" id="city">
+        @*<div>
+            <h4>City Details</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>*@
+    </div>
+</div>
+
