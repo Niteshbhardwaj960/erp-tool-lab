@@ -1,60 +1,66 @@
-﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
 
 @{
     ViewBag.Title = "All Roles";
 }
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #a700ff 0%, #00189a 100%);"> <h3 style="color:white">List of Roles</h3></nav>
-   
-    @if (Model.Any())
-    {
-        <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
-            Create Role
-        </a>
-        <hr />
-        //foreach (var role in Model)
-        //{
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
+
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">List of Roles</h3></nav>
+
+@if (Model.Any())
+{
+    <a class="btn btn-success" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+        Create Role
+    </a>
+    <hr />   
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Role ID</th>
+                            <th>Role Name</th>
+                            <th>User Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var role in Model)
+                        {
                             <tr>
-                                <th>Role ID</th>
-                                <th>Role Name</th>
-                                <th>Action</th>
+                                <td>@role.Id</td>
+                                <td>@role.Name</td>
+                                <td>
+                                    <a asp-action="EditRole" asp-controller="Administration" asp-route-id="@role.Id">
+                                        <i class="fas fa-user-edit"></i>
+                                    </a>&nbsp;&nbsp;
+                                    <a href="#">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>&nbsp;&nbsp;
+                                    <a href="#">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var role in Model)
-                            {
-                                <tr>
-                                    <td>@role.Id</td>
-                                    <td>@role.Name</td>
-                                    <td>
-                                        <a class="btn btn-primary" asp-action="EditRole" asp-controller="Administration" asp-route-id="@role.Id">Edit</a>
-                                        <a href="#" class="btn btn-primary">Delete</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
-    }
-    else
-    {
-        <div class="card">
-            <div class="card-header">
-                No roles Created Yet
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">
-                    Use the button below to create a Role
-                </h5>
-                <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
-                    Create Role
-                </a>
-            </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No roles Created Yet
         </div>
-    }
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a Role
+            </h5>
+            <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                Create Role
+            </a>
+        </div>
+    </div>
+}
