@@ -1,88 +1,237 @@
 ﻿@model IEnumerable<WebERP.Models.countryModel>
 
 @{
-        ViewData["Title"] = "Location Master";
-    }
+    ViewData["Title"] = "Location Master";
+}
 
-<h1>Location Master</h1>
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+    <h3 style="color:white">Location Master Tabs</h3>
+</nav>
 <hr />
 <ul class="nav nav-tabs">
-    <li class="active"><a href="#country" data-toggle="tab" aria-expanded="true">Country</a></li>
-    <li class=""><a href="#state" data-toggle="tab" aria-expanded="false">State</a></li>
-    <li class="active"><a href="#city" data-toggle="tab" aria-expanded="true">City</a></li>
+    <li class="nav-item">
+        <a class="nav-link active" href="#country" data-toggle="tab" aria-expanded="true">Country</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#state" data-toggle="tab" aria-expanded="false">State</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#city" data-toggle="tab" aria-expanded="true">City</a>
+    </li>
 </ul>
 <div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade active in" id="country">
-        <div>
-            <h4>Country Details</h4>
+    <div class="tab-pane fade active in" id="country">        
+        @if (Model.Any())
+        {
+            <br/>
+            <a class="btn btn-success" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                Add Country
+            </a>
             <hr />
-            @if (Model.Any())
-            {
-                <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
-                    Create Country
-                </a>
-                <hr />
-                foreach (var mod in Model)
-                {
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            Country Name
-                        </dt>
-                        <dd class="col-sm-10">
-                            @mod.Name
-                        </dd>
-                    </dl>
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            Country Code
-                        </dt>
-                        <dd class="col-sm-10">
-                            @mod.CountryCode
-                        </dd>
-                    </dl>
-                }
-             }
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Country ID</th>
+                                    <th>Country Code</th>
+                                    <th>Country Name</th>
+                                    <th>Created Date</th>
+                                    <th>Created By</th>
+                                    <th>Last Modified Date</th>
+                                    <th>Last Modified By</th>
+                                    <th>User Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var country in Model)
+                                {
+                                    <tr>
+                                        <td>@country.Id</td>
+                                        <td>@country.CountryCode</td>
+                                        <td>@country.Name</td>
+                                        <td>@country.Ins_Date</td>
+                                        <td>@country.Ins_Uid</td>
+                                        <td>@country.Upd_Date</td>
+                                        <td>@country.Upd_Uid</td>
+                                        <td>
+                                            <a href="#">
+                                                <i class="fas fa-user-edit"></i>
+                                            </a> &nbsp;&nbsp;
+                                            <a href="#">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>&nbsp;&nbsp;
+                                            <a href="#">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-        @*<div>
-            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-            <a asp-action="Index">Back to List</a>
-        </div>*@
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header">
+                    None Country Has Been Created Yet
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Use the button below to Add a new Country
+                    </h5>
+                    <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                        Add Country
+                    </a>
+                </div>
+            </div>
+        }        
     </div>
     <div class="tab-pane fade" id="state">
-        @*<div>
-            <h4>State Details</h4>
+        @if (Model.Any())
+        {
+            <br />
+            <a class="btn btn-success" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                Add State
+            </a>
             <hr />
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
-            </dl>
-        </div>
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-            <a asp-action="Index">Back to List</a>
-        </div>*@
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Country ID</th>
+                                    <th>Country Code</th>
+                                    <th>Country Name</th>
+                                    <th>Created Date</th>
+                                    <th>Created By</th>
+                                    <th>Last Modified Date</th>
+                                    <th>Last Modified By</th>
+                                    <th>User Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var country in Model)
+                                {
+                                    <tr>
+                                        <td>@country.Id</td>
+                                        <td>@country.CountryCode</td>
+                                        <td>@country.Name</td>
+                                        <td>@country.Ins_Date</td>
+                                        <td>@country.Ins_Uid</td>
+                                        <td>@country.Upd_Date</td>
+                                        <td>@country.Upd_Uid</td>
+                                        <td>
+                                            <a href="#">
+                                                <i class="fas fa-user-edit"></i>
+                                            </a> &nbsp;&nbsp;
+                                            <a href="#">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>&nbsp;&nbsp;
+                                            <a href="#">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header">
+                    No State Has Been Created Yet
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Use the button below to Add a new State
+                    </h5>
+                    <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                        Add State
+                    </a>
+                </div>
+            </div>
+        }
     </div>
     <div class="tab-pane fade" id="city">
-        @*<div>
-            <h4>City Details</h4>
+        @if (Model.Any())
+        {
+            <br />
+            <a class="btn btn-success" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                Add City
+            </a>
             <hr />
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
-            </dl>
-        </div>
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-            <a asp-action="Index">Back to List</a>
-        </div>*@
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Country ID</th>
+                                    <th>Country Code</th>
+                                    <th>Country Name</th>
+                                    <th>Created Date</th>
+                                    <th>Created By</th>
+                                    <th>Last Modified Date</th>
+                                    <th>Last Modified By</th>
+                                    <th>User Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var country in Model)
+                                {
+                                    <tr>
+                                        <td>@country.Id</td>
+                                        <td>@country.CountryCode</td>
+                                        <td>@country.Name</td>
+                                        <td>@country.Ins_Date</td>
+                                        <td>@country.Ins_Uid</td>
+                                        <td>@country.Upd_Date</td>
+                                        <td>@country.Upd_Uid</td>
+                                        <td>
+                                            <a href="#">
+                                                <i class="fas fa-user-edit"></i>
+                                            </a> &nbsp;&nbsp;
+                                            <a href="#">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>&nbsp;&nbsp;
+                                            <a href="#">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header">
+                    No City Has Been Created Yet
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Use the button below to Add a new City
+                    </h5>
+                    <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                        Add City
+                    </a>
+                </div>
+            </div>
+        }
     </div>
 </div>
 
