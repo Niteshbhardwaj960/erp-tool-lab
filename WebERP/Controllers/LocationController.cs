@@ -30,7 +30,7 @@ namespace WebERP.Controllers
         }       
 
         // GET: Location
-        [HttpGet]
+        [HttpPost]
         public ActionResult AddCountry()
         {
             return View();
@@ -47,8 +47,12 @@ namespace WebERP.Controllers
 
         [HttpGet]
         public IActionResult LocationDetails()
-        {                      
-            return View(dbContext.Countries.ToList());
+        {
+            locationViewModel locationView = new locationViewModel();
+            locationView.countryList = dbContext.Countries.ToList();
+            locationView.stateList = dbContext.States.ToList();
+            locationView.cityList = dbContext.Cities.ToList();
+            return View(locationView);
         }
 
         // GET: Location/Create

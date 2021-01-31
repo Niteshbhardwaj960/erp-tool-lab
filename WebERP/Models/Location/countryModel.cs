@@ -5,6 +5,12 @@ using System.Threading.Tasks;
 
 namespace WebERP.Models
 {    
+    public class locationViewModel
+    {
+        public List<countryModel> countryList { get; set; }
+        public List<stateModel> stateList { get; set; }
+        public List<cityModel> cityList { get; set; }
+    }
     public class countryModel
     {
         public int Id { get; set; }

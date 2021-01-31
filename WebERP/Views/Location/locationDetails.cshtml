@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebERP.Models.countryModel>
+﻿@model WebERP.Models.locationViewModel
 
 @{
     ViewData["Title"] = "Location Master";
@@ -10,21 +10,22 @@
 <hr />
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link active" href="#country" data-toggle="tab" aria-expanded="true">Country</a>
+        <a class="nav-link active" href="#country" data-toggle="tab" aria-expanded="false">Country</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#state" data-toggle="tab" aria-expanded="false">State</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#city" data-toggle="tab" aria-expanded="true">City</a>
+        <a class="nav-link" href="#city" data-toggle="tab" aria-expanded="false">City</a>
     </li>
 </ul>
 <div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade active in" id="country">        
-        @if (Model.Any())
+
+    <div class="tab-pane show active" id="country">
+        @if (Model.countryList.Any())
         {
-            <br/>
-            <a class="btn btn-success" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+            <br />
+            <a class="btn btn-success" style="color:white;" data-toggle="modal" data-target="#enquiryModal">
                 Add Country
             </a>
             <hr />
@@ -45,7 +46,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var country in Model)
+                                @foreach (var country in Model.countryList)
                                 {
                                     <tr>
                                         <td>@country.Id</td>
@@ -84,30 +85,32 @@
                     <h5 class="card-title">
                         Use the button below to Add a new Country
                     </h5>
-                    <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                    <a class="btn btn-success" style="width:auto" asp-controller="Location" asp-action="AddCountry">
                         Add Country
                     </a>
                 </div>
             </div>
-        }        
+        }
     </div>
+
     <div class="tab-pane fade" id="state">
-        @if (Model.Any())
+        @if (Model.stateList.Any())
         {
             <br />
-            <a class="btn btn-success" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+            <a class="btn btn-success" style="width:auto" asp-controller="Location" asp-action="AddState">
                 Add State
             </a>
             <hr />
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="dtstate" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Country ID</th>
-                                    <th>Country Code</th>
-                                    <th>Country Name</th>
+                                    <th>State ID</th>
+                                    <th>State Code</th>
+                                    <th>State Name</th>
+                                    <th>Country</th>
                                     <th>Created Date</th>
                                     <th>Created By</th>
                                     <th>Last Modified Date</th>
@@ -116,16 +119,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var country in Model)
+                                @foreach (var state in Model.stateList)
                                 {
                                     <tr>
-                                        <td>@country.Id</td>
-                                        <td>@country.CountryCode</td>
-                                        <td>@country.Name</td>
-                                        <td>@country.Ins_Date</td>
-                                        <td>@country.Ins_Uid</td>
-                                        <td>@country.Upd_Date</td>
-                                        <td>@country.Upd_Uid</td>
+                                        <td>@state.Id</td>
+                                        <td>@state.StateCode</td>
+                                        <td>@state.Name</td>
+                                        <td>@state.CountryCode , @state.Country.Name</td>
+                                        <td>@state.Ins_Date</td>
+                                        <td>@state.Ins_Uid </td>
+                                        <td>@state.Upd_Date</td>
+                                        <td>@state.Upd_Uid</td>
                                         <td>
                                             <a href="#">
                                                 <i class="fas fa-user-edit"></i>
@@ -155,30 +159,33 @@
                     <h5 class="card-title">
                         Use the button below to Add a new State
                     </h5>
-                    <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                    <a class="btn btn-success" style="width:auto" asp-controller="Location" asp-action="AddState">
                         Add State
                     </a>
                 </div>
             </div>
         }
     </div>
+
     <div class="tab-pane fade" id="city">
-        @if (Model.Any())
+        @if (Model.cityList.Any())
         {
             <br />
-            <a class="btn btn-success" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+            <a class="btn btn-success" style="width:auto" asp-controller="Location" asp-action="AddCity">
                 Add City
             </a>
             <hr />
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="dtcity" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Country ID</th>
-                                    <th>Country Code</th>
-                                    <th>Country Name</th>
+                                    <th>City ID</th>
+                                    @*<th>City Code</th>*@
+                                    <th>City Name</th>
+                                    <th>State</th>
+                                    <th>Country</th>
                                     <th>Created Date</th>
                                     <th>Created By</th>
                                     <th>Last Modified Date</th>
@@ -187,16 +194,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var country in Model)
+                                @foreach (var city in Model.cityList)
                                 {
                                     <tr>
-                                        <td>@country.Id</td>
-                                        <td>@country.CountryCode</td>
-                                        <td>@country.Name</td>
-                                        <td>@country.Ins_Date</td>
-                                        <td>@country.Ins_Uid</td>
-                                        <td>@country.Upd_Date</td>
-                                        <td>@country.Upd_Uid</td>
+                                        <td>@city.Id</td>
+                                        @*<td>@city.ci</td>*@
+                                        <td>@city.Name</td>
+                                        <td>@city.State.StateCode, @city.State.Name</td>
+                                        <td>@city.State.Country.CountryCode, @city.State.Country.Name</td>
+                                        <td>@city.Ins_Date</td>
+                                        <td>@city.Ins_Uid</td>
+                                        <td>@city.Upd_Date</td>
+                                        <td>@city.Upd_Uid</td>
                                         <td>
                                             <a href="#">
                                                 <i class="fas fa-user-edit"></i>
@@ -226,12 +235,145 @@
                     <h5 class="card-title">
                         Use the button below to Add a new City
                     </h5>
-                    <a class="btn btn-primary" style="width:auto" asp-controller="administration" asp-action="CreateRole">
+                    <a class="btn btn-success" style="width:auto" asp-controller="Location" asp-action="AddCity">
                         Add City
                     </a>
                 </div>
             </div>
         }
+    </div>
+
+    <div id="enquiryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="card">
+                    <div class="card-header" style="background: linear-gradient(135deg, #00ff7ee6 0%, #74009a 100%);">
+                        <h3 class="mb-0 card-title text-white">New Country Details</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="menu-form" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Country Code</label>
+                                        <div class="input-group">                                            
+                                            <input type="text" class="form-control numb" name="country_code" id="country_code" placeholder="country code like e.g IN for India" value="" required="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Country Name</label>
+                                        <input type="text" class="form-control" name="country_name" id="country_name" placeholder="country name here..." value="" required="">
+                                        <input type="hidden" class="form-control" id="id" name="id" value="" required="">
+                                    </div>
+                                </div>
+                                @*<div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Company Name</label>
+                                        <input type="text" class="form-control" name="com_name" id="com_name" placeholder="Company Name" value="">
+                                        <input type="hidden" class="form-control" id="id" name="id" value="" required="">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Email ID</label>
+                                        <input type="email" class="form-control" name="email" id="email" placeholder="email" value="" onkeyup="" required="">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="form-label">Gender</div>
+                                        <div class="form-group">
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="gender" value="1" checked="">
+                                                <span class="custom-control-label pointer">Male</span>
+                                            </label>
+                                            <label class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="gender" value="2">
+                                                <span class="custom-control-label pointer">Female</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>*@
+                            </div>
+
+                            @*<div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Address</label>
+                                        <textarea class="form-control" id="address" rows="2" name="address" placeholder="Write text here ..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Query</label>
+                                        <textarea class="form-control" id="query" rows="2" name="query" placeholder="Write text here ..."></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Remarks</label>
+                                        <textarea class="form-control" id="address" rows="2" name="remarks" placeholder="Write text here ..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Next Follow up</label>
+                                        <input type="date" class="form-control" id="follow_up" name="follow_up" value="2021-01-31">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="branch_id">Source of query</label>
+                                        <select type="text" class="form-control" name="source" id="source" required="">
+                                            <option value="1">Walkin</option>
+
+                                            <option value="2">Reference</option>
+
+                                            <option value="3">Facebook</option>
+
+                                            <option value="4">Flex</option>
+
+                                            <option value="5">Banner</option>
+
+                                            <option value="6">vvv</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="branch_id">Select branch</label>
+                                        <select type="text" class="form-control" name="branch_id" id="branch_id" required="">
+                                            <option value="12">Branch 1</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>*@
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <button type="button" class="btn mr-2 mt-1 mb-1 btn-secondary pull-right" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary mr-2 mt-1 mb-1 us-button pull-right">
+                                    <i class="fa fa-save"></i> Save
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+               
+            </div>
+        </div>
     </div>
 </div>
 
