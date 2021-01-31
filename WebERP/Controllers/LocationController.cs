@@ -48,6 +48,7 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult LocationDetails()
         {
+            //locationVM
             locationViewModel locationView = new locationViewModel();
             locationView.countryList = dbContext.Countries.ToList();
             locationView.stateList = dbContext.States.ToList();
