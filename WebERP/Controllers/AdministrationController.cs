@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using WebERP.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
+using ClosedXML.Excel;
+using System.IO;
 
 namespace WebERP.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -20,6 +22,12 @@ namespace WebERP.Controllers
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+        }
+
+        [HttpGet]
+        public IActionResult Dashboard()
+        { 
+            return View();
         }
 
         [HttpGet]
@@ -165,18 +173,18 @@ namespace WebERP.Controllers
 
                 return View("Not Found");
             }
-            
-            for(int i=0; i<model.Count; i++)
+
+            for (int i = 0; i < model.Count; i++)
             {
                 var user = await userManager.FindByIdAsync(model[i].UserId);
 
                 IdentityResult result = null;
 
-                if(model[i].IsSelected && !(await userManager.IsInRoleAsync(user,role.Name)))
+                if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user, role.Name)))
                 {
                     result = await userManager.AddToRoleAsync(user, role.Name);
                 }
-                else if(!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
+                else if (!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
                 {
                     result = await userManager.RemoveFromRoleAsync(user, role.Name);
                 }
@@ -185,16 +193,56 @@ namespace WebERP.Controllers
                     continue;
                 }
 
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     if (i < (model.Count - 1))
                         continue;
                     else
-                        return RedirectToAction("EditRole" , new { Id = roleId});
+                        return RedirectToAction("EditRole", new { Id = roleId });
                 }
             }
             return RedirectToAction("EditRole", new { Id = roleId });
         }
+
+
+
+        //[HttpGet]
+        //public IActionResult Excel()
+        //{
+        //    List<UserRoleViewModel> Users = new List<UserRoleViewModel> {
+        //    new Users {
+        //        UserId = "1212",
+        //        UserName = "Nitesh"
+        //    }
+        //    };
+
+        //    using (var workbook = new XLWorkbook())
+        //    {
+        //        var worksheet = workbook.Worksheets.Add("Users");
+        //        var currentRow = 1;
+        //        worksheet.Cell(currentRow, 1).Value = "Id";
+        //        worksheet.Cell(currentRow, 2).Value = "Username";
+        //        foreach (var user in Users)
+        //        {
+        //            currentRow++;
+        //            worksheet.Cell(currentRow, 1).Value = user.UserId;
+        //            worksheet.Cell(currentRow, 2).Value = user.UserName;
+        //        }
+
+        //        using (var stream = new MemoryStream())
+        //        {
+        //            workbook.SaveAs(stream);
+        //            var content = stream.ToArray();
+
+        //            return File(
+        //                content,
+        //                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        //                "users.xlsx");
+        //        }
+        //    }
+        //}
+
     }
 }
+
 
