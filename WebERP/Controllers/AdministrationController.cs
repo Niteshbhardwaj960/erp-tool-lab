@@ -9,6 +9,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using ClosedXML.Excel;
 using System.IO;
+using WebERP.Data;
 
 namespace WebERP.Controllers
 {
@@ -17,11 +18,13 @@ namespace WebERP.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ApplicationDbContext _dbContext;
 
-        public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager,ApplicationDbContext dbContext)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this._dbContext = dbContext;
         }
 
         [HttpGet]
@@ -206,41 +209,36 @@ namespace WebERP.Controllers
 
 
 
-        //[HttpGet]
-        //public IActionResult Excel()
-        //{
-        //    List<UserRoleViewModel> Users = new List<UserRoleViewModel> {
-        //    new Users {
-        //        UserId = "1212",
-        //        UserName = "Nitesh"
-        //    }
-        //    };
+        [HttpGet]
+        public IActionResult Excel()
+        {
+            var roles = roleManager.Roles;
 
-        //    using (var workbook = new XLWorkbook())
-        //    {
-        //        var worksheet = workbook.Worksheets.Add("Users");
-        //        var currentRow = 1;
-        //        worksheet.Cell(currentRow, 1).Value = "Id";
-        //        worksheet.Cell(currentRow, 2).Value = "Username";
-        //        foreach (var user in Users)
-        //        {
-        //            currentRow++;
-        //            worksheet.Cell(currentRow, 1).Value = user.UserId;
-        //            worksheet.Cell(currentRow, 2).Value = user.UserName;
-        //        }
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("List-Role");
+                var currentRow = 1;
+                worksheet.Cell(currentRow, 1).Value = "Id";
+                worksheet.Cell(currentRow, 2).Value = "Name";
+                foreach (var role in roles)
+                {
+                    currentRow++;
+                    worksheet.Cell(currentRow, 1).Value = role.Id;
+                    worksheet.Cell(currentRow, 2).Value = role.Name;
+                }
 
-        //        using (var stream = new MemoryStream())
-        //        {
-        //            workbook.SaveAs(stream);
-        //            var content = stream.ToArray();
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
 
-        //            return File(
-        //                content,
-        //                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        //                "users.xlsx");
-        //        }
-        //    }
-        //}
+                    return File(
+                        content,
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        "users.xlsx");
+                }
+            }
+        }
 
     }
 }
