@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,9 +8,17 @@ namespace WebERP.Models
 {    
     public class locationViewModel
     {
-        public List<countryModel> countryList { get; set; }
-        public List<stateModel> stateList { get; set; }
-        public List<cityModel> cityList { get; set; }
+        public ICollection<countryModel> countryList { get; set; }
+        public ICollection<stateModel> stateList { get; set; }
+        public ICollection<cityModel> cityList { get; set; }
+
+        public string countryId { get; set; }
+        public List<SelectListItem> countryDropDown { get; set; }
+        public string stateId { get; set; }
+        public List<SelectListItem> stateDropDown { get; set; }
+        public string cityId { get; set; }
+        public List<SelectListItem> cityDropDown { get; set; }
+
     }
     public class countryModel
     {
