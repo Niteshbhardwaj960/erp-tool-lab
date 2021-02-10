@@ -20,14 +20,18 @@
     </li>
 </ul>
 <div id="myTabContent" class="tab-content">
-
+    @*<div id="#PlaceHolderHere"></div>*@
     <div class="tab-pane show active" id="country">
         @if (Model.countryList.Any())
         {
             <br />
-            <a class="btn btn-success" style="color:white;" data-toggle="modal" data-target="#enquiryModal">
+            <a class="btn btn-success text-white" data-toggle="modal" data-target="#countryModal">
                 Add Country
             </a>
+            @*<button type="button" class="btn btn-success text-white" data-toggle="ajax-modal" data-target="#countryModal"
+                        data-url="@Url.Action("AddCountry")">
+                    Add Country
+                </button>*@
             <hr />
             <div class="card mb-3">
                 <div class="card-body">
@@ -85,9 +89,13 @@
                     <h5 class="card-title">
                         Use the button below to Add a new Country
                     </h5>
-                    <a class="btn btn-success" style="width:auto" asp-controller="Location" asp-action="AddCountry">
+                    <a class="btn btn-success text-white" data-toggle="modal" data-target="#countryModal">
                         Add Country
                     </a>
+                    @*<button type="button" class="btn btn-success text-white" data-toggle="ajax-modal" data-target="#countryModal"
+                                data-url="@Url.Action("AddCountry")">
+                            Add Country
+                        </button>*@
                 </div>
             </div>
         }
@@ -97,7 +105,7 @@
         @if (Model.stateList.Any())
         {
             <br />
-            <a class="btn btn-success" style="width:auto" asp-controller="Location" asp-action="AddState">
+            <a class="btn btn-success text-white" data-toggle="modal" data-target="#stateModal">
                 Add State
             </a>
             <hr />
@@ -159,7 +167,7 @@
                     <h5 class="card-title">
                         Use the button below to Add a new State
                     </h5>
-                    <a class="btn btn-success" style="width:auto" asp-controller="Location" asp-action="AddState">
+                    <a class="btn btn-success text-white" data-toggle="modal" data-target="#stateModal">
                         Add State
                     </a>
                 </div>
@@ -171,7 +179,7 @@
         @if (Model.cityList.Any())
         {
             <br />
-            <a class="btn btn-success" style="width:auto" asp-controller="Location" asp-action="AddCity">
+            <a class="btn btn-success text-white" data-toggle="modal" data-target="#cityModal">
                 Add City
             </a>
             <hr />
@@ -235,7 +243,7 @@
                     <h5 class="card-title">
                         Use the button below to Add a new City
                     </h5>
-                    <a class="btn btn-success" style="width:auto" asp-controller="Location" asp-action="AddCity">
+                    <a class="btn btn-success text-white" data-toggle="modal" data-target="#cityModal">
                         Add City
                     </a>
                 </div>
@@ -243,8 +251,8 @@
         }
     </div>
 
-    <div id="enquiryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+
+    <div id="countryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="card">
@@ -252,128 +260,135 @@
                         <h3 class="mb-0 card-title text-white">New Country Details</h3>
                     </div>
                     <div class="card-body">
-                        <form id="menu-form" enctype="multipart/form-data">
+                        <form method="post" asp-controller="Location" asp-action="AddCountry">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label class="form-label">Country Code</label>
-                                        <div class="input-group">                                            
-                                            <input type="text" class="form-control numb" name="country_code" id="country_code" placeholder="country code like e.g IN for India" value="" required="">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="countrycode" placeholder="country code like e.g IN for India">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label class="form-label">Country Name</label>
-                                        <input type="text" class="form-control" name="country_name" id="country_name" placeholder="country name here..." value="" required="">
-                                        <input type="hidden" class="form-control" id="id" name="id" value="" required="">
-                                    </div>
-                                </div>
-                                @*<div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group">
-                                        <label class="form-label">Company Name</label>
-                                        <input type="text" class="form-control" name="com_name" id="com_name" placeholder="Company Name" value="">
-                                        <input type="hidden" class="form-control" id="id" name="id" value="" required="">
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group">
-                                        <label class="form-label">Email ID</label>
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="email" value="" onkeyup="" required="">
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-12">
-                                    <div class="form-group">
-                                        <div class="form-label">Gender</div>
-                                        <div class="form-group">
-                                            <label class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" name="gender" value="1" checked="">
-                                                <span class="custom-control-label pointer">Male</span>
-                                            </label>
-                                            <label class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" name="gender" value="2">
-                                                <span class="custom-control-label pointer">Female</span>
-                                            </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="countryname" placeholder="country name here...">
                                         </div>
                                     </div>
-                                </div>*@
-                            </div>
-
-                            @*<div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group">
-                                        <label class="form-label">Address</label>
-                                        <textarea class="form-control" id="address" rows="2" name="address" placeholder="Write text here ..."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group">
-                                        <label class="form-label">Query</label>
-                                        <textarea class="form-control" id="query" rows="2" name="query" placeholder="Write text here ..."></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group">
-                                        <label class="form-label">Remarks</label>
-                                        <textarea class="form-control" id="address" rows="2" name="remarks" placeholder="Write text here ..."></textarea>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4 col-md-4 col-sm-12">
-                                    <div class="form-group">
-                                        <label class="form-label">Next Follow up</label>
-                                        <input type="date" class="form-control" id="follow_up" name="follow_up" value="2021-01-31">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12">
-                                    <div class="form-group">
-                                        <label for="branch_id">Source of query</label>
-                                        <select type="text" class="form-control" name="source" id="source" required="">
-                                            <option value="1">Walkin</option>
-
-                                            <option value="2">Reference</option>
-
-                                            <option value="3">Facebook</option>
-
-                                            <option value="4">Flex</option>
-
-                                            <option value="5">Banner</option>
-
-                                            <option value="6">vvv</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12">
-                                    <div class="form-group">
-                                        <label for="branch_id">Select branch</label>
-                                        <select type="text" class="form-control" name="branch_id" id="branch_id" required="">
-                                            <option value="12">Branch 1</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>*@
-
                             <div class="col-lg-12 col-md-12 col-sm-12">
-                                <button type="button" class="btn mr-2 mt-1 mb-1 btn-secondary pull-right" data-dismiss="modal">Close</button>
-                                <button class="btn btn-primary mr-2 mt-1 mb-1 us-button pull-right">
-                                    <i class="fa fa-save"></i> Save
-                                </button>
+                                <button type="button" class="btn btn-secondary mr-2 mt-1 mb-1  pull-right" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary mr-2 mt-1 mb-1 us-button pull-right">Save</button>
                             </div>
-                        </form>
+                        </form>                       
                     </div>
-
                 </div>
-               
             </div>
         </div>
     </div>
-</div>
+
+    <div id="stateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="card">
+
+                        <div class="card-header" style="background: linear-gradient(135deg, #00ff7ee6 0%, #74009a 100%);">
+                            <h3 class="mb-0 card-title text-white">New State Details</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <form method="post" asp-controller="Location" asp-action="AddState" >
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label >Country</label>
+                                            <select name="selectCountryCode" class="form-control" 
+                                                    asp-items="@(new SelectList(Model.countryDropDown,"Value", "Text"))">
+                                            </select>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="form-label">State Code</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="statecode" id="state_code" placeholder="State code like e.g CH for Chandigarh">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="form-label">State Name</label>
+                                            <input type="text" class="form-control" name="statename" id="state_name" placeholder="State name here..." >
+                                            <input type="hidden" class="form-control" id="id" name="id" value="" required="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <button type="button" class="btn mr-2 mt-1 mb-1 btn-secondary pull-right" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary mr-2 mt-1 mb-1 us-button pull-right" type="submit">
+                                        <i class="fa fa-save"></i> Save
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="cityModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="card">
+                            <div class="card-header" style="background: linear-gradient(135deg, #00ff7ee6 0%, #74009a 100%);">
+                                <h3 class="mb-0 card-title text-white">New City Details</h3>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" asp-controller="Location" asp-action="AddCity">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div class="form-group">                                               
+                                                <label asp-for="stateId">State</label>
+                                                <select name="selectStateCode" class="form-control" asp-items="@(new SelectList(Model.stateDropDown,"Value", "Text"))"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">City Code</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="citycode" id="city_code" placeholder="City code like e.g GN for Greater Noida" value="" required="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">City Name</label>
+                                                <input type="text" class="form-control" name="cityname" id="city_name" placeholder="city name here..." value="" required="">
+                                                <input type="hidden" class="form-control" id="id" name="id" value="" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <button type="button" class="btn mr-2 mt-1 mb-1 btn-secondary pull-right" data-dismiss="modal">Close</button>
+                                        <button class="btn btn-primary mr-2 mt-1 mb-1 us-button pull-right" type="submit">
+                                            <i class="fa fa-save"></i> Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
 

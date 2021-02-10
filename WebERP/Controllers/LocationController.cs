@@ -9,6 +9,7 @@ using WebERP.Models;
 using System.Diagnostics;
 using WebERP.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebERP.Controllers
 {
@@ -30,19 +31,63 @@ namespace WebERP.Controllers
         }       
 
         // GET: Location
-        [HttpPost]
+        [HttpGet]
         public ActionResult AddCountry()
         {
+            //countryModel country = new countryModel();
+            //return PartialView("_addCountryModal",country);
             return View();
         }
 
         // GET: Location
         [HttpPost]
-        public async Task<IActionResult> AddCountry(countryModel country)
-        {
+        public IActionResult AddCountry(string countrycode,string countryname)
+        {            
+            countryModel country = new countryModel();
+            country.CountryCode = countrycode;
+            country.Name = countryname;
+            country.Ins_Date = DateTime.Now;            
+            country.Ins_Uid = userManager.GetUserName(HttpContext.User);
+            
             dbContext.Countries.Add(country);
-            await dbContext.SaveChangesAsync();
-            return View();
+            dbContext.SaveChangesAsync();
+            return RedirectToAction("LocationDetails");
+        }
+
+        [HttpPost]
+        public IActionResult AddState(string selectCountryCode, string statecode, string statename)
+        {
+            stateModel state = new stateModel();
+            state.CountryId = dbContext.Countries.Where(x => x.CountryCode == selectCountryCode).Select(s => s.Id).FirstOrDefault();
+            state.CountryCode = selectCountryCode;
+            state.StateCode = statecode;
+            state.Name = statename;
+            state.Ins_Date = DateTime.Now;
+            state.Ins_Uid = userManager.GetUserName(HttpContext.User);
+            state.Upd_Date = DateTime.Now;
+            state.Upd_Uid = userManager.GetUserName(HttpContext.User);
+            dbContext.States.Add(state);
+            dbContext.SaveChangesAsync();
+            return RedirectToAction("LocationDetails");
+        }
+
+        [HttpPost]
+        public IActionResult AddCity(string selectStateCode, string citycode, string cityname)
+        {
+            cityModel city = new cityModel();
+            city.StateId = dbContext.States.
+                              Where(x => x.StateCode == selectStateCode).
+                              Select(s => s.Id).FirstOrDefault();
+            city.StateCode = selectStateCode;
+            city.StateCode = citycode;
+            city.Name = cityname;
+            city.Ins_Date = DateTime.Now;
+            city.Ins_Uid = userManager.GetUserName(HttpContext.User);
+            city.Upd_Date = DateTime.Now;
+            city.Upd_Uid = userManager.GetUserName(HttpContext.User);
+            dbContext.Cities.Add(city);
+            dbContext.SaveChangesAsync();
+            return RedirectToAction("LocationDetails");
         }
 
         [HttpGet]
@@ -50,9 +95,62 @@ namespace WebERP.Controllers
         {
             //locationVM
             locationViewModel locationView = new locationViewModel();
-            locationView.countryList = dbContext.Countries.ToList();
-            locationView.stateList = dbContext.States.ToList();
-            locationView.cityList = dbContext.Cities.ToList();
+            var cnlst = dbContext.Countries.ToList();
+            var cilst = dbContext.Cities.ToList();
+            var stlst = dbContext.States.ToList();
+
+            if(cnlst != null)
+                locationView.countryList = dbContext.Countries.ToList();
+            if (stlst != null)
+                locationView.stateList = dbContext.States.ToList();
+            if (cilst != null)
+                locationView.cityList = dbContext.Cities.ToList();
+
+            var countryList = (from country in dbContext.Countries
+                                select new SelectListItem()
+                                {
+                                    Text = country.Name,
+                                    Value = country.CountryCode.ToString(),
+                                }).ToList();
+
+            countryList.Insert(0, new SelectListItem()
+            {
+                Text = "Select Country",
+                Value = string.Empty,
+                Selected = true
+            });
+
+            var stateList = (from state in dbContext.States
+                               select new SelectListItem()
+                               {
+                                   Text = state.Name,
+                                   Value = state.StateCode.ToString(),
+                               }).ToList();
+
+            stateList.Insert(0, new SelectListItem()
+            {
+                Text = "Select State",
+                Value = string.Empty,
+                Selected = true
+            });
+
+            var cityList = (from city in dbContext.Cities
+                               select new SelectListItem()
+                               {
+                                   Text = city.Name,
+                                   Value = Convert.ToString(city.Id)
+                               }).ToList();
+
+            cityList.Insert(0, new SelectListItem()
+            {
+                Text = "Select City",
+                Value = string.Empty,
+                Selected = true
+            });
+
+            locationView.countryDropDown = countryList;
+            locationView.stateDropDown = stateList;
+            locationView.cityDropDown = cityList;
             return View(locationView);
         }
 
