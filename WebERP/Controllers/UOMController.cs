@@ -31,6 +31,26 @@ namespace WebERP.Controllers
         {
             return View(dbContext.UOM_MASTER.ToList());
         }
-
+        [HttpGet]
+        public IActionResult AddUOM()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SAVEUOM(UOM_MASTER objUOM)
+        {
+            if (ModelState.IsValid)
+            {
+                objUOM.INS_DATE = DateTime.Now;
+                objUOM.INS_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.UOM_MASTER.Add(objUOM);
+                var result = await dbContext.SaveChangesAsync();
+                return RedirectToAction("UOM_Master");
+            }
+            else
+            {
+                return View("UOM_Master");
+            }
+        }
     }
 }

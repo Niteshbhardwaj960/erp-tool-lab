@@ -31,6 +31,26 @@ namespace WebERP.Controllers
         {
             return View(dbContext.Brand_Master.ToList());
         }
-
+        [HttpGet]
+        public IActionResult AddBrand()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SAVEBrand(Brand_Master objBrand)
+        {
+            if (ModelState.IsValid)
+            {
+                objBrand.INS_DATE = DateTime.Now;
+                objBrand.INS_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.Brand_Master.Add(objBrand);
+                var result = await dbContext.SaveChangesAsync();
+                return RedirectToAction("Brand_Master");
+            }
+            else
+            {
+                return View("Brand_Master");
+            }
+        }
     }
 }

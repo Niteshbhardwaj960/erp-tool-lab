@@ -30,6 +30,26 @@ namespace WebERP.Controllers
         {
             return View(dbContext.Term_Master.ToList());
         }
-
+        [HttpGet]
+        public IActionResult AddTerm()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SAVETerm(Term_Master objTerm)
+        {
+            if (ModelState.IsValid)
+            {
+                objTerm.INS_DATE = DateTime.Now;
+                objTerm.INS_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.Term_Master.Add(objTerm);
+                var result = await dbContext.SaveChangesAsync();
+                return RedirectToAction("Term_Master");
+            }
+            else
+            {
+                return View("Term_Master");
+            }
+        }
     }
 }
