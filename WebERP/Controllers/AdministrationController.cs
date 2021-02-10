@@ -7,19 +7,30 @@ using Microsoft.AspNetCore.Mvc;
 using WebERP.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
+using ClosedXML.Excel;
+using System.IO;
+using WebERP.Data;
 
 namespace WebERP.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ApplicationDbContext _dbContext;
 
-        public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager,ApplicationDbContext dbContext)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this._dbContext = dbContext;
+        }
+
+        [HttpGet]
+        public IActionResult Dashboard()
+        { 
+            return View();
         }
 
         [HttpGet]
@@ -165,18 +176,18 @@ namespace WebERP.Controllers
 
                 return View("Not Found");
             }
-            
-            for(int i=0; i<model.Count; i++)
+
+            for (int i = 0; i < model.Count; i++)
             {
                 var user = await userManager.FindByIdAsync(model[i].UserId);
 
                 IdentityResult result = null;
 
-                if(model[i].IsSelected && !(await userManager.IsInRoleAsync(user,role.Name)))
+                if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user, role.Name)))
                 {
                     result = await userManager.AddToRoleAsync(user, role.Name);
                 }
-                else if(!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
+                else if (!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
                 {
                     result = await userManager.RemoveFromRoleAsync(user, role.Name);
                 }
@@ -185,16 +196,51 @@ namespace WebERP.Controllers
                     continue;
                 }
 
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     if (i < (model.Count - 1))
                         continue;
                     else
-                        return RedirectToAction("EditRole" , new { Id = roleId});
+                        return RedirectToAction("EditRole", new { Id = roleId });
                 }
             }
             return RedirectToAction("EditRole", new { Id = roleId });
         }
+
+
+
+        [HttpGet]
+        public IActionResult Excel()
+        {
+            var roles = roleManager.Roles;
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("List-Role");
+                var currentRow = 1;
+                worksheet.Cell(currentRow, 1).Value = "Id";
+                worksheet.Cell(currentRow, 2).Value = "Name";
+                foreach (var role in roles)
+                {
+                    currentRow++;
+                    worksheet.Cell(currentRow, 1).Value = role.Id;
+                    worksheet.Cell(currentRow, 2).Value = role.Name;
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+
+                    return File(
+                        content,
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        "users.xlsx");
+                }
+            }
+        }
+
     }
 }
+
 

@@ -18,6 +18,7 @@ namespace WebERP.Data
         public DbSet<countryModel> Countries { get; set; }
         public DbSet<stateModel> States { get; set; }
         public DbSet<cityModel> Cities { get; set; }
+        public DbSet<Company> Companies { get; set; }
     }
 
 }
