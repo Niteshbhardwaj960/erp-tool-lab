@@ -8,7 +8,7 @@
     <a class="btn btn-success" style="width:auto" asp-controller="Term" asp-action="ADDTerm">
         Add Term
     </a>
-    <a class="btn btn-success" style="width:auto" asp-controller="Account" asp-action="Excel">
+    <a class="btn btn-success" style="width:auto" asp-controller="Term" asp-action="Excel">
         Export
     </a>
     <hr />
@@ -32,10 +32,10 @@
                                 <td>@Data.PO</td>
                                 <td>@Data.SAL_Order</td>
                                 <td>
-                                    <a asp-action="EditAccount" asp-controller="Account" asp-route-id="@Data.ID">
+                                    <a asp-action="EditTerm" asp-controller="Term" asp-route-id="@Data.ID">
                                         <i class="fas fa-user-edit"></i>
                                     </a>&nbsp;&nbsp;
-                                    <a asp-action="DeleteAccount" asp-controller="Account" asp-route-id="@Data.ID">
+                                    <a asp-action="DeleteTerm" asp-controller="Term" asp-route-id="@Data.ID">
                                         <i class="far fa-trash-alt"></i>
                                     </a>&nbsp;&nbsp;
                                     <a href="#">

@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label for="branch_id">ACTIVE_TAG</label>
                             <div class="custom-radio">
-                                <select class="form-control" id="ACTIVE_TAG" name="ACTIVE_TAG">
+                                <select class="form-control" asp-for="ACTIVE_TAG">
                                     <option value="1">Yes</option>
                                     <option value="2">No</option>
                                 </select>
@@ -120,7 +120,7 @@
                         <div class="form-group">
                             <label for="branch_id">Opening Balance Tag</label>
                             <div class="custom-radio">
-                                <select class="form-control" id="OP_BAL_TAG" name="OP_BAL_TAG">
+                                <select class="form-control" asp-for="OP_BAL_TAG">
                                     <option value="1">Debit</option>
                                     <option value="2">Credit</option>
                                 </select>
@@ -131,7 +131,7 @@
                         <div class="form-group">
                             <label for="branch_id">Account Type</label>
                             <div class="custom-radio">
-                                <select class="form-control" id="ACC_TYPE" name="ACC_TYPE">
+                                <select class="form-control" asp-for="ACC_TYPE">
                                     <option value="1">Sundry Deptor</option>
                                     <option value="2">Sundry Creditor</option>
                                     <option value="3">Both</option>
