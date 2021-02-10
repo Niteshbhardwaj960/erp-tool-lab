@@ -3,7 +3,7 @@
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-            <h3 style="color:white">Add Company</h3>
+            <h3 style="color:white">Edit Company</h3>
         </nav>
         <div class="card-body">
             <form id="menu-form" method="post" enctype="multipart/form-data">
@@ -13,7 +13,7 @@
                         <div class="form-group">
                             <label class="form-label">NAME</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="Name" id="Name">
+                                <input type="text" class="form-control" asp-for="NAME" />
                                 <span asp-validation-for="NAME" class="text-danger"></span>
                             </div>
                         </div>
@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label class="form-label">ABBRIVATION</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="Abv" id="Abv" >
+                                <input type="text" class="form-control" asp-for="ABV" />
                             </div>
                         </div>
                         @*<div class="form-group">
@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <label for="branch_id">REMARKS</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="REMARKS" id="REMARKS">
+                                <input type="text" class="form-control" asp-for="REMARKS" />
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <label class="form-label">ADDRESS LINE 1</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="ADD1" id="ADD1">
+                                <input type="text" class="form-control" asp-for="ADD1" />
                                 <span asp-validation-for="ADD1" class="text-danger"></span>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                         <div class="form-group">
                             <label class="form-label">ADDRESS LINE 2</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="ADD2" id="ADD2">
+                                <input type="text" class="form-control" asp-for="ADD2" />
                             </div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                         <div class="form-group">
                             <label for="branch_id">CITY CODE</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE">
+                                <input type="text" class="form-control" asp-for="CITY_CODE" />
                                 <span asp-validation-for="CITY_CODE" class="text-danger"></span>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                         <div class="form-group">
                             <label for="branch_id">PIN CODE</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="PIN_CODE" id="PIN_CODE">
+                                <input type="text" class="form-control" asp-for="PIN_CODE" />
                                 <span asp-validation-for="PIN_CODE" class="text-danger"></span>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                         <div class="form-group">
                             <label for="branch_id">EMAIL ID</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="EMAIL_ID" id="EMAIL_ID">
+                                <input type="text" class="form-control" asp-for="EMAIL_ID" />
                                 <span asp-validation-for="EMAIL_ID" class="text-danger"></span>
                             </div>
                         </div>
@@ -132,7 +132,7 @@
                         <div class="form-group">
                             <label for="branch_id">MOBILE NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="MOBILE_NO" id="MOBILE_NO">
+                                <input type="text" class="form-control" asp-for="MOBILE_NO" />
                                 <span asp-validation-for="MOBILE_NO" class="text-danger"></span>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                         <div class="form-group">
                             <label for="branch_id">PHONE NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="PH_NO" id="PH_NO">
+                                <input type="text" class="form-control" asp-for="PH_NO" />
                             </div>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                         <div class="form-group">
                             <label for="branch_id">FAX NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="FAX_NO" id="FAX_NO">
+                                <input type="text" class="form-control" asp-for="FAX_NO" />
                             </div>
                         </div>
                     </div>
@@ -157,7 +157,7 @@
                         <div class="form-group">
                             <label for="branch_id">URL</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="URL" id="URL">
+                                <input type="text" class="form-control" asp-for="URL" />
                             </div>
                         </div>
                     </div>
@@ -165,7 +165,7 @@
                         <div class="form-group">
                             <label for="branch_id">LST NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="LST_NO" id="LST_NO">
+                                <input type="text" class="form-control" asp-for="LST_NO" />
                             </div>
                         </div>
                     </div>
@@ -173,7 +173,7 @@
                         <div class="form-group">
                             <label for="branch_id">LST DATE</label>
                             <div class="input-group">
-                                <input type="date" class="form-control" name="LST_DATE" id="LST_DATE">
+                                <input type="text" class="form-control" asp-for="LST_DATE" />
                             </div>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
                         <div class="form-group">
                             <label for="branch_id">CST NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="CST_NO" id="CST_NO">
+                                <input type="text" class="form-control" asp-for="CST_NO" />
                             </div>
                         </div>
                     </div>
@@ -189,7 +189,7 @@
                         <div class="form-group">
                             <label for="branch_id">CST DATE</label>
                             <div class="input-group">
-                                <input type="date" class="form-control" id="CST_DAT" name="CST_DAT">
+                                <input type="text" class="form-control" asp-for="CST_DAT" />
                                 @*<input type="text" class="form-control numb" name="CST_DATE" id="CST_DATE" placeholder="CST DATE" value="">*@
                             </div>
                         </div>
@@ -201,7 +201,7 @@
                         <div class="form-group">
                             <label for="branch_id">BANK NAME</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="BANK_NAME" id="BANK_NAME">
+                                <input type="text" class="form-control" asp-for="BANK_NAME" />
                             </div>
                         </div>
                     </div>
@@ -209,7 +209,7 @@
                         <div class="form-group">
                             <label for="branch_id">BANK ACCOUNT NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="BANK_ACC_NO" id="BANK_ACC_NO" >
+                                <input type="text" class="form-control" asp-for="BANK_ACC_NO" />
                             </div>
                         </div>
                     </div>
@@ -217,7 +217,7 @@
                         <div class="form-group">
                             <label for="branch_id">BANK BRANCH</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="BANK_BRANCH" id="BANK_BRANCH" >
+                                <input type="text" class="form-control" asp-for="BANK_BRANCH" />
                             </div>
                         </div>
                     </div>
@@ -225,7 +225,7 @@
                         <div class="form-group">
                             <label for="branch_id">IFSC CODE</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="IFSC_CODE" id="IFSC_CODE" >
+                                <input type="text" class="form-control" asp-for="IFSC_CODE" />
                             </div>
                         </div>
                     </div>
@@ -236,7 +236,7 @@
                         <div class="form-group">
                             <label for="branch_id">GST NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="GST_NO" id="GST_NO">
+                                <input type="text" class="form-control" asp-for="GST_NO" />
                                 <span asp-validation-for="GST_NO" class="text-danger"></span>
                             </div>
                         </div>
@@ -245,7 +245,7 @@
                         <div class="form-group">
                             <label for="branch_id">PAN NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="PAN_NO" id="PAN_NO">
+                                <input type="text" class="form-control" asp-for="PAN_NO" />
                                 <span asp-validation-for="PAN_NO" class="text-danger"></span>
                             </div>
                         </div>
@@ -254,7 +254,7 @@
                         <div class="form-group">
                             <label for="branch_id">SERVICE TAX NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="SERVICE_TAX_NO" id="SERVICE_TAX_NO">
+                                <input type="text" class="form-control" asp-for="SERVICE_TAX_NO" />
                             </div>
                         </div>
                     </div>
@@ -271,7 +271,7 @@
                         <div class="form-group">
                             <label for="branch_id">ECC NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="ECC_NO" id="ECC_NO">
+                                <input type="text" class="form-control" asp-for="ECC_NO" />
                             </div>
                         </div>
                     </div>
@@ -281,7 +281,7 @@
                         <div class="form-group">
                             <label for="branch_id">ESI NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="ESI_NO" id="ESI_NO">
+                                <input type="text" class="form-control" asp-for="ESI_NO" />
                             </div>
                         </div>
                     </div>
@@ -289,7 +289,7 @@
                         <div class="form-group">
                             <label for="branch_id">PF NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="PF_NO" id="PF_NO">
+                                <input type="text" class="form-control" asp-for="PF_NO" />
                             </div>
                         </div>
                     </div>
@@ -297,7 +297,7 @@
                         <div class="form-group">
                             <label for="branch_id">TDS NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="TDS_NO" id="TDS_NO">
+                                <input type="text" class="form-control" asp-for="TDS_NO" />
                             </div>
                         </div>
                     </div>
@@ -305,7 +305,7 @@
                         <div class="form-group">
                             <label for="branch_id">MSME NO</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="MSME_NO" id="MSME_NO">
+                                <input type="text" class="form-control" asp-for="MSME_NO" />
                             </div>
                         </div>
                     </div>
@@ -313,7 +313,39 @@
                         <div class="form-group">
                             <label for="branch_id">LOGO NAME</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="LOGO_NAME" id="LOGO_NAME">
+                                <input type="text" class="form-control" asp-for="LOGO_NAME" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label hidden="hidden" for="branch_id">INSERT DATE</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" asp-for="INS_DATE" hidden="hidden" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label hidden="hidden" for="branch_id">INSERTED BY</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" asp-for="INS_UID" hidden="hidden" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label hidden="hidden" for="branch_id">UPDATE DATE</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" asp-for="UDT_DATE" hidden="hidden" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label hidden="hidden" for="branch_id">UPDATED BY</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" asp-for="UDT_UID" hidden="hidden" />
                             </div>
                         </div>
                     </div>
@@ -322,11 +354,12 @@
                 @*</div>*@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Company">Close</a>
-                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Company" asp-action="SAVECompany">
-                        <i class="fa fa-save"></i> Save
+                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Company" asp-action="EditCompany">
+                        <i class="fa fa-save"></i> Update
                     </button>
 
                 </div>
+               
             </form>
         </div>
 

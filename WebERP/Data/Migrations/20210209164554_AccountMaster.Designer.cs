@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210209164554_AccountMaster")]
+    partial class AccountMaster
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,8 +150,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("ADD2");
 
-                    b.Property<string>("CITY_CODE")
-                        .IsRequired();
+                    b.Property<string>("CITY_CODE");
 
                     b.Property<string>("CR_DAYS");
 
@@ -245,30 +246,6 @@ namespace WebERP.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("WebERP.Models.Brand_Master", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ABV");
-
-                    b.Property<DateTime>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("NAME")
-                        .IsRequired();
-
-                    b.Property<DateTime>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Brand_Master");
-                });
-
             modelBuilder.Entity("WebERP.Models.Company", b =>
                 {
                     b.Property<int>("ID")
@@ -355,58 +332,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Companies");
-                });
-
-            modelBuilder.Entity("WebERP.Models.Term_Master", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ACTIVE_TAG");
-
-                    b.Property<DateTime>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("NAME")
-                        .IsRequired();
-
-                    b.Property<string>("PO");
-
-                    b.Property<string>("SAL_Order");
-
-                    b.Property<DateTime>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Term_Master");
-                });
-
-            modelBuilder.Entity("WebERP.Models.UOM_MASTER", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ABV");
-
-                    b.Property<DateTime>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("NAME")
-                        .IsRequired();
-
-                    b.Property<DateTime>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("UOM_MASTER");
                 });
 
             modelBuilder.Entity("WebERP.Models.cityModel", b =>

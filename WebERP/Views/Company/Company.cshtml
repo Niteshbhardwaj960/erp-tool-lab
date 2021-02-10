@@ -8,7 +8,7 @@
     <a class="btn btn-success" style="width:auto" asp-controller="Company" asp-action="AddCompany">
         Add Company
     </a>
-    <a class="btn btn-success" style="width:auto" asp-controller="Administration" asp-action="">
+    <a class="btn btn-success" style="width:auto" asp-controller="Company" asp-action="Excel">
         Export
     </a>
     <hr />
@@ -18,11 +18,10 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Contact No</th>
-                            <th>GST No</th>
-                            <th>Address</th>
-                            <th>City</th>
+                            <th>Name</th>  
+                            <th>Abrivation</th>
+                            <th>Address</th>  
+                            <th>GST NO</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -30,16 +29,16 @@
                         @foreach (var Data in Model)
                         {
                         <tr>
-                            <td>@Data.NAME</td>
-                            <td>@Data.PH_NO</td>
-                            <td>@Data.SERVICE_TAX_NO</td>
-                            <td>@Data.ADD1 || @Data.ADD2</td>
-                            <td>@Data.CITY_CODE</td>
+                            <td>@Data.NAME</td> 
+                            <td>@Data.ABV</td>
+                            <td>@Data.ADD1  @Data.ADD2  @Data.CITY_CODE</td>
+                            <td>@Data.GST_NO</td>
+                           
                             <td>
-                                <a asp-action="EditRole" asp-controller="Administration" asp-route-id="@Data.ID">
+                                <a asp-action="EditCompany" asp-controller="Company" asp-route-id="@Data.ID">
                                     <i class="fas fa-user-edit"></i>
                                 </a>&nbsp;&nbsp;
-                                <a href="#">
+                                <a asp-action="DeleteCompany" asp-controller="Company" asp-route-id="@Data.ID">
                                     <i class="far fa-trash-alt"></i>
                                 </a>&nbsp;&nbsp;
                                 <a href="#">
@@ -62,9 +61,9 @@ else
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                Use the button below to create a Role
+                Use the button below to create a Company
             </h5>
-            <a class="btn btn-primary" style="width:auto" asp-controller="Company" asp-action="SAVECompany">
+            <a class="btn btn-primary" style="width:auto" asp-controller="Company" asp-action="AddCompany">
                 Add Company
             </a>
         </div>
