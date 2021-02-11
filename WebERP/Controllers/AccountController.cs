@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebERP.Data;
 using WebERP.Models;
 
@@ -35,8 +36,70 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult AddAccount()
         {
-            return View();
+            var countryList = (from country in dbContext.Countries
+                               select new SelectListItem()
+                               {
+                                   Text = country.Name,
+                                   Value = country.CountryCode.ToString(),
+                               }).ToList();
+
+            countryList.Insert(0, new SelectListItem()
+            {
+                Text = "Select Country",
+                Value = string.Empty,
+                Selected=true
+            });
+            var StateList = (from state in dbContext.States
+                             select new SelectListItem()
+                             {
+                                 Text = state.Name,
+                                 Value = state.StateCode.ToString(),
+                             }).ToList();
+
+            StateList.Insert(0, new SelectListItem()
+            {
+                Text = "Select State",
+                Value = string.Empty,
+                Selected = true
+            });
+            var cityList = (from city in dbContext.Cities
+                            select new SelectListItem()
+                            {
+                                Text = city.Name,
+                                Value = Convert.ToString(city.Id)
+                            }).ToList();
+
+            cityList.Insert(0, new SelectListItem()
+            {
+                Text = "Select City",
+                Value = string.Empty,
+                Selected = true
+            });
+            Account_Master am = new Account_Master();
+            am.countryDropDown = countryList;
+            am.stateDropDown = StateList;
+            am.cityDropDown = cityList;
+            return View(am);
         }
+
+        public ActionResult Getstatelist(int cid)
+        {
+            var StateList = (from state in dbContext.States
+                             select new SelectListItem()
+                             {
+                                 Text = state.Name,
+                                 Value = state.StateCode.ToString(),
+                             }).ToList();
+
+            StateList.Insert(0, new SelectListItem()
+            {
+                Text = "Select State",
+                Value = string.Empty,
+                Selected = true
+            });
+            return View(StateList);
+        }
+
         [HttpPost]
         public async Task<IActionResult> SAVEAccount(Account_Master objAccount)
         {

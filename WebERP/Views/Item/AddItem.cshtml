@@ -1,0 +1,87 @@
+﻿@model WebERP.Models.Item_Master
+
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Add Item</h3>
+        </nav>
+        <div class="card-body">
+            <form id="menu-form" method="post" enctype="multipart/form-data">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Basic Details</b></h4>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Name</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="Name" id="Name">
+                                <span asp-validation-for="NAME" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">UOM Code</label>
+                            <div class="input-group">
+                                @*<select name="selectUOMCode" class="form-control" asp-items="@(new SelectList(Model.UOM_CODE,"Value", "Text"))"></select>*@
+                                @*<input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE">*@
+                                @*<span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">HSN Code</label>
+                            <div class="input-group">
+                                @*<select name="selectCountryCode" id="cid" class="form-control" asp-items="@(new SelectList(Model.countryDropDown,"Value", "Text"))"></select>*@
+                                <input type="text" class="form-control numb" name="HSN_CODE" id="HSN_CODE">
+                                @*<span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Min Stock</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="MIN_STOCK" id="MIN_STOCK">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Max Stock</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="MAX_STOCK" id="MAX_STOCK">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Active Tag</label>
+                            <div class="custom-radio">
+                                <select class="form-control" id="ACTIVE_TAG" name="ACTIVE_TAG">
+                                    <option value="1">Yes</option>
+                                    <option value="2">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Remarks</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="REMARKS" id="REMARKS">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Item_Master">Close</a>
+                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Item" asp-action="SAVEItem">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

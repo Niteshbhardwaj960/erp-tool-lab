@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Item_Master>
+
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Item Details</h3></nav>
+
+
+@if (Model.Any())
+{
+    <a class="btn btn-success" style="width:auto" asp-controller="Item" asp-action="ADDItem">
+        Add Item
+    </a>
+    <a class="btn btn-success" style="width:auto" asp-controller="Item" asp-action="Excel">
+        Export
+    </a>
+    <hr />
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>UOM Code</th>
+                            <th>HSN Code</th>
+                            <th>Min Stock</th>
+                            <th>Max Stock</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var Data in Model)
+                        {
+                        <tr>
+                            <td>@Data.NAME</td>
+                            <td>@Data.UOM_CODE</td>
+                            <td>@Data.HSN_CODE</td>
+                            <td>@Data.MIN_STOCK</td>
+                            <td>@Data.MAX_STOCK</td>
+                            <td>
+                                <a asp-action="EditItem" asp-controller="Item" asp-route-id="@Data.ID">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="DeleteItem" asp-controller="Item" asp-route-id="@Data.ID">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>&nbsp;&nbsp;
+                                <a href="#">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No Item Created Yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a Item
+            </h5>
+            <a class="btn btn-primary" style="width:auto" asp-controller="Item" asp-action="ADDItem">
+                Add Item
+            </a>
+        </div>
+    </div>
+}

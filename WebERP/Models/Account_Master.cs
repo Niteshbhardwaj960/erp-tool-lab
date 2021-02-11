@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +10,13 @@ namespace WebERP.Models
 {
     public class Account_Master
     {
+        [NotMapped]
+        public List<SelectListItem> countryDropDown { get; set; }
+        [NotMapped]
+        public List<SelectListItem> stateDropDown { get; set; }
+        [NotMapped]
+        public List<SelectListItem> cityDropDown { get; set; }
+
         public int ID { get; set; }
         [Required]
         public string NAME { get; set; }
