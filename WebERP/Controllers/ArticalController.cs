@@ -33,8 +33,9 @@ namespace WebERP.Controllers
             return View(dbContext.Artical_Master.ToList());
         }
         [HttpGet]
-        public IActionResult AddArtical()
+        public IActionResult AddArtical(int ID, string Type)
         {
+
             return View();
         }
         [HttpPost]
