@@ -1,0 +1,79 @@
+﻿@model IEnumerable<WebERP.Models.Location.StateModel>
+
+@{
+    Layout = null;
+}
+
+<hr />
+@if (Model.Any())
+{
+    <a class="btn btn-success text-white" href="/Location/AddState">
+        Add State
+    </a>
+    <hr />
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>State Id</th>
+                            <th>State Name</th>
+                            <th>State Code</th>
+                            <th>Country Id</th>
+                            <th>Country Code</th>
+                            <th>Created Date</th>
+                            <th>Created By</th>
+                            <th>Last Modified Date</th>
+                            <th>Last Modified By</th>
+                            <th>User Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var state in Model)
+                        {
+                        <tr>
+                            <td>@state.Id</td>
+                            <td>@state.Name</td>
+                            <td>@state.StateCode</td>
+                            <td>@state.CountryId</td>
+                            <td>@state.CountryCode</td>
+                            <td>@state.Ins_Date</td>
+                            <td>@state.Ins_Uid</td>
+                            <td>@state.Upd_Date</td>
+                            <td>@state.Upd_Uid</td>
+                            <td>
+                                &nbsp;&nbsp;<a href="/Location/EditState/@state.Id">
+                                    <i class="fas fa-user-edit"></i>
+                                </a> &nbsp;&nbsp;
+                                <a href="/Location/DeleteState/@state.Id">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>@*&nbsp;&nbsp;
+                                <a href="/Location/DetailState/@state.Id">
+                                <i class="fas fa-eye"></i>
+                                </a>*@
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No State Has Been Created Yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to Add a new state
+            </h5>
+            <a class="btn btn-success text-white" href="/Location/AddState">
+                Add State
+            </a>           
+        </div>
+    </div>
+}

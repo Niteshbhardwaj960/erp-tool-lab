@@ -1,0 +1,81 @@
+﻿@model IEnumerable<WebERP.Models.Location.CountryModel>
+
+@{
+    Layout = null;
+}
+
+<hr />
+@if (Model.Any())
+{
+    <a class="btn btn-success text-white" href="/Location/AddCountry" >
+        Add Country
+    </a>
+   
+    <hr />
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Country ID</th>
+                            <th>Country Code</th>
+                            <th>Country Name</th>
+                            <th>Created Date</th>
+                            <th>Created By</th>
+                            <th>Last Modified Date</th>
+                            <th>Last Modified By</th>
+                            <th>User Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var country in Model)
+                        {
+                            <tr>
+                                <td>@country.Id</td>
+                                <td>@country.CountryCode</td>
+                                <td>@country.Name</td>
+                                <td>@country.Ins_Date</td>
+                                <td>@country.Ins_Uid</td>
+                                <td>@country.Upd_Date</td>
+                                <td>@country.Upd_Uid</td>
+                                <td>
+                                    &nbsp;&nbsp;<a href="/Location/EditCountry/@country.Id">
+                                        <i class="fas fa-user-edit"></i>
+                                    </a> &nbsp;&nbsp;
+                                    <a href="/Location/Delete/@country.Id">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>@*&nbsp;&nbsp;
+                                    <a href="/Location/Detail/@country.Id">
+                                    <i class="fas fa-eye"></i>
+                                    </a>*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            None Country Has Been Created Yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to Add a new Country
+            </h5>
+            <a class="btn btn-success text-white"  href="/Location/AddCountry">
+                Add Country
+            </a>
+            @*<button type="button" class="btn btn-success text-white" data-toggle="ajax-modal" data-target="#countryModal"
+                        data-url="@Url.Action("AddCountry")">
+                    Add Country
+                </button>*@
+        </div>
+    </div>
+}
+
