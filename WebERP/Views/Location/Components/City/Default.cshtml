@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebERP.Models.Location.CityModel>
+
+@{
+    Layout = null;
+}
+
+<hr />
+@if (Model.Any())
+{
+    <a class="btn btn-success text-white" href="/Location/AddCity">
+        Add City
+    </a>
+    <hr />
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>City Id</th>
+                            <th>State Id</th>
+                            <th>City Code</th>
+                            <th>City Name</th>
+                            <th>Created Date</th>
+                            <th>Created By</th>
+                            <th>Last Modified Date</th>
+                            <th>Last Modified By</th>
+                            <th>User Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var city in Model)
+                        {
+                        <tr>
+                            <td>@city.Id</td>
+                            <td>@city.StateId</td>
+                            <td>@city.CityCode</td>
+                            <td>@city.Name</td>
+                            <td>@city.Ins_Date</td>
+                            <td>@city.Ins_Uid</td>
+                            <td>@city.Upd_Date</td>
+                            <td>@city.Upd_Uid</td>
+                            <td>
+                                &nbsp;&nbsp;<a href="/Location/EditCity/@city.Id">
+                                    <i class="fas fa-user-edit"></i>
+                                </a> &nbsp;&nbsp;
+                                <a href="/Location/DeleteCity/@city.Id">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>@*&nbsp;&nbsp;
+                                 <a href="/Location/DetailCity/@city.Id">
+                                    <i class="fas fa-eye"></i>
+                                 </a>*@
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No City Has Been Created Yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to Add a new City
+            </h5>
+            <a class="btn btn-success text-white" href="/Location/AddCity">
+                Add City
+            </a>            
+        </div>
+    </div>
+}
+

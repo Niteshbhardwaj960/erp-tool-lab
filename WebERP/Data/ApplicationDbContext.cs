@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebERP.Models;
 //using WebERP.Models.Location;
+using WebERP.Models.Location;
 
 namespace WebERP.Data
 {
@@ -15,9 +16,9 @@ namespace WebERP.Data
         {
         }
 
-        public DbSet<countryModel> Countries { get; set; }
-        public DbSet<stateModel> States { get; set; }
-        public DbSet<cityModel> Cities { get; set; }
+        public DbSet<CountryModel> Countries { get; set; }
+        public DbSet<StateModel> States { get; set; }
+        public DbSet<CityModel> Cities { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Account_Master> Account_Masters { get; set; }
         public DbSet<Term_Master> Term_Master { get; set; }
