@@ -240,6 +240,14 @@ namespace WebERP.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult DeleteRole(int ID)
+        {
+            var data = _dbContext.Companies.Find(ID);
+            _dbContext.Remove(data);
+            _dbContext.SaveChanges();
+            return RedirectToAction("Company");
+        }
     }
 }
 

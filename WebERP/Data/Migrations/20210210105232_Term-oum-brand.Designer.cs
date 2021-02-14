@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210210105232_Term-oum-brand")]
+    partial class Termoumbrand
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,30 +247,6 @@ namespace WebERP.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("WebERP.Models.Artical_Master", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BRAND_CODE");
-
-                    b.Property<DateTime>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("NAME")
-                        .IsRequired();
-
-                    b.Property<DateTime>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Artical_Master");
-                });
-
             modelBuilder.Entity("WebERP.Models.Brand_Master", b =>
                 {
                     b.Property<int>("ID")
@@ -379,62 +357,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Companies");
-                });
-
-            modelBuilder.Entity("WebERP.Models.Item_Master", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ACTIVE_TAG");
-
-                    b.Property<int>("HSN_CODE");
-
-                    b.Property<DateTime>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<int>("MAX_STOCK");
-
-                    b.Property<int>("MIN_STOCK");
-
-                    b.Property<string>("NAME")
-                        .IsRequired();
-
-                    b.Property<string>("REMARKS");
-
-                    b.Property<DateTime>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.Property<int>("UOM_CODE");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Item_Master");
-                });
-
-            modelBuilder.Entity("WebERP.Models.Size_Master", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("NAME")
-                        .IsRequired();
-
-                    b.Property<DateTime>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Size_Master");
                 });
 
             modelBuilder.Entity("WebERP.Models.Term_Master", b =>

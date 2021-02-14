@@ -20,6 +20,13 @@ namespace WebERP.Data
         public DbSet<StateModel> States { get; set; }
         public DbSet<CityModel> Cities { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Account_Master> Account_Masters { get; set; }
+        public DbSet<Term_Master> Term_Master { get; set; }
+        public DbSet<UOM_MASTER> UOM_MASTER { get; set; }
+        public DbSet<Brand_Master> Brand_Master { get; set; }
+        public DbSet<Item_Master> Item_Master { get; set; }
+        public DbSet<Artical_Master> Artical_Master { get; set; }
+        public DbSet<Size_Master> Size_Master { get; set; }
     }
 
 }
