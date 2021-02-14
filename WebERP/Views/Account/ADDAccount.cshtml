@@ -1,0 +1,232 @@
+﻿@model WebERP.Models.Account_Master
+
+    <div class="modal-content show-modal-content form_content">
+        <div class="card">
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Add Account</h3>
+            </nav>
+            <div class="card-body">
+                <form id="menu-form" method="post" enctype="multipart/form-data">
+                    <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Basic Details</b></h4>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">NAME</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="Name" id="Name">
+                                    <span asp-validation-for="NAME" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">ACTIVE_TAG</label>
+                                <div class="custom-radio">
+                                    <select class="form-control" id="ACTIVE_TAG" name="ACTIVE_TAG">
+                                        <option value="1">Yes</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">REMARKS</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="REMARKS" id="REMARKS">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Address Details</b></h4>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">ADDRESS LINE 1</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="ADD1" id="ADD1">
+                                    <span asp-validation-for="ADD1" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">ADDRESS LINE 2</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="ADD2" id="ADD2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">PIN CODE</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="PIN_CODE" id="PIN_CODE">
+                                    <span asp-validation-for="PIN_CODE" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Country</label>
+                                <div class="input-group">
+                                    <select name="selectCountryCode" id="cid" class="form-control" asp-items="@(new SelectList(Model.countryDropDown,"Value", "Text"))"></select>
+                                    @*<input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE">*@
+                                    @*<span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">State</label>
+                                <div class="input-group">
+                                    <select name="selectStateCode" id="sid" class="form-control" asp-items="@(new SelectList(Model.stateDropDown,"Value", "Text"))"></select>
+                                    @*<input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE">
+                                        <span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">City</label>
+                                <div class="input-group">
+                                    <select name="selectCityCode" id="ctid" class="form-control" asp-items="@(new SelectList(Model.cityDropDown,"Value", "Text"))"></select>
+                                    @*<input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE">
+                                        <span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Contact Details</b></h4>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">EMAIL ID</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="EMAIL_ID" id="EMAIL_ID">
+                                    <span asp-validation-for="EMAIL_ID" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">MOBILE NO</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="MOBILE_NO" id="MOBILE_NO">
+                                    <span asp-validation-for="MOBILE_NO" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">PHONE NO</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="PH_NO" id="PH_NO">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Account Details</b></h4>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Opening Balance</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="OP_BAL" id="OP_BAL">
+                                    <span asp-validation-for="OP_BAL" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Opening Balance Tag</label>
+                                <div class="custom-radio">
+                                    <select class="form-control" id="OP_BAL_TAG" name="OP_BAL_TAG">
+                                        <option value="1">Debit</option>
+                                        <option value="2">Credit</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Account Type</label>
+                                <div class="custom-radio">
+                                    <select class="form-control" id="ACC_TYPE" name="ACC_TYPE">
+                                        <option value="1">Sundry Deptor</option>
+                                        <option value="2">Sundry Creditor</option>
+                                        <option value="3">Both</option>
+                                        <option value="4">General</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Credit Limit</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="CR_LIMIT" id="CR_LIMIT">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Credit Days</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="CR_DAYS" id="CR_DAYS">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Goverment ID Details</b></h4>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">GST NO</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="GST_NO" id="GST_NO">
+                                    <span asp-validation-for="GST_NO" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">GST Regestration Tag</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control numb" name="GST_REGD_TAG" id="GST_REGD_TAG">
+                                    <span asp-validation-for="GST_REGD_TAG" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*</div>*@
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Account_Master">Close</a>
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Account" asp-action="SAVEAccount">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+<script>
+    $(document).ready (function() {
+        $("#cid").change(function () {
+            var countyid = $this.val();
+            $.ajax({
+                type: "post",
+                url="Account/Getstatelist?cid=" + countyid,
+                contentType: "html",
+                success: function (response) {
+                    $("#sid").empty();
+                    $("#sid").append(response);
+                }
+            })
+        })
+   })
+</script>
