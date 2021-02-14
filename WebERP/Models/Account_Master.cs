@@ -47,5 +47,7 @@ namespace WebERP.Models
         public string INS_UID { get; set; }
         public DateTime UDT_DATE { get; set; }
         public string UDT_UID { get; set; }
+        [NotMapped]
+        public string Type { get; set; }
     }
 }
