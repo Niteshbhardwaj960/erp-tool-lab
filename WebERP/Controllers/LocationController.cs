@@ -98,9 +98,18 @@ namespace WebERP.Controllers
 
         [HttpPost]
         public ActionResult EditCountry(CountryModel country)
-        {            
-            return View();
+        {
+            if (ModelState.IsValid)
+            {
+                country.Upd_Date = DateTime.Now;
+                country.Upd_Uid = userManager.GetUserName(HttpContext.User);
+                dbContext.Countries.Update(country);
+                dbContext.SaveChanges();
+                return RedirectToAction("LocationDetails");
+            }
+            return View(country);
         }
+
         public ActionResult Delete(int Id)
         {
             if (Id > 0)
@@ -184,14 +193,21 @@ namespace WebERP.Controllers
 
         [HttpPost]
         public ActionResult EditState(StateModel state)
-        {
-            var stateDetails = dbContext.Countries.Find(state.Id);
-            //if (stateDetails == null)
-            //{
-            //    return RedirectToAction("LocationDetails");
-            //}
-            return View(stateDetails);
+        {           
+            var vm = new LocationViewModel();
+            if (ModelState.IsValid)
+            {
+                state.CountryCode = dbContext.Countries.Where(x => x.Id == state.CountryId).Select(s => s.CountryCode).FirstOrDefault();
+                state.Upd_Date = DateTime.Now;
+                state.Upd_Uid = userManager.GetUserName(HttpContext.User);
+                dbContext.States.Update(state);
+                dbContext.SaveChanges();
+                vm.ActiveTab = Tab.State;
+                return RedirectToAction(nameof(LocationController.LocationDetails), vm);
+            }
+            return View(state);
         }
+
         public ActionResult DeleteState(int Id)
         {
             if (Id > 0)
@@ -272,6 +288,22 @@ namespace WebERP.Controllers
             }
             cityDetails.stateDropDown = stateList;
             return View(cityDetails);
+        }
+
+        [HttpPost]
+        public ActionResult EditCity(CityModel city)
+        {
+            var vm = new LocationViewModel();
+            if (ModelState.IsValid)
+            {
+                city.Upd_Date = DateTime.Now;
+                city.Upd_Uid = userManager.GetUserName(HttpContext.User);
+                dbContext.Cities.Update(city);
+                dbContext.SaveChanges();
+                vm.ActiveTab = Tab.City;
+                return RedirectToAction(nameof(LocationController.LocationDetails), vm);
+            }
+            return View(city);
         }
 
         public ActionResult DeleteCity(int Id)
