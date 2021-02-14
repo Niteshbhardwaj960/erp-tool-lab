@@ -1,0 +1,354 @@
+﻿
+
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Add Company</h3>
+        </nav>
+        <div class="card-body">
+            <form id="menu-form" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">NAME</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="Name" id="Name" placeholder="NAME" value="" required="">
+                            </div>
+                            @*<input type="date" class="form-control" id="sal_date" name="sal_date" value="2021-02-06">
+                <input type="hidden" class="form-control" id="id" name="id" value="" required="">*@
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">ABBRIVATION</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="Abv" id="Abv" placeholder="ABBRIVATION" value="" required="">
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                <label for="branch_id">Employee</label>
+                <select type="text" class="form-control" name="employee" id="employee" required="">
+                    <option value="1">Sam</option>
+
+                    <option value="2">Deep</option>
+
+                    <option value="3">John</option>
+
+                    <option value="4">Mariam</option>
+
+                    <option value="5">Julie</option>
+
+                    <option value="6">Shenoy</option>
+
+                    <option value="7">Adam</option>
+
+                    <option value="8">Sunny</option>
+
+                    <option value="9">SuperAdmin</option>
+
+                    <option value="10">Jeet</option>
+
+                    <option value="11">Sagar</option>
+
+                    <option value="12">Pritpal</option>
+
+                    <option value="13">Hp</option>
+
+                    <option value="14">User2</option>
+
+                </select>
+            </div>*@
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">ADDRESS LINE 1</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="Add1" id="Add1" placeholder="ADDRESS LINE 1" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">ADDRESS LINE 2</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="Add2" id="Add2" placeholder="ADDRESS LINE 2" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">CITY CODE</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE" placeholder="CITY CODE" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">PIN CODE</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="PIN_CODE" id="PIN_CODE" placeholder="PIN CODE" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">MOBILE NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="MOBILE_NO" id="MOBILE_NO" placeholder="MOBILE NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">URL</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="URL" id="URL" placeholder="URL" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">EMAIL ID</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="EMAIL_ID" id="EMAIL_ID" placeholder="EMAIL ID" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">PHONE NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="PH_NO" id="PH_NO" placeholder="PHONE NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">PHONE NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="PH_NO" id="PH_NO" placeholder="PHONE NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">FAX NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="FAX_NO" id="FAX_NO" placeholder="FAX NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">LST NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="LST_NO" id="LST_NO" placeholder="LST NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">LST DATE</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="LST_DATE" id="LST_DATE" placeholder="LST DATE" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">CST NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="CST_NO" id="CST_NO" placeholder="CST NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">CST DATE</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="CST_DATE" id="CST_DATE" placeholder="CST DATE" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">FAX NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="FAX_NO" id="FAX_NO" placeholder="FAX NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">TIN NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="TIN_NO" id="TIN_NO" placeholder="TIN NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">GST NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="GST_NO" id="GST_NO" placeholder="GST NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">ECC NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="ECC_NO" id="ECC_NO" placeholder="ECC NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">SERVICE TAX NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="SERVICE_TAX_NO" id="SERVICE_TAX_NO" placeholder="SERVICE TAX NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">PAN NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="PAN_NO" id="PAN_NO" placeholder="PAN NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">IFSC CODE</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="IFSC_CODE" id="IFSC_CODE" placeholder="IFSC CODE" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">TDS NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="TDS_NO" id="TDS_NO" placeholder="TDS NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">ESI NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="ESI_NO" id="ESI_NO" placeholder="ESI NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">PF NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="PF_NO" id="PF_NO" placeholder="PF NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">MSME NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="MSME_NO" id="MSME_NO" placeholder="MSME NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">LOGO NAME</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="LOGO_NAME" id="LOGO_NAME" placeholder=LOGO NAME" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">BANK NAME</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="BANK_NAME" id="BANK_NAME" placeholder="BANK NAME" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">BANK ACCOUNT NO</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="BANK_ACC_NO" id="BANK_ACC_NO" placeholder="BANK ACCOUNT NO" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">BANK BRANCH</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="BANK_BRANCH" id="BANK_BRANCH" placeholder="BANK BRANCH" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">ACTIVE_TAG</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="ACTIVE_TAG" id="ACTIVE_TAG" placeholder="ACTIVE TAG" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">REMARKS</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="REMARKS" id="REMARKS" placeholder="REMARKS" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">INSERT DATE</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="INS_DATE" id="INS_DATE" placeholder="INSERT DATE" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">INSERTED BY</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="INS_UID" id="INS_UID" placeholder="INSERTED BY" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">UPDATE DATE</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="UDT_DATE" id="UDT_DATE" placeholder="UPDATE DATE" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">UPDATED BY</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="UDT_UID" id="UDT_UID" placeholder="UPDATED BY" value="" required="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<button type="button" class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" data-dismiss="modal">Close</button>
+                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
