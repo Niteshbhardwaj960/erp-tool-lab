@@ -7,8 +7,7 @@
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
     <h3 style="color:white">Location Master Tabs</h3>
 </nav>
-<hr />
-<ul class="nav nav-pills" style="background: linear-gradient(135deg, rgb(255 141 0 / 90%) 0%, #74009a 100%);">
+<ul class="nav nav-pills" style="background: linear-gradient(135deg, rgb(255 141 0 / 90%) 0%, #74009a 100%); width:290px;">
     <li role="presentation" class="nav-item @(Model.ActiveTab == WebERP.Models.Tab.Country ? "active": string.Empty)" >
         <a class="nav-link text-white" asp-route-tabname="Country" asp-action="SwitchToTabs">Country</a>
     </li>
