@@ -54,11 +54,25 @@ namespace WebERP.Controllers
             }
         }
         [HttpGet]
+        public IActionResult ActionSize(int id)
+        {
+            Size_Master objSize = new Size_Master();
+            objSize = dbContext.Size_Master.Find(id);
+            objSize.Type = "Action";
+            dbContext.Size_Master.Update(objSize);
+            dbContext.SaveChanges();
+            return View("EditSize", objSize);
+        }
+        [HttpGet]
         public IActionResult EditSize(int id)
         {
-            return View(dbContext.Size_Master.Find(id));
+            Size_Master objSize = new Size_Master();
+            objSize = dbContext.Size_Master.Find(id);
+            objSize.Type = "Edit";
+            dbContext.Size_Master.Update(objSize);
+            dbContext.SaveChanges();
+            return View(objSize);
         }
-
         [HttpPost]
         public IActionResult EditSize(Size_Master objSize)
         {

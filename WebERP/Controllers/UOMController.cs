@@ -55,11 +55,25 @@ namespace WebERP.Controllers
             }
         }
         [HttpGet]
+        public IActionResult ActionUOM(int id)
+        {
+            UOM_MASTER objUOM = new UOM_MASTER();
+            objUOM = dbContext.UOM_MASTER.Find(id);
+            objUOM.Type = "Action";
+            dbContext.UOM_MASTER.Update(objUOM);
+            dbContext.SaveChanges();
+            return View("EditUOM", objUOM);
+        }
+        [HttpGet]
         public IActionResult EditUOM(int id)
         {
-            return View(dbContext.UOM_MASTER.Find(id));
+            UOM_MASTER objUOM = new UOM_MASTER();
+            objUOM = dbContext.UOM_MASTER.Find(id);
+            objUOM.Type = "Edit";
+            dbContext.UOM_MASTER.Update(objUOM);
+            dbContext.SaveChanges();
+            return View(objUOM);
         }
-
         [HttpPost]
         public IActionResult EditUOM(UOM_MASTER objUOM)
         {
@@ -88,7 +102,7 @@ namespace WebERP.Controllers
                 var worksheet = workbook.Worksheets.Add("List-UOMs");
                 var currentRow = 1;
                 worksheet.Cell(currentRow, 1).Value = "NAME";
-                worksheet.Cell(currentRow, 2).Value = "ABBRIVATION";
+                worksheet.Cell(currentRow, 2).Value = "Abbreviation";
                 worksheet.Cell(currentRow, 4).Value = "INSERT DATE";
                 worksheet.Cell(currentRow, 3).Value = "INSERT UID";
                 worksheet.Cell(currentRow, 4).Value = "UPDATE DATE";

@@ -53,12 +53,25 @@ namespace WebERP.Controllers
                 return View("Item_Master");
             }
         }
+        public IActionResult ActionItem(int id)
+        {
+            Item_Master objItem = new Item_Master();
+            objItem = dbContext.Item_Master.Find(id);
+            objItem.Type = "Action";
+            dbContext.Item_Master.Update(objItem);
+            dbContext.SaveChanges();
+            return View("EditItem", objItem);
+        }
         [HttpGet]
         public IActionResult EditItem(int id)
         {
-            return View(dbContext.Item_Master.Find(id));
+            Item_Master objItem = new Item_Master();
+            objItem = dbContext.Item_Master.Find(id);
+            objItem.Type = "Edit";
+            dbContext.Item_Master.Update(objItem);
+            dbContext.SaveChanges();
+            return View(objItem);
         }
-
         [HttpPost]
         public IActionResult EditItem(Item_Master objItem)
         {

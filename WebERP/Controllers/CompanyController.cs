@@ -30,7 +30,16 @@ namespace WebERP.Controllers
             this.userManager = userManager;
             this.dbContext = context;
         }
-
+        [HttpGet]
+        public IActionResult ActionCompany(int id)
+        {
+            Company objCompany = new Company();
+            objCompany = dbContext.Companies.Find(id);
+            objCompany.Type = "Action";
+            dbContext.Companies.Update(objCompany);
+            dbContext.SaveChanges();
+            return View("EditCompany", objCompany);
+        }
         [HttpGet]
         public IActionResult Company()
         {
@@ -62,26 +71,23 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult EditCompany(int id)
         {
-            return View(dbContext.Companies.Find(id));
+            Company objCompany = new Company();
+            objCompany = dbContext.Companies.Find(id);
+            objCompany.Type = "Edit";
+            dbContext.Companies.Update(objCompany);
+            dbContext.SaveChanges();
+            return View("EditCompany", objCompany);
         }
 
         [HttpPost]
         public IActionResult EditCompany(Company objCompany)
         {
-            if (objCompany.ACTIVE_TAG == "Yes")
-            {
-                objCompany.ACTIVE_TAG = "1";
-            }
-            else
-            {
-                objCompany.ACTIVE_TAG = "2";
-            }
-                objCompany.UDT_DATE = DateTime.Now;
-                objCompany.UDT_UID = userManager.GetUserName(HttpContext.User);
-                dbContext.Companies.Update(objCompany);
-                dbContext.SaveChanges();
-                return RedirectToAction("Company");
-            
+            objCompany.UDT_DATE = DateTime.Now;
+            objCompany.UDT_UID = userManager.GetUserName(HttpContext.User);
+            dbContext.Companies.Update(objCompany);
+            dbContext.SaveChanges();
+            return RedirectToAction("Company");
+
         }
 
         [HttpGet]

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using WebERP.Data;
 using WebERP.Models;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebERP.Controllers
 {
@@ -32,12 +33,28 @@ namespace WebERP.Controllers
         {
             return View(dbContext.Artical_Master.ToList());
         }
+
         [HttpGet]
         public IActionResult AddArtical(int ID, string Type)
         {
+            var BrandList = (from Brand in dbContext.Brand_Master
+                               select new SelectListItem()
+                               {
+                                   Text = Brand.NAME,
+                                   Value = Brand.ID.ToString(),
+                               }).ToList();
 
-            return View();
+            BrandList.Insert(0, new SelectListItem()
+            {
+                Text = "Select Brand",
+                Value = string.Empty,
+                Selected = true
+            });
+            Artical_Master am = new Artical_Master();
+            am.brandDropDown = BrandList;
+            return View(am);
         }
+
         [HttpPost]
         public async Task<IActionResult> SAVEArtical(Artical_Master objArtical)
         {
@@ -55,9 +72,24 @@ namespace WebERP.Controllers
             }
         }
         [HttpGet]
+        public IActionResult ActionArtical(int id)
+        {
+            Artical_Master objArtical = new Artical_Master();
+            objArtical = dbContext.Artical_Master.Find(id);
+            objArtical.Type = "Action";
+            dbContext.Artical_Master.Update(objArtical);
+            dbContext.SaveChanges();
+            return View("EditArtical", objArtical);
+        }
+        [HttpGet]
         public IActionResult EditArtical(int id)
         {
-            return View(dbContext.Artical_Master.Find(id));
+            Artical_Master objArtical = new Artical_Master();
+            objArtical = dbContext.Artical_Master.Find(id);
+            objArtical.Type = "Edit";
+            dbContext.Artical_Master.Update(objArtical);
+            dbContext.SaveChanges();
+            return View("EditArtical", objArtical);
         }
 
         [HttpPost]
