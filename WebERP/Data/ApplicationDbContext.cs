@@ -27,6 +27,9 @@ namespace WebERP.Data
         public DbSet<Item_Master> Item_Master { get; set; }
         public DbSet<Artical_Master> Artical_Master { get; set; }
         public DbSet<Size_Master> Size_Master { get; set; }
+        public DbSet<Process_Master> Process_Master { get; set; }
+        public DbSet<ProcessRate_Master> ProcessRate_Master { get; set; }
+        public DbSet<Godown_Master> Godown_Master { get; set; }
     }
 
 }

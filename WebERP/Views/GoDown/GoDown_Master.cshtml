@@ -1,15 +1,15 @@
-﻿@model IEnumerable<Artical_Master>
+﻿@model IEnumerable<Godown_Master>
 
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Artical Details</h3></nav>
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">GoDown Details</h3></nav>
+
 
 @if (Model.Any())
 {
-    <a class="btn btn-success" style="width:auto" asp-controller="Artical" asp-action="ADDArtical">
-        Add Artical
+    <a class="btn btn-success" style="width:auto" asp-controller="GoDown" asp-action="ADD_GoDown">
+        Add GoDown
     </a>
-    <a class="btn btn-success" style="width:auto" asp-controller="Artical" asp-action="Excel">
+    <a class="btn btn-success" style="width:auto" asp-controller="GoDown" asp-action="Excel">
         Export
-
     </a>
     <hr />
     <div class="card mb-3">
@@ -19,7 +19,6 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Brand Name</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -28,15 +27,14 @@
                         {
                             <tr>
                                 <td>@Data.NAME</td>
-                                <td>@Data.BRAND_CODE</td>
                                 <td>
-                                    <a asp-action="EditArtical" asp-controller="Artical" asp-route-id="@Data.ID">
+                                    <a asp-action="EditGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
                                         <i class="fas fa-user-edit"></i>
                                     </a>&nbsp;&nbsp;
-                                    <a asp-action="DeleteArtical" asp-controller="Artical" asp-route-id="@Data.ID">
+                                    <a asp-action="DeleteGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
                                         <i class="far fa-trash-alt"></i>
                                     </a>&nbsp;&nbsp;
-                                    <a asp-action="ActionArtical" asp-controller="Artical" asp-route-id="@Data.ID">
+                                    <a asp-action="ActionGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                 </td>
@@ -52,14 +50,14 @@ else
 {
     <div class="card">
         <div class="card-header">
-            No Artical Created Yet
+            No GoDown Created Yet
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                Use the button below to create a Artical
+                Use the button below to create a GoDown
             </h5>
-            <a class="btn btn-primary" style="width:auto" asp-controller="Artical" asp-action="ADDArtical">
-                Add Artical
+            <a class="btn btn-primary" style="width:auto" asp-controller="GoDown" asp-action="ADD_Godown">
+                Add Process
             </a>
         </div>
     </div>

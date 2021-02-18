@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace WebERP.Models
 {
-    public class Brand_Master
+    public class Godown_Master
     {
         [Key]
         public int ID { get; set; }
         [Required(ErrorMessage = "Name is Required Field")]
         public string NAME { get; set; }
-        [Required(ErrorMessage = "Abbreviation is Required Field")]
         public string ABV { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }

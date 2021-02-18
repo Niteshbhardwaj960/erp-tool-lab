@@ -13,10 +13,12 @@ namespace WebERP.Models
         [NotMapped]
         public List<SelectListItem> brandDropDown { get; set; }
         public int ID { get; set; }
+
         [Required(ErrorMessage = "Name is Required Field")]
         public string NAME { get; set; }
-        [Required(ErrorMessage = "Brand Name is Required Field")]
+        
         public int BRAND_CODE { get; set; }
+        //public int BRAND_NAME { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }

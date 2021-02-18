@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 
 namespace WebERP.Models
 {
-    public class Brand_Master
+    public class ProcessRate_Master
     {
         [Key]
         public int ID { get; set; }
-        [Required(ErrorMessage = "Name is Required Field")]
-        public string NAME { get; set; }
-        [Required(ErrorMessage = "Abbreviation is Required Field")]
-        public string ABV { get; set; }
+        [Required(ErrorMessage = "Process Name is Required Field")]
+        public string Proc_Code { get; set; }
+        [Required(ErrorMessage = "Rate is Required Field")]
+        public string Rate { get; set; }
+        [Required(ErrorMessage = "UOM Code is Required Field")]
+        public string UOM_Code { get; set; }
+        public DateTime? From_DATE { get; set; }
+        public DateTime? To_DATE { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
