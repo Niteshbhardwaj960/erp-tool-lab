@@ -32,7 +32,21 @@ namespace WebERP.Controllers
         { 
             return View();
         }
-
+        [HttpGet]
+        public IActionResult About()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Services()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
         [HttpGet]
         public IActionResult CreateRole()
         {
