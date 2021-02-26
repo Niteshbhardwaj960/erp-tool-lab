@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.Account_Master
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @if (Model.Type == "Edit")
@@ -68,9 +68,32 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">City Code</label>
+                            <label for="branch_id">Country</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" asp-for="CITY_CODE" />
+                                <select asp-for="Country_Code" id="ddlCountry" class="form-control" asp-items="@(new SelectList(Model.countryDropDown,"Value", "Text"))"></select>
+                                @*<input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE">*@
+                                @*<span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
+                            </div>
+                            <span asp-validation-for="Country_Code" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">State</label>
+                            <div class="input-group">
+                                <select asp-for="State_Code" id="ddlState" class="form-control" asp-items="@(new SelectList(Model.stateDropDown,"Value", "Text"))"></select>
+                                @*<input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE">*@
+                                @*<span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
+                            </div>
+                            <span asp-validation-for="State_Code" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">City</label>
+                            <div class="input-group">
+                                <select asp-for="CITY_CODE" id="ddlCity" class="form-control" asp-items="@(new SelectList(Model.cityDropDown,"Value", "Text"))"></select>
+
                             </div>
                             <span asp-validation-for="CITY_CODE" class="text-danger"></span>
                         </div>
@@ -233,3 +256,28 @@
 
     </div>
 </div>
+<script>
+    $(function () {
+        $("#ddlCountry").change(function () {
+            $.getJSON("/Account/Getstatelist", { cid: $("#ddlCountry").val() }, function (d) {
+                var row = "";
+                $("#ddlState").empty();
+                $("#ddlCity").empty();
+                $.each(d, function (i, v) {
+                    row += "<option value=" + v.value + ">" + v.text + "</option>";
+                });
+                $("#ddlState").html(row);
+            })
+        })
+        $("#ddlState").change(function () {
+            $.getJSON("/Account/GetCitylist", { sid: $("#ddlState").val() }, function (d) {
+                var row = "";
+                $("#ddlCity").empty();
+                $.each(d, function (i, v) {
+                    row += "<option value=" + v.value + ">" + v.text + "</option>";
+                });
+                $("#ddlCity").html(row);
+            })
+        })
+    })
+</script>

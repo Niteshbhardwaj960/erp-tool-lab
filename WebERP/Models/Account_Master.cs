@@ -24,6 +24,8 @@ namespace WebERP.Models
         public string ADD1 { get; set; }
         public string ADD2 { get; set; }
         [Required(ErrorMessage = "City Name is Required Field")]
+        public string Country_Code { get; set; }
+        public string State_Code { get; set; }
         public string CITY_CODE { get; set; }
         [Required(ErrorMessage = "Pin Code is Required Field")]
         public string PIN_CODE { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +9,13 @@ using System.Threading.Tasks;
 namespace WebERP.Models
 {
     public class Company
-    {        
+    {
+        [NotMapped]
+        public List<SelectListItem> countryDropDown { get; set; }
+        [NotMapped]
+        public List<SelectListItem> stateDropDown { get; set; }
+        [NotMapped]
+        public List<SelectListItem> cityDropDown { get; set; }
         public int ID { get; set; }
         [Required(ErrorMessage ="Name is Required Field")]
         public string NAME { get; set; }
@@ -17,6 +24,8 @@ namespace WebERP.Models
         [Required(ErrorMessage = "Address Line 1 is Required Field")]
         public string ADD1 { get; set; }
         public string ADD2 { get; set; }
+        public string Country_Code { get; set; }
+        public string State_Code { get; set; }
         public string CITY_CODE { get; set; }
         [Required(ErrorMessage = "PIN Code is Required Field")]
         public string PIN_CODE { get; set; }

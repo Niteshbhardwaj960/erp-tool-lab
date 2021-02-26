@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210226094546_newcolumn")]
+    partial class newcolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -327,8 +329,6 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("CST_NO");
 
-                    b.Property<string>("Country_Code");
-
                     b.Property<string>("ECC_NO");
 
                     b.Property<string>("EMAIL_ID")
@@ -374,8 +374,6 @@ namespace WebERP.Data.Migrations
                     b.Property<string>("REMARKS");
 
                     b.Property<string>("SERVICE_TAX_NO");
-
-                    b.Property<string>("State_Code");
 
                     b.Property<string>("TDS_NO");
 
