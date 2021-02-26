@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,6 +10,10 @@ namespace WebERP.Models
 {
     public class ProcessRate_Master
     {
+        [NotMapped]
+        public List<SelectListItem> UOMDropDown { get; set; }
+        [NotMapped]
+        public string UOM_Name { get; set; }
         [Key]
         public int ID { get; set; }
         [Required(ErrorMessage = "Process Name is Required Field")]

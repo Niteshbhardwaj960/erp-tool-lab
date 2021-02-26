@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebERP.Data;
 using WebERP.Models;
 
@@ -30,12 +31,18 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult ProcessRate_Master()
         {
-            return View(dbContext.ProcessRate_Master.ToList());
+            var UOM_list = dbContext.ProcessRate_Master.ToList();
+            foreach (var item in UOM_list)
+            {
+                item.UOM_Name = dbContext.UOM_MASTER.Where(s => s.ID == Convert.ToInt64(item.UOM_Code)).Select(s => s.NAME).FirstOrDefault();
+            }
+            return View(UOM_list);
         }
         [HttpGet]
         public IActionResult AddProcessRate()
         {
             ProcessRate_Master obj = new ProcessRate_Master();
+            obj.UOMDropDown = UOMlists();
             obj.Type = "Add";
             return View("AddProcessRate", obj);
         }
@@ -58,21 +65,17 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult ActionProcessRate(int id)
         {
-            ProcessRate_Master obj = new ProcessRate_Master();
-            obj = dbContext.ProcessRate_Master.Find(id);
+            var obj = dbContext.ProcessRate_Master.Find(id);
             obj.Type = "Action";
-            dbContext.ProcessRate_Master.Update(obj);
-            dbContext.SaveChanges();
+            obj.UOMDropDown = UOMlists();
             return View("AddProcessRate", obj);
         }
         [HttpGet]
         public IActionResult EditProcessRate(int id)
         {
-            ProcessRate_Master obj = new ProcessRate_Master();
-            obj = dbContext.ProcessRate_Master.Find(id);
+           var obj = dbContext.ProcessRate_Master.Find(id);
             obj.Type = "Edit";
-            dbContext.ProcessRate_Master.Update(obj);
-            dbContext.SaveChanges();
+            obj.UOMDropDown = UOMlists();
             return View("AddProcessRate", obj);
         }
 
@@ -137,6 +140,23 @@ namespace WebERP.Controllers
                         "ProcessRate.xlsx");
                 }
             }
+        }
+        public List<SelectListItem> UOMlists()
+        {
+            var UOMList = (from UOM in dbContext.UOM_MASTER
+                           select new SelectListItem()
+                           {
+                               Text = UOM.NAME,
+                               Value = UOM.ID.ToString(),
+                           }).ToList();
+
+            UOMList.Insert(0, new SelectListItem()
+            {
+                Text = "Select UOM",
+                Value = string.Empty,
+                Selected = true
+            });
+            return UOMList;
         }
     }
 }

@@ -29,9 +29,10 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">UOM Code</label>
+                            <label for="branch_id">UOM Name</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" asp-for="UOM_CODE" />
+                                <select asp-for="UOM_CODE" class="form-control" asp-items="@(new SelectList(Model.UOMDropDown,"Value", "Text"))"></select>
+                                @*<input type="text" class="form-control" asp-for="UOM_CODE" />*@
                             </div>
                         </div>
                     </div>

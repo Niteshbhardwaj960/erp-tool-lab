@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,6 +10,8 @@ namespace WebERP.Models
 {
     public class Item_Master
     {
+        [NotMapped]
+        public List<SelectListItem> UOMDropDown { get; set; }
         public int ID { get; set; }
         [Required(ErrorMessage = "Name is Required Field")]
         public string NAME { get; set; }
@@ -24,5 +27,7 @@ namespace WebERP.Models
         public string UDT_UID { get; set; }
         [NotMapped]
         public string Type { get; set; }
+        [NotMapped]
+        public string UOM_Name { get; set; }
     }
 }

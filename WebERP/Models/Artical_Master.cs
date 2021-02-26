@@ -25,5 +25,7 @@ namespace WebERP.Models
         public string UDT_UID { get; set; }
         [NotMapped]
         public string Type { get; set; }
+        [NotMapped]
+        public string Brand_Name { get; set; }
     }
 }

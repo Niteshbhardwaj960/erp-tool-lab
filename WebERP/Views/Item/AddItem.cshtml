@@ -22,9 +22,8 @@
                         <div class="form-group">
                             <label for="branch_id">UOM Code</label>
                             <div class="input-group">
-                                @*<select name="selectUOMCode" class="form-control" asp-items="@(new SelectList(Model.UOM_CODE,"Value", "Text"))"></select>*@
-                                <input type="text" class="form-control numb" name="UOM_Code" id="CITY_CODE">
-                                @*<span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
+                                <select asp-for="UOM_CODE" class="form-control" asp-items="@(new SelectList(Model.UOMDropDown,"Value", "Text"))"></select>
+                                <span asp-validation-for="UOM_CODE" class="text-danger"></span>
                             </div>
                             <span asp-validation-for="UOM_CODE" class="text-danger"></span>
                         </div>

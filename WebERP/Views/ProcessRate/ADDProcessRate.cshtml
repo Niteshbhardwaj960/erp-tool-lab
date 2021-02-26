@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label class="form-label">UOM Name</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" asp-for="UOM_Code">
+                                <select asp-for="UOM_Code" class="form-control" asp-items="@(new SelectList(Model.UOMDropDown,"Value", "Text"))"></select>
                             </div>
                             <span asp-validation-for="UOM_Code" class="text-danger"></span>
                         </div>
