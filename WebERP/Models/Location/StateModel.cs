@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebERP.Models.Location
+namespace WebERP.Models
 {
     public class StateModel
     {
@@ -14,6 +14,7 @@ namespace WebERP.Models.Location
         [Required]
         public string Name { get; set; }
         [Required]
+        [StringLength(3, ErrorMessage = "StateCode cannot be more than 3")]
         public string StateCode { get; set; }
         [Required(ErrorMessage = "Please select country name")]
         public int CountryId { get; set; }
@@ -24,6 +25,7 @@ namespace WebERP.Models.Location
         public string Upd_Uid { get; set; }
 
         [NotMapped]
-        public List<SelectListItem> countryDropDown { get; set; }       
+        public List<SelectListItem> countryDropDown { get; set; }
+       
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210214131121_AddingPOTables")]
+    partial class AddingPOTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,24 +150,21 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("ADD2");
 
-                    b.Property<string>("CITY_CODE");
+                    b.Property<string>("CITY_CODE")
+                        .IsRequired();
 
                     b.Property<string>("CR_DAYS");
 
                     b.Property<string>("CR_LIMIT");
 
-                    b.Property<string>("Country_Code")
-                        .IsRequired();
-
                     b.Property<string>("EMAIL_ID")
                         .IsRequired();
 
-                    b.Property<string>("GST_NO")
-                        .IsRequired();
+                    b.Property<string>("GST_NO");
 
                     b.Property<string>("GST_REGD_TAG");
 
-                    b.Property<DateTime?>("INS_DATE");
+                    b.Property<DateTime>("INS_DATE");
 
                     b.Property<string>("INS_UID");
 
@@ -186,9 +185,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("REMARKS");
 
-                    b.Property<string>("State_Code");
-
-                    b.Property<DateTime?>("UDT_DATE");
+                    b.Property<DateTime>("UDT_DATE");
 
                     b.Property<string>("UDT_UID");
 
@@ -258,14 +255,14 @@ namespace WebERP.Data.Migrations
 
                     b.Property<int>("BRAND_CODE");
 
-                    b.Property<DateTime?>("INS_DATE");
+                    b.Property<DateTime>("INS_DATE");
 
                     b.Property<string>("INS_UID");
 
                     b.Property<string>("NAME")
                         .IsRequired();
 
-                    b.Property<DateTime?>("UDT_DATE");
+                    b.Property<DateTime>("UDT_DATE");
 
                     b.Property<string>("UDT_UID");
 
@@ -280,17 +277,16 @@ namespace WebERP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ABV")
-                        .IsRequired();
+                    b.Property<string>("ABV");
 
-                    b.Property<DateTime?>("INS_DATE");
+                    b.Property<DateTime>("INS_DATE");
 
                     b.Property<string>("INS_UID");
 
                     b.Property<string>("NAME")
                         .IsRequired();
 
-                    b.Property<DateTime?>("UDT_DATE");
+                    b.Property<DateTime>("UDT_DATE");
 
                     b.Property<string>("UDT_UID");
 
@@ -331,8 +327,7 @@ namespace WebERP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ABV")
-                        .IsRequired();
+                    b.Property<string>("ABV");
 
                     b.Property<string>("ACTIVE_TAG");
 
@@ -349,11 +344,9 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("CITY_CODE");
 
-                    b.Property<DateTime?>("CST_DAT");
+                    b.Property<DateTime>("CST_DAT");
 
                     b.Property<string>("CST_NO");
-
-                    b.Property<string>("Country_Code");
 
                     b.Property<string>("ECC_NO");
 
@@ -375,7 +368,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("LOGO_NAME");
 
-                    b.Property<DateTime?>("LST_DATE");
+                    b.Property<DateTime>("LST_DATE");
 
                     b.Property<string>("LST_NO");
 
@@ -401,8 +394,6 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("SERVICE_TAX_NO");
 
-                    b.Property<string>("State_Code");
-
                     b.Property<string>("TDS_NO");
 
                     b.Property<string>("TIN_NO");
@@ -417,7 +408,6 @@ namespace WebERP.Data.Migrations
 
                     b.ToTable("Companies");
                 });
-
 
             modelBuilder.Entity("WebERP.Models.CountryModel", b =>
                 {
@@ -442,30 +432,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
-
-            modelBuilder.Entity("WebERP.Models.Godown_Master", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ABV");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("NAME")
-                        .IsRequired();
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Godown_Master");
-
                 });
 
             modelBuilder.Entity("WebERP.Models.Item_Master", b =>
@@ -478,7 +444,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<int>("HSN_CODE");
 
-                    b.Property<DateTime?>("INS_DATE");
+                    b.Property<DateTime>("INS_DATE");
 
                     b.Property<string>("INS_UID");
 
@@ -491,7 +457,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("REMARKS");
 
-                    b.Property<DateTime?>("UDT_DATE");
+                    b.Property<DateTime>("UDT_DATE");
 
                     b.Property<string>("UDT_UID");
 
@@ -613,74 +579,20 @@ namespace WebERP.Data.Migrations
                     b.ToTable("POTerm_Master");
                 });
 
-            modelBuilder.Entity("WebERP.Models.ProcessRate_Master", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("From_DATE");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("Proc_Code")
-                        .IsRequired();
-
-                    b.Property<string>("Rate")
-                        .IsRequired();
-
-                    b.Property<DateTime?>("To_DATE");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.Property<string>("UOM_Code")
-                        .IsRequired();
-
-                    b.HasKey("ID");
-
-                    b.ToTable("ProcessRate_Master");
-                });
-
-            modelBuilder.Entity("WebERP.Models.Process_Master", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("NAME")
-                        .IsRequired();
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Process_Master");
-                });
-
             modelBuilder.Entity("WebERP.Models.Size_Master", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("INS_DATE");
+                    b.Property<DateTime>("INS_DATE");
 
                     b.Property<string>("INS_UID");
 
                     b.Property<string>("NAME")
                         .IsRequired();
 
-                    b.Property<DateTime?>("UDT_DATE");
+                    b.Property<DateTime>("UDT_DATE");
 
                     b.Property<string>("UDT_UID");
 
@@ -726,7 +638,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("ACTIVE_TAG");
 
-                    b.Property<DateTime?>("INS_DATE");
+                    b.Property<DateTime>("INS_DATE");
 
                     b.Property<string>("INS_UID");
 
@@ -737,7 +649,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("SAL_Order");
 
-                    b.Property<DateTime?>("UDT_DATE");
+                    b.Property<DateTime>("UDT_DATE");
 
                     b.Property<string>("UDT_UID");
 
@@ -752,17 +664,16 @@ namespace WebERP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ABV")
-                        .IsRequired();
+                    b.Property<string>("ABV");
 
-                    b.Property<DateTime?>("INS_DATE");
+                    b.Property<DateTime>("INS_DATE");
 
                     b.Property<string>("INS_UID");
 
                     b.Property<string>("NAME")
                         .IsRequired();
 
-                    b.Property<DateTime?>("UDT_DATE");
+                    b.Property<DateTime>("UDT_DATE");
 
                     b.Property<string>("UDT_UID");
 
