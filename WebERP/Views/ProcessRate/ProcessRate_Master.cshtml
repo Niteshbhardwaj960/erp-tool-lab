@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ProcessRate_Master>
+
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Process Rate Details</h3></nav>
+
+
+@if (Model.Any())
+{
+    <a class="btn btn-success" style="width:auto" asp-controller="ProcessRate" asp-action="ADDProcessRate">
+        Add Process Rate
+    </a>
+    <a class="btn btn-success" style="width:auto" asp-controller="ProcessRate" asp-action="Excel">
+        Export
+    </a>
+    <hr />
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Process Name</th>
+                            <th>Rate</th>
+                            <th>UOM Name</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var Data in Model)
+                        {
+                        <tr>
+                            <td>@Data.Proc_Code</td>
+                            <td>@Data.Rate</td>
+                            <td>@Data.UOM_Name</td>
+                            <td>@Data.From_DATE</td>
+                            <td>@Data.To_DATE</td>
+                            <td>
+                                <a asp-action="EditProcessRate" asp-controller="ProcessRate" asp-route-id="@Data.ID">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="DeleteProcessRate" asp-controller="ProcessRate" asp-route-id="@Data.ID">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="ActionProcessRate" asp-controller="ProcessRate" asp-route-id="@Data.ID">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No Process Rate Created Yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a Process Rate
+            </h5>
+            <a class="btn btn-primary" style="width:auto" asp-controller="ProcessRate" asp-action="ADDProcessRate">
+                Add Process Rate
+            </a>
+        </div>
+    </div>
+}

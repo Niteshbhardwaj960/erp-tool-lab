@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using WebERP.Data;
 using WebERP.Models;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebERP.Controllers
 {
@@ -30,13 +31,21 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Item_Master()
         {
-            return View(dbContext.Item_Master.ToList());
+            var UOM_list = dbContext.Item_Master.ToList();
+            foreach (var item in UOM_list)
+            {
+                item.UOM_Name = dbContext.UOM_MASTER.Where(s => s.ID == item.UOM_CODE).Select(s => s.NAME).FirstOrDefault();
+            }
+            return View(UOM_list);
         }
         [HttpGet]
         public IActionResult AddItem()
         {
-            return View();
+            Item_Master am = new Item_Master();
+            am.UOMDropDown = UOMlists();
+            return View(am);
         }
+        
         [HttpPost]
         public async Task<IActionResult> SAVEItem(Item_Master objItem)
         {
@@ -53,12 +62,21 @@ namespace WebERP.Controllers
                 return View("Item_Master");
             }
         }
+        public IActionResult ActionItem(int id)
+        {
+            var objItem = dbContext.Item_Master.Find(id);
+            objItem.Type = "Action";
+            objItem.UOMDropDown = UOMlists();
+            return View("EditItem", objItem);
+        }
         [HttpGet]
         public IActionResult EditItem(int id)
-        {
-            return View(dbContext.Item_Master.Find(id));
+        {            
+            var objItem = dbContext.Item_Master.Find(id);
+            objItem.Type = "Edit";
+            objItem.UOMDropDown = UOMlists();
+            return View(objItem);
         }
-
         [HttpPost]
         public IActionResult EditItem(Item_Master objItem)
         {
@@ -123,8 +141,26 @@ namespace WebERP.Controllers
                         content,
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                         "Items.xlsx");
-                }
+                }                
             }
         }
+        public List<SelectListItem> UOMlists()
+        {
+            var UOMList = (from UOM in dbContext.UOM_MASTER
+                           select new SelectListItem()
+                           {
+                               Text = UOM.NAME,
+                               Value = UOM.ID.ToString(),
+                           }).ToList();
+
+            UOMList.Insert(0, new SelectListItem()
+            {
+                Text = "Select UOM",
+                Value = string.Empty,
+                Selected = true
+            });
+            return UOMList;
+        }
+
     }
 }

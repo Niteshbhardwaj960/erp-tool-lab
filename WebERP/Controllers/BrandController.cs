@@ -55,11 +55,26 @@ namespace WebERP.Controllers
             }
         }
         [HttpGet]
+        public IActionResult ActionBrand(int id)
+        {
+            Brand_Master objBrand = new Brand_Master();
+            objBrand = dbContext.Brand_Master.Find(id);
+            objBrand.Type = "Action";
+            dbContext.Brand_Master.Update(objBrand);
+            dbContext.SaveChanges();
+            return View("EditBrand", objBrand);
+        }
+        [HttpGet]
         public IActionResult EditBrand(int id)
         {
-            return View(dbContext.Brand_Master.Find(id));
+            Brand_Master objBrand = new Brand_Master();
+            objBrand = dbContext.Brand_Master.Find(id);
+            objBrand.Type = "Edit";
+            dbContext.Brand_Master.Update(objBrand);
+            dbContext.SaveChanges();
+            return View(objBrand);
         }
-
+        
         [HttpPost]
         public IActionResult EditBrand(Brand_Master objBrand)
         {
@@ -88,7 +103,7 @@ namespace WebERP.Controllers
                 var worksheet = workbook.Worksheets.Add("List-Brands");
                 var currentRow = 1;
                 worksheet.Cell(currentRow, 1).Value = "NAME";
-                worksheet.Cell(currentRow, 2).Value = "ABBRIVATION";
+                worksheet.Cell(currentRow, 2).Value = "Abbreviation";
                 worksheet.Cell(currentRow, 3).Value = "INSERT DATE";
                 worksheet.Cell(currentRow, 4).Value = "INSERT UID";
                 worksheet.Cell(currentRow, 5).Value = "UPDATE DATE";

@@ -18,22 +18,24 @@ namespace WebERP.Models
         public List<SelectListItem> cityDropDown { get; set; }
 
         public int ID { get; set; }
-        [Required]
-        public string NAME { get; set; }
-       
-        [Required]
+        [Required(ErrorMessage = "Name is Required Field")]
+        public string NAME { get; set; }       
+        [Required(ErrorMessage = "Address Line 1 is Required Field")]
         public string ADD1 { get; set; }
         public string ADD2 { get; set; }
-        [Required]
+        [Required(ErrorMessage = "City Name is Required Field")]
+        public string Country_Code { get; set; }
+        public string State_Code { get; set; }
         public string CITY_CODE { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Pin Code is Required Field")]
         public string PIN_CODE { get; set; }
         public string GST_REGD_TAG { get; set; }
+        [Required(ErrorMessage = "GST No is Required Field")]
         public string GST_NO { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Mobile No is Required Field")]
         public string MOBILE_NO { get; set; }       
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Email Address is Required Field")]
+        [EmailAddress(ErrorMessage = "Email Address should be in xyz@xyz.com format")]
         public string EMAIL_ID { get; set; }
         public string PH_NO { get; set; }
         public string OP_BAL { get; set; }
@@ -43,9 +45,9 @@ namespace WebERP.Models
         public string CR_DAYS { get; set; }        
         public string ACTIVE_TAG { get; set; }
         public string REMARKS { get; set; }
-        public DateTime INS_DATE { get; set; }
+        public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
-        public DateTime UDT_DATE { get; set; }
+        public DateTime? UDT_DATE { get; set; }
         public string UDT_UID { get; set; }
         [NotMapped]
         public string Type { get; set; }

@@ -2,7 +2,6 @@
 
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Artical Details</h3></nav>
 
-
 @if (Model.Any())
 {
     <a class="btn btn-success" style="width:auto" asp-controller="Artical" asp-action="ADDArtical">
@@ -10,6 +9,7 @@
     </a>
     <a class="btn btn-success" style="width:auto" asp-controller="Artical" asp-action="Excel">
         Export
+
     </a>
     <hr />
     <div class="card mb-3">
@@ -19,7 +19,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Brand Code</th>
+                            <th>Brand Name</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -28,7 +28,7 @@
                         {
                             <tr>
                                 <td>@Data.NAME</td>
-                                <td>@Data.BRAND_CODE</td>
+                                <td>@Data.Brand_Name</td>
                                 <td>
                                     <a asp-action="EditArtical" asp-controller="Artical" asp-route-id="@Data.ID">
                                         <i class="fas fa-user-edit"></i>
@@ -36,7 +36,7 @@
                                     <a asp-action="DeleteArtical" asp-controller="Artical" asp-route-id="@Data.ID">
                                         <i class="far fa-trash-alt"></i>
                                     </a>&nbsp;&nbsp;
-                                    <a href="#">
+                                    <a asp-action="ActionArtical" asp-controller="Artical" asp-route-id="@Data.ID">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                 </td>

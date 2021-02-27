@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using WebERP.Data;
 using WebERP.Models;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebERP.Controllers
 {
@@ -16,7 +17,7 @@ namespace WebERP.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext dbContext;
-
+        
         public ArticalController(
             RoleManager<IdentityRole> roleManager,
             UserManager<ApplicationUser> userManager,
@@ -30,14 +31,22 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Artical_Master()
         {
-            return View(dbContext.Artical_Master.ToList());
+            var Artical_list = dbContext.Artical_Master.ToList();
+            foreach (var item in Artical_list)
+            {
+                item.Brand_Name = dbContext.Brand_Master.Where(s => s.ID == item.BRAND_CODE).Select(s => s.NAME).FirstOrDefault();
+            }
+            return View(Artical_list);
         }
+
         [HttpGet]
         public IActionResult AddArtical(int ID, string Type)
         {
-
-            return View();
+            Artical_Master am = new Artical_Master();
+            am.brandDropDown = Brandlists();
+            return View(am);
         }
+
         [HttpPost]
         public async Task<IActionResult> SAVEArtical(Artical_Master objArtical)
         {
@@ -55,9 +64,20 @@ namespace WebERP.Controllers
             }
         }
         [HttpGet]
+        public IActionResult ActionArtical(int id)
+        {        
+            var objArtical = dbContext.Artical_Master.Find(id);
+            objArtical.brandDropDown = Brandlists();
+            objArtical.Type = "Action";
+            return View("EditArtical", objArtical);
+        }
+        [HttpGet]
         public IActionResult EditArtical(int id)
         {
-            return View(dbContext.Artical_Master.Find(id));
+            var objArtical = dbContext.Artical_Master.Find(id);
+            objArtical.brandDropDown = Brandlists();            
+            objArtical.Type = "Edit";
+            return View("EditArtical", objArtical);
         }
 
         [HttpPost]
@@ -116,6 +136,23 @@ namespace WebERP.Controllers
                         "Aticals.xlsx");
                 }
             }
+        }
+        public List<SelectListItem> Brandlists()
+        {
+            var BrandList = (from Brand in dbContext.Brand_Master
+                             select new SelectListItem()
+                             {
+                                 Text = Brand.NAME,
+                                 Value = Brand.ID.ToString(),
+                             }).ToList();
+
+            BrandList.Insert(0, new SelectListItem()
+            {
+                Text = "Select Brand",
+                Value = string.Empty,
+                Selected = true
+            });
+            return BrandList;
         }
     }
 }

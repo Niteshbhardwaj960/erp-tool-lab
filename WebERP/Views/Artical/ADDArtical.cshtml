@@ -11,19 +11,20 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label class="form-label">NAME</label>
+                            <label class="form-label">Name</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="Name" id="Name">
-                                <span asp-validation-for="NAME" class="text-danger"></span>
                             </div>
+                            <span asp-validation-for="NAME" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">UOM CODE</label>
+                            <label for="branch_id">Brand Name</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="UOM_CODE" id="UOM_CODE">
+                                <select name="Brand_Code" id="Brand_Code" class="form-control" asp-items="@(new SelectList(Model.brandDropDown,"Value", "Text"))"></select>                              
                             </div>
+                            <span asp-validation-for="brandDropDown" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
