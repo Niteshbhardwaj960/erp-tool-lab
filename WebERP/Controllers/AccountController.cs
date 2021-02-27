@@ -117,9 +117,25 @@ namespace WebERP.Controllers
             }
         }
         [HttpGet]
+        public IActionResult ActionAccount(int id)
+        {
+
+            Account_Master objAccount = new Account_Master();
+            objAccount = dbContext.Account_Masters.Find(id);
+            objAccount.Type = "Action";
+            dbContext.Account_Masters.Update(objAccount);
+            dbContext.SaveChanges();
+            return View("EditAccount",objAccount);
+        }
+        [HttpGet]
         public IActionResult EditAccount(int id)
         {
-            return View(dbContext.Account_Masters.Find(id));
+            Account_Master objAccount = new Account_Master();
+            objAccount = dbContext.Account_Masters.Find(id);
+            objAccount.Type = "Edit";
+            dbContext.Account_Masters.Update(objAccount);
+            dbContext.SaveChanges();
+            return View(objAccount);
         }
 
         [HttpPost]
