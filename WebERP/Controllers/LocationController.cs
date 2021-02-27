@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using WebERP.Models.Location;
 using WebERP.Models;
 using System.Diagnostics;
 using WebERP.Data;

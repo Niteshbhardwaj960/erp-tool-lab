@@ -4,8 +4,6 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebERP.Models;
-//using WebERP.Models.Location;
-using WebERP.Models.Location;
 
 namespace WebERP.Data
 {
@@ -27,6 +25,17 @@ namespace WebERP.Data
         public DbSet<Item_Master> Item_Master { get; set; }
         public DbSet<Artical_Master> Artical_Master { get; set; }
         public DbSet<Size_Master> Size_Master { get; set; }
+
+        public DbSet<POHeaderModel> POHeader_Master { get; set; }
+        public DbSet<PODetailModel> PODetail_Master { get; set; }
+        public DbSet<POTermsModel> POTerm_Master { get; set; }
+
+        //protected void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<PODetail_Master>().Property(x => x.SnachCount).HasPrecision(16, 3);
+        //    modelBuilder.Entity<PODetail_Master>().Property(x => x.MinimumStock).HasPrecision(16, 3);
+        //    modelBuilder.Entity<PODetail_Master>().Property(x => x.MaximumStock).HasPrecision(16, 3);
+        //}
     }
 
 }
