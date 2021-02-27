@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WebERP.Models.GateEntry.Gate_HDR>
+
+
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Gate Entry</h3>
+        </nav>
+        <div class="card-body">
+            <form id="menu-form" method="post" enctype="multipart/form-data">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Type of work Details</b></h4>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Document Date</label>
+                            <div class="input-group">
+                                <select class="form-control" id="Type" name="Type">
+                                    <option value="1">Process Order</option>
+                                    <option value="2">Job Work</option>
+                                </select>
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                </div>
+                @*<h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Pending Process Order Details</b></h4>*@
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Process Order No</th>
+                                        <th>Order Date</th>
+                                        <th>Item</th>
+                                        <th>Order Qty</th>
+                                        <th>Received Qty</th>
+                                        <th>Net Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*@foreach (var Data in Model)
+                                    {*@
+                                    <tr>
+                                        <th><input type="checkbox" /></th>
+                                        <td>1212</td>
+                                        <td>212</td>
+                                        <td>21</td>
+                                        <td>212</td>
+                                        <td>212</td>
+                                        <td>212</td>                                        
+                                    </tr>
+                                    @*}*@
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Size_Master">Close</a>
+                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Size" asp-action="SAVESize">
+                        <i class="fa fa-Add"></i> Add
+                    </button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

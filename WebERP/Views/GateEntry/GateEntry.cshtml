@@ -1,0 +1,120 @@
+﻿@model IEnumerable<WebERP.Models.GateEntry.Gate_HDR>
+
+
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Gate Entry</h3>
+        </nav>
+        <div class="card-body">
+            <form id="menu-form" method="post" enctype="multipart/form-data">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Header Details</b></h4>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Document Date</label>
+                            <div class="input-group">
+                                <input type="Date" class="form-control numb" name="Doc_Date" id="Doc_Date">
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Financial Year</label>
+                            <div class="input-group">
+                                <input type="text" readonly="readonly" class="form-control numb" name="Doc_Date" id="Doc_Date">
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Document No</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="Doc_Date" id="Doc_Date">
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Document Type</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="Doc_Date" id="Doc_Date">
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Remarks</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" name="Doc_Date" id="Doc_Date">
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <label class="form-label"></label>
+                        <div class="input-group">
+                            <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Size" asp-action="SAVESize">
+                                <i class="fa fa-filter"></i> Select Item
+                            </button>
+                        </div>
+                        @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                    </div>
+
+                </div>
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Process Order Details</b></h4>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>GST NO</th>
+                                        <th>Opening Balance</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*@foreach (var Data in Model)
+                                    {*@
+                                        <tr>
+                                            <td>1212</td>
+                                            <td>212</td>
+                                            <td>21</td>
+                                            <td>212</td>
+                                            <td>
+                                                <a asp-action="EditAccount" asp-controller="Account" asp-route-id="">
+                                                    <i class="fas fa-user-edit"></i>
+                                                </a>&nbsp;&nbsp;
+                                                <a asp-action="DeleteAccount" asp-controller="Account" asp-route-id="">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </a>&nbsp;&nbsp;
+                                                <a asp-action="ActionAccount" asp-controller="Account" asp-route-id="">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @*}*@
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Size_Master">Close</a>
+                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Size" asp-action="SAVESize">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

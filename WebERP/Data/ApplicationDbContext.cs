@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using WebERP.Models;
 //using WebERP.Models.Location;
 using WebERP.Models.Location;
+using WebERP.Models.GateEntry;
 
 namespace WebERP.Data
 {
@@ -30,6 +31,7 @@ namespace WebERP.Data
         public DbSet<Process_Master> Process_Master { get; set; }
         public DbSet<ProcessRate_Master> ProcessRate_Master { get; set; }
         public DbSet<Godown_Master> Godown_Master { get; set; }
+        public DbSet<Gate_HDR> Gate_HDR { get; set; }        
     }
 
 }
