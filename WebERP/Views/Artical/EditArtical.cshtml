@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.Artical_Master
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @if (Model.Type == "Edit")
@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label class="form-label">Name</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" asp-for="NAME" />
+                                <input type="text" readonly="readonly" class="form-control" asp-for="NAME" />
                             </div>
                             <span asp-validation-for="NAME" class="text-danger"></span>
                         </div>
@@ -31,9 +31,41 @@
                         <div class="form-group">
                             <label for="branch_id">Brand Name</label>
                             <div class="input-group">
-                                <select asp-for="BRAND_CODE" class="form-control" asp-items="@(new SelectList(Model.brandDropDown,"Value", "Text"))"></select>
+                                <select asp-for="BRAND_CODE" id="Brand_Code" class="form-control" asp-items="@(new SelectList(Model.brandDropDown,"Value", "Text"))"></select>
                             </div>
                             <span asp-validation-for="BRAND_CODE" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Insert Date</label>
+                            <div class="input-group">
+                                <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Insert By</label>
+                            <div class="input-group">
+                                <input type="text" readonly="readonly" class="form-control" asp-for="INS_UID" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Update Date</label>
+                            <div class="input-group">
+                                <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Update By</label>
+                            <div class="input-group">
+                                <input type="text" readonly="readonly" class="form-control" asp-for="UDT_UID" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,3 +83,9 @@
 
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $("#Brand_Code").chosen();
+    })
+
+</script>

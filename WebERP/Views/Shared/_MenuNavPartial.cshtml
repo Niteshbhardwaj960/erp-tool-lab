@@ -13,24 +13,12 @@
             <span>Dashboard</span>
         </a>
     </li>
-    <li class="nav-item active">
-        <a class="nav-link" asp-controller="GateEntry" asp-action="GateEntry">
+    @*<li class="nav-item active">
+        <a class="nav-link" asp-controller="GateEntry" asp-action="GateEntry_Master">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Gate Entry</span>
         </a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" asp-controller="Administration" asp-action="ListRole">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Role Details</span>
-        </a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" asp-controller="Location" asp-action="LocationDetails">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Locations Details</span>
-        </a>
-    </li>
+    </li>*@    
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
@@ -48,6 +36,8 @@
         <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Users:</h6>
+                <a class="collapse-item" asp-controller="Administration" asp-action="ListRole">Role Details</a>
+                <a class="collapse-item" asp-controller="Location" asp-action="LocationDetails">Locations Details</a>
                 <a class="collapse-item" asp-area="" asp-controller="Company" asp-action="Company">Company Master</a>
                 <a class="collapse-item" asp-area="" asp-controller="Account" asp-action="Account_Master">Account Master</a>
                 <a class="collapse-item" asp-controller="Term" asp-action="Term_Master">Term Master</a>
@@ -133,12 +123,12 @@
             </a>
         </li>*@
     <!-- Nav Item - Charts -->
-    <li class="nav-item">
+    @*<li class="nav-item">
         <a class="nav-link" href="charts.html">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Reports</span>
         </a>
-    </li>
+    </li>*@
     <!-- Nav Item - Tables -->
     @*<li class="nav-item">
             <a class="nav-link" href="tables.html">

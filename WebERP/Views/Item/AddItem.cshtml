@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.Item_Master
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
@@ -21,8 +21,8 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">UOM Code</label>
-                            <div class="input-group">
-                                <select asp-for="UOM_CODE" class="form-control" asp-items="@(new SelectList(Model.UOMDropDown,"Value", "Text"))"></select>
+                            <div class="input-group col-md-12" >
+                                <select asp-for="UOM_CODE" id="UOMCODE" class="form-control" asp-items="@(new SelectList(Model.UOMDropDown,"Value", "Text"))"></select>
                                 <span asp-validation-for="UOM_CODE" class="text-danger"></span>
                             </div>
                             <span asp-validation-for="UOM_CODE" class="text-danger"></span>
@@ -33,7 +33,7 @@
                             <label for="branch_id">HSN Code</label>
                             <div class="input-group">
                                 @*<select name="selectCountryCode" id="cid" class="form-control" asp-items="@(new SelectList(Model.countryDropDown,"Value", "Text"))"></select>*@
-                                <input type="text" class="form-control numb" name="HSN_CODE" id="HSN_CODE">
+                                <input type="text" class="form-control numb" value="0" name="HSN_CODE" id="HSN_CODE">
                                 @*<span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label for="branch_id">Min Stock</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="MIN_STOCK" id="MIN_STOCK">
+                                <input type="text" class="form-control numb" name="MIN_STOCK" value="0" id="MIN_STOCK">
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                         <div class="form-group">
                             <label for="branch_id">Max Stock</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="MAX_STOCK" id="MAX_STOCK">
+                                <input type="text" class="form-control numb" name="MAX_STOCK" value="0" id="MAX_STOCK">
                             </div>
                         </div>
                     </div>
@@ -85,3 +85,10 @@
 
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#UOMCODE").chosen();
+    })
+
+</script>

@@ -40,6 +40,14 @@ namespace WebERP.Controllers
         [HttpPost]
         public async Task<IActionResult> SAVESize(Size_Master objSize)
         {
+            var NAME = dbContext.Size_Master.FirstOrDefault(x => x.NAME == objSize.NAME);
+
+            if (NAME != null)
+            {
+                ModelState.AddModelError("NAME", "Size Name Already Exists.");
+                return View("ADDSize",objSize);
+            }
+
             if (ModelState.IsValid)
             {
                 objSize.INS_DATE = DateTime.Now;
@@ -50,8 +58,10 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View("Size_Master");
+                return View("ADDSize");
             }
+
+
         }
         [HttpGet]
         public IActionResult ActionSize(int id)
@@ -75,13 +85,19 @@ namespace WebERP.Controllers
         }
         [HttpPost]
         public IActionResult EditSize(Size_Master objSize)
-        {
-            objSize.UDT_DATE = DateTime.Now;
-            objSize.UDT_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.Size_Master.Update(objSize);
-            dbContext.SaveChanges();
-            return RedirectToAction("Size_Master");
-
+        {           
+            if (ModelState.IsValid)
+            {
+                objSize.UDT_DATE = DateTime.Now;
+                objSize.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.Size_Master.Update(objSize);
+                dbContext.SaveChanges();
+                return RedirectToAction("Size_Master");
+            }
+            else
+            {
+                return View("EditSize", objSize);
+            }
         }
         [HttpGet]
         public IActionResult DeleteSize(int ID)
