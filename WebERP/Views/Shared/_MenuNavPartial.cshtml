@@ -6,7 +6,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <hr class="sidebar-divider my-0">
-    <!-- Nav Item - Dashboard -->
+   
     <li class="nav-item active">
         <a class="nav-link" asp-controller="Administration" asp-action="Dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -16,9 +16,15 @@
     <li class="nav-item active">
         <a class="nav-link" asp-controller="GateEntry" asp-action="GateEntry_Master">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Gate Entry</span>
+            <span>Role Details</span>
         </a>
-    </li>    
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" asp-controller="Location" asp-action="LocationDetails">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Locations Details</span>
+        </a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
@@ -46,10 +52,15 @@
                 <a class="collapse-item" asp-controller="Size" asp-action="Size_Master">Size Master</a>
                 <a class="collapse-item" asp-controller="Artical" asp-action="Artical_Master">Artical Master</a>
                 <a class="collapse-item" asp-controller="Item" asp-action="Item_Master">Item Master</a>
+
+                <a class="collapse-item" asp-controller="Location" asp-action="LocationDetails">Location Master</a>
+                <a class="collapse-item" asp-controller="PO" asp-action="PODetails">PO Master</a>
+=======
                 <a class="collapse-item" asp-controller="Process" asp-action="Process_Master">Process Master</a>
                 <a class="collapse-item" asp-controller="ProcessRate" asp-action="ProcessRate_Master">Process Rate Master</a>
                 <a class="collapse-item" asp-controller="GoDown" asp-action="GoDown_Master">GoDown Master</a>
                 @*<a class="collapse-item" asp-area="" asp-page="/Privacy">User Profile</a>*@
+
             </div>
         </div>
     </li>
@@ -123,7 +134,7 @@
             </a>
         </li>*@
     <!-- Nav Item - Charts -->
-    @*<li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="charts.html">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Reports</span>
