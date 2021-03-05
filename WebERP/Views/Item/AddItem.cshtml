@@ -23,7 +23,7 @@
                             <label for="branch_id">UOM Code</label>
                             <div class="input-group col-md-12" >
                                 <select asp-for="UOM_CODE" id="UOMCODE" class="form-control" asp-items="@(new SelectList(Model.UOMDropDown,"Value", "Text"))"></select>
-                                <span asp-validation-for="UOM_CODE" class="text-danger"></span>
+                          
                             </div>
                             <span asp-validation-for="UOM_CODE" class="text-danger"></span>
                         </div>

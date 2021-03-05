@@ -1,6 +1,7 @@
-﻿@model IEnumerable<WebERP.Models.PurchasingOrder.PODetailModel>
-
+﻿@*@model IEnumerable<WebERP.ModelsPurchasingOrder.PODetailModel>*@
+@model WebERP.Models.V_PODetails
 <script src="~/lib/jquery/dist/jquery.js"></script>
+
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
@@ -12,15 +13,24 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label class="form-label">Document Date</label>
+                            <label class="form-label">Type of Order</label>
                             <div class="input-group">
-                                <select class="form-control" id="Type" name="Type">
+                                <select class="form-control" id="ddlwork" name="Type">
                                     <option value="1">Process Order</option>
                                     <option value="2">Job Work</option>
                                 </select>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Account Name</label>
+                            <div class="input-group">
+                                <select id="ddlACC" class="form-control" asp-items="@(new SelectList( Model.AccDropDown ,"Value", "Text"))"></select>
+                            </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
                         </div>
+
                     </div>
                 </div>
                 @*<h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Pending Process Order Details</b></h4>*@
@@ -32,24 +42,22 @@
                                     <tr>
                                         <th></th>
                                         <th>Process Order No</th>
+                                        <th>Account Name</th>
                                         <th>Order Date</th>
                                         <th>Order Qty</th>
-                                        <th>Received Qty</th>
-                                        <th>Net Rate</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var Data in Model)
-                                    {
-                                        <tr>
-                                            <th><input type="checkbox" name="checboxlist" value="@Data.POD_PK" id=@Data.POD_PK /></th>
-                                            <td>@Data.POD_PK</td>
-                                            <td>@Data.APPROVED_DATE</td>
-                                            <td>@Data.QTY</td>
-                                            <td>@Data.QTY</td>
-                                            <td>@Data.NET_RATE</td>
-                                        </tr>
-                                    }
+                                    @*@foreach (var Data in ViewBag.)
+                                        {
+                                            <tr>
+                                                <th><input type="checkbox" name="checboxlist" value="@Data.ORDER_NO" id=@Data.ORDER_NO /></th>
+                                                <td>@Data.ORDER_NO</td>
+                                                <td>@Data.ACC_CODE</td>
+                                                <td>@Data.ORDER_DATE</td>
+                                                <td>@Data.QTY</td>
+                                            </tr>
+                                        }*@
                                 </tbody>
                             </table>
                         </div>
@@ -67,52 +75,24 @@
 
     </div>
 </div>
-@*<script>
-        $(document).ready(function() {
-            $("#AddPO").click(function () {
-                var selected = new Array();
-                debugger;
-                //Reference the CheckBoxes and insert the checked CheckBox value in Array.
-                $("#dataTable input[type=checkbox]:checked").each(function () {
-                    selected.push(this.value);
-                });
-                var array = [1, 2, 3, 4, 5];
-                $.post('/GateEntry/ADD', $.param({ data: selected }, true));
-                //$.get("/GateEntry/ADD", {cid: selected}, function (d) {
-                //    var row = "";
-                //})
-        });
-    });
-        //$(function () {
-        //    $(document).on("click", ".AddPO", function () {
-        //        $.getJSON("/GateEntry/ADD", { }, function (d) {
-        //            var row = "";
-        //        })
-        //    })
-        //    //$("#ddlCountry")(function () {
-        //    //    $.getJSON("/Account/Getstatelist", { cid: $("#ddlCountry").val() }, function (d) {
-        //    //        var row = "";
-        //    //        $("#ddlState").empty();
-        //    //        $("#ddlCity").empty();
-        //    //        $.each(d, function (i, v) {
-        //    //            row += "<option value=" + v.value + ">" + v.text + "</option>";
-        //    //        });
-        //    //        $("#ddlState").html(row);
-        //    //    })
-        //    //})
-        //})
-    </script>*@
-@*<script>
-       var AddPO = function() {
-
-            var arrItem = [];
-            var commaseprated = "";
-
-            $("#dataTable li input[type=checkbox]").each(function (Index, val) {
-
-                debugger;
-
+<script>
+    $(function () {
+        $("#ddlACC").change(function () {
+            debugger;
+            $.getJSON("/GateEntry/GetGrdData", { accid: $("#ddlACC").val(), work: $('#ddlwork').val() }, function (json) {
+                var tr;
+                $(".dataTables_empty").remove();
+                for (var i = 0; i < json.length; i++) {
+                    tr = $('<tr/>');
+                    tr.append("<td>" + '<input type="checkbox" name="ckec" value="' + json[i].ordeR_NO + '" id="test' + i + '">' + "</td>");
+                    tr.append("<td>" + json[i].ordeR_NO + "</td>");
+                    tr.append("<td>" + json[i].acC_CODE + "</td>");
+                    tr.append("<td>" + json[i].ordeR_DATE + "</td>");
+                    tr.append("<td>" + json[i].qty + "</td>");
+                    $('#dataTable').append(tr);
+                }
             })
-        }
 
-    </script>*@
+        })
+    })
+</script>

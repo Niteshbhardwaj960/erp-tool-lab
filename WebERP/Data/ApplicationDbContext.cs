@@ -7,6 +7,7 @@ using WebERP.Models;
 //using WebERP.Models.Location;
 using WebERP.Models.Location;
 using WebERP.Models.GateEntry;
+using WebERP.Models.PurchasingOrder;
 
 namespace WebERP.Data
 {
@@ -31,7 +32,13 @@ namespace WebERP.Data
         public DbSet<Process_Master> Process_Master { get; set; }
         public DbSet<ProcessRate_Master> ProcessRate_Master { get; set; }
         public DbSet<Godown_Master> Godown_Master { get; set; }
-        public DbSet<Gate_HDR> Gate_HDR { get; set; }        
+        public DbSet<Gate_HDR> Gate_HDR { get; set; }
+        public DbSet<POHeaderModel> POHeaderModel { get; set; }
+        public DbSet<PODetailModel> PODetailModel { get; set; }
+        public DbSet<V_PODetails> V_PODetails { get; set; }
+        public DbSet<V_CITY_DTL> V_CITY_DTL { get; set; }
+        public DbSet<GateEntryDetail> gateEntryDetails { get; set; }
+        public DbSet<V_GateEntryDetail> V_GateEntryDetail { get; set; }
     }
 
 }

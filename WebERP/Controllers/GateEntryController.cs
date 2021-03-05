@@ -30,16 +30,48 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult GateEntry_Master()
         {
-            return View(dbContext.PODetailModel.ToList());
+            V_PODetails PO = new V_PODetails();
+            PO.AccDropDown = ACClists();
+            return View(PO);
         }
         [HttpPost]
-        public IActionResult GateEntry_Master(List<string> checboxlist)
+        public IActionResult GateEntry_Master(List<string> ckec)
         {
-            //foreach (var item in checboxlist)
-            //{
-            //    ViewBag.NewData<PODetailModel>  = dbContext.PODetailModel.Find(Convert.ToInt32(item));
-            //}
-            return View("GateEntry", ViewBag.NewData);
+            List<V_GateEntryDetail> li = new List<V_GateEntryDetail>();
+            List<V_GateEntryDetail> lli = new List<V_GateEntryDetail>();
+            foreach (var order in ckec)
+            {
+                li = dbContext.V_GateEntryDetail.Where(o => o.ORDER_NO == Convert.ToInt32(order)).ToList();
+                foreach (var item in li)
+                {
+                    lli.Add(item);
+                }
+            }
+            //return View("GateEntry", li);
+            return View("GateEntry", lli);
+        }
+        public List<SelectListItem> ACClists()
+        {
+            var AccList = (from ACC in dbContext.V_PODetails
+                            select new SelectListItem()
+                            {
+                                Text = ACC.ACC_CODE,
+                                Value = ACC.ACC_CODE,
+                            }).ToList();
+
+            AccList.Insert(0, new SelectListItem()
+            {
+                Text = "Select Account",
+                Value = string.Empty,
+                Selected = true
+            });
+            return AccList;
+        }
+
+        public JsonResult GetGrdData(string accid,string work)
+        {
+            var grddata = dbContext.V_PODetails.Where(x => x.ACC_CODE == accid).ToList();
+            return Json(grddata);
         }
         //[HttpGet]
         //public IActionResult GateEntry(SelectedModel obj)

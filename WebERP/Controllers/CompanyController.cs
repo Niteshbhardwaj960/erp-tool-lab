@@ -51,6 +51,19 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult AddCompany()
         {
+            var cityList = (from city in dbContext.V_CITY_DTL
+                            select new SelectListItem()
+                            {
+                                Text = city.CSC_NAME,
+                                Value = city.Id.ToString(),
+                            }).ToList();
+
+            cityList.Insert(0, new SelectListItem()
+            {
+                Text = "Select City",
+                Value = string.Empty,
+                Selected = true
+            });
             Company objCompany = new Company();
             objCompany.cityDropDown = Citylists();
             return View(objCompany);

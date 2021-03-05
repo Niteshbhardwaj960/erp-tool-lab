@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210301080350_Countycoderequiredchanged")]
+    partial class Countycoderequiredchanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -389,53 +391,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Companies");
-                });
-
-            modelBuilder.Entity("WebERP.Models.GateEntry.GateEntryDetail", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("Bill_Date");
-
-                    b.Property<string>("Bill_NO");
-
-                    b.Property<DateTime?>("CHL_DATE");
-
-                    b.Property<string>("CHL_NO");
-
-                    b.Property<int>("Fin_Qty");
-
-                    b.Property<int>("Fin_UOM");
-
-                    b.Property<int>("GH_FK");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<int>("Item_Name");
-
-                    b.Property<string>("Item_UOM");
-
-                    b.Property<int>("JW_FK");
-
-                    b.Property<int>("Order_No");
-
-                    b.Property<int>("POD_FK");
-
-                    b.Property<int>("Stk_Qty");
-
-                    b.Property<int>("Stk_UOM");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("gateEntryDetails");
                 });
 
             modelBuilder.Entity("WebERP.Models.GateEntry.Gate_HDR", b =>
@@ -817,36 +772,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("UOM_MASTER");
-                });
-
-            modelBuilder.Entity("WebERP.Models.V_CITY_DTL", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CSC_NAME");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("V_CITY_DTL");
-                });
-
-            modelBuilder.Entity("WebERP.Models.V_PODetails", b =>
-                {
-                    b.Property<int>("ORDER_NO")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ACC_CODE");
-
-                    b.Property<DateTime?>("ORDER_DATE");
-
-                    b.Property<decimal>("QTY");
-
-                    b.HasKey("ORDER_NO");
-
-                    b.ToTable("V_PODetails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
