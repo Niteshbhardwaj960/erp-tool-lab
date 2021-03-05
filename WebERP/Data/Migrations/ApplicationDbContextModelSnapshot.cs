@@ -442,6 +442,7 @@ namespace WebERP.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+                });
 
             modelBuilder.Entity("WebERP.Models.Godown_Master", b =>
                 {
