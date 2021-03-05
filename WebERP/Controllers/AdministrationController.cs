@@ -261,7 +261,7 @@ namespace WebERP.Controllers
             _dbContext.Remove(data);
             _dbContext.SaveChanges();
             return RedirectToAction("Company");
-        }
+        }        
     }
 }
 

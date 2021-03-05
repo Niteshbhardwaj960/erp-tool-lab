@@ -42,6 +42,12 @@ namespace WebERP.Controllers
         [HttpPost]
         public async Task<IActionResult> SAVEProcess(Process_Master objProcess)
         {
+            var NAME = dbContext.Process_Master.FirstOrDefault(x => x.NAME == objProcess.NAME);
+
+            if (NAME != null)
+            {
+                ModelState.AddModelError("NAME", "Name Already Exists.");
+            }
             if (ModelState.IsValid)
             {
                 objProcess.INS_DATE = DateTime.Now;
@@ -52,7 +58,8 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View("Process_Master");
+                objProcess.Type = "Add";
+                return View("AddProcess",objProcess);
             }
         }
         [HttpGet]
@@ -79,11 +86,18 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult EditProcess(Process_Master obj)
         {
-            obj.UDT_DATE = DateTime.Now;
-            obj.UDT_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.Process_Master.Update(obj);
-            dbContext.SaveChanges();
-            return RedirectToAction("Process_Master");
+            if (ModelState.IsValid)
+            {
+                obj.UDT_DATE = DateTime.Now;
+                obj.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.Process_Master.Update(obj);
+                dbContext.SaveChanges();
+                return RedirectToAction("Process_Master");
+            }
+            else
+            {
+                return View(obj);
+            }
         }
         [HttpGet]
         public IActionResult DeleteProcess(int ID)

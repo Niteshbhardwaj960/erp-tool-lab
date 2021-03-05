@@ -41,6 +41,12 @@ namespace WebERP.Controllers
         [HttpPost]
         public async Task<IActionResult> SAVEUOM(UOM_MASTER objUOM)
         {
+            var NAME = dbContext.UOM_MASTER.FirstOrDefault(x => x.NAME == objUOM.NAME);
+
+            if (NAME != null)
+            {
+                ModelState.AddModelError("NAME", "Name Already Exists.");
+            }
             if (ModelState.IsValid)
             {
                 objUOM.INS_DATE = DateTime.Now;
@@ -51,7 +57,7 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View("UOM_Master");
+                return View("AddUOM",objUOM);
             }
         }
         [HttpGet]
@@ -77,12 +83,18 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult EditUOM(UOM_MASTER objUOM)
         {
-            objUOM.UDT_DATE = DateTime.Now;
-            objUOM.UDT_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.UOM_MASTER.Update(objUOM);
-            dbContext.SaveChanges();
-            return RedirectToAction("UOM_MASTER");
-
+            if (ModelState.IsValid)
+            {
+                objUOM.UDT_DATE = DateTime.Now;
+                objUOM.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.UOM_MASTER.Update(objUOM);
+                dbContext.SaveChanges();
+                return RedirectToAction("UOM_MASTER");
+            }
+            else
+            {
+                return View(objUOM);
+            }
         }
         [HttpGet]
         public IActionResult DeleteUOM(int ID)

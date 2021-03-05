@@ -49,6 +49,12 @@ namespace WebERP.Controllers
         [HttpPost]
         public async Task<IActionResult> SAVEProcessRate(ProcessRate_Master objProcessRate)
         {
+            var NAME = dbContext.ProcessRate_Master.FirstOrDefault(x => x.Proc_Code == objProcessRate.Proc_Code);
+
+            if (NAME != null)
+            {
+                ModelState.AddModelError("Proc_Code", "Proc Name Already Exists.");
+            }
             if (ModelState.IsValid)
             {
                 objProcessRate.INS_DATE = DateTime.Now;
@@ -59,7 +65,9 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View("ProcessRate_Master");
+                objProcessRate.Type = "Add";
+                objProcessRate.UOMDropDown = UOMlists();
+                return View("ADDProcessRate",objProcessRate);
             }
         }
         [HttpGet]
@@ -82,11 +90,18 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult EditProcessRate(ProcessRate_Master obj)
         {
-            obj.UDT_DATE = DateTime.Now;
-            obj.UDT_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.ProcessRate_Master.Update(obj);
-            dbContext.SaveChanges();
-            return RedirectToAction("ProcessRate_Master");
+            if (ModelState.IsValid)
+            {
+                obj.UDT_DATE = DateTime.Now;
+                obj.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.ProcessRate_Master.Update(obj);
+                dbContext.SaveChanges();
+                return RedirectToAction("ProcessRate_Master");
+            }
+            else
+            {
+                return View(obj);
+            }
         }
         [HttpGet]
         public IActionResult DeleteProcessRate(int ID)

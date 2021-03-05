@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using ClosedXML.Excel;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebERP.Models.Location;
 
 namespace WebERP.Controllers
 {
@@ -37,9 +38,8 @@ namespace WebERP.Controllers
             Company objCompany = new Company();
             objCompany = dbContext.Companies.Find(id);
             objCompany.Type = "Action";
-            objCompany.countryDropDown = Countrylists();
-            objCompany.stateDropDown = Statelists(objCompany.Country_Code);
-            objCompany.cityDropDown = Citylists(objCompany.State_Code);
+            objCompany.stateDropDown = Statelists(objCompany.State_Code);
+            objCompany.cityDropDown = Citylists();
             return View("EditCompany", objCompany);
         }
         [HttpGet]
@@ -51,13 +51,32 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult AddCompany()
         {
+            var cityList = (from city in dbContext.V_CITY_DTL
+                            select new SelectListItem()
+                            {
+                                Text = city.CSC_NAME,
+                                Value = city.Id.ToString(),
+                            }).ToList();
+
+            cityList.Insert(0, new SelectListItem()
+            {
+                Text = "Select City",
+                Value = string.Empty,
+                Selected = true
+            });
             Company objCompany = new Company();
-            objCompany.countryDropDown = Countrylists();
+            objCompany.cityDropDown = Citylists();
             return View(objCompany);
         }
         [HttpPost]
         public async Task<IActionResult> SAVECompany(Company objCompany)
         {
+            var NAME = dbContext.Companies.FirstOrDefault(x => x.NAME == objCompany.NAME);
+
+            if (NAME != null)
+            {
+                ModelState.AddModelError("NAME", "Name Already Exists.");
+            }
             if (ModelState.IsValid)
             {
                 objCompany.INS_DATE = DateTime.Now;
@@ -68,7 +87,8 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View("AddCompany");
+                objCompany.cityDropDown = Citylists();
+                return View("AddCompany", objCompany);
             }
         }
 
@@ -78,21 +98,26 @@ namespace WebERP.Controllers
             Company objCompany = new Company();
             objCompany = dbContext.Companies.Find(id);
             objCompany.Type = "Edit";
-            objCompany.countryDropDown = Countrylists();
-            objCompany.stateDropDown = Statelists(objCompany.Country_Code);
-            objCompany.cityDropDown = Citylists(objCompany.State_Code);
+            objCompany.stateDropDown = Statelists(objCompany.State_Code);
+            objCompany.cityDropDown = Citylists();
             return View("EditCompany", objCompany);
         }
 
         [HttpPost]
         public IActionResult EditCompany(Company objCompany)
         {
-            objCompany.UDT_DATE = DateTime.Now;
-            objCompany.UDT_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.Companies.Update(objCompany);
-            dbContext.SaveChanges();
-            return RedirectToAction("Company");
-
+            if (ModelState.IsValid)
+            {
+                objCompany.UDT_DATE = DateTime.Now;
+                objCompany.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.Companies.Update(objCompany);
+                dbContext.SaveChanges();
+                return RedirectToAction("Company");
+            }
+            else
+            {
+                return View(objCompany);
+            }
         }
 
         [HttpGet]
@@ -201,26 +226,31 @@ namespace WebERP.Controllers
             dbContext.SaveChanges();
             return RedirectToAction("Company");
         }
-        public JsonResult Getstatelist(string cid)
-        {
-            var StateList = (from state in dbContext.States.Where(x => x.CountryId == Convert.ToInt32(cid)).ToList()
-                             select new SelectListItem()
-                             {
-                                 Text = state.Name,
-                                 Value = state.Id.ToString(),
-                             }).ToList();
+        public JsonResult Getstatelist(string ctid)
+        {           
+            CityModel City = new CityModel();
+            City = dbContext.Cities.Find(Convert.ToInt32(ctid));
+            var Stateid = City.StateId;
 
-            StateList.Insert(0, new SelectListItem()
-            {
-                Text = "Select State",
-                Value = string.Empty,
-                Selected = true
-            });
+            StateModel St = new StateModel();
+            St = dbContext.States.Find(Convert.ToInt32(Stateid));
+            var Countryid = St.CountryId;
+
+            CountryModel CtModel = new CountryModel();
+            CtModel = dbContext.Countries.Find(Convert.ToInt32(Countryid));
+            var Countyname = CtModel.Name;
+
+            var StateList = (from state in dbContext.States.Where(x => x.Id == Convert.ToInt32(Stateid)).ToList()
+                            select new SelectListItem()
+                            {
+                                Text = state.Name + '/' + Countyname,
+                                Value = state.Name + '/' + Countyname
+                            }).ToList();
             return Json(StateList);
         }
-        public JsonResult GetCitylist(int sid)
+        public JsonResult GetCitylist(string ctid)
         {
-            var cityList = (from city in dbContext.Cities.Where(x => x.StateId == Convert.ToInt32(sid)).ToList()
+            var cityList = (from city in dbContext.Cities.Where(x => x.StateId == Convert.ToInt32(ctid)).ToList()
                             select new SelectListItem()
                             {
                                 Text = city.Name,
@@ -242,6 +272,7 @@ namespace WebERP.Controllers
                                {
                                    Text = country.Name,
                                    Value = country.Id.ToString(),
+                                   
                                }).ToList();
 
             countryList.Insert(0, new SelectListItem()
@@ -254,28 +285,28 @@ namespace WebERP.Controllers
         }
         public List<SelectListItem> Statelists(string cid)
         {
-            var StateList = (from state in dbContext.States.Where(x => x.CountryId == Convert.ToInt32(cid)).ToList()
-                             select new SelectListItem()
-                             {
-                                 Text = state.Name,
-                                 Value = state.Id.ToString(),
-                             }).ToList();
-
+            //var StateList = (from state in dbContext.States.Where(x => x.CountryId == Convert.ToInt32(cid)).ToList()
+            //                 select new SelectListItem()
+            //                 {
+            //                     Text = state.Name,
+            //                     Value = state.Id.ToString(),
+            //                 }).ToList();
+            List<SelectListItem> StateList = new List<SelectListItem>(); 
             StateList.Insert(0, new SelectListItem()
             {
-                Text = "Select State",
-                Value = string.Empty,
+                Text = cid,
+                Value = cid,
                 Selected = true
             });
             return StateList;
         }
-        public List<SelectListItem> Citylists(string sid)
+        public List<SelectListItem> Citylists()
         {
-            var cityList = (from city in dbContext.Cities.Where(x => x.StateId == Convert.ToInt32(sid)).ToList()
+            var cityList = (from city in dbContext.Cities
                             select new SelectListItem()
                             {
                                 Text = city.Name,
-                                Value = Convert.ToString(city.Id)
+                                Value = city.Id.ToString(),                                
                             }).ToList();
 
             cityList.Insert(0, new SelectListItem()

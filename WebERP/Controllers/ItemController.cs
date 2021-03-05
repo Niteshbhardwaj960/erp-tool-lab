@@ -49,6 +49,12 @@ namespace WebERP.Controllers
         [HttpPost]
         public async Task<IActionResult> SAVEItem(Item_Master objItem)
         {
+            var NAME = dbContext.Item_Master.FirstOrDefault(x => x.NAME == objItem.NAME);
+
+            if (NAME != null)
+            {
+                ModelState.AddModelError("NAME", "Name Already Exists.");
+            }
             if (ModelState.IsValid)
             {
                 objItem.INS_DATE = DateTime.Now;
@@ -59,7 +65,8 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View("Item_Master");
+                objItem.UOMDropDown = UOMlists();
+                return View("AddItem",objItem);
             }
         }
         public IActionResult ActionItem(int id)
@@ -80,12 +87,18 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult EditItem(Item_Master objItem)
         {
-            objItem.UDT_DATE = DateTime.Now;
-            objItem.UDT_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.Item_Master.Update(objItem);
-            dbContext.SaveChanges();
-            return RedirectToAction("Item_Master");
-
+            if (ModelState.IsValid)
+            {
+                objItem.UDT_DATE = DateTime.Now;
+                objItem.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.Item_Master.Update(objItem);
+                dbContext.SaveChanges();
+                return RedirectToAction("Item_Master");
+            }
+            else
+            {
+                return View(objItem);
+            }
         }
         [HttpGet]
         public IActionResult DeleteItem(int ID)

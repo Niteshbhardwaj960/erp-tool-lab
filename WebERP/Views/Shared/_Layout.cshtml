@@ -24,7 +24,7 @@
     <link href="~/layoutcss/css/sb-admin-2.min.css" rel="stylesheet">
     <!-- Custom styles for this page -->
     <link href="~/layoutcss/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">    
-
+    <link href="~/lib/bootstrap/Chosen/chosen.min.css" rel="stylesheet" />
 </head>
 <body id="page-top" class="sidebar-toggled">
     @*<header>
@@ -83,31 +83,31 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            @*<li class="nav-item active">
                 <a class="nav-link" asp-action="About" asp-controller="Administration">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>About</span>
                 </a>
-            </li>
+            </li>*@
 
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            @*<li class="nav-item active">
                 <a class="nav-link" asp-action="Services" asp-controller="Administration">
                     <i class="fas fa-fw fa-sign-out"></i>
                     <span>Services</span>
                 </a>
-            </li>
+            </li>*@
             <partial name="_MenuNavPartial" />
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            @*<li class="nav-item active">
                 <a class="nav-link" asp-action="ContactUs" asp-controller="Administration">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Contact Us</span>
                 </a>
-            </li>
+            </li>*@
 
         </ul>
         <!-- End of Sidebar -->
@@ -136,7 +136,7 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
+                        @*<li class="nav-item dropdown no-arrow d-sm-none">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
@@ -281,8 +281,8 @@
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                             </div>
-                        </li>
-                        <div class="topbar-divider d-none d-sm-block"></div>
+                        </li>*@
+                        @*<div class="topbar-divider d-none d-sm-block"></div>
                         @*<li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link" role="button" asp-area="Identity" asp-page="/Account/Login">
                                     Login<i class="fas fa-sign-in fa-fw"></i>
@@ -373,7 +373,7 @@
 
     <!-- Page level custom scripts -->
     <script src="~/layoutcss/js/demo/datatables-demo.js"></script>
-
+    <script src="~/lib/jquery/ChosenJs/chosen.jquery.min.js"></script>
     @RenderSection("Scripts", required: false)
 
     <script>
