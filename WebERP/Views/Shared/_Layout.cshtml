@@ -158,7 +158,7 @@
                                 </form>
                             </div>
                         </li>
-                       
+
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
@@ -293,10 +293,10 @@
                 </nav>
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
-                <div class="container-fluid">                    
+                <div class="container-fluid">
                     @*<partial name="_CookieConsentPartial" />*@
                     @*<h1 class="h3 mb-4 text-gray-800">*@
-                        @RenderBody()
+                    @RenderBody()
                     @*</h1>*@
                 </div>
                 <!-- /.container-fluid -->
@@ -375,5 +375,11 @@
     <script src="~/layoutcss/js/demo/datatables-demo.js"></script>
     <script src="~/lib/jquery/ChosenJs/chosen.jquery.min.js"></script>
     @RenderSection("Scripts", required: false)
+
+    <script>
+        $(function () {
+            WebERP.PurchasingOrders.Init();
+        });
+    </script>
 </body>
 </html>
