@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebERP.Models.Location
+namespace WebERP.Models
 {
     public class CityModel
     {
@@ -15,6 +15,7 @@ namespace WebERP.Models.Location
         public string Name { get; set; }
         [Required(ErrorMessage = "Please select state name")]
         public int StateId { get; set; }
+        [StringLength(3, ErrorMessage = "CityCode cannot be more than 3")]
         public string CityCode { get; set; }
         public DateTime? Ins_Date { get; set; }
         public string Ins_Uid { get; set; }

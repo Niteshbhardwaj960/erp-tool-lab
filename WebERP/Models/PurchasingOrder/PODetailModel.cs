@@ -4,11 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebERP.Models.PurchasingOrder
+namespace WebERP.Models
 {
     public class PODetailModel
     {
+
         [Key]
         public int POD_PK { get; set; }
 
@@ -59,9 +62,6 @@ namespace WebERP.Models.PurchasingOrder
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
         public string UDT_UID { get; set; }
-        [NotMapped]
-        public bool IsChecked { get; set; }
-        [NotMapped]
-        public List<PODetailModel> PODetail { get; set; }
-    }   
+        
+    }
 }

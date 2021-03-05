@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebERP.Models.PurchasingOrder
+namespace WebERP.Models
 {
     public class POTermsModel
     {
-     //   public int MyProperty { get; set; }
-     //   public int MyProperty { get; set; }
-     //   public int MyProperty { get; set; }
-     //   public int MyProperty { get; set; }
-     //   public DateTime? INS_DATE { get; set; }
-     //   public string INS_UID { get; set; }
-     //   public DateTime? UDT_DATE { get; set; }
-     //   public string UDT_UID { get; set; }
-     //   "POT_PK" NUMBER(10,0), 
-	    //"POH_FK" NUMBER(10,0) NOT NULL ENABLE, 
-	    //"TERMS_CODE" NUMBER(10,0) NOT NULL ENABLE, 
-	    //"REMARKS" VARCHAR2(100 BYTE), 
-	    //"INS_DATE" DATE, 
-	    //"INS_UID" VARCHAR2(20 BYTE), 
-	    //"UDT_DATE" DATE, 
-	    //"UDT_UID" VARCHAR2(20 BYTE), 
+        [Key]
+        public int POT_PK { get; set; }
+
+        [ForeignKey("POHeaderModel")]
+        public int POH_FK { get; set; }
+
+        public virtual POHeaderModel POHeaderModel { get; set; }
+        public int TERMS_CODE { get; set; }
+        [StringLength(100)]
+        public string REMARKS { get; set; }
+        public DateTime? INS_DATE { get; set; }
+        public string INS_UID { get; set; }
+        public DateTime? UDT_DATE { get; set; }
+        public string UDT_UID { get; set; }       
     }
 }

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebERP.Models.PurchasingOrder
+namespace WebERP.Models
 {
     public class POHeaderModel
     {
         [Key]
         public int POH_PK { get; set; }
-        public int COMP_CODE { get; set; }
+        public int COMP_CODE { get; set; }        
         public DateTime ORDER_DATE { get; set; }
         public string ORDER_FINYEAR { get; set; }
         public int ORDER_NO { get; set; }
@@ -26,6 +26,5 @@ namespace WebERP.Models.PurchasingOrder
 
         [NotMapped]
         public ICollection<PODetailModel> PODetailItemList { get; set; }
-
     }
 }
