@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 using ClosedXML.Excel;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using WebERP.Models.Location;
 
 namespace WebERP.Controllers
 {

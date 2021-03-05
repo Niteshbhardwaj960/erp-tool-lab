@@ -4,10 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebERP.Models;
-//using WebERP.Models.Location;
-using WebERP.Models.Location;
 using WebERP.Models.GateEntry;
-using WebERP.Models.PurchasingOrder;
 
 namespace WebERP.Data
 {
