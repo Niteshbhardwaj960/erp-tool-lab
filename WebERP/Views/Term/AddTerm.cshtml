@@ -22,7 +22,10 @@
                         <div class="form-group">
                             <label for="branch_id">Purchase Order</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="PO" id="PO">
+                                <select class="form-control" id="PO" name="PO">
+                                    <option value="1">Yes</option>
+                                    <option value="2" selected="selected">No</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -30,7 +33,10 @@
                         <div class="form-group">
                             <label class="form-label">Sales Order</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="SAL_Order" id="SAL_Order">
+                                <select class="form-control" id="SAL_Order" name="SAL_Order">
+                                    <option value="1">Yes</option>
+                                    <option value="2" selected="selected">No</option>
+                                </select>
                             </div>
                             <span asp-validation-for="SAL_Order" class="text-danger"></span>
                         </div>
@@ -40,7 +46,7 @@
                             <label for="branch_id">ACTIVE_TAG</label>
                             <div class="custom-radio">
                                 <select class="form-control" id="ACTIVE_TAG" name="ACTIVE_TAG">
-                                    <option value="1">Yes</option>
+                                    <option value="1" selected="selected">Yes</option>
                                     <option value="2">No</option>
                                 </select>
                             </div>

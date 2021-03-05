@@ -11,6 +11,8 @@ namespace WebERP.Models
     public class Company
     {
         [NotMapped]
+        public List<V_CITY_DTL> CityDDL { get; set; }
+        [NotMapped]
         public List<SelectListItem> countryDropDown { get; set; }
         [NotMapped]
         public List<SelectListItem> stateDropDown { get; set; }

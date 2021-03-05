@@ -50,6 +50,13 @@ namespace WebERP.Controllers
         [HttpPost]
         public async Task<IActionResult> SAVEArtical(Artical_Master objArtical)
         {
+            var NAME = dbContext.Artical_Master.FirstOrDefault(x => x.NAME == objArtical.NAME);
+
+            if (NAME != null)
+            {
+                ModelState.AddModelError("NAME", "Name Already Exists.");
+            }
+
             if (ModelState.IsValid)
             {
                 objArtical.INS_DATE = DateTime.Now;
@@ -60,7 +67,8 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View("Artical_Master");
+                objArtical.brandDropDown = Brandlists();
+                return View("ADDArtical", objArtical);
             }
         }
         [HttpGet]
@@ -83,12 +91,18 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult EditArtical(Artical_Master objArtical)
         {
-            objArtical.UDT_DATE = DateTime.Now;
-            objArtical.UDT_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.Artical_Master.Update(objArtical);
-            dbContext.SaveChanges();
-            return RedirectToAction("Artical_Master");
-
+            if (ModelState.IsValid)
+            {
+                objArtical.UDT_DATE = DateTime.Now;
+                objArtical.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.Artical_Master.Update(objArtical);
+                dbContext.SaveChanges();
+                return RedirectToAction("Artical_Master");
+            }
+            else
+            {
+                return View("EditArtical",objArtical);
+            }
         }
         [HttpGet]
         public IActionResult DeleteArtical(int ID)

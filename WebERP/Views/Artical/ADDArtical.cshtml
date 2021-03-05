@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.Artical_Master
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
@@ -40,3 +40,9 @@
 
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $("#Brand_Code").chosen();
+    })
+
+</script>

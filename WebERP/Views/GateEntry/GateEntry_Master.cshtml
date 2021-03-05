@@ -1,0 +1,98 @@
+﻿@*@model IEnumerable<WebERP.ModelsPurchasingOrder.PODetailModel>*@
+@model WebERP.Models.V_PODetails
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Gate Entry</h3>
+        </nav>
+        <div class="card-body">
+            <form id="menu-form" method="post" enctype="multipart/form-data">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Type of work Details</b></h4>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Type of Order</label>
+                            <div class="input-group">
+                                <select class="form-control" id="ddlwork" name="Type">
+                                    <option value="1">Process Order</option>
+                                    <option value="2">Job Work</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Account Name</label>
+                            <div class="input-group">
+                                <select id="ddlACC" class="form-control" asp-items="@(new SelectList( Model.AccDropDown ,"Value", "Text"))"></select>
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+
+                    </div>
+                </div>
+                @*<h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Pending Process Order Details</b></h4>*@
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Process Order No</th>
+                                        <th>Account Name</th>
+                                        <th>Order Date</th>
+                                        <th>Order Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*@foreach (var Data in ViewBag.)
+                                        {
+                                            <tr>
+                                                <th><input type="checkbox" name="checboxlist" value="@Data.ORDER_NO" id=@Data.ORDER_NO /></th>
+                                                <td>@Data.ORDER_NO</td>
+                                                <td>@Data.ACC_CODE</td>
+                                                <td>@Data.ORDER_DATE</td>
+                                                <td>@Data.QTY</td>
+                                            </tr>
+                                        }*@
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Size_Master">Close</a>
+                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" id="AddPO">
+                        Add
+                    </button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#ddlACC").change(function () {
+            debugger;
+            $.getJSON("/GateEntry/GetGrdData", { accid: $("#ddlACC").val(), work: $('#ddlwork').val() }, function (json) {
+                var tr;
+                $(".dataTables_empty").remove();
+                for (var i = 0; i < json.length; i++) {
+                    tr = $('<tr/>');
+                    tr.append("<td>" + '<input type="checkbox" name="ckec" value="' + json[i].ordeR_NO + '" id="test' + i + '">' + "</td>");
+                    tr.append("<td>" + json[i].ordeR_NO + "</td>");
+                    tr.append("<td>" + json[i].acC_CODE + "</td>");
+                    tr.append("<td>" + json[i].ordeR_DATE + "</td>");
+                    tr.append("<td>" + json[i].qty + "</td>");
+                    $('#dataTable').append(tr);
+                }
+            })
+
+        })
+    })
+</script>

@@ -41,6 +41,12 @@ namespace WebERP.Controllers
         [HttpPost]
         public async Task<IActionResult> SAVEBrand(Brand_Master objBrand)
         {
+            var NAME = dbContext.Brand_Master.FirstOrDefault(x => x.NAME == objBrand.NAME);
+
+            if (NAME != null)
+            {
+                ModelState.AddModelError("NAME", "Name Already Exists.");
+            }
             if (ModelState.IsValid)
             {
                 objBrand.INS_DATE = DateTime.Now;
@@ -51,7 +57,7 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View("Brand_Master");
+                return View("ADDBrand",objBrand);
             }
         }
         [HttpGet]
@@ -78,12 +84,18 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult EditBrand(Brand_Master objBrand)
         {
-            objBrand.UDT_DATE = DateTime.Now;
-            objBrand.UDT_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.Brand_Master.Update(objBrand);
-            dbContext.SaveChanges();
-            return RedirectToAction("Brand_Master");
-
+            if (ModelState.IsValid)
+            {
+                objBrand.UDT_DATE = DateTime.Now;
+                objBrand.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.Brand_Master.Update(objBrand);
+                dbContext.SaveChanges();
+                return RedirectToAction("Brand_Master");
+            }
+            else
+            {
+                return View(objBrand);
+            }
         }
         [HttpGet]
         public IActionResult DeleteBrand(int ID)

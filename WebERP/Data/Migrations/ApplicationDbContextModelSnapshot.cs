@@ -154,8 +154,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("CR_LIMIT");
 
-                    b.Property<string>("Country_Code")
-                        .IsRequired();
+                    b.Property<string>("Country_Code");
 
                     b.Property<string>("EMAIL_ID")
                         .IsRequired();
@@ -418,30 +417,83 @@ namespace WebERP.Data.Migrations
                     b.ToTable("Companies");
                 });
 
-
-            modelBuilder.Entity("WebERP.Models.CountryModel", b =>
+            modelBuilder.Entity("WebERP.Models.GateEntry.GateEntryDetail", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CountryCode")
-                        .IsRequired();
+                    b.Property<DateTime?>("Bill_Date");
 
-                    b.Property<DateTime?>("Ins_Date");
+                    b.Property<string>("Bill_NO");
 
-                    b.Property<string>("Ins_Uid");
+                    b.Property<DateTime?>("CHL_DATE");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("CHL_NO");
 
-                    b.Property<DateTime?>("Upd_Date");
+                    b.Property<int>("Fin_Qty");
 
-                    b.Property<string>("Upd_Uid");
+                    b.Property<int>("Fin_UOM");
 
-                    b.HasKey("Id");
+                    b.Property<int>("GH_FK");
 
-                    b.ToTable("Countries");
+                    b.Property<DateTime?>("INS_DATE");
+
+                    b.Property<string>("INS_UID");
+
+                    b.Property<int>("Item_Name");
+
+                    b.Property<string>("Item_UOM");
+
+                    b.Property<int>("JW_FK");
+
+                    b.Property<int>("Order_No");
+
+                    b.Property<int>("POD_FK");
+
+                    b.Property<int>("Stk_Qty");
+
+                    b.Property<int>("Stk_UOM");
+
+                    b.Property<DateTime?>("UDT_DATE");
+
+                    b.Property<string>("UDT_UID");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("gateEntryDetails");
+                });
+
+            modelBuilder.Entity("WebERP.Models.GateEntry.Gate_HDR", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Acc_Code");
+
+                    b.Property<int>("Comp_Code");
+
+                    b.Property<DateTime?>("Doc_Date");
+
+                    b.Property<string>("Doc_FN_Year");
+
+                    b.Property<string>("Doc_No");
+
+                    b.Property<DateTime?>("INS_DATE");
+
+                    b.Property<string>("INS_UID");
+
+                    b.Property<string>("Remarks");
+
+                    b.Property<DateTime?>("UDT_DATE");
+
+                    b.Property<string>("UDT_UID");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Gate_HDR");
+                });
 
             modelBuilder.Entity("WebERP.Models.Godown_Master", b =>
                 {
@@ -502,115 +554,84 @@ namespace WebERP.Data.Migrations
                     b.ToTable("Item_Master");
                 });
 
-            modelBuilder.Entity("WebERP.Models.PODetailModel", b =>
+            modelBuilder.Entity("WebERP.Models.Location.CityModel", b =>
                 {
-                    b.Property<int>("POD_PK")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("APPROVED_DATE");
+                    b.Property<string>("CityCode");
 
-                    b.Property<string>("APPROVED_UID");
+                    b.Property<DateTime?>("Ins_Date");
 
-                    b.Property<DateTime>("DELV_DATE");
+                    b.Property<string>("Ins_Uid");
 
-                    b.Property<decimal>("DISC_PER");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
-                    b.Property<decimal>("DISC_RATE");
+                    b.Property<int>("StateId");
 
-                    b.Property<DateTime?>("INS_DATE");
+                    b.Property<DateTime?>("Upd_Date");
 
-                    b.Property<string>("INS_UID");
+                    b.Property<string>("Upd_Uid");
 
-                    b.Property<int>("ITEM_CODE");
+                    b.HasKey("Id");
 
-                    b.Property<decimal>("NET_RATE");
-
-                    b.Property<string>("POD_PK_STATUS")
-                        .HasMaxLength(3);
-
-                    b.Property<int>("POH_FK");
-
-                    b.Property<decimal>("QTY");
-
-                    b.Property<int>("QTY_UOM");
-
-                    b.Property<decimal>("RATE");
-
-                    b.Property<int>("RATE_UOM");
-
-                    b.Property<string>("REMARKS")
-                        .HasMaxLength(100);
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("POD_PK");
-
-                    b.HasIndex("POH_FK");
-
-                    b.ToTable("PODetail_Master");
+                    b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("WebERP.Models.POHeaderModel", b =>
+            modelBuilder.Entity("WebERP.Models.Location.CountryModel", b =>
                 {
-                    b.Property<int>("POH_PK")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ACC_CODE");
+                    b.Property<string>("CountryCode")
+                        .IsRequired();
 
-                    b.Property<int>("COMP_CODE");
+                    b.Property<DateTime?>("Ins_Date");
 
-                    b.Property<DateTime?>("INS_DATE");
+                    b.Property<string>("Ins_Uid");
 
-                    b.Property<string>("INS_UID");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
-                    b.Property<DateTime>("ORDER_DATE");
+                    b.Property<DateTime?>("Upd_Date");
 
-                    b.Property<string>("ORDER_FINYEAR");
+                    b.Property<string>("Upd_Uid");
 
-                    b.Property<int>("ORDER_NO");
+                    b.HasKey("Id");
 
-                    b.Property<string>("REMARKS")
-                        .HasMaxLength(100);
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("POH_PK");
-
-                    b.ToTable("POHeader_Master");
+                    b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("WebERP.Models.POTermsModel", b =>
+            modelBuilder.Entity("WebERP.Models.Location.StateModel", b =>
                 {
-                    b.Property<int>("POT_PK")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("INS_DATE");
+                    b.Property<string>("CountryCode");
 
-                    b.Property<string>("INS_UID");
+                    b.Property<int>("CountryId");
 
-                    b.Property<int>("POH_FK");
+                    b.Property<DateTime?>("Ins_Date");
 
-                    b.Property<string>("REMARKS")
-                        .HasMaxLength(100);
+                    b.Property<string>("Ins_Uid");
 
-                    b.Property<int>("TERMS_CODE");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
-                    b.Property<DateTime?>("UDT_DATE");
+                    b.Property<string>("StateCode")
+                        .IsRequired();
 
-                    b.Property<string>("UDT_UID");
+                    b.Property<DateTime?>("Upd_Date");
 
-                    b.HasKey("POT_PK");
+                    b.Property<string>("Upd_Uid");
 
-                    b.HasIndex("POH_FK");
+                    b.HasKey("Id");
 
-                    b.ToTable("POTerm_Master");
+                    b.ToTable("States");
                 });
 
             modelBuilder.Entity("WebERP.Models.ProcessRate_Master", b =>
@@ -665,6 +686,89 @@ namespace WebERP.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Process_Master");
+                });
+
+            modelBuilder.Entity("WebERP.Models.PurchasingOrder.PODetailModel", b =>
+                {
+                    b.Property<int>("POD_PK")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("APPROVED_DATE");
+
+                    b.Property<string>("APPROVED_UID");
+
+                    b.Property<DateTime>("DELV_DATE");
+
+                    b.Property<decimal>("DISC_PER");
+
+                    b.Property<decimal>("DISC_RATE");
+
+                    b.Property<DateTime?>("INS_DATE");
+
+                    b.Property<string>("INS_UID");
+
+                    b.Property<int>("ITEM_CODE");
+
+                    b.Property<decimal>("NET_RATE");
+
+                    b.Property<string>("POD_PK_STATUS")
+                        .HasMaxLength(3);
+
+                    b.Property<int>("POH_FK");
+
+                    b.Property<decimal>("QTY");
+
+                    b.Property<int>("QTY_UOM");
+
+                    b.Property<decimal>("RATE");
+
+                    b.Property<int>("RATE_UOM");
+
+                    b.Property<string>("REMARKS")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime?>("UDT_DATE");
+
+                    b.Property<string>("UDT_UID");
+
+                    b.HasKey("POD_PK");
+
+                    b.HasIndex("POH_FK");
+
+                    b.ToTable("PODetailModel");
+                });
+
+            modelBuilder.Entity("WebERP.Models.PurchasingOrder.POHeaderModel", b =>
+                {
+                    b.Property<int>("POH_PK")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ACC_CODE");
+
+                    b.Property<int>("COMP_CODE");
+
+                    b.Property<DateTime?>("INS_DATE");
+
+                    b.Property<string>("INS_UID");
+
+                    b.Property<DateTime>("ORDER_DATE");
+
+                    b.Property<string>("ORDER_FINYEAR");
+
+                    b.Property<int>("ORDER_NO");
+
+                    b.Property<string>("REMARKS")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime?>("UDT_DATE");
+
+                    b.Property<string>("UDT_UID");
+
+                    b.HasKey("POH_PK");
+
+                    b.ToTable("POHeaderModel");
                 });
 
             modelBuilder.Entity("WebERP.Models.Size_Master", b =>
@@ -771,6 +875,36 @@ namespace WebERP.Data.Migrations
                     b.ToTable("UOM_MASTER");
                 });
 
+            modelBuilder.Entity("WebERP.Models.V_CITY_DTL", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CSC_NAME");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("V_CITY_DTL");
+                });
+
+            modelBuilder.Entity("WebERP.Models.V_PODetails", b =>
+                {
+                    b.Property<int>("ORDER_NO")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ACC_CODE");
+
+                    b.Property<DateTime?>("ORDER_DATE");
+
+                    b.Property<decimal>("QTY");
+
+                    b.HasKey("ORDER_NO");
+
+                    b.ToTable("V_PODetails");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -815,6 +949,116 @@ namespace WebERP.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
+            modelBuilder.Entity("WebERP.Models.PODetailModel", b =>
+            {
+                b.Property<int>("POD_PK")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                b.Property<DateTime?>("APPROVED_DATE");
+
+                b.Property<string>("APPROVED_UID");
+
+                b.Property<DateTime>("DELV_DATE");
+
+                b.Property<decimal>("DISC_PER");
+
+                b.Property<decimal>("DISC_RATE");
+
+                b.Property<DateTime?>("INS_DATE");
+
+                b.Property<string>("INS_UID");
+
+                b.Property<int>("ITEM_CODE");
+
+                b.Property<decimal>("NET_RATE");
+
+                b.Property<string>("POD_PK_STATUS")
+                    .HasMaxLength(3);
+
+                b.Property<int>("POH_FK");
+
+                b.Property<decimal>("QTY");
+
+                b.Property<int>("QTY_UOM");
+
+                b.Property<decimal>("RATE");
+
+                b.Property<int>("RATE_UOM");
+
+                b.Property<string>("REMARKS")
+                    .HasMaxLength(100);
+
+                b.Property<DateTime?>("UDT_DATE");
+
+                b.Property<string>("UDT_UID");
+
+                b.HasKey("POD_PK");
+
+                b.HasIndex("POH_FK");
+
+                b.ToTable("PODetail_Master");
+            });
+
+            modelBuilder.Entity("WebERP.Models.POHeaderModel", b =>
+            {
+                b.Property<int>("POH_PK")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                b.Property<int>("ACC_CODE");
+
+                b.Property<int>("COMP_CODE");
+
+                b.Property<DateTime?>("INS_DATE");
+
+                b.Property<string>("INS_UID");
+
+                b.Property<DateTime>("ORDER_DATE");
+
+                b.Property<string>("ORDER_FINYEAR");
+
+                b.Property<int>("ORDER_NO");
+
+                b.Property<string>("REMARKS")
+                    .HasMaxLength(100);
+
+                b.Property<DateTime?>("UDT_DATE");
+
+                b.Property<string>("UDT_UID");
+
+                b.HasKey("POH_PK");
+
+                b.ToTable("POHeader_Master");
+            });
+
+            modelBuilder.Entity("WebERP.Models.POTermsModel", b =>
+            {
+                b.Property<int>("POT_PK")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                b.Property<DateTime?>("INS_DATE");
+
+                b.Property<string>("INS_UID");
+
+                b.Property<int>("POH_FK");
+
+                b.Property<string>("REMARKS")
+                    .HasMaxLength(100);
+
+                b.Property<int>("TERMS_CODE");
+
+                b.Property<DateTime?>("UDT_DATE");
+
+                b.Property<string>("UDT_UID");
+
+                b.HasKey("POT_PK");
+
+                b.HasIndex("POH_FK");
+
+                b.ToTable("POTerm_Master");
+            });
 
             modelBuilder.Entity("WebERP.Models.PODetailModel", b =>
                 {

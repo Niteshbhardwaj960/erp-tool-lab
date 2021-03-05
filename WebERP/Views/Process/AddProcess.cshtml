@@ -6,11 +6,11 @@
         {<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
     <h3 style="color:white">Add Process</h3>
 </nav>}
-        @if (Model.Type == "Edit")
+        else if (Model.Type == "Edit")
         {<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
              <h3 style="color:white">Edit Process</h3>
             </nav>}
-        @if (Model.Type == "Action")
+        else
         {<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
              <h3 style="color:white">View Process</h3>
             </nav>}
@@ -23,11 +23,53 @@
                         <div class="form-group">
                             <label class="form-label">Name</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" asp-for="NAME">
+                                @if (Model.Type == "Add")
+                                {
+                                    <input type="text" class="form-control numb" asp-for="NAME">
+                                }
+                                else
+                                {
+                                    <input type="text" readonly="readonly" class="form-control numb" asp-for="NAME">
+                                }
                             </div>
                             <span asp-validation-for="NAME" class="text-danger"></span>
                         </div>
                     </div>
+                    @if ((Model.Type == "Edit") || (Model.Type == "Action"))
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_UID" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_UID" />
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Process_Master">Close</a>

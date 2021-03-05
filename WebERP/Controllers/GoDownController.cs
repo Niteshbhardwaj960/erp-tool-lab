@@ -42,6 +42,12 @@ namespace WebERP.Controllers
         [HttpPost]
         public async Task<IActionResult> SAVEGoDown(Godown_Master objGoDown)
         {
+            var NAME = dbContext.Godown_Master.FirstOrDefault(x => x.NAME == objGoDown.NAME);
+
+            if (NAME != null)
+            {
+                ModelState.AddModelError("NAME", "Name Already Exists.");
+            }
             if (ModelState.IsValid)
             {
                 objGoDown.INS_DATE = DateTime.Now;
@@ -52,7 +58,8 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View("GoDown_Master");
+                objGoDown.Type = "Add";
+                return View("Add_GoDown", objGoDown);
             }
         }
         [HttpGet]
@@ -79,11 +86,18 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult EditGoDown(Godown_Master obj)
         {
-            obj.UDT_DATE = DateTime.Now;
-            obj.UDT_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.Godown_Master.Update(obj);
-            dbContext.SaveChanges();
-            return RedirectToAction("Godown_Master");
+            if (ModelState.IsValid)
+            {
+                obj.UDT_DATE = DateTime.Now;
+                obj.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.Godown_Master.Update(obj);
+                dbContext.SaveChanges();
+                return RedirectToAction("Godown_Master");
+            }
+            else
+            {
+                return View(obj);
+            }
         }
         [HttpGet]
         public IActionResult DeleteGoDown(int ID)

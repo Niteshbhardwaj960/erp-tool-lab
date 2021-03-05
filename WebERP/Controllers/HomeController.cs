@@ -12,7 +12,16 @@ namespace WebERP.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var returnUrl = "~/Identity/Account/Login";            
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         public IActionResult Privacy()

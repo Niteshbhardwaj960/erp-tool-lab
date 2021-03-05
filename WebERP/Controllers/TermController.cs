@@ -40,6 +40,12 @@ namespace WebERP.Controllers
         [HttpPost]
         public async Task<IActionResult> SAVETerm(Term_Master objTerm)
         {
+            var NAME = dbContext.Term_Master.FirstOrDefault(x => x.NAME == objTerm.NAME);
+
+            if (NAME != null)
+            {
+                ModelState.AddModelError("NAME", "Name Already Exists.");
+            }
             if (ModelState.IsValid)
             {
                 objTerm.INS_DATE = DateTime.Now;
@@ -50,7 +56,7 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View("Term_Master");
+                return View("AddTerm",objTerm);
             }
         }
         [HttpGet]
@@ -77,12 +83,18 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult EditTerm(Term_Master objTerm)
         {
-            objTerm.UDT_DATE = DateTime.Now;
-            objTerm.UDT_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.Term_Master.Update(objTerm);
-            dbContext.SaveChanges();
-            return RedirectToAction("Term_Master");
-
+            if (ModelState.IsValid)
+            {
+                objTerm.UDT_DATE = DateTime.Now;
+                objTerm.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.Term_Master.Update(objTerm);
+                dbContext.SaveChanges();
+                return RedirectToAction("Term_Master");
+            }
+            else
+            {
+                return View(objTerm);
+            }
         }
         [HttpGet]
         public IActionResult DeleteTerm(int ID)
