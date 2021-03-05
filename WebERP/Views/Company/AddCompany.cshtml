@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.Company
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
@@ -11,57 +11,25 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label class="form-label">NAME</label>
+                            <label class="form-label">Name</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="Name" id="Name">
-                                <span asp-validation-for="NAME" class="text-danger"></span>
                             </div>
+                            <span asp-validation-for="NAME" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label class="form-label">ABBRIVATION</label>
+                            <label class="form-label">Abbreviation</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="Abv" id="Abv" >
+                                <input type="text" class="form-control numb" name="Abv" id="Abv">
                             </div>
+                            <span asp-validation-for="ABV" class="text-danger"></span>
                         </div>
-                        @*<div class="form-group">
-                    <label for="branch_id">Employee</label>
-                    <select type="text" class="form-control" name="employee" id="employee" >
-                        <option value="1">Sam</option>
-
-                        <option value="2">Deep</option>
-
-                        <option value="3">John</option>
-
-                        <option value="4">Mariam</option>
-
-                        <option value="5">Julie</option>
-
-                        <option value="6">Shenoy</option>
-
-                        <option value="7">Adam</option>
-
-                        <option value="8">Sunny</option>
-
-                        <option value="9">SuperAdmin</option>
-
-                        <option value="10">Jeet</option>
-
-                        <option value="11">Sagar</option>
-
-                        <option value="12">Pritpal</option>
-
-                        <option value="13">Hp</option>
-
-                        <option value="14">User2</option>
-
-                    </select>
-                </div>*@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">ACTIVE_TAG</label>
+                            <label for="branch_id">Active Tag</label>
                             <div class="custom-radio">
                                 <select class="form-control" id="ACTIVE_TAG" name="ACTIVE_TAG">
                                     <option value="1">Yes</option>
@@ -72,7 +40,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">REMARKS</label>
+                            <label for="branch_id">Remarks</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="REMARKS" id="REMARKS">
                             </div>
@@ -83,16 +51,16 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label class="form-label">ADDRESS LINE 1</label>
+                            <label class="form-label">Address Line 1</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="ADD1" id="ADD1">
-                                <span asp-validation-for="ADD1" class="text-danger"></span>
                             </div>
+                            <span asp-validation-for="ADD1" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label class="form-label">ADDRESS LINE 2</label>
+                            <label class="form-label">Address Line 2</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="ADD2" id="ADD2">
                             </div>
@@ -100,20 +68,42 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">CITY CODE</label>
+                            <label for="branch_id">Country</label>
                             <div class="input-group">
-                                <input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE">
-                                <span asp-validation-for="CITY_CODE" class="text-danger"></span>
+                                <select name="Country_Code" id="ddlCountry" class="form-control" asp-items="@(new SelectList(Model.countryDropDown,"Value", "Text"))"></select>
+                                @*<input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE">*@
+                                @*<span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
+                            </div>
+                            <span asp-validation-for="Country_Code" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">State</label>
+                            <div class="input-group">
+                                <select name="State_Code" id="ddlState" class="form-control" asp-items="@(new SelectList(string.Empty,"Value", "Text"))"></select>
+                                @*<input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE">
+                    <span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">PIN CODE</label>
+                            <label for="branch_id">City</label>
+                            <div class="input-group">
+                                <select name="CITY_CODE" id="ddlCity" class="form-control" asp-items="@(new SelectList(string.Empty,"Value", "Text"))"></select>
+                                @*<input type="text" class="form-control numb" name="CITY_CODE" id="CITY_CODE">
+                    <span asp-validation-for="CITY_CODE" class="text-danger"></span>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Pin Code</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="PIN_CODE" id="PIN_CODE">
-                                <span asp-validation-for="PIN_CODE" class="text-danger"></span>
                             </div>
+                            <span asp-validation-for="PIN_CODE" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -121,25 +111,25 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">EMAIL ID</label>
+                            <label for="branch_id">Email Id</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="EMAIL_ID" id="EMAIL_ID">
-                                <span asp-validation-for="EMAIL_ID" class="text-danger"></span>
                             </div>
+                            <span asp-validation-for="EMAIL_ID" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">MOBILE NO</label>
+                            <label for="branch_id">Mobile No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="MOBILE_NO" id="MOBILE_NO">
-                                <span asp-validation-for="MOBILE_NO" class="text-danger"></span>
                             </div>
+                            <span asp-validation-for="MOBILE_NO" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">PHONE NO</label>
+                            <label for="branch_id">Phone No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="PH_NO" id="PH_NO">
                             </div>
@@ -147,7 +137,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">FAX NO</label>
+                            <label for="branch_id">Fax No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="FAX_NO" id="FAX_NO">
                             </div>
@@ -163,7 +153,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">LST NO</label>
+                            <label for="branch_id">Lst No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="LST_NO" id="LST_NO">
                             </div>
@@ -171,7 +161,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">LST DATE</label>
+                            <label for="branch_id">Lst Date</label>
                             <div class="input-group">
                                 <input type="date" class="form-control" name="LST_DATE" id="LST_DATE">
                             </div>
@@ -179,7 +169,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">CST NO</label>
+                            <label for="branch_id">Cst No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="CST_NO" id="CST_NO">
                             </div>
@@ -187,7 +177,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">CST DATE</label>
+                            <label for="branch_id">Cst Date</label>
                             <div class="input-group">
                                 <input type="date" class="form-control" id="CST_DAT" name="CST_DAT">
                                 @*<input type="text" class="form-control numb" name="CST_DATE" id="CST_DATE" placeholder="CST DATE" value="">*@
@@ -199,7 +189,7 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">BANK NAME</label>
+                            <label for="branch_id">Bank Name</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="BANK_NAME" id="BANK_NAME">
                             </div>
@@ -207,7 +197,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">BANK ACCOUNT NO</label>
+                            <label for="branch_id">Bank Account No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="BANK_ACC_NO" id="BANK_ACC_NO" >
                             </div>
@@ -215,7 +205,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">BANK BRANCH</label>
+                            <label for="branch_id">Bank Branch</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="BANK_BRANCH" id="BANK_BRANCH" >
                             </div>
@@ -223,7 +213,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">IFSC CODE</label>
+                            <label for="branch_id">IFSC Code</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="IFSC_CODE" id="IFSC_CODE" >
                             </div>
@@ -234,25 +224,25 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">GST NO</label>
+                            <label for="branch_id">GST No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="GST_NO" id="GST_NO">
-                                <span asp-validation-for="GST_NO" class="text-danger"></span>
                             </div>
+                            <span asp-validation-for="GST_NO" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">PAN NO</label>
+                            <label for="branch_id">PAN No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="PAN_NO" id="PAN_NO">
-                                <span asp-validation-for="PAN_NO" class="text-danger"></span>
                             </div>
+                            <span asp-validation-for="PAN_NO" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">SERVICE TAX NO</label>
+                            <label for="branch_id">Service Tax No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="SERVICE_TAX_NO" id="SERVICE_TAX_NO">
                             </div>
@@ -260,7 +250,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">TIN NO</label>
+                            <label for="branch_id">TIN No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="TIN_NO" id="TIN_NO">
                             </div>
@@ -269,7 +259,7 @@
 
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">ECC NO</label>
+                            <label for="branch_id">ECC No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="ECC_NO" id="ECC_NO">
                             </div>
@@ -279,7 +269,7 @@
 
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">ESI NO</label>
+                            <label for="branch_id">ESI No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="ESI_NO" id="ESI_NO">
                             </div>
@@ -287,7 +277,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">PF NO</label>
+                            <label for="branch_id">PF No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="PF_NO" id="PF_NO">
                             </div>
@@ -295,7 +285,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">TDS NO</label>
+                            <label for="branch_id">TDS No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="TDS_NO" id="TDS_NO">
                             </div>
@@ -303,7 +293,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">MSME NO</label>
+                            <label for="branch_id">MSME No</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="MSME_NO" id="MSME_NO">
                             </div>
@@ -311,7 +301,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">LOGO NAME</label>
+                            <label for="branch_id">Logo Name</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" name="LOGO_NAME" id="LOGO_NAME">
                             </div>
@@ -332,3 +322,28 @@
 
     </div>
 </div>
+<script>
+    $(function () {
+        $("#ddlCountry").change(function (){
+            $.getJSON("/Account/Getstatelist", { cid: $("#ddlCountry").val() }, function (d) {
+                var row = "";
+                $("#ddlState").empty();
+                $("#ddlCity").empty();
+                $.each(d, function (i, v) {
+                    row += "<option value=" + v.value + ">" + v.text + "</option>";
+                });
+                $("#ddlState").html(row);
+            })
+        })
+        $("#ddlState").change(function () {
+            $.getJSON("/Account/GetCitylist", { sid: $("#ddlState").val() }, function (d) {
+                var row = "";
+                $("#ddlCity").empty();
+                $.each(d, function (i, v) {
+                    row += "<option value=" + v.value + ">" + v.text + "</option>";
+                });
+                $("#ddlCity").html(row);
+            })
+        })
+    })
+</script>

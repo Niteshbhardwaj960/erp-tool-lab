@@ -35,25 +35,19 @@ namespace WebERP.Controllers
         }
         [HttpGet]
         public IActionResult AddAccount()
-        {
-            var countryList = (from country in dbContext.Countries
-                               select new SelectListItem()
-                               {
-                                   Text = country.Name,
-                                   Value = country.CountryCode.ToString(),
-                               }).ToList();
+        {           
+            Account_Master am = new Account_Master();
+            am.countryDropDown = Countrylists();
+            return View(am);
+        }
 
-            countryList.Insert(0, new SelectListItem()
-            {
-                Text = "Select Country",
-                Value = string.Empty,
-                Selected=true
-            });
-            var StateList = (from state in dbContext.States
+        public JsonResult Getstatelist(string cid)
+        {
+            var StateList = (from state in dbContext.States.Where(x => x.CountryId   == Convert.ToInt32(cid)).ToList()
                              select new SelectListItem()
                              {
                                  Text = state.Name,
-                                 Value = state.StateCode.ToString(),
+                                 Value = state.Id.ToString(),
                              }).ToList();
 
             StateList.Insert(0, new SelectListItem()
@@ -62,7 +56,11 @@ namespace WebERP.Controllers
                 Value = string.Empty,
                 Selected = true
             });
-            var cityList = (from city in dbContext.Cities
+            return Json(StateList);
+        }
+        public JsonResult GetCitylist(int sid)
+        {
+            var cityList = (from city in dbContext.Cities.Where(x => x.StateId == Convert.ToInt32(sid)).ToList()
                             select new SelectListItem()
                             {
                                 Text = city.Name,
@@ -75,31 +73,8 @@ namespace WebERP.Controllers
                 Value = string.Empty,
                 Selected = true
             });
-            Account_Master am = new Account_Master();
-            am.countryDropDown = countryList;
-            am.stateDropDown = StateList;
-            am.cityDropDown = cityList;
-            return View(am);
+            return Json(cityList);
         }
-
-        public ActionResult Getstatelist(int cid)
-        {
-            var StateList = (from state in dbContext.States
-                             select new SelectListItem()
-                             {
-                                 Text = state.Name,
-                                 Value = state.StateCode.ToString(),
-                             }).ToList();
-
-            StateList.Insert(0, new SelectListItem()
-            {
-                Text = "Select State",
-                Value = string.Empty,
-                Selected = true
-            });
-            return View(StateList);
-        }
-
         [HttpPost]
         public async Task<IActionResult> SAVEAccount(Account_Master objAccount)
         {
@@ -133,6 +108,9 @@ namespace WebERP.Controllers
             Account_Master objAccount = new Account_Master();
             objAccount = dbContext.Account_Masters.Find(id);
             objAccount.Type = "Edit";
+            objAccount.countryDropDown = Countrylists();
+            objAccount.stateDropDown = Statelists(objAccount.Country_Code);
+            objAccount.cityDropDown = Citylists(objAccount.State_Code);
             dbContext.Account_Masters.Update(objAccount);
             dbContext.SaveChanges();
             return View(objAccount);
@@ -225,6 +203,58 @@ namespace WebERP.Controllers
                         "Accounts.xlsx");
                 }
             }
+        }
+
+        public List<SelectListItem> Countrylists()
+        {
+            var countryList = (from country in dbContext.Countries
+                               select new SelectListItem()
+                               {
+                                   Text = country.Name,
+                                   Value = country.Id.ToString(),
+                               }).ToList();
+
+            countryList.Insert(0, new SelectListItem()
+            {
+                Text = "Select Country",
+                Value = string.Empty,
+                Selected = true
+            });
+            return countryList;
+        }
+        public List<SelectListItem> Statelists(string cid)
+        {
+            var StateList = (from state in dbContext.States.Where(x => x.CountryId == Convert.ToInt32(cid)).ToList()
+                             select new SelectListItem()
+                             {
+                                 Text = state.Name,
+                                 Value = state.Id.ToString(),
+                             }).ToList();
+
+            StateList.Insert(0, new SelectListItem()
+            {
+                Text = "Select State",
+                Value = string.Empty,
+                Selected = true
+            });
+            return StateList;
+        }
+        public List<SelectListItem> Citylists(string sid)
+        {
+            var cityList = (from city in dbContext.Cities.Where(x => x.StateId == Convert.ToInt32(sid)).ToList()
+                            select new SelectListItem()
+                            {
+                                Text = city.Name,
+                                Value = Convert.ToString(city.Id)
+                            }).ToList();
+
+            cityList.Insert(0, new SelectListItem()
+            {
+                Text = "Select City",
+                Value = string.Empty,
+                Selected = true
+            });
+            return cityList;
         }
     }
 }

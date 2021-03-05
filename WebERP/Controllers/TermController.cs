@@ -54,11 +54,26 @@ namespace WebERP.Controllers
             }
         }
         [HttpGet]
+        public IActionResult ActionTerm(int id)
+        {
+            Term_Master objTerm = new Term_Master();
+            objTerm = dbContext.Term_Master.Find(id);
+            objTerm.Type = "Action";
+            dbContext.Term_Master.Update(objTerm);
+            dbContext.SaveChanges();
+            return View("EditTerm", objTerm);
+        }
+        [HttpGet]
         public IActionResult EditTerm(int id)
         {
-            return View(dbContext.Term_Master.Find(id));
+            Term_Master objTerm = new Term_Master();
+            objTerm = dbContext.Term_Master.Find(id);
+            objTerm.Type = "Edit";
+            dbContext.Term_Master.Update(objTerm);
+            dbContext.SaveChanges();
+            return View(objTerm);
         }
-
+       
         [HttpPost]
         public IActionResult EditTerm(Term_Master objTerm)
         {
