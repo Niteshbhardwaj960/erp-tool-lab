@@ -52,9 +52,9 @@
                                 @Html.DisplayFor(modelItem => item.INS_UID)
                             </td>
                             <td>
-                                <a asp-action="EditPODetails" asp-controller="PO" asp-route-id="@item.POH_PK">
+                                @*<a asp-action="EditPODetails" asp-controller="PO" asp-route-id="@item.POH_PK">
                                     <i class="fas fa-user-edit"></i>
-                                </a>&nbsp;&nbsp;
+                                </a>&nbsp;&nbsp;*@
                                 <a asp-action="DeletePODetails" asp-controller="PO" asp-route-id="@item.POH_PK">
                                     <i class="far fa-trash-alt"></i>
                                 </a>&nbsp;&nbsp;
