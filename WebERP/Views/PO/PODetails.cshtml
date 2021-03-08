@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebERP.Models.POHeaderModel>
+﻿@model WebERP.Models.POViewModel
 
 @{
     ViewData["Title"] = "PODetails";
@@ -9,158 +9,208 @@
 
 <div class="card">
     <div class="card-body">
-        <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label for="company_id">Company</label>
-                    <select type="text" class="form-control" name="company_id" id="company_id" required="">
-                        <option value="12" selected="">001 - Company 1</option>
-                        <option value="12" selected="">002 - Company 2</option>
-                        <option value="12" selected="">003 - Company 3</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <label for="dop">Date of Purchase</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
-                        </div>
+        <form asp-action="AddCity">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="company_id">Company</label>
+                        <select asp-for="POHeader.COMP_CODE" class="form-control"
+                                asp-items="@(new SelectList(Model.POHeader.companyDropDown,"Value", "Text"))"></select>
                     </div>
-                    <input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="date" name="dop" id="dop" value="2021-02-03">
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <label for="dop">Date of Purchase</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                            </div>
+                        </div>
+                        <input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="date" asp-for="POHeader.ORDER_DATE">
+                    </div>
+
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="series_number">Order Financial Year</label>
+                        <input type="text" class="form-control" asp-for="POHeader.ORDER_FINYEAR" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="order_number">Order number</label>
+                        <input type="text" class="form-control" asp-for="POHeader.ORDER_NO" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="form-group">
+                        <label for="acc_code">Acc Code</label>
+                        <select asp-for="POHeader.ACC_CODE" class="form-control"
+                                asp-items="@(new SelectList(Model.POHeader.accDropDown,"Value", "Text"))"></select>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label for="remarks">Remarks</label>
+                        <input type="text" class="form-control" asp-for="POHeader.REMARKS" placeholder="Place order remarks here">
+                    </div>
+                </div>
+            </div>
+            <hr class="alert-danger" />
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive form-group">
+                        <table class="table table-hover" id="poDtlTable">
+                            <thead class="thead-light">
+                                <tr style="text-align:center;">
+                                    <th>Item</th>
+                                    <th>Qty</th>
+                                    <th>Qty UOM</th>
+                                    <th>Rate</th>
+                                    <th>Rate UOM</th>
+                                    <th>Disc Per</th>
+                                    <th>Disc Rate</th>
+                                    <th>Net Rate</th>
+                                    <th>Amt.</th>
+                                    <th>Delivery Date</th>
+                                    <th>Status</th>
+                                    <th>Remarks</th>
+                                    <th style="text-align:center;">
+                                        <a href="#" class="btn btn-info" id="addRow">
+                                            <i class="fa fa-plus-circle"></i>Add
+                                        </a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PODetails)
+                                {
+                                    <tr class="template">
+                                        <td>
+                                           @Html.DropDownListFor(x => item.ITEM_CODE,
+                                          new SelectList(item.GetItems,"Value","Text"),new { @class="form-control"})
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(x => item.QTY,new { @class="form-control"})
+                                            @*<input type="text" class="form-control" asp-for="@poItem.QTY" />*@                                            
+                                        </td>
+                                        <td>
+                                           @Html.TextBoxFor(x => item.QTY,new { @class="form-control"})
+                                        </td>
+                                        <td>
+                                           @Html.TextBoxFor(x => item.QTY,new { @class="form-control"})
+                                        </td>
+                                        <td>
+                                           @Html.TextBoxFor(x => item.QTY,new { @class="form-control"})
+                                        </td>
+                                        <td>
+                                           @Html.TextBoxFor(x => item.QTY,new { @class="form-control"})
+                                        </td>
+                                        <td>
+                                           @Html.TextBoxFor(x => item.QTY,new { @class="form-control"})
+                                        </td>
+                                        <td>
+                                           @Html.TextBoxFor(x => item.QTY,new { @class="form-control"})
+                                        </td>
+                                        <td>
+                                           @Html.TextBoxFor(x => item.QTY,new { @class="form-control"})
+                                        </td>
+                                        <td>
+                                            <input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="date" name="delDate" id="delDate" value="2021-02-03">
+                                        </td>
+                                        <td>
+                                           @Html.TextBoxFor(x => item.QTY,new { @class="form-control"})
+                                        </td>
+                                        <td>
+                                           @Html.TextBoxFor(x => item.QTY,new { @class="form-control"})
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="btn-group btn-group-sm">
+                                                    @*<a href="#" class="btn btn-primary mr-2" id="duplicateRow">
+                                                            <i class="fa fa-plus-circle"></i>Duplicate
+                                                      </a>*@
+                                                    <a href="#" class="btn btn-danger" id="deleteRow">
+                                                        <i class="fa fa-minus-circle"></i>Delete
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <label>Total Qty:</label>
+                                    </td>
+                                    <td colspan="2">
+                                        <input class="form-control" disabled />
+                                    </td>
+                                    <td colspan="3"></td>
+                                    <td>
+                                        <label>Total Amt:</label>
+                                    </td>
+                                    <td colspan="2">
+                                        <input class="form-control" disabled />
+                                    </td>
+                                    <td colspan="4"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
 
             </div>
-
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label for="series_number">Series</label>
-                    <input type="text" class="form-control" name="series_number" id="series_number" placeholder="Enter Current Financial Series" value="20202021">
+            <hr class="alert-danger" />
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <table class="table" id="poTermDtlTable">
+                            <thead>
+                                <tr>
+                                    <th>Terms & Conditions</th>
+                                    <th>Remarks</th>
+                                    <th style="text-align:center;">
+                                        <a href="#" class="btn btn-info" id="addTermRow">
+                                            <i class="fa fa-plus-circle"></i>Add
+                                        </a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:center;">
+                                        <a href="#" class="btn btn-danger" id="deleteTermRow">
+                                            <i class="fa fa-minus-circle"></i>Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+            <hr class="alert-light" />
+            <div class="col-lg-12 col-md-12 col-sm-12" style="text-align:center;">
+                &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-left" asp-controller="PO" asp-action="POGridDetails">Close</a>
+                <button class="btn btn-app btn-success mr-2 mt-1 mb-1 us-button pull-left" asp-controller="Company" asp-action="EditCompany">
+                    <i class="fa fa-save"></i> Save
+                </button>
 
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="form-group">
-                    <label for="order_number">Order number</label>
-                    <input type="text" class="form-control" name="order_number" id="order_number" value="202020233">
-                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-3">
-                <div class="form-group">
-                    <label for="acc_code">Acc Code</label>
-                    <select type="text" class="form-control" name="acc_code" id="acc_code" required="">
-                        <option value="12" selected="">001 - Acc 1</option>
-                        <option value="12" selected="">002 - Acc 2</option>
-                        <option value="12" selected="">003 - Acc 3</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="form-group">
-                    <label for="remarks">Remarks</label>
-                    <input type="text" class="form-control" name="remarks" id="remarks" placeholder="Place order remarks here">
-                </div>
-            </div>
-        </div>
-        <hr class="alert-danger" />
-
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="form-group">
-                    <table class="table table-bordered text-nowrap w-100" id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>Indent No</th>
-                                <th>Catalog Item</th>
-                                <th>Party Item Name</th>
-                                <th>Quantity</th>
-                                <th>Rate</th>
-                                <th>Disc Per</th>
-                                <th>Disc Rate</th>
-                                <th>Net Rate</th>
-                                <th>Amount</th>
-                                <th>Delivery Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr class="template">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <a href="#" class="btn btn-primary" id="addRow">
-                                                <i class="fa fa-plus-circle"></i>Add
-                                            </a>
-
-                                            <a href="#" class="btn btn-primary" id="deleteRow">
-                                                <i class="fa fa-minus-circle"></i>Delete
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-        <hr class="alert-danger" />
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="form-group">
-                    <table class="table table-bordered text-nowrap w-100">
-                        <thead>
-                            <tr>
-                                <th>Terms & Conditions</th>
-                                <th>Remarks</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
+
+<script src="~/scripts/erpPoDetails.js"></script>

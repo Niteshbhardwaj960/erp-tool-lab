@@ -1,0 +1,80 @@
+﻿@model IEnumerable<WebERP.Models.POHeaderModel>
+
+@{
+    ViewData["Title"] = "POGridDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+    <h3 style="color:white">Purchasing Order Details</h3>
+</nav>
+@if (Model.Any())
+{
+    <a class="btn btn-success text-white" href="/PO/PODetails">
+        Create New PO
+    </a>
+    <hr />
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Order Date</th>
+                            <th>Order No</th>
+                            <th>Acc Code</th>
+                            <th>Create Date</th>
+                            <th>Created By</th>
+                            <th>User Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.COMP_CODE)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ORDER_DATE)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ORDER_NO)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ACC_CODE)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.INS_DATE)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.INS_UID)
+                                </td>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.POH_PK">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No PO Has Been Created Yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to Create New PO
+            </h5>
+            <a class="btn btn-success text-white" href="/PO/PODetails">
+                Create New PO
+            </a>
+        </div>
+    </div>
+}

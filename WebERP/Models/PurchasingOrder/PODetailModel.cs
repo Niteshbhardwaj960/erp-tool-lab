@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebERP.Models
 {
@@ -21,6 +22,9 @@ namespace WebERP.Models
         public virtual POHeaderModel POHeaderModel { get; set; }
 
         public int ITEM_CODE { get; set; }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> GetItems { get; set; }
 
         [RegularExpression(@"^\d+\.\d{0,3}$")]
         [Range(0, 999999999999.999)]
