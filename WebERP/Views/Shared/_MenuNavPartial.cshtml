@@ -18,7 +18,13 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Gate Entry</span>
         </a>
-    </li>    
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" asp-controller="PO" asp-action="POGridDetails">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>PO Master</span>
+        </a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
@@ -47,7 +53,7 @@
                 <a class="collapse-item" asp-controller="Artical" asp-action="Artical_Master">Artical Master</a>
                 <a class="collapse-item" asp-controller="Item" asp-action="Item_Master">Item Master</a>
                 <a class="collapse-item" asp-controller="Location" asp-action="LocationDetails">Location Master</a>
-                <a class="collapse-item" asp-controller="PO" asp-action="PODetails">PO Master</a>
+                @*<a class="collapse-item" asp-controller="PO" asp-action="POGridDetails">PO Master</a>*@
 
                 <a class="collapse-item" asp-controller="Process" asp-action="Process_Master">Process Master</a>
                 <a class="collapse-item" asp-controller="ProcessRate" asp-action="ProcessRate_Master">Process Rate Master</a>
@@ -127,11 +133,11 @@
         </li>*@
     <!-- Nav Item - Charts -->
     @*<li class="nav-item">
-        <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Reports</span>
-        </a>
-    </li>*@
+            <a class="nav-link" href="charts.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Reports</span>
+            </a>
+        </li>*@
     <!-- Nav Item - Tables -->
     @*<li class="nav-item">
             <a class="nav-link" href="tables.html">
