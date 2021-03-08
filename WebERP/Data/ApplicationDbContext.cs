@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebERP.Models;
 //using WebERP.Models.Location;
-using WebERP.Models.Location;
+using WebERP.Models;
 using WebERP.Models.GateEntry;
 
 namespace WebERP.Data

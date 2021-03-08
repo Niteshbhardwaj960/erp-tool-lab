@@ -1,7 +1,6 @@
-﻿@*@model IEnumerable<WebERP.ModelsPurchasingOrder.PODetailModel>*@
-@model WebERP.Models.GateEntryViewModel
-<script src="~/lib/jquery/dist/jquery.js"></script>
+﻿@model WebERP.Models.GateEntryViewModel
 
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
@@ -25,7 +24,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label class="form-label">Account Name</label>
-                            <div class="input-group">                               
+                            <div class="input-group">
                                 <select id="ddlACC" name="ddlACC" class="form-control" asp-items="@(new SelectList( Model.Gate_HDR.AccDropDown ,"Value", "Text"))"></select>
                             </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
@@ -42,7 +41,13 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label class="form-label">Document Finyear</label>
-                            <input type="text" class="form-control numb" name="FinYear" id="FinYear">
+                            <input type="text" readonly="readonly" class="form-control numb" name="FinYear" id="FinYear">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Remarks</label>
+                            <input type="text" class="form-control numb" name="Remarks" id="Remarks">
                         </div>
 
                     </div>
@@ -56,48 +61,49 @@
                                     <tr>
                                         <th></th>
                                         <th>Order No</th>
-                                        <th>Order Date</th>
                                         <th>Item Name</th>
+                                        <th>Order Date</th>
                                         <th>Qty</th>
                                         <th>Qty UOM</th>
                                         <th>Gate Entry Qty</th>
                                         <th>Bal Qty</th>
+                                        <th>Remarks</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @*@if (Model != null && Model.v_GateEntryDetails.Count > 0)
-                                    {
-                                        int j = 0;
-                                        foreach (var i in Model.v_GateEntryDetails)
                                         {
-                                    <tr style="border:1px solid black">
-                                        <td>
-                                            @Html.CheckBoxFor("Field1", Model.v_GateEntryDetails)
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.v_GateEntryDetails[j].POD_PK, new { @class = "form-control" })
-                                            @Html.TextBoxFor(a => a.v_GateEntryDetails[j].POH_PK, new { @class = "form-control" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.v_GateEntryDetails[j].ORDER_DATE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(a => a.v_GateEntryDetails[j].ORDER_DATE, new { @class = "form-control" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.v_GateEntryDetails[j].ITEM_CODE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(a => a.v_GateEntryDetails[j].ITEM_NAME, new { @class = "form-control" })
-                                        </td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY, new { @class = "form-control" })</td>
-                                        <td>
-                                            @Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY_UOM, new { @class = "form-control" })
-                                            @Html.HiddenFor(a => a.v_GateEntryDetails[j].QTY_CODE, new { @class = "form-control" })
-                                        </td>
+                                            int j = 0;
+                                            foreach (var i in Model.v_GateEntryDetails)
+                                            {
+                                        <tr style="border:1px solid black">
+                                            <td>
+                                                @Html.CheckBoxFor("Field1", Model.v_GateEntryDetails)
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(a => a.v_GateEntryDetails[j].POD_PK, new { @class = "form-control" })
+                                                @Html.TextBoxFor(a => a.v_GateEntryDetails[j].POH_PK, new { @class = "form-control" })
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(a => a.v_GateEntryDetails[j].ORDER_DATE, new { @class = "form-control" })
+                                                @Html.TextBoxFor(a => a.v_GateEntryDetails[j].ORDER_DATE, new { @class = "form-control" })
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(a => a.v_GateEntryDetails[j].ITEM_CODE, new { @class = "form-control" })
+                                                @Html.TextBoxFor(a => a.v_GateEntryDetails[j].ITEM_NAME, new { @class = "form-control" })
+                                            </td>
+                                            <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY, new { @class = "form-control" })</td>
+                                            <td>
+                                                @Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY_UOM, new { @class = "form-control" })
+                                                @Html.HiddenFor(a => a.v_GateEntryDetails[j].QTY_CODE, new { @class = "form-control" })
+                                            </td>
 
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Gate_Entry_Qty, new { @class = "form-control" })</td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].BAL_QTY, new { @class = "form-control" })</td>
-                                    </tr>
-                                            j++;
-                                        }
-                                    }*@
+                                            <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Gate_Entry_Qty, new { @class = "form-control" })</td>
+                                            <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].BAL_QTY, new { @class = "form-control" })</td>
+                                        </tr>
+                                                j++;
+                                            }
+                                        }*@
                                 </tbody>
                             </table>
                             @*<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -144,6 +150,7 @@
             debugger;
             $.getJSON("/GateEntry/GetGrdData", { accid: $("#ddlACC").val(), work: $('#ddlwork').val() }, function (json) {
                 var tr;
+                console.log(json);
                 $(".dataTables_empty").remove();
                 for (var i = 0; i < json.length; i++) {
                     tr = $('<tr/>');
@@ -153,12 +160,28 @@
                     tr.append("<td>" + json[i].ordeR_DATE + "</td>");
                     tr.append("<td>" + json[i].qty + "</td>");
                     tr.append("<td>" + json[i].qtY_UOM + "</td>");
-                    tr.append("<td>" + json[i].gatE_Entry_Qty + "</td>");
-                    tr.append("<td>" + json[i].baL_QTY + "</td>"); 
+                    tr.append("<td>" + json[i].gate_Entry_Qty + "</td>");
+                    tr.append("<td>" + json[i].baL_QTY + "</td>");
+                    tr.append("<td>" + json[i].remarks + "</td>");
                     $('#dataTable').append(tr);
                 }
             })
 
         })
+    })
+
+    $(function () {
+        $("#doc_Date").change(function () {
+            debugger;
+            var date = $(this).val();
+            var financial_year = "";
+            var today = new Date(date);
+            if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
+                financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
+            } else {
+                financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
+            }
+            $("#FinYear").val(financial_year);
+        });
     })
 </script>

@@ -14,7 +14,16 @@
                             <div class="form-group">
                                 <label for="branch_id">Account Name</label>
                                 <div class="custom-radio">
-                                    @Html.TextBoxFor(a => a.Gate_HDR.Acc_Code, new { @class = "form-control" })
+                                    @Html.TextBoxFor(a => a.Gate_HDR.Acc_Name, new { @class = "form-control", @readOnly = "readonly" })
+                                    @Html.HiddenFor(a => a.Gate_HDR.Acc_Code, new { @class = "form-control", @readOnly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Document Date</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(a => a.Gate_HDR.Doc_Date, new { @class = "form-control"})
                                 </div>
                             </div>
                         </div>
@@ -22,15 +31,23 @@
                             <div class="form-group">
                                 <label for="branch_id">Document Financial Year</label>
                                 <div class="input-group">
-                                    @Html.TextBoxFor(a => a.Gate_HDR.Doc_Date, new { @class = "form-control" })
+                                    @Html.TextBoxFor(a => a.Gate_HDR.Doc_FN_Year, new { @class = "form-control", @readOnly = "readonly" })
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12">
                             <div class="form-group">
-                                <label for="branch_id">Document Financial Year</label>
+                                <label for="branch_id">Document Number</label>
                                 <div class="input-group">
-                                    @Html.TextBoxFor(a => a.Gate_HDR.Doc_FN_Year, new { @class = "form-control" })
+                                    @Html.TextBoxFor(a => a.Gate_HDR.Doc_No, new { @class = "form-control", @readOnly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Remarks</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(a => a.Gate_HDR.Remarks, new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>
@@ -64,21 +81,21 @@
                                         {
                                     <tr style="border:1px solid black">
                                         <td>@Html.HiddenFor(a => a.v_GateEntryDetails[j].POD_PK, new { @class = "form-control" })
-                                        @Html.TextBoxFor(a => a.v_GateEntryDetails[j].POH_PK, new { @class = "form-control" })</td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_NO, new { @class = "form-control" })</td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_DATE, new { @class = "form-control" })</td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_NO, new { @class = "form-control" })</td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_Date, new { @class = "form-control" })</td>
+                                        @Html.TextBoxFor(a => a.v_GateEntryDetails[j].POH_PK, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_NO, new { @class = "form-control"})</td>
+                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_DATE, new { @class = "form-control fc-datepicker", @type = "date" })</td>
+                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_NO, new { @class = "form-control"})</td>
+                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_Date, new { @class = "form-control fc-datepicker", @type = "date" })</td>
                                         <td>@Html.HiddenFor(a => a.v_GateEntryDetails[j].ITEM_CODE, new { @class = "form-control" })
-                                        @Html.TextBoxFor(a => a.v_GateEntryDetails[j].ITEM_NAME, new { @class = "form-control" })</td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY, new { @class = "form-control" })</td>
+                                        @Html.TextBoxFor(a => a.v_GateEntryDetails[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
                                         <td>
-                                            @Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY_UOM, new { @class = "form-control" })
+                                            @Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
                                             @Html.HiddenFor(a => a.v_GateEntryDetails[j].QTY_CODE, new { @class = "form-control" })
                                         </td>
                                                                             
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Gate_Entry_Qty, new { @class = "form-control" })</td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].BAL_QTY, new { @class = "form-control" })</td>
+                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Gate_Entry_Qty, new { @class = "form-control", @type = "number"})</td>
+                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].BAL_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
                                         <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].REMARKS, new { @class = "form-control" })</td>
                                         @*<td><input type="text" data-mdb-toggle="tooltip" title="[j].ORDER_NO" class="form-control" value="[j].ORDER_NO" name="[j].ORDER_NO"></td>
         <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ACC_CODE" class="form-control" value="@Data.ACC_CODE" name="ACC_CODE"></td>

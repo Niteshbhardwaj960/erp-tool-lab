@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210308142154_GATEHDRCOlumnchange")]
+    partial class GATEHDRCOlumnchange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -450,8 +452,6 @@ namespace WebERP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ACC_NAME");
-
                     b.Property<DateTime?>("Bill_Date");
 
                     b.Property<string>("Bill_NO");
@@ -461,8 +461,6 @@ namespace WebERP.Data.Migrations
                     b.Property<string>("CHL_NO");
 
                     b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<string>("Doc_No");
 
                     b.Property<string>("FIN_YEAR");
 

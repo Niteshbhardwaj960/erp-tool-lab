@@ -31,5 +31,7 @@ namespace WebERP.Models.GateEntry
         public string Remarks { get; set; }
         public string FIN_YEAR { get; set; }
         public DateTime? DOC_DATE { get; set; }
+        public string ACC_NAME { get; set; }
+        public string Doc_No { get; set; }
     }
 }

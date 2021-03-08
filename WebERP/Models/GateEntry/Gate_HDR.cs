@@ -24,6 +24,7 @@ namespace WebERP.Models
         public string Doc_FN_Year { get; set; }
         public string Doc_No { get; set; }
         public string Acc_Code { get; set; }
+        public string Acc_Name { get; set; }
         public string Remarks { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
