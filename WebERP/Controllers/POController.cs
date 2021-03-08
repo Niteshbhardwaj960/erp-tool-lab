@@ -230,6 +230,8 @@ namespace WebERP.Controllers
             #endregion
 
             #region Detail Fill
+            double grandTotal = 0;
+            decimal grandQTotal = 0;
             var PODetailList = dbContext.PODetail_Master.Where(x => x.POH_FK == id).ToList();
             foreach (var poDetailModel in PODetailList)
             {
@@ -239,6 +241,10 @@ namespace WebERP.Controllers
                 poDetailModel.RATEUOM_NAME = dbContext.UOM_MASTER.
                                            Where(x => x.ID == poDetailModel.RATE_UOM).
                                            Select(y => y.NAME).FirstOrDefault();
+                poDetailModel.AMOUNT = Convert.ToString(
+                                        Convert.ToDouble(poDetailModel.QTY) * Convert.ToDouble(poDetailModel.NET_RATE));
+                grandQTotal += Convert.ToDecimal(poDetailModel.QTY);
+                grandTotal += Convert.ToDouble(poDetailModel.AMOUNT);
                 if (poDetailModel.POD_PK_STATUS == "A")
                     poDetailModel.POD_PK_STATUS = "Active";
                     if (poDetailModel.POD_PK_STATUS == "F")
@@ -247,6 +253,8 @@ namespace WebERP.Controllers
                     poDetailModel.POD_PK_STATUS = "Cancelled";
                 poDetailList.Add(poDetailModel);
             }
+            ViewBag.pograndTotal = grandTotal;
+            ViewBag.pograndQTotal = grandQTotal;
             poViewModel.PODetails = poDetailList;
             #endregion
 
@@ -261,8 +269,7 @@ namespace WebERP.Controllers
                 poTermList.Add(poTermModel);
             }
             poViewModel.POTerms = poTermList;
-            #endregion
-            
+            #endregion            
             return View(poViewModel);
         }
         public ActionResult DeletePODetails(int id)
