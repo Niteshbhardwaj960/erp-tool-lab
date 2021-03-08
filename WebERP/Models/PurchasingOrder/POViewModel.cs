@@ -13,7 +13,5 @@ namespace WebERP.Models
         public POHeaderModel POHeader { get; set; }
         public List<PODetailModel> PODetails { get; set; }
         public List<POTermsModel> POTerms { get; set; }
-
-
     }
 }

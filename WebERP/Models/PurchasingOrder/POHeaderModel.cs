@@ -12,11 +12,14 @@ namespace WebERP.Models
     {
         [Key]
         public int POH_PK { get; set; }
+
         [Required(ErrorMessage = "Please select Company Name")]
-        public int COMP_CODE { get; set; }        
+        public int COMP_CODE { get; set; }
+        
         public DateTime ORDER_DATE { get; set; }
         public string ORDER_FINYEAR { get; set; }
         public int ORDER_NO { get; set; }
+
         [Required(ErrorMessage = "Please select Acc Name")]
         public int ACC_CODE { get; set; }
 
@@ -27,6 +30,10 @@ namespace WebERP.Models
         public DateTime? UDT_DATE { get; set; }
         public string UDT_UID { get; set; }
 
+        [NotMapped]
+        public string COMP_NAME { get; set; }
+        [NotMapped]
+        public string ACC_NAME { get; set; }
         [NotMapped]
         public ICollection<PODetailModel> PODetailItemList { get; set; }
         [NotMapped]
