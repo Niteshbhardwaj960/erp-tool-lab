@@ -15,7 +15,7 @@ namespace WebERP.Models.GateEntry
         public int JW_FK { get; set; }
         public int Order_No { get; set; }
         public int Item_Name { get; set; }
-        public string Item_UOM { get; set; }
+        public int Item_UOM { get; set; }
         public string CHL_NO { get; set; }
         public DateTime? CHL_DATE { get; set; }
         public string Bill_NO { get; set; }
@@ -28,7 +28,8 @@ namespace WebERP.Models.GateEntry
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
         public string UDT_UID { get; set; }
-        [NotMapped]
-        public string Type { get; set; }
+        public string Remarks { get; set; }
+        public string FIN_YEAR { get; set; }
+        public DateTime? DOC_DATE { get; set; }
     }
 }

@@ -12,19 +12,26 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" asp-controller="GateEntry" asp-action="GateEntry_Master">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+    </li>    
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGateEntry"
+           aria-expanded="true" aria-controls="collapseGateEntry">
+            <i class="fas fa-fw fa-cog"></i>
             <span>Gate Entry</span>
         </a>
+        <div id="collapseGateEntry" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">                
+                <a class="collapse-item" asp-controller="GateEntry" asp-action="Gate_Entry_Details">Gate Entry View</a>
+                <a class="collapse-item" asp-controller="GateEntry" asp-action="GateEntry_Master">Add Gate Entry</a>               
+            </div>
+        </div>
     </li>
     @*<li class="nav-item active">
-        <a class="nav-link" asp-controller="Location" asp-action="LocationDetails">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Locations Details</span>
-        </a>
-    </li>*@
+            <a class="nav-link" asp-controller="Location" asp-action="LocationDetails">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Locations Details</span>
+            </a>
+        </li>*@
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->

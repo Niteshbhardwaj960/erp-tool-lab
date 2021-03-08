@@ -1,0 +1,72 @@
+﻿@model IEnumerable<WebERP.Models.GateEntry.GateEntryDetail>
+
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Gate Entry Details</h3></nav>
+
+
+@if (Model.Any())
+{
+    <a class="btn btn-success" style="width:auto" asp-controller="GateEntry" asp-action="GateEntry_Master">
+        Add Gate Entry
+    </a>
+    <a class="btn btn-success" style="width:auto" asp-controller="Company" asp-action="Excel">
+        Export
+    </a>
+    <hr />
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Order No</th>
+                            <th>Item Name</th>
+                            <th>Iten UOM</th>
+                            <th>CHL NO</th>
+                            <th>CHL Date</th>
+                            <th>Bill NO</th>
+                            <th>Bill Date</th>
+                            <th>Stk Qty</th>
+                            <th>Stk UOM</th>
+                            <th>Fin Qty</th>
+                            <th>Fin UOM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var Data in Model)
+                        {
+                            <tr>
+                                <td>@Data.Order_No</td>
+                                <td>@Data.Item_Name</td>
+                                <td>@Data.Item_UOM</td>
+                                <td>@Data.CHL_NO</td>
+                                <td>@Data.CHL_DATE</td>
+                                <td>@Data.Bill_NO</td>
+                                <td>@Data.Bill_Date
+                                <td>@Data.Stk_Qty</td>
+                                <td>@Data.Stk_UOM</td>
+                                <td>@Data.Fin_Qty</td>
+                                <td>@Data.Fin_UOM</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No Gate Entry Created Yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to Add Gate Entry
+            </h5>
+            <a class="btn btn-primary" style="width:auto" asp-controller="GateEntry" asp-action="GateEntry_Master">
+                Add Gate Entry
+            </a>
+        </div>
+    </div>
+}

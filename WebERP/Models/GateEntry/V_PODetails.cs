@@ -11,7 +11,7 @@ namespace WebERP.Models
     public class V_PODetails
     {
         [Key]
-        public int ORDER_NO { get; set; }
+        public int POH_PK { get; set; }
         public string ACC_CODE { get; set; }
         public DateTime? ORDER_DATE { get; set; }
         public decimal QTY { get; set; }
