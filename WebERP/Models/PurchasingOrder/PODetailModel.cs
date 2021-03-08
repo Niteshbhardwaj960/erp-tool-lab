@@ -57,8 +57,13 @@ namespace WebERP.Models
 
         [StringLength(3)]
         public string POD_PK_STATUS { get; set; }
+
+        [NotMapped]
+        public string AMOUNT { get; set; }
+
         [StringLength(100)]
         public string REMARKS { get; set; }
+
         public string APPROVED_UID { get; set; }
         public DateTime? APPROVED_DATE { get; set; }
 
@@ -66,6 +71,11 @@ namespace WebERP.Models
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
         public string UDT_UID { get; set; }
-        
+
+        [NotMapped]
+        public string ITEM_NAME { get; set; }
+        [NotMapped]
+        public string RATEUOM_NAME { get; set; }
+
     }
 }
