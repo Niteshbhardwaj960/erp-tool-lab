@@ -34,7 +34,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label class="form-label">Document Date</label>
-                            <input type="Date" class="form-control numb" name="doc_Date" id="doc_Date">
+                            <input type="Date" class="form-control" name="doc_Date" id="doc_Date">
                         </div>
 
                     </div>
@@ -133,7 +133,7 @@
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Size_Master">Close</a>
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Gate_Entry_Details">Close</a>
                     <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" id="AddPO">
                         Add
                     </button>
@@ -155,7 +155,7 @@
                 for (var i = 0; i < json.length; i++) {
                     tr = $('<tr/>');
                     tr.append("<td>" + '<input type="checkbox" name="ckec" value="' + json[i].poD_PK + '" id="test' + i + '">' + "</td>");
-                    tr.append("<td>" + json[i].poH_PK + "</td>");
+                    tr.append("<td>" + json[i].ordeR_NO + "</td>");
                     tr.append("<td>" + json[i].iteM_NAME + "</td>");
                     tr.append("<td>" + json[i].ordeR_DATE + "</td>");
                     tr.append("<td>" + json[i].qty + "</td>");

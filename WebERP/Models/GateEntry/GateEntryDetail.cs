@@ -21,9 +21,10 @@ namespace WebERP.Models.GateEntry
         public string Bill_NO { get; set; }
         public DateTime? Bill_Date { get; set; }
         public int Stk_Qty { get; set; }
-        public int Stk_UOM  { get; set; }
+        public int Stk_UOM { get; set; }
         public int Fin_Qty { get; set; }
         public int Fin_UOM { get; set; }
+        public int GDW_NO { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
@@ -33,5 +34,13 @@ namespace WebERP.Models.GateEntry
         public DateTime? DOC_DATE { get; set; }
         public string ACC_NAME { get; set; }
         public string Doc_No { get; set; }
+        [NotMapped]
+        public Decimal PO_QTY { get; set; }
+        [NotMapped]
+        public Decimal BAL_QTY { get; set; }
+        [NotMapped]
+        public string ITEM_NAMEs {get; set;}
+        [NotMapped]
+        public string UOM_NAME { get; set; }
     }
 }

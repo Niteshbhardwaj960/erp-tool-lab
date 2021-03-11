@@ -24,7 +24,7 @@
                             <div class="input-group">
                                 @if (Model.Type == "Add")
                                 {
-                                    <input type="text" class="form-control numb" asp-for="Proc_Code">
+                                    <select asp-for="Proc_Code" id="Proc_Code" class="form-control" asp-items="@(new SelectList(Model.ProcDropDown,"Value", "Text"))"></select>
                                 }
                                 else
                                 {
@@ -32,6 +32,22 @@
                                 }
                             </div>
                             <span asp-validation-for="Proc_Code" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Process Name</label>
+                            <div class="input-group">
+                                @if (Model.Type == "Add")
+                                {
+                                    <select asp-for="Artical_Code" id="Artical_Code" class="form-control" asp-items="@(new SelectList(Model.ArticalDropDown,"Value", "Text"))"></select>
+                                }
+                                else
+                                {
+                                    <input type="text" readonly="readonly" class="form-control numb" asp-for="Artical_Code">
+                                }
+                            </div>
+                            <span asp-validation-for="Artical_Code" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -50,6 +66,14 @@
                                 <select asp-for="UOM_Code" id="UOMCODE" class="form-control" asp-items="@(new SelectList(Model.UOMDropDown,"Value", "Text"))"></select>
                             </div>
                             <span asp-validation-for="UOM_Code" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Commercial Rate</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="Comm_Rate">
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">

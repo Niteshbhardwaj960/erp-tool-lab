@@ -26,7 +26,7 @@
                                     @Html.TextBoxFor(a => a.Gate_HDR.Doc_Date, new { @class = "form-control"})
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="col-lg-4 col-md-4 col-sm-12">
                             <div class="form-group">
                                 <label for="branch_id">Document Financial Year</label>
@@ -81,7 +81,7 @@
                                         {
                                     <tr style="border:1px solid black">
                                         <td>@Html.HiddenFor(a => a.v_GateEntryDetails[j].POD_PK, new { @class = "form-control" })
-                                        @Html.TextBoxFor(a => a.v_GateEntryDetails[j].POH_PK, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                        @Html.TextBoxFor(a => a.v_GateEntryDetails[j].ORDER_NO, new { @class = "form-control", @readOnly = "readonly" })</td>
                                         <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_NO, new { @class = "form-control"})</td>
                                         <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_DATE, new { @class = "form-control fc-datepicker", @type = "date" })</td>
                                         <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_NO, new { @class = "form-control"})</td>

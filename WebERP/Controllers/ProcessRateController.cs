@@ -35,6 +35,8 @@ namespace WebERP.Controllers
             foreach (var item in UOM_list)
             {
                 item.UOM_Name = dbContext.UOM_MASTER.Where(s => s.ID == Convert.ToInt64(item.UOM_Code)).Select(s => s.NAME).FirstOrDefault();
+                item.Artical_Name = dbContext.Artical_Master.Where(s => s.ID == Convert.ToInt64(item.Artical_Code)).Select(s => s.NAME).FirstOrDefault();
+                item.Proc_Name = dbContext.Process_Master.Where(s => s.ID == Convert.ToInt64(item.Proc_Code)).Select(s => s.NAME).FirstOrDefault();
             }
             return View(UOM_list);
         }
@@ -43,6 +45,8 @@ namespace WebERP.Controllers
         {
             ProcessRate_Master obj = new ProcessRate_Master();
             obj.UOMDropDown = UOMlists();
+            obj.ArticalDropDown = Articallists();
+            obj.ProcDropDown = Processlists();
             obj.Type = "Add";
             return View("AddProcessRate", obj);
         }
@@ -76,6 +80,8 @@ namespace WebERP.Controllers
             var obj = dbContext.ProcessRate_Master.Find(id);
             obj.Type = "Action";
             obj.UOMDropDown = UOMlists();
+            obj.ArticalDropDown = Articallists();
+            obj.ProcDropDown = Processlists();
             return View("AddProcessRate", obj);
         }
         [HttpGet]
@@ -84,6 +90,8 @@ namespace WebERP.Controllers
            var obj = dbContext.ProcessRate_Master.Find(id);
             obj.Type = "Edit";
             obj.UOMDropDown = UOMlists();
+            obj.ArticalDropDown = Articallists();
+            obj.ProcDropDown = Processlists();
             return View("AddProcessRate", obj);
         }
 
@@ -172,6 +180,40 @@ namespace WebERP.Controllers
                 Selected = true
             });
             return UOMList;
+        }
+        public List<SelectListItem> Processlists()
+        {
+            var ProcessList = (from UOM in dbContext.Process_Master
+                           select new SelectListItem()
+                           {
+                               Text = UOM.NAME,
+                               Value = UOM.ID.ToString(),
+                           }).ToList();
+
+            ProcessList.Insert(0, new SelectListItem()
+            {
+                Text = "Select Process",
+                Value = string.Empty,
+                Selected = true
+            });
+            return ProcessList;
+        }
+        public List<SelectListItem> Articallists()
+        {
+            var ArticalList = (from UOM in dbContext.Artical_Master
+                               select new SelectListItem()
+                               {
+                                   Text = UOM.NAME,
+                                   Value = UOM.ID.ToString(),
+                               }).ToList();
+
+            ArticalList.Insert(0, new SelectListItem()
+            {
+                Text = "Select Artical",
+                Value = string.Empty,
+                Selected = true
+            });
+            return ArticalList;
         }
     }
 }

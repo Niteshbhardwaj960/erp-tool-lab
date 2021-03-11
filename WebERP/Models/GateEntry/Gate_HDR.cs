@@ -26,12 +26,15 @@ namespace WebERP.Models
         public string Acc_Code { get; set; }
         public string Acc_Name { get; set; }
         public string Remarks { get; set; }
+        public string Type { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
         public string UDT_UID { get; set; }
         [NotMapped]
         public List<SelectListItem> AccDropDown { get; set; }
+        [NotMapped]
+        public string ActionType { get; set; }
 
     }
 }

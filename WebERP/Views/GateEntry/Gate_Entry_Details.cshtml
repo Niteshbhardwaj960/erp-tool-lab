@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebERP.Models.GateEntry.GateEntryDetail>
+﻿@model IEnumerable<WebERP.Models.Gate_HDR>
 
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Gate Entry Details</h3></nav>
 
@@ -18,10 +18,10 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Order No</th>
-                            <th>Account Name</th>
+                            <th>Type</th>
+                            <th>Doc Date</th>
                             <th>Doc No</th>
-                            <th>Order Date</th>
+                            <th>Account Name</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -29,20 +29,20 @@
                         @foreach (var Data in Model)
                         {
                         <tr>
-                            <td>@Data.Order_No</td>
-                            <td>@Data.ACC_NAME</td>
-                            <td>@Data.Doc_No</td>
+                            <td>@Data.Type</td>
                             <td>@Data.INS_DATE</td>
+                            <td>@Data.Doc_No</td>
+                            <td>@Data.Acc_Name</td>
                             <td>
-                                @*<a asp-action="EditCompany" asp-controller="Company" asp-route-id="@Data.ID">
-                                    <i class="fas fa-user-edit"></i>
-                                </a>&nbsp;&nbsp;
-                                <a asp-action="DeleteCompany" asp-controller="Company" asp-route-id="@Data.ID">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>&nbsp;&nbsp;
-                                <a asp-action="ActionCompany" asp-controller="Company" asp-route-id="@Data.ID">
-                                    <i class="fas fa-eye"></i>
-                                </a>*@
+                                <a asp-action="EditGateEntry" asp-controller="GateEntry" asp-route-id="@Data.Doc_No">
+                <i class="fas fa-user-edit"></i>
+            </a>&nbsp;&nbsp;
+            <a asp-action="DeleteGateEntry" asp-controller="GateEntry" asp-route-id="@Data.Doc_No">
+                <i class="far fa-trash-alt"></i>
+            </a>&nbsp;&nbsp;
+            <a asp-action="ActionGateEntry" asp-controller="GateEntry" asp-route-id="@Data.Doc_No">
+                <i class="fas fa-eye"></i>
+            </a>
                             </td>
                         </tr>
                         }

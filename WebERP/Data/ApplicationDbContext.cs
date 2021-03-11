@@ -51,6 +51,9 @@ namespace WebERP.Data
         public DbSet<V_CITY_DTL> V_CITY_DTL { get; set; }
         public DbSet<GateEntryDetail> gateEntryDetails { get; set; }
         public DbSet<V_GateEntryDetail> V_GateEntryDetail { get; set; }
+        public DbSet<Department_Master> Department_Masters { get; set; }
+        public DbSet<Employee_Master> Employee_Masters { get; set; }
+        public DbSet<StockDTL_Model> StockDTL_Models { get; set; }
     }
 
 }
