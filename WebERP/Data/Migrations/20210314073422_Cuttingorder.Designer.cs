@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210314073422_Cuttingorder")]
+    partial class Cuttingorder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1045,65 +1047,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("V_CITY_DTL");
-                });
-
-            modelBuilder.Entity("WebERP.Models.V_CuttingDetail", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ARTICAL_CODE");
-
-                    b.Property<int>("ARTICAL_NAME");
-
-                    b.Property<int>("AVG_PC_WEIGHT");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<int>("CONT_EMP_CODE");
-
-                    b.Property<int>("CONT_EMP_NAME");
-
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<int>("DOC_FINYEAR");
-
-                    b.Property<int>("DOC_NO");
-
-                    b.Property<int>("EMP_CODE");
-
-                    b.Property<int>("EMP_NAME");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<int>("ITEM_CODE");
-
-                    b.Property<int>("ITEM_NAME");
-
-                    b.Property<int>("ORDER_QTY");
-
-                    b.Property<string>("ORDER_STATUS");
-
-                    b.Property<int>("PROC_CODE");
-
-                    b.Property<int>("PROC_NAME");
-
-                    b.Property<int>("SIZE_CODE");
-
-                    b.Property<int>("SIZE_NAME");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.Property<int>("WASTAGE_PER");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("V_CuttingDetails");
                 });
 
             modelBuilder.Entity("WebERP.Models.V_GateEntryDetail", b =>

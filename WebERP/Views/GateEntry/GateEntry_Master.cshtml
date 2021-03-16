@@ -15,7 +15,7 @@
                             <label class="form-label">Type of Order</label>
                             <div class="input-group">
                                 <select class="form-control" id="ddlwork" name="ddlwork">
-                                    <option value="1">Process Order</option>
+                                    <option value="1">Purchase Order</option>
                                     <option value="2">Job Work</option>
                                 </select>
                             </div>
@@ -52,7 +52,7 @@
 
                     </div>
                 </div>
-                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Process Order Details</b></h4>
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Purchase Order Details</b></h4>
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -183,5 +183,9 @@
             }
             $("#FinYear").val(financial_year);
         });
+    })
+
+    $(function () {
+        $("#ddlACC").chosen();
     })
 </script>

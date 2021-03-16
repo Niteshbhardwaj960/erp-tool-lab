@@ -54,6 +54,8 @@ namespace WebERP.Data
         public DbSet<Department_Master> Department_Masters { get; set; }
         public DbSet<Employee_Master> Employee_Masters { get; set; }
         public DbSet<StockDTL_Model> StockDTL_Models { get; set; }
+        public DbSet<Cutting_Order> Cutting_Orders { get; set; }
+        public DbSet<V_CuttingDetail> V_CuttingDetail { get; set; }
     }
 
 }

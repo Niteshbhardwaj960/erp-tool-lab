@@ -45,7 +45,7 @@ namespace WebERP.Controllers
         [HttpPost]
         public async Task<IActionResult> SAVEEmployee(Employee_Master objEmp)
         {
-            var NAME = dbContext.Employee_Masters.FirstOrDefault(x => x.NAME == objEmp.NAME);
+            var NAME = dbContext.Employee_Masters.FirstOrDefault(x => x.NAME == objEmp.EMP_NAME);
            
             if (NAME != null)
             {
@@ -65,6 +65,8 @@ namespace WebERP.Controllers
             }
             else
             {
+                objEmp.Type = "Add";
+                objEmp.DepDropDown = DepLists();
                 return View("AddEmployee", objEmp);
             }
         }

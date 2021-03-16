@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -42,5 +43,7 @@ namespace WebERP.Models.GateEntry
         public string ITEM_NAMEs {get; set;}
         [NotMapped]
         public string UOM_NAME { get; set; }
+        [NotMapped]
+        public bool CHK { get; set; }
     }
 }

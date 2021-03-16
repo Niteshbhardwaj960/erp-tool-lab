@@ -1,0 +1,184 @@
+﻿@model WebERP.Models.Cutting_Order
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Add Cutting</h3>
+        </nav>
+        <div class="card-body">
+            <form id="menu-form" method="post" enctype="multipart/form-data">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Basic Details</b></h4>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Company Code</label>
+                            <div class="input-group">
+                                <input type="text" readonly="readonly" class="form-control numb" asp-for="COMP_CODE">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Document Date</label>
+                            <div class="custom-radio">
+                                <input type="date" class="form-control numb" id="DOC_DATE" asp-for="DOC_DATE">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Document Financel Year</label>
+                            <div class="input-group">
+                                <input type="text" readonly="readonly" class="form-control numb" id="DOC_FINYEAR" asp-for="DOC_FINYEAR">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Document No</label>
+                            <div class="input-group">
+                                <input type="text" readonly="readonly" class="form-control numb" asp-for="DOC_NO">
+                            </div>
+                            <span asp-validation-for="DOC_NO" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Cutting Details</b></h4>
+                <div class="row">                   
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Employee Name</label>
+                            <div class="input-group">
+                                <select asp-for="EMP_CODE" id="EMP_CODE" class="form-control" asp-items="@(new SelectList(Model.EmpDropDown,"Value", "Text"))"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Contract Employee Name</label>
+                            <div class="input-group">
+                                <select asp-for="CONT_EMP_CODE" id="CONTEMP_CODE" class="form-control" asp-items="@(new SelectList(Model.ContEmpDropDown,"Value", "Text"))"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Item Name</label>
+                            <div class="input-group">
+                                <select asp-for="ITEM_CODE" id="ITEM_CODE" class="form-control" asp-items="@(new SelectList(Model.ItemDropDown,"Value", "Text"))"></select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Artical Name</label>
+                            <div class="input-group">
+                                <select asp-for="ARTICAL_CODE" id="ARTICAL_CODE" class="form-control" asp-items="@(new SelectList(Model.ArticalDropDown,"Value", "Text"))"></select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Size Name</label>
+                            <div class="input-group">
+                                <select asp-for="SIZE_CODE" id="SIZE_CODE" class="form-control" asp-items="@(new SelectList(Model.SizeDropDown,"Value", "Text"))"></select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Process Name</label>
+                            <div class="input-group">
+                                <select asp-for="PROC_CODE" id="ddlCity" class="form-control" asp-items="@(new SelectList(Model.ProcDropDown,"Value", "Text"))"></select>
+
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Order Qty</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="ORDER_QTY">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Average Pic Weight</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="AVG_PC_WEIGHT">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Wastage Percentage</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="WASTAGE_PER">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Order Status</label>
+                            <div class="custom-radio">
+                                <select class="form-control" asp-for="ORDER_STATUS">
+                                    <option value="1">Active</option>
+                                    <option value="2">Finished</option>
+                                    <option value="3">Cancel</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="CuttingDetail">Close</a>
+                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Cutting" asp-action="SaveCutting">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#DOC_DATE").change(function () {
+            debugger;
+            var date = $(this).val();
+            var financial_year = "";
+            var today = new Date(date);
+            if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
+                financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
+            } else {
+                financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
+            }
+            $("#DOC_FINYEAR").val(financial_year);
+        });
+    })
+
+    $(function () {
+        $("#EMP_CODE").chosen();
+    })
+    $(function () {
+        $("#CONTEMP_CODE").chosen();
+    })
+    $(function () {
+        $("#ITEM_CODE").chosen();
+    })
+    $(function () {
+        $("#ARTICAL_CODE").chosen();
+    })
+    $(function () {
+        $("#SIZE_CODE").chosen();
+    })
+    $(function () {
+        $("#PROC_CODE").chosen();
+    })
+</script>

@@ -100,6 +100,7 @@ namespace WebERP.Controllers
                     INS_DATE = DateTime.Now,
                     INS_UID = userManager.GetUserName(HttpContext.User),
                     Order_No = order.ORDER_NO,
+                    GDW_NO = 0,
                     Bill_Date = order.Bill_Date,
                     Bill_NO = order.Bill_NO,
                     CHL_NO = order.CHL_NO,
@@ -183,26 +184,35 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult EditGateEntry(EditGateEntryModel EditGateEntryModels)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    EditGateEntryModels.Gate_HDRs.UDT_DATE = DateTime.Now;                
-            //    EditGateEntryModels.Gate_HDRs.UDT_UID = userManager.GetUserName(HttpContext.User);
-            //    dbContext.Gate_HDR.Update(EditGateEntryModels.Gate_HDRs);
-            //    dbContext.SaveChanges();
-            //    foreach (var gateDetailModel in EditGateEntryModels.EditGateEntryDetails.ToList())
-            //    {
-            //        gateDetailModel.UDT_DATE = DateTime.Now;
-            //        gateDetailModel.UDT_UID = userManager.GetUserName(HttpContext.User);                   
-            //        dbContext.gateEntryDetails.Update(gateDetailModel);
-            //        dbContext.SaveChanges();
-            //    }                 
-               
-               return RedirectToAction("Gate_Entry_Details");
-            //}
-            //else
-            //{
-            //    return View(EditGateEntryModels);
-            //}
+            if (ModelState.IsValid)
+            {
+                EditGateEntryModels.Gate_HDRs.UDT_DATE = DateTime.Now;
+                EditGateEntryModels.Gate_HDRs.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.Gate_HDR.Update(EditGateEntryModels.Gate_HDRs);
+                dbContext.SaveChanges();
+                foreach (var gateDetailModel in EditGateEntryModels.EditGateEntryDetails.ToList())
+                {
+                    var result = dbContext.gateEntryDetails.SingleOrDefault(b => b.ID == gateDetailModel.ID);
+                    if (result != null)
+                    {
+                        result.UDT_DATE = DateTime.Now;
+                        result.UDT_UID = userManager.GetUserName(HttpContext.User);
+                        result.CHL_NO = gateDetailModel.CHL_NO;
+                        result.CHL_DATE = gateDetailModel.CHL_DATE;
+                        result.Bill_Date = gateDetailModel.Bill_Date;
+                        result.Bill_NO = gateDetailModel.Bill_NO;
+                        result.Stk_Qty = gateDetailModel.Stk_Qty;
+                        result.GDW_NO = gateDetailModel.GDW_NO;
+                        result.Remarks = gateDetailModel.Remarks;
+                        dbContext.SaveChanges();
+                    }                   
+                }
+                return RedirectToAction("Gate_Entry_Details");
+            }
+            else
+            {
+                return View(EditGateEntryModels);
+            }
         }
         [HttpGet]
         public IActionResult ActionGateEntry(string id)
