@@ -32,7 +32,27 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult GoDown_Master()
         {
-            return View(dbContext.Godown_Master.ToList());
+            List<Godown_Master> gd = new List<Godown_Master>();
+            gd = dbContext.Godown_Master.ToList();
+            foreach (var obj in gd)
+            {
+                if (obj.SALE_TAG == "0")
+                {
+                    obj.SALE_TAG = "Yes";
+                }
+                else
+                {
+                    obj.SALE_TAG = "No";
+                }
+                if (obj.GO_DOWN_TYPE == "1") { obj.GO_DOWN_TYPE = "Raw Material"; }
+                else if (obj.GO_DOWN_TYPE == "2") { obj.GO_DOWN_TYPE = "Semi Finished"; }
+                else if (obj.GO_DOWN_TYPE == "3") { obj.GO_DOWN_TYPE = "Finished"; }
+                else if (obj.GO_DOWN_TYPE == "4") { obj.GO_DOWN_TYPE = "General"; }
+                else if (obj.GO_DOWN_TYPE == "5") { obj.GO_DOWN_TYPE = "Waste"; }
+                else if (obj.GO_DOWN_TYPE == "6") { obj.GO_DOWN_TYPE = "Outside"; }
+                else if (obj.GO_DOWN_TYPE == "7") { obj.GO_DOWN_TYPE = "Consumeable"; }
+            }
+            return View(gd);
         }
         [HttpGet]
         public IActionResult Add_GoDown()

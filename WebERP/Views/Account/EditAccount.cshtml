@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.Account_Master
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @if (Model.Type == "Edit")
@@ -273,5 +273,8 @@
             })
 
         })
+    })
+    $(function () {
+        $("#ddlCity").chosen();
     })
 </script>

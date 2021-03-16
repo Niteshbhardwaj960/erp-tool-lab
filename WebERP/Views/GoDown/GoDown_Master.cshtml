@@ -19,26 +19,30 @@
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Sal Tag</th>
+                            <th>Godown Type</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var Data in Model)
                         {
-                            <tr>
-                                <td>@Data.NAME</td>
-                                <td>
-                                    <a asp-action="EditGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
-                                        <i class="fas fa-user-edit"></i>
-                                    </a>&nbsp;&nbsp;
-                                    <a asp-action="DeleteGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>&nbsp;&nbsp;
-                                    <a asp-action="ActionGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>@Data.NAME</td>
+                            <td>@Data.SALE_TAG</td>
+                            <td>@Data.GO_DOWN_TYPE</td>
+                            <td>
+                                <a asp-action="EditGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="DeleteGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="ActionGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
