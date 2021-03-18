@@ -42,15 +42,15 @@
                             <td>@Data.PROC_NAME</td>
                             <td>@Data.SIZE_NAME</td>
                             <td>
-                                @*<a asp-action="EditEmployee" asp-controller="Employee" asp-route-id="@Data.ID">
+                                <a asp-action="EditCutting" asp-route-id="@Data.ID">
                                     <i class="fas fa-user-edit"></i>
                                 </a>&nbsp;&nbsp;
-                                <a asp-action="DeleteEmployee" asp-controller="Employee" asp-route-id="@Data.ID">
+                                <a asp-action="DeleteCutting" asp-route-id="@Data.ID">
                                     <i class="far fa-trash-alt"></i>
                                 </a>&nbsp;&nbsp;
-                                <a asp-action="ActionEmployee" asp-controller="Employee" asp-route-id="@Data.ID">
+                                <a asp-action="ActionCutting" asp-route-id="@Data.ID">
                                     <i class="fas fa-eye"></i>
-                                </a>*@
+                                </a>
                             </td>
                         </tr>
                         }

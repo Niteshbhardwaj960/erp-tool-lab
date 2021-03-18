@@ -50,6 +50,12 @@
             <span>Cutting Order</span>
         </a>
     </li>
+    <li class="nav-item active">
+        <a class="nav-link" asp-controller="RawMaterial" asp-action="RM_Master">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Raw Material Issue</span>
+        </a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
@@ -67,6 +73,7 @@
         <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Users:</h6>
+                <a class="collapse-item" href="/Identity/Account/register">Register User</a>
                 <a class="collapse-item" asp-controller="Administration" asp-action="ListRole">Role Details</a>
                 <a class="collapse-item" asp-controller="Location" asp-action="LocationDetails">Locations Details</a>
                 <a class="collapse-item" asp-area="" asp-controller="Company" asp-action="Company">Company Master</a>

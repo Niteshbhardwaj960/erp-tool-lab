@@ -51,6 +51,8 @@ namespace WebERP.Models
         [NotMapped]
         public List<SelectListItem> SizeDropDown { get; set; }
         [NotMapped]
-        public List<SelectListItem> ProcDropDown { get; set; }        
+        public List<SelectListItem> ProcDropDown { get; set; }
+        [NotMapped]
+        public string Type { get; set; }
     }
 }

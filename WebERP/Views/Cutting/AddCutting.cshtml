@@ -3,9 +3,25 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-            <h3 style="color:white">Add Cutting</h3>
-        </nav>
+        @if (Model.Type == "Add")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Add Cutting</h3>
+            </nav>
+        }
+        @if (Model.Type == "Edit")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Edit Cutting</h3>
+            </nav>
+        }
+        @if (Model.Type == "Action")
+        {
+           <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">View Cutting</h3>
+            </nav>
+        }
+        
         <div class="card-body">
             <form id="menu-form" method="post" enctype="multipart/form-data">
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Basic Details</b></h4>
@@ -22,7 +38,14 @@
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
                             <div class="custom-radio">
-                                <input type="date" class="form-control numb" id="DOC_DATE" asp-for="DOC_DATE">
+                                @if (Model.Type == "Add")
+                                {
+                                    <input type="date" class="form-control numb" id="DOC_DATE" asp-for="DOC_DATE">
+                                }
+                                @if(Model.Type == "Action" || Model.Type == "Edit")
+                                {
+                                <input type="date" readonly="readonly" class="form-control numb" id="DOC_DATE" asp-for="DOC_DATE">
+                                }
                             </div>
                         </div>
                     </div>
@@ -45,7 +68,7 @@
                     </div>
                 </div>
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Cutting Details</b></h4>
-                <div class="row">                   
+                <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label class="form-label">Employee Name</label>
@@ -97,7 +120,7 @@
 
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Order Qty</label>
@@ -137,10 +160,18 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="CuttingDetail">Close</a>
-                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Cutting" asp-action="SaveCutting">
-                        <i class="fa fa-save"></i> Save
-                    </button>
-
+                    @if (Model.Type == "Add")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Cutting" asp-action="SaveCutting">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                    }
+                    @if (Model.Type == "Edit")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Cutting" asp-action="EditCutting">
+                            <i class="fa fa-save"></i> Update
+                        </button>
+                    }
                 </div>
             </form>
         </div>

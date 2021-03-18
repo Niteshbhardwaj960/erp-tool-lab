@@ -16,7 +16,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Models\NewFolder\" />
     <Folder Include="Views\StockDTL\" />
   </ItemGroup>
 
