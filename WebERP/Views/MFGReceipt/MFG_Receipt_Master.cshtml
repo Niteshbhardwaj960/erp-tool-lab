@@ -1,0 +1,176 @@
+﻿@model WebERP.Models.MFGReceiptViewModel
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        @if (Model.Type == "Add")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Add MFG Receipt</h3>
+            </nav>
+        }
+        @if (Model.Type == "Edit")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Edit MFG Receipt</h3>
+            </nav>
+        }
+        @if (Model.Type == "View")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">View MFG Receipt</h3>
+            </nav>
+        }
+        <div class="card-body">
+
+            <form id="menu-form" method="post">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Basic Details</b></h4>
+                <div class="row">
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Document Date</label>
+                            <div class="input-group">
+                                @if (Model.Type == "Add")
+                                {
+                                    @Html.TextBoxFor(a => a.MGF_RECEIPTs.DOC_DATE, new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(a => a.MGF_RECEIPTs.DOC_DATE, new { @ID = "Doc_Date", @class = "form-control", @readOnly = "readonly" })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Document Financial Year</label>
+                            <div class="input-group">
+                                @Html.HiddenFor(a => a.MGF_RECEIPTs.ID, new { @ID = "ID", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.MGF_RECEIPTs.DOC_FINYEAR, new { @ID = "Doc_FN_Year", @class = "form-control", @readOnly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.Type == "Add")
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Cutting Order Detail</label>
+                                <div class="custom-radio">
+                                    <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList(Model.CUTDropDown, "Value", "Text"))"></select>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Item Name</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.MGF_RECEIPTs.ITEM_NAME, new { @ID = "ItemName", @class = "form-control", @readOnly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Artical Name</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.MGF_RECEIPTs.ART_NAME, new { @ID = "ArtName", @class = "form-control", @readOnly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Size Name</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.MGF_RECEIPTs.SIZE_NAME, new { @ID = "SizeName", @class = "form-control", @readOnly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Process Name</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.MGF_RECEIPTs.PROC_NAME, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.HiddenFor(a => a.MGF_RECEIPTs.CUTTING_ORDER_FK, new { @ID = "CUTPK", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Employee Name</label>
+                            <div class="input-group">
+                                <select name="EMPDropDown" id="EMPDropDown" class="form-control" asp-items="@(new SelectList(Model.EMPDropDown, "Value", "Text"))"></select>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Contract Employee Name</label>
+                            <div class="input-group">
+                                <select name="CONEMPDropDown" id="CONEMPDropDown" class="form-control" asp-items="@(new SelectList(Model.CONEMPDropDown, "Value", "Text"))"></select>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Receipt Qty</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.MGF_RECEIPTs.RECEIPT_QTY, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="CuttingReceiptDetail">Close</a>
+                    @if (Model.Type == "Add")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="MFGReceipt" asp-action="MFG_Receipt_Master">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                    }
+                    @if (Model.Type == "Edit")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="MFGReceipt" asp-action="SAVECR">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                    }
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#Doc_Date").change(function () {
+            debugger;
+            var date = $(this).val();
+            var financial_year = "";
+            var today = new Date(date);
+            if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
+                financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
+            } else {
+                financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
+            }
+            $("#Doc_FN_Year").val(financial_year);           
+        });
+    })
+    $(function () {
+        $("#ddlCUT").change(function () {
+            debugger;
+            var Array = $("#ddlCUT").val().split("/");
+            $('#EmpName').val(Array[0]);
+            $('#ItemName').val(Array[1]);
+            $('#ArtName').val(Array[2]);
+            $('#SizeName').val(Array[3]);
+            $('#ProcName').val(Array[4]);
+            $('#CUTPK').val(Array[5]);
+        })
+    })
+    $(function () {
+        $("#ddlCut").chosen();
+    })
+</script>

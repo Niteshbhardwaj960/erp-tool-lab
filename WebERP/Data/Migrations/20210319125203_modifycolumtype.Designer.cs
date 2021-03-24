@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210319125203_modifycolumtype")]
+    partial class modifycolumtype
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -491,47 +493,6 @@ namespace WebERP.Data.Migrations
                     b.ToTable("Cutting_Orders");
                 });
 
-            modelBuilder.Entity("WebERP.Models.Cutting_Receipt", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ART_NAME");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<int>("CUTTING_ORDER_FK");
-
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<int>("DOC_FINYEAR");
-
-                    b.Property<int>("DOC_NO");
-
-                    b.Property<string>("EMP_NAME");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("ITEM_NAME");
-
-                    b.Property<string>("PROC_NAME");
-
-                    b.Property<decimal>("RECEIPT_QTY");
-
-                    b.Property<string>("SIZE_NAME");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Cutting_Receipt");
-                });
-
             modelBuilder.Entity("WebERP.Models.Department_Master", b =>
                 {
                     b.Property<int>("ID")
@@ -762,53 +723,6 @@ namespace WebERP.Data.Migrations
                     b.ToTable("Item_Master");
                 });
 
-            modelBuilder.Entity("WebERP.Models.MGF_RECEIPT", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ART_NAME");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<int>("CONT_EMP_CODE");
-
-                    b.Property<int>("CUTTING_ORDER_FK");
-
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<int>("DOC_FINYEAR");
-
-                    b.Property<int>("DOC_NO");
-
-                    b.Property<int>("EMP_CODE");
-
-                    b.Property<string>("EMP_NAME");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("ITEM_NAME");
-
-                    b.Property<int>("PROC_CODE");
-
-                    b.Property<string>("PROC_NAME");
-
-                    b.Property<decimal>("RECEIPT_QTY");
-
-                    b.Property<string>("SIZE_NAME");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("MGF_RECEIPT");
-                });
-
             modelBuilder.Entity("WebERP.Models.PODetailModel", b =>
                 {
                     b.Property<int>("POD_PK")
@@ -1021,8 +935,6 @@ namespace WebERP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ART_NAME");
-
                     b.Property<int>("Comp_Code");
 
                     b.Property<int>("Cutting_Order_FK");
@@ -1039,13 +951,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("INS_UID");
 
-                    b.Property<string>("ITEM_NAME");
-
-                    b.Property<string>("PROC_NAME");
-
                     b.Property<string>("Remarks");
-
-                    b.Property<string>("SIZE_NAME");
 
                     b.Property<DateTime?>("UDT_DATE");
 

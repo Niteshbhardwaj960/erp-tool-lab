@@ -3,26 +3,26 @@
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-            <h3 style="color:white">Raw Material Issue</h3>
+            <h3 style="color:white">Edit Raw Material Issue</h3>
         </nav>
         <div class="card-body">
 
-            <form id="menu-form" method="post" asp-controller="RawMaterial" asp-action="RM_Master">
+            <form id="menu-form" method="post" asp-controller="RawMaterial" asp-action="SAVERM">
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Cutting Order Details</b></h4>
                 <div class="row">
                     @*<div class="col-lg-4 col-md-4 col-sm-12">
-                            <div class="form-group">
-                                <label for="branch_id">Document Number</label>
-                                <div class="input-group">
-                                    @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
-                                </div>
-                            </div>
-                        </div>*@
+            <div class="form-group">
+                <label for="branch_id">Document Number</label>
+                <div class="input-group">
+                    @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
+                </div>
+            </div>
+        </div>*@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.Doc_Date, new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" })
+                                @Html.TextBoxFor(a => a.RM_HDR.Doc_Date, new { @ID = "Doc_Date", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -34,11 +34,19 @@
                             </div>
                         </div>
                     </div>
+                    @*<div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="form-group">
+                <label for="branch_id">Cutting Order Detail</label>
+                <div class="custom-radio">
+                    <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList( Model.CUTDropDown ,"Value", "Text"))"></select>
+                </div>
+            </div>
+        </div>*@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">Cutting Order Detail</label>
-                            <div class="custom-radio">
-                                <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList( Model.CUTDropDown ,"Value", "Text"))"></select>
+                            <label for="branch_id">Employee Name</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.RM_HDR.EMP_NAME, new { @ID = "EmpName", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -110,34 +118,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (Model != null && Model.V_RM_DTLs.Count > 0)
+                                    @if (Model != null && Model.RM_DTL_LST.Count > 0)
                                     {
                                         int j = 0;
-                                        foreach (var i in Model.V_RM_DTLs)
+                                        foreach (var i in Model.RM_DTL_LST)
                                         {
                                             <tr style="border:1px solid black">
                                                 <td>
-                                                    @Html.CheckBoxFor(a => a.V_RM_DTLs[j].CHK, new { @class = "form-control" })
-                                                    @Html.HiddenFor(a => a.V_RM_DTLs[j].ID, new { @class = "form-control" })
+                                                    @Html.CheckBoxFor(a => a.RM_DTL_LST[j].CHK, new { @class = "form-control" })
+                                                    @Html.HiddenFor(a => a.RM_DTL_LST[j].ID, new { @class = "form-control" })
                                                 </td>
                                                 <td>
-                                                    @Html.HiddenFor(a => a.V_RM_DTLs[j].GDW_CODE, new { @class = "form-control" })
-                                                    @Html.TextBoxFor(a => a.V_RM_DTLs[j].GDW_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @Html.HiddenFor(a => a.RM_DTL_LST[j].GDW_Code, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(a => a.RM_DTL_LST[j].GDW_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    @Html.HiddenFor(a => a.V_RM_DTLs[j].ITEM_CODE, new { @class = "form-control" })
-                                                    @Html.TextBoxFor(a => a.V_RM_DTLs[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @Html.HiddenFor(a => a.RM_DTL_LST[j].ITEM_Code, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(a => a.RM_DTL_LST[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    @Html.HiddenFor(a => a.V_RM_DTLs[j].ARTICAL_CODE, new { @class = "form-control" })
-                                                    @Html.TextBoxFor(a => a.V_RM_DTLs[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @Html.HiddenFor(a => a.RM_DTL_LST[j].ARTICAL_Code, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(a => a.RM_DTL_LST[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    @Html.HiddenFor(a => a.V_RM_DTLs[j].SIZE_CODE, new { @class = "form-control" })
-                                                    @Html.TextBoxFor(a => a.V_RM_DTLs[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @Html.HiddenFor(a => a.RM_DTL_LST[j].SIZE_Code, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(a => a.RM_DTL_LST[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                                 </td>
-                                                <td>@Html.TextBoxFor(a => a.V_RM_DTLs[j].STK_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                                <td>@Html.TextBoxFor(a => a.V_RM_DTLs[j].Issue_Qty, new { @class = "form-control", @type = "decimal" })</td>
+                                                <td>@Html.TextBoxFor(a => a.RM_DTL_LST[j].ORDER_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                                <td>@Html.TextBoxFor(a => a.RM_DTL_LST[j].ISSUE_QTY, new { @class = "form-control", @type = "decimal" })</td>
                                             </tr>
                                             j++;
                                         }
@@ -161,45 +169,3 @@
 
     </div>
 </div>
-<script>
-    $(function () {
-        $("#Doc_Date").change(function () {
-            debugger;
-            var date = $(this).val();
-            var financial_year = "";
-            var today = new Date(date);
-            if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
-                financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
-            } else {
-                financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
-            }
-            $("#Doc_FN_Year").val(financial_year);
-            $.ajax({
-                // edit to add steve's suggestion.
-                //url: "/ControllerName/ActionName",
-                url: '<%= Url.Action("DocNo", "RawMaterial") %>',
-                success: function (data) {
-                    // your data could be a View or Json or what ever you returned in your action method
-                    // parse your data here
-                    debugger;
-                    $("#DocNo").val(data);
-                }
-            });
-        });
-    })
-    $(function () {
-        $("#ddlCUT").change(function () {
-            debugger;
-            var Array = $("#ddlCUT").val().split("/");
-            $('#EmpName').val(Array[0]);
-            $('#ItemName').val(Array[1]);
-            $('#ArtName').val(Array[2]);
-            $('#SizeName').val(Array[3]);
-            $('#ProcName').val(Array[4]);
-            $('#CUTPK').val(Array[5]);
-        })
-    })
-    $(function () {
-        $("#ddlCut").chosen();
-    })
-</script>

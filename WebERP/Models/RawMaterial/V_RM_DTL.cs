@@ -25,5 +25,7 @@ namespace WebERP.Models
         public int STK_QTY { get; set; }
         [NotMapped]
         public bool CHK { get; set; }
+        [NotMapped]
+        public decimal Issue_Qty { get; set; }
     }
 }
