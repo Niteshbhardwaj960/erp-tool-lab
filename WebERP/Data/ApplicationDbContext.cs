@@ -33,6 +33,8 @@ namespace WebERP.Data
         public DbSet<PODetailModel> PODetail_Master { get; set; }
         public DbSet<POTermsModel> POTerm_Master { get; set; }
 
+        public DbSet<JobWorkIssueHdr> JobWorkIssue_Header { get; set; }
+        public DbSet<JobWorkIssueDet> JobWorkIssue_Details { get; set; }
         //protected void OnModelCreating(DbModelBuilder modelBuilder)
         //{
         //    modelBuilder.Entity<PODetail_Master>().Property(x => x.SnachCount).HasPrecision(16, 3);

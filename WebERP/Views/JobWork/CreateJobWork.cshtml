@@ -1,0 +1,171 @@
+﻿@model WebERP.Models.JobWorkViewModel
+@{
+    ViewData["Title"] = "CreateJobWork";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-3 static-top shadow"
+     style="background: linear-gradient(135deg, rgb(255 141 0 / 90%) 0%, #74009a 100%);">
+    <h3 style="color:white">New Job Work Issue</h3>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post" id="jobworkForm">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="JobWork" asp-action="JobWorkGrid">JobWork</a></li>
+                    <li class="breadcrumb-item">Create Job Work</li>
+                    <li class="breadcrumb-item active" aria-current="page">Fill Data</li>
+                </ol>
+            </nav>
+            <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <b>Job-Work Header</b>
+            </h4>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Company</label>
+                        <select asp-for="JobWorkIssHeader.COMP_CODE" class="form-control"
+                                asp-items="@(new SelectList(Model.JobWorkIssHeader.companyDropDown,"Value", "Text"))" readonly></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <label>Document Date</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                            </div>
+                        </div>
+                        <input class="form-control fc-datepicker" id="jwDocDate" type="date" value="@DateTime.Now" asp-for="JobWorkIssHeader.DOC_DATE">
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Document Financial Year</label>
+                        <input type="text" class="form-control" id="jwDocFinYear" asp-for="JobWorkIssHeader.DOC_FINYEAR" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="form-group">
+                        <label>Party Name</label>
+                        <select asp-for="JobWorkIssHeader.ACC_CODE" class="form-control jwDropDown"
+                                asp-items="@(new SelectList(Model.JobWorkIssHeader.accDropDown, "Value", "Text"))"></select>
+                        <span asp-validation-for="JobWorkIssHeader.ACC_CODE" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <input type="text" class="form-control" asp-for="JobWorkIssHeader.REMARKS" placeholder="Place job work remarks here">
+                    </div>
+                </div>                               
+            </div>
+
+            <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Job-Work Details</b></h4>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="form-group">                       
+                        <select asp-for="JobWorkIssHeader.ACC_CODE" class="form-control jwDropDown"
+                                asp-items="@(new SelectList(Model.JobWorkIssHeader.accDropDown, "Value", "Text"))"></select>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <a href="#" class="btn btn-dark" data-toggle="tooltip" data-placement="right"
+                       title="Use this button for Adding Process to Selected Rows" id="addProcess">
+                        <i class="fa fa-check-circle"></i>
+                    </a>                    
+                </div>
+            </div>
+            <div class="row" style="font-size:small;">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive-sm">
+                        <table class="table table-sm d-sm-table-cell table-bordered" id="jwDtlTable" width="100%" cellspacing="0">
+                            <thead class="thead-light">
+                                <tr style="text-align:center;">
+                                    <th style="width: 30px;">Check</th>
+                                    <th style="width: 150px;">GDW</th>
+                                    <th style="width: 100px;">Item</th>
+                                    <th style="width: 100px;">Artical</th>
+                                    <th style="width: 100px;">Size</th>
+                                    <th style="width: 128px;">HSN</th>
+                                    <th style="width: 150px;">Process</th>
+                                    <th style="width: 100px;">Stock Qty</th>
+                                    <th style="width: 100px;">Proc Qty</th>
+                                    @*<th style="width: 90px;">Qty UOM</th>*@
+                                    <th style="width: 150px;">Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int j = 0; j < Model.JobWorkIssueDetails.Count(); j++)
+                                {
+                                <tr>
+                                    <td style="text-align:center;">
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].GODOWN_CODE, new { @class = "form-control", @type = "text" })
+                                    </td>
+                                    <td>
+                                        @Html.DropDownListFor(m=>m.JobWorkIssueDetails[j].ITEM_CODE,
+                                          new SelectList(string.Empty, "Value", "Text"),
+                                          new { @class="form-control"})
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ARTICAL_CODE, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].SIZE_CODE, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].HSN_CODE, new { @class = "form-control", @type = "text" })
+                                    </td>
+
+                                    <td>
+                                        @Html.DropDownListFor(m=>m.JobWorkIssueDetails[j].PROC_CODE,
+                                          new SelectList(string.Empty, "Value", "Text"),
+                                          new { @class= "form-control" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number" })
+                                    </td>
+                                      @*<td>
+                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
+                                      </td>*@
+                                    <td>
+                                        @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control" })
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>                           
+                        </table>
+                    </div>
+                </div>
+            </div>                        
+            <hr class="alert-light" />
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+            </div>
+        </form>
+        <hr />
+        <div>
+            <a asp-action="JobWorkGrid" asp-controller="JobWork"><i class="fas fa-arrow-left"></i>Back To Grid</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>

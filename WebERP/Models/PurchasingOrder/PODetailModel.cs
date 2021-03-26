@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebERP.Models
@@ -30,7 +28,7 @@ namespace WebERP.Models
         [Range(0, 999999999999.999)]
         public decimal QTY { get; set; }
 
-        public int QTY_UOM { get; set; }
+        public string QTY_UOM { get; set; }
 
         [DataType(DataType.Currency)]
         [RegularExpression(@"^\d+\.\d{0,2}$")]
