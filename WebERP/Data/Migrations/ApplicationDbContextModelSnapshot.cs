@@ -1363,6 +1363,81 @@ namespace WebERP.Data.Migrations
                     b.ToTable("V_RM_DTL");
                 });
 
+            modelBuilder.Entity("WebERP.Models.JobWorkIssueDet", b =>
+            {
+                b.Property<int>("JWD_PK")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                b.Property<int>("ARTICAL_CODE");
+
+                b.Property<int>("GODOWN_CODE");
+
+                b.Property<int>("HSN_CODE");
+
+                b.Property<DateTime?>("INS_DATE");
+
+                b.Property<string>("INS_UID");
+
+                b.Property<int>("ITEM_CODE");
+
+                b.Property<int>("JWH_FK");
+
+                b.Property<int>("PROC_CODE");
+
+                b.Property<decimal>("QTY");
+
+                b.Property<string>("QTY_UOM");
+
+                b.Property<string>("REMARKS")
+                    .HasMaxLength(100);
+
+                b.Property<int>("SIZE_CODE");
+
+                b.Property<DateTime?>("UDT_DATE");
+
+                b.Property<string>("UDT_UID");
+
+                b.HasKey("JWD_PK");
+
+                b.HasIndex("JWH_FK");
+
+                b.ToTable("JobWorkIssue_Details");
+            });
+
+            modelBuilder.Entity("WebERP.Models.JobWorkIssueHdr", b =>
+            {
+                b.Property<int>("JWH_PK")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                b.Property<int>("ACC_CODE");
+
+                b.Property<int>("COMP_CODE");
+
+                b.Property<DateTime>("DOC_DATE");
+
+                b.Property<string>("DOC_FINYEAR");
+
+                b.Property<int>("DOC_NO");
+
+                b.Property<DateTime?>("INS_DATE");
+
+                b.Property<string>("INS_UID");
+
+                b.Property<string>("REMARKS")
+                    .HasMaxLength(100);
+
+                b.Property<DateTime?>("UDT_DATE");
+
+                b.Property<string>("UDT_UID");
+
+                b.HasKey("JWH_PK");
+
+                b.ToTable("JobWorkIssue_Header");
+            });
+
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -1423,6 +1498,15 @@ namespace WebERP.Data.Migrations
                         .HasForeignKey("POH_FK")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
+
+            modelBuilder.Entity("WebERP.Models.JobWorkIssueDet", b =>
+            {
+                b.HasOne("WebERP.Models.JobWorkIssueHdr", "JobWorkIssueHdr")
+                    .WithMany()
+                    .HasForeignKey("JWH_FK")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
 #pragma warning restore 612, 618
         }
     }

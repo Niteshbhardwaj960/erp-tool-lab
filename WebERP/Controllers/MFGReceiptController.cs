@@ -64,7 +64,7 @@ namespace WebERP.Controllers
 
             empList.Insert(0, new SelectListItem()
             {
-                Text = "Select Contract Employee",
+                Text = "Select Employee",
                 Value = string.Empty,
                 Selected = true
             });
@@ -81,7 +81,7 @@ namespace WebERP.Controllers
 
             CutList.Insert(0, new SelectListItem()
             {
-                Text = "Select Cutting Order",
+                Text = "Select Contract Employee",
                 Value = string.Empty,
                 Selected = true
             });
@@ -106,6 +106,49 @@ namespace WebERP.Controllers
             mFGReceiptViewModel.MGF_RECEIPTs.CONT_EMP_CODE = Convert.ToInt32(CONEMPDropDown);
             mFGReceiptViewModel.MGF_RECEIPTs.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.MGF_RECEIPT.Add(mFGReceiptViewModel.MGF_RECEIPTs);
+            dbContext.SaveChanges();
+            return RedirectToAction("MFGReceiptDetail");
+        }
+        [HttpGet]
+        public IActionResult EditMFG(int id)
+        {
+            MFGReceiptViewModel mFGReceiptViewModel = new MFGReceiptViewModel();
+            mFGReceiptViewModel.MGF_RECEIPTs = dbContext.MGF_RECEIPT.Where(r => r.ID == id).FirstOrDefault();
+            mFGReceiptViewModel.Type = "Edit";
+            mFGReceiptViewModel.CONEMPDropDown = CoEmplists();
+            mFGReceiptViewModel.EMPDropDown = EMPlists();
+            return View("MFG_Receipt_Master", mFGReceiptViewModel);
+        }
+        [HttpPost]
+        public IActionResult SAVEMFG(MFGReceiptViewModel mFGReceiptViewModel)
+        {
+            var result = dbContext.MGF_RECEIPT.SingleOrDefault(b => b.ID == mFGReceiptViewModel.MGF_RECEIPTs.ID);
+            if (result != null)
+            {
+                result.UDT_DATE = DateTime.Now;
+                result.UDT_UID = userManager.GetUserName(HttpContext.User);
+                result.EMP_CODE = mFGReceiptViewModel.MGF_RECEIPTs.EMP_CODE;
+                result.CONT_EMP_CODE = mFGReceiptViewModel.MGF_RECEIPTs.CONT_EMP_CODE;
+                result.RECEIPT_QTY = mFGReceiptViewModel.MGF_RECEIPTs.RECEIPT_QTY;
+                dbContext.SaveChanges();
+            }
+            return RedirectToAction("MFGReceiptDetail");
+        }
+        [HttpGet]
+        public IActionResult ActionMFG(int id)
+        {
+            MFGReceiptViewModel mFGReceiptViewModel = new MFGReceiptViewModel();
+            mFGReceiptViewModel.MGF_RECEIPTs = dbContext.MGF_RECEIPT.Where(r => r.ID == id).FirstOrDefault();
+            mFGReceiptViewModel.Type = "View";
+            mFGReceiptViewModel.CONEMPDropDown = CoEmplists();
+            mFGReceiptViewModel.EMPDropDown = EMPlists();
+            return View("MFG_Receipt_Master", mFGReceiptViewModel);
+        }
+        [HttpGet]
+        public IActionResult DeleteMFG(int ID)
+        {
+            var data = dbContext.MGF_RECEIPT.Where(D => D.ID == ID).FirstOrDefault();
+            dbContext.MGF_RECEIPT.Remove(data);
             dbContext.SaveChanges();
             return RedirectToAction("MFGReceiptDetail");
         }

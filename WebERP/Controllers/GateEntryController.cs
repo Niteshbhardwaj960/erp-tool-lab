@@ -9,9 +9,11 @@ using WebERP.Data;
 using WebERP.Models;
 using WebERP.Models.GateEntry;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebERP.Controllers
 {
+    [Authorize(Roles = "GateEntryUser")]
     public class GateEntryController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

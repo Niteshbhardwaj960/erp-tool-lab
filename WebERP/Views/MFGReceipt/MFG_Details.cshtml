@@ -32,15 +32,15 @@
                                 <td>@Data.DOC_NO</td>
                                 <td>@Data.EMP_NAME</td>
                                 <td>
-                                    @*<a asp-action="EditCR" asp-controller="CuttingReceipt" asp-route-id="@Data.ID">
+                                    <a asp-action="EditMFG" asp-controller="MFGReceipt" asp-route-id="@Data.ID">
                                         <i class="fas fa-user-edit"></i>
                                     </a>&nbsp;&nbsp;
-                                    <a asp-action="DeleteCR" asp-controller="CuttingReceipt" asp-route-id="@Data.ID">
+                                    <a asp-action="DeleteMFG" asp-controller="MFGReceipt" asp-route-id="@Data.ID">
                                         <i class="far fa-trash-alt"></i>
                                     </a>&nbsp;&nbsp;
-                                    <a asp-action="ActionCR" asp-controller="CuttingReceipt" asp-route-id="@Data.ID">
+                                    <a asp-action="ActionMFG" asp-controller="MFGReceipt" asp-route-id="@Data.ID">
                                         <i class="fas fa-eye"></i>
-                                    </a>*@
+                                    </a>
                                 </td>
                             </tr>
                         }

@@ -98,7 +98,7 @@
                         <div class="form-group">
                             <label for="branch_id">Employee Name</label>
                             <div class="input-group">
-                                <select name="EMPDropDown" id="EMPDropDown" class="form-control" asp-items="@(new SelectList(Model.EMPDropDown, "Value", "Text"))"></select>
+                                <select asp-for="MGF_RECEIPTs.EMP_CODE" id="EMPDropDown" class="form-control" asp-items="@(new SelectList(Model.EMPDropDown, "Value", "Text"))"></select>
                                
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                         <div class="form-group">
                             <label for="branch_id">Contract Employee Name</label>
                             <div class="input-group">
-                                <select name="CONEMPDropDown" id="CONEMPDropDown" class="form-control" asp-items="@(new SelectList(Model.CONEMPDropDown, "Value", "Text"))"></select>
+                                <select asp-for="MGF_RECEIPTs.CONT_EMP_CODE" id="CONEMPDropDown" class="form-control" asp-items="@(new SelectList(Model.CONEMPDropDown, "Value", "Text"))"></select>
                                
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="CuttingReceiptDetail">Close</a>
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="MFGReceiptDetail">Close</a>
                     @if (Model.Type == "Add")
                     {
                         <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="MFGReceipt" asp-action="MFG_Receipt_Master">
@@ -132,7 +132,7 @@
                     }
                     @if (Model.Type == "Edit")
                     {
-                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="MFGReceipt" asp-action="SAVECR">
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="MFGReceipt" asp-action="SAVEMFG">
                             <i class="fa fa-save"></i> Save
                         </button>
                     }

@@ -44,6 +44,7 @@ namespace WebERP.Controllers
             cut.ItemDropDown = Itemlists();
             cut.ProcDropDown = Proclists();
             cut.SizeDropDown = Sizelists();
+            cut.Type = "Add";
             cut.DOC_NO = DoC_No + 1;
             return View(cut);
         }
