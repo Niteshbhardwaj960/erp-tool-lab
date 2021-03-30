@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebERP.Models.GateEntry
+namespace WebERP.Models
 {
     public class Gate_HDR
     {
@@ -24,12 +24,17 @@ namespace WebERP.Models.GateEntry
         public string Doc_FN_Year { get; set; }
         public string Doc_No { get; set; }
         public string Acc_Code { get; set; }
+        public string Acc_Name { get; set; }
         public string Remarks { get; set; }
+        public string Type { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
         public string UDT_UID { get; set; }
         [NotMapped]
-        public string Type { get; set; }
+        public List<SelectListItem> AccDropDown { get; set; }
+        [NotMapped]
+        public string ActionType { get; set; }
+
     }
 }

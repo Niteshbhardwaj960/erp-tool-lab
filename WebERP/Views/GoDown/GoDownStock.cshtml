@@ -1,0 +1,94 @@
+﻿@model WebERP.Models.EditGateEntryModel
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        @*@if (Model.Type == "Action")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Add Stock Godown</h3>
+            </nav>
+        }
+        @if (Model.Type == "Edit")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Edit Stock Godown</h3>
+            </nav>
+        }
+        @if (Model.Type == "Add")
+        {*@
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Add Stock Godown</h3>
+        </nav>
+        @*}*@
+        <div class="card-body">
+            <form id="menu-form" method="post" enctype="multipart/form-data">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Basic Details</b></h4>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">GoDown Name</label>
+                            <div class="input-group">
+                                <select name="GDWCODE" id="GDWCODE" class="form-control" asp-items="@(new SelectList(Model.GoDownDropDown,"Value", "Text"))"></select>
+                            </div>
+                            <span asp-validation-for="GWDERROR" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>CHL NO</th>
+                                <th>CHL Date</th>
+                                <th>BILL NO</th>
+                                <th>BILL Date</th>
+                                <th>Item Name</th>
+                                <th>Stock Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.EditGateEntryDetails.Count > 0)
+                            {
+                                int j = 0;
+                                foreach (var i in Model.EditGateEntryDetails)
+                                {
+                                    <tr style="border:1px solid black">
+                                        <td>
+                                            @Html.HiddenFor(a => a.EditGateEntryDetails[j].ID, new { @class = "form-control" })
+                                        @Html.CheckBoxFor(a => a.EditGateEntryDetails[j].CHK, new { @class = "form-control" })
+                                    </td>
+                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_NO, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_DATE, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Bill_NO, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Bill_Date, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Item_Name, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Stk_Qty, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                </tr>
+                                j++;
+                            }
+                        }
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="GoDownDetails">Close</a>
+                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="GoDown" asp-action="GoDownStock">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#GDWCODE").chosen();
+    })
+
+</script>

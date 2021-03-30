@@ -1,0 +1,183 @@
+﻿@model WebERP.Models.Employee_Master
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        @if (Model.Type == "Add")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Add Employee</h3>
+            </nav>
+        }
+        @if (Model.Type == "Edit")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Edit Employee</h3>
+            </nav>
+        }
+        @if (Model.Type == "Action")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">View Employee</h3>
+            </nav>
+        }
+        <div class="card-body">
+            <form id="menu-form" method="post" enctype="multipart/form-data">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Basic Details</b></h4>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Employee Name</label>
+                            <div class="input-group">
+                                <input type="hidden" class="form-control numb" asp-for="EMP_CODE">
+                                <input type="text" class="form-control numb" asp-for="EMP_NAME">
+                            </div>
+                            <span asp-validation-for="EMP_NAME" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Department Name</label>
+                            <div class="input-group">
+                                <select asp-for="DEP_CODE" id="DEP_CODE" class="form-control" asp-items="@(new SelectList(Model.DepDropDown,"Value", "Text"))"></select>
+                            </div>
+                            <span asp-validation-for="DEP_CODE" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Employee Type</label>
+                            <div class="" custom-radio">
+                                <select class="form-control" asp-for="EMP_TYPE">
+                                    <option value="P">Pc Rate</option>
+                                    <option value="S">Salary</option>
+                                    <option value="C">Contractor</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="NAME" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Employee Father's Name</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="Emp_Father_Name">
+                            </div>
+                            <span asp-validation-for="Emp_Father_Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Employee Mobile No</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="emp_mobile_no1">
+                            </div>
+                            <span asp-validation-for="emp_mobile_no1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Employee Phone No</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="emp_mobile_no2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Employee DOJ</label>
+                            <div class="input-group">
+                                <input type="Date" class="form-control numb" asp-for="emp_doj">
+                            </div>
+                            <span asp-validation-for="emp_doj" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Employee Salary</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="emp_salary">
+                            </div>
+                            <span asp-validation-for="emp_salary" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Active Tag</label>
+                            <div class="custom-radio">
+                                <select class="form-control" id="ACTIVE_TAG" name="ACTIVE_TAG">
+                                    <option value="1">Yes</option>
+                                    <option value="2">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Remarks</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="Remarks">
+                            </div>
+                        </div>
+                    </div>
+                    @if ((Model.Type == "Edit") || (Model.Type == "Action"))
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_UID" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_UID" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Employee_Master">Close</a>
+                    @if (Model.Type == "Add")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Employee" asp-action="SAVEEmployee">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                    }
+                    @if (Model.Type == "Edit")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Employee" asp-action="EditEmployee">
+                            <i class="fa fa-save"></i> Update
+                        </button>
+                    }
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#DEP_CODE").chosen();
+    })
+</script>

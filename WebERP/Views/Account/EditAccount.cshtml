@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.Account_Master
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @if (Model.Type == "Edit")
@@ -150,6 +150,10 @@
                                 <select class="form-control" asp-for="OP_BAL_TAG">
                                     <option value="1">Debit</option>
                                     <option value="2">Credit</option>
+                                    <option value="3">Agent</option>
+                                    <option value="4">Bank</option>
+                                    <option value="5">Cash</option>
+                                    <option value="6">General</option>
                                 </select>
                             </div>
                         </div>
@@ -269,5 +273,8 @@
             })
 
         })
+    })
+    $(function () {
+        $("#ddlCity").chosen();
     })
 </script>

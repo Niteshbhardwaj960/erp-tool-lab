@@ -44,7 +44,7 @@
                             <div class="form-group">
                                 <label class="form-label">Address Line 1</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control numb" name="ADD1" id="ADD1">
+                                    <input type="text" class="form-control numb" value="." name="ADD1" id="ADD1">
                                 </div>
                                 <span asp-validation-for="ADD1" class="text-danger"></span>
                             </div>
@@ -61,7 +61,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Pin Code</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control numb" name="PIN_CODE" id="PIN_CODE">
+                                    <input type="text" class="form-control numb" value="0" name="PIN_CODE" id="PIN_CODE">
                                 </div>
                                 <span asp-validation-for="PIN_CODE" class="text-danger"></span>
                             </div>
@@ -94,7 +94,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Email Id</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control numb" name="EMAIL_ID" id="EMAIL_ID">
+                                    <input type="text" class="form-control numb" value="demo@demo.com" name="EMAIL_ID" id="EMAIL_ID">
                                 </div>
                                 <span asp-validation-for="EMAIL_ID" class="text-danger"></span>
                             </div>
@@ -103,7 +103,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Mobile No</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control numb" name="MOBILE_NO" id="MOBILE_NO">
+                                    <input type="text" class="form-control numb" value="0" name="MOBILE_NO" id="MOBILE_NO">
                                 </div>
                                 <span asp-validation-for="MOBILE_NO" class="text-danger"></span>
                             </div>
@@ -144,10 +144,12 @@
                                 <label for="branch_id">Account Type</label>
                                 <div class="custom-radio">
                                     <select class="form-control" id="ACC_TYPE" name="ACC_TYPE">
-                                        <option value="1">Sundry Deptor</option>
-                                        <option value="2">Sundry Creditor</option>
-                                        <option value="3">Both</option>
-                                        <option value="4">General</option>
+                                        <option value="1">Debit</option>
+                                        <option value="2">Credit</option>
+                                        <option value="3">Agent</option>
+                                        <option value="4">Bank</option>
+                                        <option value="5">Cash</option>
+                                        <option value="6">General</option>
                                     </select>
                                 </div>
                             </div>
@@ -175,7 +177,7 @@
                             <div class="form-group">
                                 <label for="branch_id">GST No</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control numb" name="GST_NO" id="GST_NO">
+                                    <input type="text" class="form-control numb" value="0" name="GST_NO" id="GST_NO">
                                 </div>
                                 <span asp-validation-for="GST_NO" class="text-danger"></span>
                             </div>
@@ -184,7 +186,10 @@
                             <div class="form-group">
                                 <label for="branch_id">GST Registration Tag</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control numb" name="GST_REGD_TAG" id="GST_REGD_TAG">
+                                    <select class="form-control" id="GST_REGD_TAG" name="GST_REGD_TAG">
+                                        <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -221,5 +226,8 @@
             })
 
         })
+    })
+    $(function () {
+        $("#ddlCity").chosen();
     })
 </script>
