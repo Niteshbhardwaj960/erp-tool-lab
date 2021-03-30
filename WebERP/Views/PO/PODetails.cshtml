@@ -7,7 +7,8 @@
 
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-3 static-top shadow" 
      style="background: linear-gradient(135deg, rgb(255 141 0 / 90%) 0%, #74009a 100%);"> 
-    <h3 style="color:white">New Purchasing Order</h3></nav>
+    <h3 style="color:white">New Purchasing Order</h3>
+</nav>
 
 <div class="card">
     <div class="card-body">       
@@ -20,7 +21,7 @@
                 </ol>
             </nav>
             <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <b>PO Header Details</b>                
+                <b>PO Header Details</b>               
             </h4>
             <div class="row">
                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -58,7 +59,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
-                        <label>Acc Code</label>
+                        <label>Party Name</label>
                         <select asp-for="POHeader.ACC_CODE" class="form-control poDropDown"
                                 asp-items="@(new SelectList(Model.POHeader.accDropDown, "Value", "Text"))"></select>
                         <span asp-validation-for="POHeader.ACC_CODE" class="text-danger"></span>
@@ -74,7 +75,7 @@
 
             <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>PO Item Details</b></h4>
 
-            <div class="row">
+            <div class="row" style="font-size:small;">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="table-responsive-sm">
                         <table class="table table-sm d-sm-table-cell table-bordered" id="poDtlTable" width="100%" cellspacing="0">
@@ -228,15 +229,8 @@
         </form>
         <hr />
         <div>
-            <a asp-action="POGridDetails" asp-controller="PO"><i class="fas fa-arrow-left"></i>Back To Grid</a>
+            <a asp-action="POGridDetails" asp-controller="PO"><i class="fas fa-arrow-left"></i>Back To Grid</a>                      
         </div>
     </div>
 </div>
 
-<script src="~/scripts/erpPoDetails.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $(".poDropDown").chosen();
-    })
-
-</script>

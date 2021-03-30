@@ -10,7 +10,7 @@
 </nav>
 @if (Model.Any())
 {
-    <a class="btn btn-success text-white" href="/PO/PODetails">
+    <a class="btn btn-success text-white"  href="/PO/PODetails">        
         Create New PO
     </a>
     <hr />
@@ -19,11 +19,11 @@
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" cellspacing="0">
                     <thead>
-                        <tr>    
+                        <tr>
                             <th>Order No</th>
                             <th>Company</th>
-                            <th>Order Date</th>                            
-                            <th>Acc Code</th>
+                            <th>Order Date</th>
+                            <th>Party Name</th>
                             <th>Create Date</th>
                             <th>Created By</th>
                             <th>User Action</th>
@@ -32,37 +32,37 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr> 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ORDER_NO)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.COMP_NAME)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ORDER_DATE)
-                            </td>                            
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ACC_NAME)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.INS_DATE)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.INS_UID)
-                            </td>
-                            <td>
-                                @*<a asp-action="EditPODetails" asp-controller="PO" asp-route-id="@item.POH_PK">
-                                    <i class="fas fa-user-edit"></i>
-                                </a>&nbsp;&nbsp;*@
-                                <a asp-action="DeletePODetails" asp-controller="PO" asp-route-id="@item.POH_PK">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>&nbsp;&nbsp;
-                                <a asp-action="ShowPODetails" asp-controller="PO" asp-route-id="@item.POH_PK">
-                                    <i class="fas fa-eye"></i>
-                                </a>                                
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ORDER_NO)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.COMP_NAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ORDER_DATE)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ACC_NAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.INS_DATE)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.INS_UID)
+                                </td>
+                                <td>
+                                    <a asp-action="EditPODetails" asp-controller="PO" asp-route-id="@item.POH_PK">
+                                            <i class="fas fa-user-edit"></i>
+                                        </a>&nbsp;&nbsp;
+                                    <a asp-action="DeletePODetails" asp-controller="PO" asp-route-id="@item.POH_PK">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>&nbsp;&nbsp;
+                                    <a asp-action="ShowPODetails" asp-controller="PO" asp-route-id="@item.POH_PK">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -86,3 +86,4 @@ else
         </div>
     </div>
 }
+

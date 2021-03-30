@@ -27,8 +27,9 @@ WebERP.PurchasingOrders = {
         $('#poDtlTable tbody').on('change', 'input[name*="QTY"]', WebERP.PurchasingOrders.QuantityOnChange);
         $('#poDtlTable tbody').on('change', 'input[name*="RATE"]', WebERP.PurchasingOrders.RateOnChange);
         $('#poDtlTable tbody').on('change', 'input[name*="DISC_PER"]', WebERP.PurchasingOrders.DiscRateOnChange);
+     
     },
-
+   
     FormOnSubmit: function (e) {        
         e.preventDefault();
         WebERP.PurchasingOrders._SetProperInputNames();
@@ -101,8 +102,7 @@ WebERP.PurchasingOrders = {
         WebERP.PurchasingOrders._SetProperInputNames();
     },
 
-    _SetProperInputNames() {
-        debugger
+    _SetProperInputNames() {        
         var pogridtableRows = $('#poDtlTable tbody tr');
         $.each(pogridtableRows, function (rowInd, row) {
             debugger

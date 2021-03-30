@@ -1,0 +1,89 @@
+﻿@model IEnumerable<WebERP.Models.JobWorkIssueHdr>
+    
+@{
+        ViewData["Title"] = "JobWorkGrid";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background:linear-gradient(135deg, rgb(255 141 0 / 90%) 0%, #74009a 100%);">
+        <h3 style="color:white">Job Work Issue Details</h3>
+    </nav>
+    @if (Model.Any())
+    {
+    <a class="btn btn-success text-white" href="/JobWork/CreateJobWork">
+        Create New JobWork
+    </a>
+    <hr />
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Doc No</th>
+                            <th>Company</th>
+                            <th>Document Date</th>
+                            <th>Party Name</th>
+                            <th>Create Date</th>
+                            <th>Created By</th>
+                            <th>User Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                            {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DOC_NO)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.COMP_NAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DOC_DATE)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ACC_NAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.INS_DATE)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.INS_UID)
+                            </td>
+                            <td>
+                                <a asp-action="EditJobWorkDetails" asp-controller="JobWork" asp-route-id="@item.JWH_PK">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="DeleteJobWorkDetails" asp-controller="JobWork" asp-route-id="@item.JWH_PK">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="ShowJobWorkDetails" asp-controller="JobWork" asp-route-id="@item.JWH_PK">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    }
+    else
+    {
+    <div class="card">
+        <div class="card-header">
+            No Job Work Issue Has Been Created Yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to Create New Job Work Issue
+            </h5>
+            <a class="btn btn-success text-white" href="/JobWork/CreateJobWork">
+                Create Job Work Issue
+            </a>
+        </div>
+    </div>
+    }
+

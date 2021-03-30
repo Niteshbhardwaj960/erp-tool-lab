@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210323173830_AddJobWorkTables")]
+    partial class AddJobWorkTables
     {
-       protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -444,175 +446,11 @@ namespace WebERP.Data.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("WebERP.Models.Cutting_Order", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ARTICAL_CODE");
-
-                    b.Property<int>("AVG_PC_WEIGHT");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<int>("CONT_EMP_CODE");
-
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<int>("DOC_FINYEAR");
-
-                    b.Property<int>("DOC_NO");
-
-                    b.Property<int>("EMP_CODE");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<int>("ITEM_CODE");
-
-                    b.Property<int>("ORDER_QTY");
-
-                    b.Property<string>("ORDER_STATUS");
-
-                    b.Property<int>("PROC_CODE");
-
-                    b.Property<int>("SIZE_CODE");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.Property<int>("WASTAGE_PER");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Cutting_Orders");
-                });
-
-            modelBuilder.Entity("WebERP.Models.Cutting_Receipt", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ART_NAME");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<int>("CUTTING_ORDER_FK");
-
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<int>("DOC_FINYEAR");
-
-                    b.Property<int>("DOC_NO");
-
-                    b.Property<string>("EMP_NAME");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("ITEM_NAME");
-
-                    b.Property<string>("PROC_NAME");
-
-                    b.Property<decimal>("RECEIPT_QTY");
-
-                    b.Property<string>("SIZE_NAME");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Cutting_Receipt");
-                });
-
-            modelBuilder.Entity("WebERP.Models.Department_Master", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("NAME")
-                        .IsRequired();
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Department_Masters");
-                });
-
-            modelBuilder.Entity("WebERP.Models.Employee_Master", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<int>("DEP_CODE");
-
-                    b.Property<string>("Dep_Name");
-
-                    b.Property<int>("EMP_CODE");
-
-                    b.Property<string>("EMP_NAME")
-                        .IsRequired();
-
-                    b.Property<string>("EMP_TYPE")
-                        .IsRequired();
-
-                    b.Property<string>("Emp_Father_Name")
-                        .IsRequired();
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("NAME");
-
-                    b.Property<string>("Remarks");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.Property<string>("active_tag");
-
-                    b.Property<DateTime?>("emp_doj")
-                        .IsRequired();
-
-                    b.Property<string>("emp_mobile_no1")
-                        .IsRequired();
-
-                    b.Property<string>("emp_mobile_no2");
-
-                    b.Property<int>("emp_salary");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Employee_Masters");
-                });
-
             modelBuilder.Entity("WebERP.Models.GateEntry.GateEntryDetail", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ACC_NAME");
 
                     b.Property<DateTime?>("Bill_Date");
 
@@ -622,17 +460,9 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("CHL_NO");
 
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<string>("Doc_No");
-
-                    b.Property<string>("FIN_YEAR");
-
                     b.Property<int>("Fin_Qty");
 
                     b.Property<int>("Fin_UOM");
-
-                    b.Property<int>("GDW_NO");
 
                     b.Property<int>("GH_FK");
 
@@ -642,15 +472,13 @@ namespace WebERP.Data.Migrations
 
                     b.Property<int>("Item_Name");
 
-                    b.Property<int>("Item_UOM");
+                    b.Property<string>("Item_UOM");
 
                     b.Property<int>("JW_FK");
 
                     b.Property<int>("Order_No");
 
                     b.Property<int>("POD_FK");
-
-                    b.Property<string>("Remarks");
 
                     b.Property<int>("Stk_Qty");
 
@@ -665,15 +493,13 @@ namespace WebERP.Data.Migrations
                     b.ToTable("gateEntryDetails");
                 });
 
-            modelBuilder.Entity("WebERP.Models.Gate_HDR", b =>
+            modelBuilder.Entity("WebERP.Models.GateEntry.Gate_HDR", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Acc_Code");
-
-                    b.Property<string>("Acc_Name");
 
                     b.Property<int>("Comp_Code");
 
@@ -688,8 +514,6 @@ namespace WebERP.Data.Migrations
                     b.Property<string>("INS_UID");
 
                     b.Property<string>("Remarks");
-
-                    b.Property<string>("Type");
 
                     b.Property<DateTime?>("UDT_DATE");
 
@@ -708,16 +532,12 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("ABV");
 
-                    b.Property<string>("GO_DOWN_TYPE");
-
                     b.Property<DateTime?>("INS_DATE");
 
                     b.Property<string>("INS_UID");
 
                     b.Property<string>("NAME")
                         .IsRequired();
-
-                    b.Property<string>("SALE_TAG");
 
                     b.Property<DateTime?>("UDT_DATE");
 
@@ -762,51 +582,78 @@ namespace WebERP.Data.Migrations
                     b.ToTable("Item_Master");
                 });
 
-            modelBuilder.Entity("WebERP.Models.MGF_RECEIPT", b =>
+            modelBuilder.Entity("WebERP.Models.JobWorkIssueDet", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("JWD_PK")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ART_NAME");
+                    b.Property<int>("ARTICAL_CODE");
 
-                    b.Property<int>("COMP_CODE");
+                    b.Property<int>("GODOWN_CODE");
 
-                    b.Property<int>("CONT_EMP_CODE");
-
-                    b.Property<int>("CUTTING_ORDER_FK");
-
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<int>("DOC_FINYEAR");
-
-                    b.Property<int>("DOC_NO");
-
-                    b.Property<int>("EMP_CODE");
-
-                    b.Property<string>("EMP_NAME");
+                    b.Property<int>("HSN_CODE");
 
                     b.Property<DateTime?>("INS_DATE");
 
                     b.Property<string>("INS_UID");
 
-                    b.Property<string>("ITEM_NAME");
+                    b.Property<int>("ITEM_CODE");
+
+                    b.Property<int>("JWH_FK");
 
                     b.Property<int>("PROC_CODE");
 
-                    b.Property<string>("PROC_NAME");
+                    b.Property<decimal>("QTY");
 
-                    b.Property<decimal>("RECEIPT_QTY");
+                    b.Property<string>("QTY_UOM");
 
-                    b.Property<string>("SIZE_NAME");
+                    b.Property<string>("REMARKS")
+                        .HasMaxLength(100);
+
+                    b.Property<int>("SIZE_CODE");
 
                     b.Property<DateTime?>("UDT_DATE");
 
                     b.Property<string>("UDT_UID");
 
-                    b.HasKey("ID");
+                    b.HasKey("JWD_PK");
 
-                    b.ToTable("MGF_RECEIPT");
+                    b.HasIndex("JWH_FK");
+
+                    b.ToTable("JobWorkIssue_Details");
+                });
+
+            modelBuilder.Entity("WebERP.Models.JobWorkIssueHdr", b =>
+                {
+                    b.Property<int>("JWH_PK")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ACC_CODE");
+
+                    b.Property<int>("COMP_CODE");
+
+                    b.Property<DateTime>("DOC_DATE");
+
+                    b.Property<string>("DOC_FINYEAR");
+
+                    b.Property<int>("DOC_NO");
+
+                    b.Property<DateTime?>("INS_DATE");
+
+                    b.Property<string>("INS_UID");
+
+                    b.Property<string>("REMARKS")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime?>("UDT_DATE");
+
+                    b.Property<string>("UDT_UID");
+
+                    b.HasKey("JWH_PK");
+
+                    b.ToTable("JobWorkIssue_Header");
                 });
 
             modelBuilder.Entity("WebERP.Models.PODetailModel", b =>
@@ -840,7 +687,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<decimal>("QTY");
 
-                    b.Property<int>("QTY_UOM");
+                    b.Property<string>("QTY_UOM");
 
                     b.Property<decimal>("RATE");
 
@@ -926,12 +773,6 @@ namespace WebERP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Artical_Code")
-                        .IsRequired();
-
-                    b.Property<string>("Comm_Rate")
-                        .IsRequired();
-
                     b.Property<DateTime?>("From_DATE");
 
                     b.Property<DateTime?>("INS_DATE");
@@ -978,82 +819,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Process_Master");
-                });
-
-            modelBuilder.Entity("WebERP.Models.RM_DTL", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ARTICAL_Code");
-
-                    b.Property<int>("BRAND_Code");
-
-                    b.Property<int>("GDW_Code");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<decimal>("ISSUE_QTY");
-
-                    b.Property<int>("ITEM_Code");
-
-                    b.Property<decimal>("ORDER_QTY");
-
-                    b.Property<int>("RM_HDR_FK");
-
-                    b.Property<int>("SIZE_Code");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("RM_DTL");
-                });
-
-            modelBuilder.Entity("WebERP.Models.RM_HDR", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ART_NAME");
-
-                    b.Property<int>("Comp_Code");
-
-                    b.Property<int>("Cutting_Order_FK");
-
-                    b.Property<DateTime?>("Doc_Date");
-
-                    b.Property<string>("Doc_FN_Year");
-
-                    b.Property<int>("Doc_No");
-
-                    b.Property<string>("EMP_NAME");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<string>("ITEM_NAME");
-
-                    b.Property<string>("PROC_NAME");
-
-                    b.Property<string>("Remarks");
-
-                    b.Property<string>("SIZE_NAME");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("RM_HDR");
                 });
 
             modelBuilder.Entity("WebERP.Models.Size_Master", b =>
@@ -1106,43 +871,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("States");
-                });
-
-            modelBuilder.Entity("WebERP.Models.StockDTL_Model", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Artical_CODE");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<int>("GDW_CODE");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<int>("Item_Code");
-
-                    b.Property<int>("Size_Code");
-
-                    b.Property<int>("Stk_Qty_IN");
-
-                    b.Property<int>("Stk_Qty_OUT");
-
-                    b.Property<string>("Tran_Table");
-
-                    b.Property<int>("Tran_Table_PK");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("StockDTL_Models");
                 });
 
             modelBuilder.Entity("WebERP.Models.Term_Master", b =>
@@ -1211,74 +939,13 @@ namespace WebERP.Data.Migrations
                     b.ToTable("V_CITY_DTL");
                 });
 
-            modelBuilder.Entity("WebERP.Models.V_CuttingDetail", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ARTICAL_CODE");
-
-                    b.Property<string>("ARTICAL_NAME");
-
-                    b.Property<int>("AVG_PC_WEIGHT");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<int>("CONT_EMP_CODE");
-
-                    b.Property<string>("CONT_EMP_NAME");
-
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<int>("DOC_FINYEAR");
-
-                    b.Property<int>("DOC_NO");
-
-                    b.Property<int>("EMP_CODE");
-
-                    b.Property<string>("EMP_NAME");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<int>("ITEM_CODE");
-
-                    b.Property<string>("Item_NAME");
-
-                    b.Property<int>("ORDER_QTY");
-
-                    b.Property<string>("ORDER_STATUS");
-
-                    b.Property<int>("PROC_CODE");
-
-                    b.Property<string>("PROC_NAME");
-
-                    b.Property<int>("SIZE_CODE");
-
-                    b.Property<string>("SIZE_NAME");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.Property<int>("WASTAGE_PER");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("V_CuttingDetail");
-                });
-
             modelBuilder.Entity("WebERP.Models.V_GateEntryDetail", b =>
                 {
-                    b.Property<int>("POH_PK")
+                    b.Property<int>("ORDER_NO")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ACC_CODE");
-
-                    b.Property<string>("ACC_NAME");
+                    b.Property<string>("ACC_CODE");
 
                     b.Property<decimal>("BAL_QTY");
 
@@ -1286,34 +953,28 @@ namespace WebERP.Data.Migrations
 
                     b.Property<int>("Gate_Entry_Qty");
 
-                    b.Property<int>("ITEM_CODE");
-
                     b.Property<string>("ITEM_NAME");
 
                     b.Property<DateTime>("ORDER_DATE");
 
                     b.Property<string>("ORDER_FINYEAR");
 
-                    b.Property<int>("ORDER_NO");
-
                     b.Property<int>("POD_PK");
+
+                    b.Property<int>("POH_PK");
 
                     b.Property<decimal>("QTY");
 
-                    b.Property<int>("QTY_CODE");
-
                     b.Property<string>("QTY_UOM");
 
-                    b.Property<string>("REMARKS");
-
-                    b.HasKey("POH_PK");
+                    b.HasKey("ORDER_NO");
 
                     b.ToTable("V_GateEntryDetail");
                 });
 
             modelBuilder.Entity("WebERP.Models.V_PODetails", b =>
                 {
-                    b.Property<int>("POH_PK")
+                    b.Property<int>("ORDER_NO")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -1323,120 +984,10 @@ namespace WebERP.Data.Migrations
 
                     b.Property<decimal>("QTY");
 
-                    b.HasKey("POH_PK");
+                    b.HasKey("ORDER_NO");
 
                     b.ToTable("V_PODetails");
                 });
-
-            modelBuilder.Entity("WebERP.Models.V_RM_DTL", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ARTICAL_CODE");
-
-                    b.Property<string>("ARTICAL_NAME");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<int>("GDW_CODE");
-
-                    b.Property<string>("GDW_NAME");
-
-                    b.Property<int>("ITEM_CODE");
-
-                    b.Property<string>("ITEM_NAME");
-
-                    b.Property<int>("SIZE_CODE");
-
-                    b.Property<string>("SIZE_NAME");
-
-                    b.Property<int>("STK_QTY");
-
-                    b.Property<int>("STK_QTY_IN");
-
-                    b.Property<int>("STK_QTY_OUT");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("V_RM_DTL");
-                });
-
-            modelBuilder.Entity("WebERP.Models.JobWorkIssueDet", b =>
-            {
-                b.Property<int>("JWD_PK")
-                    .ValueGeneratedOnAdd()
-                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                b.Property<int>("ARTICAL_CODE");
-
-                b.Property<int>("GODOWN_CODE");
-
-                b.Property<int>("HSN_CODE");
-
-                b.Property<DateTime?>("INS_DATE");
-
-                b.Property<string>("INS_UID");
-
-                b.Property<int>("ITEM_CODE");
-
-                b.Property<int>("JWH_FK");
-
-                b.Property<int>("PROC_CODE");
-
-                b.Property<decimal>("QTY");
-
-                b.Property<string>("QTY_UOM");
-
-                b.Property<string>("REMARKS")
-                    .HasMaxLength(100);
-
-                b.Property<int>("SIZE_CODE");
-
-                b.Property<DateTime?>("UDT_DATE");
-
-                b.Property<string>("UDT_UID");
-
-                b.HasKey("JWD_PK");
-
-                b.HasIndex("JWH_FK");
-
-                b.ToTable("JobWorkIssue_Details");
-            });
-
-            modelBuilder.Entity("WebERP.Models.JobWorkIssueHdr", b =>
-            {
-                b.Property<int>("JWH_PK")
-                    .ValueGeneratedOnAdd()
-                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                b.Property<int>("ACC_CODE");
-
-                b.Property<int>("COMP_CODE");
-
-                b.Property<DateTime>("DOC_DATE");
-
-                b.Property<string>("DOC_FINYEAR");
-
-                b.Property<int>("DOC_NO");
-
-                b.Property<DateTime?>("INS_DATE");
-
-                b.Property<string>("INS_UID");
-
-                b.Property<string>("REMARKS")
-                    .HasMaxLength(100);
-
-                b.Property<DateTime?>("UDT_DATE");
-
-                b.Property<string>("UDT_UID");
-
-                b.HasKey("JWH_PK");
-
-                b.ToTable("JobWorkIssue_Header");
-            });
-
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
@@ -1483,6 +1034,14 @@ namespace WebERP.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("WebERP.Models.JobWorkIssueDet", b =>
+                {
+                    b.HasOne("WebERP.Models.JobWorkIssueHdr", "JobWorkIssueHdr")
+                        .WithMany()
+                        .HasForeignKey("JWH_FK")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("WebERP.Models.PODetailModel", b =>
                 {
                     b.HasOne("WebERP.Models.POHeaderModel", "POHeaderModel")
@@ -1498,14 +1057,6 @@ namespace WebERP.Data.Migrations
                         .HasForeignKey("POH_FK")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
-
-            modelBuilder.Entity("WebERP.Models.JobWorkIssueDet", b =>
-            {
-                b.HasOne("WebERP.Models.JobWorkIssueHdr", "JobWorkIssueHdr")
-                    .WithMany()
-                    .HasForeignKey("JWH_FK")
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
 #pragma warning restore 612, 618
         }
     }
