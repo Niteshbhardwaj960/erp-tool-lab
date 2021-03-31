@@ -35,6 +35,12 @@ namespace WebERP.Models
 
         public int HSN_CODE { get; set; }
 
+        [NotMapped]
+        public string PROC_NAME { get; set; }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> GetProcess { get; set; }
+
         public int PROC_CODE { get; set; }
 
         [RegularExpression(@"^\d+\.\d{0,3}$")]

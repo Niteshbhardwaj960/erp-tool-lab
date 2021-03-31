@@ -40,6 +40,9 @@ namespace WebERP.Models
         [NotMapped]
         public string ACC_NAME { get; set; }
         [NotMapped]
-        public ICollection<JobWorkIssueDet> JWDetailItemList { get; set; }        
+        public ICollection<JobWorkIssueDet> JWDetailItemList { get; set; }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> GetProcess { get; set; }
     }
 }
