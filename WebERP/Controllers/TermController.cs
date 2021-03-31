@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebERP.Data;
@@ -11,6 +12,8 @@ using WebERP.Models;
 
 namespace WebERP.Controllers
 {
+    //[Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Term")]
     public class TermController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -30,7 +33,28 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Term_Master()
         {
-            return View(dbContext.Term_Master.ToList());
+            List<Term_Master> tm = new List<Term_Master>();
+            tm = dbContext.Term_Master.ToList();
+            foreach (var term in tm)
+            {
+                if (term.PO == "1")
+                {
+                    term.PO = "Yes";
+                }
+                else
+                {
+                    term.PO = "No";
+                }
+                if (term.SAL_Order == "1")
+                {
+                    term.SAL_Order = "Yes";
+                }
+                else
+                {
+                    term.SAL_Order = "No";
+                }
+            }
+            return View(tm);
         }
         [HttpGet]
         public IActionResult AddTerm()

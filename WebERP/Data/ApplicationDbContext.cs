@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebERP.Models;
 //using WebERP.Models.Location;
+using WebERP.Models;
 using WebERP.Models.GateEntry;
 
 namespace WebERP.Data
@@ -52,6 +53,16 @@ namespace WebERP.Data
         public DbSet<V_CITY_DTL> V_CITY_DTL { get; set; }
         public DbSet<GateEntryDetail> gateEntryDetails { get; set; }
         public DbSet<V_GateEntryDetail> V_GateEntryDetail { get; set; }
+        public DbSet<Department_Master> Department_Masters { get; set; }
+        public DbSet<Employee_Master> Employee_Masters { get; set; }
+        public DbSet<StockDTL_Model> StockDTL_Models { get; set; }
+        public DbSet<Cutting_Order> Cutting_Orders { get; set; }
+        public DbSet<V_CuttingDetail> V_CuttingDetail { get; set; }
+        public DbSet<V_RM_DTL> V_RM_DTL { get; set; }
+        public DbSet<RM_HDR> RM_HDR { get; set; }
+        public DbSet<RM_DTL> RM_DTL { get; set; }
+        public DbSet<Cutting_Receipt> Cutting_Receipt { get; set; }
+        public DbSet<MGF_RECEIPT> MGF_RECEIPT { get; set; }
     }
 
 }

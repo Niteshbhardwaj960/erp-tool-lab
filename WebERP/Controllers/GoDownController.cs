@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebERP.Data;
 using WebERP.Models;
+using WebERP.Models.GateEntry;
 
 namespace WebERP.Controllers
 {
@@ -30,12 +32,32 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult GoDown_Master()
         {
-            return View(dbContext.Godown_Master.ToList());
+            List<Godown_Master> gd = new List<Godown_Master>();
+            gd = dbContext.Godown_Master.ToList();
+            foreach (var obj in gd)
+            {
+                if (obj.SALE_TAG == "0")
+                {
+                    obj.SALE_TAG = "Yes";
+                }
+                else
+                {
+                    obj.SALE_TAG = "No";
+                }
+                if (obj.GO_DOWN_TYPE == "1") { obj.GO_DOWN_TYPE = "Raw Material"; }
+                else if (obj.GO_DOWN_TYPE == "2") { obj.GO_DOWN_TYPE = "Semi Finished"; }
+                else if (obj.GO_DOWN_TYPE == "3") { obj.GO_DOWN_TYPE = "Finished"; }
+                else if (obj.GO_DOWN_TYPE == "4") { obj.GO_DOWN_TYPE = "General"; }
+                else if (obj.GO_DOWN_TYPE == "5") { obj.GO_DOWN_TYPE = "Waste"; }
+                else if (obj.GO_DOWN_TYPE == "6") { obj.GO_DOWN_TYPE = "Outside"; }
+                else if (obj.GO_DOWN_TYPE == "7") { obj.GO_DOWN_TYPE = "Consumeable"; }
+            }
+            return View(gd);
         }
         [HttpGet]
         public IActionResult Add_GoDown()
         {
-            Godown_Master obj = new Godown_Master();            
+            Godown_Master obj = new Godown_Master();
             obj.Type = "Add";
             return View("Add_GoDown", obj);
         }
@@ -143,6 +165,98 @@ namespace WebERP.Controllers
                         "GoDowns.xlsx");
                 }
             }
+        }
+
+        [HttpGet]
+        public IActionResult GoDownDetails()
+        {
+            List<StockDTL_Model> STK = new List<StockDTL_Model>();
+            STK = dbContext.StockDTL_Models.ToList();
+            return View(STK);
+        }
+
+        [HttpGet]
+        public IActionResult GoDownStock()
+        {
+            var err="";
+            if(TempData["err"] != null)
+            {
+                err = TempData["err"].ToString();
+            }
+            Models.EditGateEntryModel GED = new Models.EditGateEntryModel();
+            GED.GWDERROR = err;
+            GED.GoDownDropDown = GoDownList();
+            GED.EditGateEntryDetails = dbContext.gateEntryDetails.Where(G => G.GDW_NO == 0).ToList();
+            return View(GED);
+        }
+        public List<SelectListItem> GoDownList()
+        {
+            var GDWList = (from GDW in dbContext.Godown_Master.ToList()
+                           select new SelectListItem()
+                           {
+                               Text = GDW.NAME,
+                               Value = Convert.ToString(GDW.ID),
+                           }).ToList();
+
+            //GDWList.Insert(0, new SelectListItem()
+            //{
+            //    Text = "Select Godown",
+            //    Value = string.Empty,
+            //    Selected = true
+            //});
+            return GDWList;
+        }
+
+        [HttpPost]
+        public IActionResult GoDownStock(EditGateEntryModel EditGateEntryModels, string GDWCODE)
+        {
+            //if (GDWCODE == null)
+            //{
+            //    TempData["err"] = "Please Select Godown ";
+            //    return RedirectToAction("GoDownStock");
+            //}
+            //else {
+            //    //if (ModelState.IsValid)
+            //    //{
+                List<StockDTL_Model> StkDTL = new List<StockDTL_Model>();
+                List<int> ID = new List<int>();
+                foreach (var stk in EditGateEntryModels.EditGateEntryDetails)
+                {
+                    if (stk.CHK == true)
+                    {
+                        StkDTL.Add(new StockDTL_Model()
+                        {
+                            INS_DATE = DateTime.Now,
+                            INS_UID = userManager.GetUserName(HttpContext.User),
+                            COMP_CODE = 0,
+                            Tran_Table = "Gate Entry",
+                            Tran_Table_PK = stk.ID,
+                            GDW_CODE = Convert.ToInt32(GDWCODE),
+                            Item_Code = stk.Item_Name,
+                            Artical_CODE = 0,
+                            Size_Code = 0,
+                            Stk_Qty_IN = stk.Stk_Qty,
+                            Stk_Qty_OUT = 0
+                        });
+                        ID.Add(stk.ID);
+                    }
+                }
+                foreach (var item in StkDTL)
+                {
+                    dbContext.StockDTL_Models.Add(item);
+                    dbContext.SaveChanges();
+                }
+                foreach (var item in ID)
+                {
+                    var result = dbContext.gateEntryDetails.SingleOrDefault(b => b.ID == item);
+                    if (result != null)
+                    {
+                        result.GDW_NO = Convert.ToInt32(GDWCODE);
+                        dbContext.SaveChanges();
+                    }                                      
+                }
+                return RedirectToAction("GoDownStock");
+            //}
         }
     }
 }

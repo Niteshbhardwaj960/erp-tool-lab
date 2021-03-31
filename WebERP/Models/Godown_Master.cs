@@ -14,6 +14,8 @@ namespace WebERP.Models
         [Required(ErrorMessage = "Name is Required Field")]
         public string NAME { get; set; }
         public string ABV { get; set; }
+        public string SALE_TAG { get; set; }
+        public string GO_DOWN_TYPE { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }

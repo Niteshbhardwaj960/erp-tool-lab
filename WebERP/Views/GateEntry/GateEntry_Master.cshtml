@@ -1,22 +1,21 @@
-﻿@*@model IEnumerable<WebERP.ModelsPurchasingOrder.PODetailModel>*@
-@model WebERP.Models.V_PODetails
-<script src="~/lib/jquery/dist/jquery.js"></script>
+﻿@model WebERP.Models.GateEntryViewModel
 
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
             <h3 style="color:white">Gate Entry</h3>
         </nav>
         <div class="card-body">
-            <form id="menu-form" method="post" enctype="multipart/form-data">
-                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Type of work Details</b></h4>
+            <form id="menu-form" method="post" asp-controller="GateEntry" asp-action="GateEntry_Master">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Header Details</b></h4>
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label class="form-label">Type of Order</label>
                             <div class="input-group">
-                                <select class="form-control" id="ddlwork" name="Type">
-                                    <option value="1">Process Order</option>
+                                <select class="form-control" id="ddlwork" name="ddlwork">
+                                    <option value="1">Purchase Order</option>
                                     <option value="2">Job Work</option>
                                 </select>
                             </div>
@@ -26,45 +25,115 @@
                         <div class="form-group">
                             <label class="form-label">Account Name</label>
                             <div class="input-group">
-                                <select id="ddlACC" class="form-control" asp-items="@(new SelectList( Model.AccDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlACC" name="ddlACC" class="form-control" asp-items="@(new SelectList( Model.Gate_HDR.AccDropDown ,"Value", "Text"))"></select>
                             </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
                         </div>
 
                     </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Document Date</label>
+                            <input type="Date" class="form-control" name="doc_Date" id="doc_Date">
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Document Finyear</label>
+                            <input type="text" readonly="readonly" class="form-control numb" name="FinYear" id="FinYear">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Remarks</label>
+                            <input type="text" class="form-control numb" name="Remarks" id="Remarks">
+                        </div>
+
+                    </div>
                 </div>
-                @*<h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Pending Process Order Details</b></h4>*@
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Purchase Order Details</b></h4>
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered" Name="dataTa" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>Process Order No</th>
-                                        <th>Account Name</th>
+                                        <th>Order No</th>
+                                        <th>Item Name</th>
                                         <th>Order Date</th>
-                                        <th>Order Qty</th>
+                                        <th>Qty</th>
+                                        <th>Qty UOM</th>
+                                        <th>Gate Entry Qty</th>
+                                        <th>Bal Qty</th>
+                                        <th>Remarks</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @*@foreach (var Data in ViewBag.)
+                                    @*@if (Model != null && Model.v_GateEntryDetails.Count > 0)
                                         {
-                                            <tr>
-                                                <th><input type="checkbox" name="checboxlist" value="@Data.ORDER_NO" id=@Data.ORDER_NO /></th>
-                                                <td>@Data.ORDER_NO</td>
-                                                <td>@Data.ACC_CODE</td>
-                                                <td>@Data.ORDER_DATE</td>
-                                                <td>@Data.QTY</td>
-                                            </tr>
+                                            int j = 0;
+                                            foreach (var i in Model.v_GateEntryDetails)
+                                            {
+                                        <tr style="border:1px solid black">
+                                            <td>
+                                                @Html.CheckBoxFor("Field1", Model.v_GateEntryDetails)
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(a => a.v_GateEntryDetails[j].POD_PK, new { @class = "form-control" })
+                                                @Html.TextBoxFor(a => a.v_GateEntryDetails[j].POH_PK, new { @class = "form-control" })
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(a => a.v_GateEntryDetails[j].ORDER_DATE, new { @class = "form-control" })
+                                                @Html.TextBoxFor(a => a.v_GateEntryDetails[j].ORDER_DATE, new { @class = "form-control" })
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(a => a.v_GateEntryDetails[j].ITEM_CODE, new { @class = "form-control" })
+                                                @Html.TextBoxFor(a => a.v_GateEntryDetails[j].ITEM_NAME, new { @class = "form-control" })
+                                            </td>
+                                            <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY, new { @class = "form-control" })</td>
+                                            <td>
+                                                @Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY_UOM, new { @class = "form-control" })
+                                                @Html.HiddenFor(a => a.v_GateEntryDetails[j].QTY_CODE, new { @class = "form-control" })
+                                            </td>
+
+                                            <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Gate_Entry_Qty, new { @class = "form-control" })</td>
+                                            <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].BAL_QTY, new { @class = "form-control" })</td>
+                                        </tr>
+                                                j++;
+                                            }
                                         }*@
                                 </tbody>
                             </table>
+                            @*<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Process Order No</th>
+                                            <th>Account Name</th>
+                                            <th>Order Date</th>
+                                            <th>Order Qty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var Data in ViewBag.)
+                                            {
+                                                <tr>
+                                                    <th><input type="checkbox" name="checboxlist" value="@Data.ORDER_NO" id=@Data.ORDER_NO /></th>
+                                                    <td>@Data.ORDER_NO</td>
+                                                    <td>@Data.ACC_CODE</td>
+                                                    <td>@Data.ORDER_DATE</td>
+                                                    <td>@Data.QTY</td>
+                                                </tr>
+                                            }
+                                    </tbody>
+                                </table>*@
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Size_Master">Close</a>
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Gate_Entry_Details">Close</a>
                     <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" id="AddPO">
                         Add
                     </button>
@@ -81,18 +150,42 @@
             debugger;
             $.getJSON("/GateEntry/GetGrdData", { accid: $("#ddlACC").val(), work: $('#ddlwork').val() }, function (json) {
                 var tr;
+                console.log(json);
                 $(".dataTables_empty").remove();
                 for (var i = 0; i < json.length; i++) {
                     tr = $('<tr/>');
-                    tr.append("<td>" + '<input type="checkbox" name="ckec" value="' + json[i].ordeR_NO + '" id="test' + i + '">' + "</td>");
+                    tr.append("<td>" + '<input type="checkbox" name="ckec" value="' + json[i].poD_PK + '" id="test' + i + '">' + "</td>");
                     tr.append("<td>" + json[i].ordeR_NO + "</td>");
-                    tr.append("<td>" + json[i].acC_CODE + "</td>");
+                    tr.append("<td>" + json[i].iteM_NAME + "</td>");
                     tr.append("<td>" + json[i].ordeR_DATE + "</td>");
                     tr.append("<td>" + json[i].qty + "</td>");
+                    tr.append("<td>" + json[i].qtY_UOM + "</td>");
+                    tr.append("<td>" + json[i].gate_Entry_Qty + "</td>");
+                    tr.append("<td>" + json[i].baL_QTY + "</td>");
+                    tr.append("<td>" + json[i].remarks + "</td>");
                     $('#dataTable').append(tr);
                 }
             })
 
         })
+    })
+
+    $(function () {
+        $("#doc_Date").change(function () {
+            debugger;
+            var date = $(this).val();
+            var financial_year = "";
+            var today = new Date(date);
+            if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
+                financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
+            } else {
+                financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
+            }
+            $("#FinYear").val(financial_year);
+        });
+    })
+
+    $(function () {
+        $("#ddlACC").chosen();
     })
 </script>

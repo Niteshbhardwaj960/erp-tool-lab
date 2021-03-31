@@ -5,7 +5,7 @@
         @if (Model.Type == "Add")
         {<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
                 <h3 style="color:white">Add GoDown</h3>
-            </nav>      }
+            </nav> }
         else if (Model.Type == "Edit")
         {<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
                 <h3 style="color:white">Edit GoDown</h3>
@@ -13,7 +13,7 @@
         else
         {<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
                 <h3 style="color:white">View GoDown</h3>
-            </nav>      }
+            </nav>}
 
         <div class="card-body">
             <form id="menu-form" method="post" enctype="multipart/form-data">
@@ -29,13 +29,73 @@
                                 }
                                 else
                                 {
-                                <input type="text" readonly="readonly" class="form-control numb" asp-for="NAME">
+                                    <input type="text" readonly="readonly" class="form-control numb" asp-for="NAME">
                                 }
                             </div>
                             <span asp-validation-for="NAME" class="text-danger"></span>
                         </div>
                     </div>
-                    @if ((Model.Type == "Edit") ||  (Model.Type == "Action"))
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Sale Tag</label>
+                            <div class="input-group">
+                                @if (Model.Type == "Add")
+                                {
+                                    <select class="form-control" asp-for="SALE_TAG">
+                                        <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+
+                                }
+                                else
+                                {
+
+                                    <select class="form-control" asp-for="SALE_TAG">
+                                        <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+
+                                }
+                            </div>
+                            <span asp-validation-for="NAME" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">GoDown Type</label>
+                            <div class="input-group">
+                                @if (Model.Type == "Add")
+                                {
+                                    <select class="form-control" asp-for="GO_DOWN_TYPE">
+                                        <option value="1">Raw Material</option>
+                                        <option value="2">Semi Finished</option>
+                                        <option value="3">Finished</option>
+                                        <option value="4">General</option>
+                                        <option value="5">Waste</option>
+                                        <option value="6">Outside</option>
+                                        <option value="7">Consumeable</option>
+                                    </select>
+
+                                }
+                                else
+                                {
+
+                                    <select class="form-control" asp-for="GO_DOWN_TYPE">
+                                        <option value="1">Raw Material</option>
+                                        <option value="2">Semi Finished</option>
+                                        <option value="3">Finished</option>
+                                        <option value="4">General</option>
+                                        <option value="5">Waste</option>
+                                        <option value="6">Outside</option>
+                                        <option value="6">Consumeable</option>
+                                    </select>
+
+                                }
+                            </div>
+                            <span asp-validation-for="NAME" class="text-danger"></span>
+                        </div>
+                    </div>
+                    @if ((Model.Type == "Edit") || (Model.Type == "Action"))
                     {
                         <div class="col-lg-4 col-md-4 col-sm-12">
                             <div class="form-group">
@@ -70,7 +130,7 @@
                             </div>
                         </div>
                     }
-                    </div>
+                </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Godown_Master">Close</a>
                     @if (Model.Type == "Add")
@@ -84,7 +144,7 @@
                         <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="GoDown" asp-action="EditGoDown">
                             <i class="fa fa-save"></i> Update
                         </button>
-                    }                    
+                    }
                 </div>
             </form>
         </div>
