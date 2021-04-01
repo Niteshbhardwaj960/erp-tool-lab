@@ -41,14 +41,14 @@
                                 <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
                             </div>
                         </div>
-                        <input class="form-control fc-datepicker" id="jwDocDate" type="date" value="@DateTime.Now" asp-for="JobWorkIssHeader.DOC_DATE">
+                        <input class="form-control fc-datepicker" id="jwEditDocDate" type="date" value="@DateTime.Now" asp-for="JobWorkIssHeader.DOC_DATE">
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>Document Financial Year</label>
-                        <input type="text" class="form-control" id="jwDocFinYear" asp-for="JobWorkIssHeader.DOC_FINYEAR" readonly>
+                        <input type="text" class="form-control" id="jwEditDocFinYear" asp-for="JobWorkIssHeader.DOC_FINYEAR" readonly>
                     </div>
                 </div>
 
@@ -114,46 +114,48 @@
                             <tbody>
                                 @for (int j = 0; j < Model.JobWorkIssueDetails.Count(); j++)
                                 {
-                                    <tr>
-                                        <td style="text-align:center;">
-                                            <input type="checkbox" />
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].GODOWN_CODE, new { @class = "form-control", @type = "text" })
-                                        </td>
-                                        <td>
-                                            @Html.DropDownListFor(m=>m.JobWorkIssueDetails[j].ITEM_CODE,
-                                              new SelectList(string.Empty, "Value", "Text"),
-                                              new { @class="form-control"})
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ARTICAL_CODE, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].SIZE_CODE, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].HSN_CODE, new { @class = "form-control", @type = "text" })
-                                        </td>
+                                <tr>
+                                    <td style="text-align:center;">
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].GODOWN_CODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].GODOWN_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].ITEM_CODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ITEM_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].ARTICAL_CODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].SIZE_CODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].HSN_CODE, new { @class = "form-control", @type = "text" })
+                                    </td>
 
-                                        <td>
-                                            @Html.DropDownListFor(m=>m.JobWorkIssueDetails[j].PROC_CODE,
-                                              new SelectList(string.Empty, "Value", "Text"),
-                                              new { @class= "form-control" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number" })
-                                        </td>
-                                        @*<td>
-                                               @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
-                                            </td>*@
-                                        <td>
-                                            @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control" })
-                                        </td>
-                                    </tr>
+                                    <td>
+                                        @Html.DropDownListFor(m=>m.JobWorkIssueDetails[j].PROC_CODE,
+                                          new SelectList(string.Empty, "Value", "Text"),
+                                          new { @class= "form-control" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number" })
+                                    </td>
+                                    @*<td>
+           @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
+        </td>*@
+                                    <td>
+                                        @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control" })
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -174,5 +176,20 @@
 <script type="text/javascript">
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
+    })
+
+    $(function () {
+        $("#jwEditDocDate").change(function () {
+            debugger;
+            var date = $(this).val();
+            var financial_year = "";
+            var today = new Date(date);
+            if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
+                financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
+            } else {
+                financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
+            }
+            $("#jwEditDocFinYear").val(financial_year);
+        });
     })
 </script>

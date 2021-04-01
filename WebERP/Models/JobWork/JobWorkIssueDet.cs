@@ -22,16 +22,22 @@ namespace WebERP.Models
         public int GODOWN_CODE { get; set; }
 
         [NotMapped]
-        public string ITEM_NAME { get; set; }
+        public string GODOWN_NAME { get; set; }
+       
+        public int ITEM_CODE { get; set; }
 
         [NotMapped]
-        public IEnumerable<SelectListItem> GetItems { get; set; }
-
-        public int ITEM_CODE { get; set; }
+        public string ITEM_NAME { get; set; }
 
         public int ARTICAL_CODE { get; set; }
 
+        [NotMapped]
+        public string ARTICAL_NAME { get; set; }
+
         public int SIZE_CODE { get; set; }
+
+        [NotMapped]
+        public string SIZE_NAME { get; set; }
 
         public int HSN_CODE { get; set; }
 
@@ -47,7 +53,7 @@ namespace WebERP.Models
         [Range(0, 999999999999.999)]
         public decimal QTY { get; set; }
 
-        public string QTY_UOM { get; set; }
+        public string QTY_UOM { get; set; } //considering as a stock quant for now
 
         [StringLength(100)]
         public string REMARKS { get; set; }

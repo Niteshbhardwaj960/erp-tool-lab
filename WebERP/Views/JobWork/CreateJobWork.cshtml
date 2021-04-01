@@ -111,18 +111,20 @@
                                         <input type="checkbox" class="tickJobWork"/>
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].GODOWN_CODE, new { @class = "form-control", @type = "text" })
+                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].GODOWN_CODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].GODOWN_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
                                     </td>
                                     <td>
-                                        @Html.DropDownListFor(m=>m.JobWorkIssueDetails[j].ITEM_CODE,
-                                          new SelectList(Model.JobWorkIssueDetails[j].GetItems, "Value", "Text"),
-                                          new { @class="form-control"})
+                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].ITEM_CODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ITEM_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ARTICAL_CODE, new { @class = "form-control", @readOnly = "readonly" })
+                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].ARTICAL_CODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].SIZE_CODE, new { @class = "form-control", @readOnly = "readonly" })
+                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].SIZE_CODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                     </td>
                                     <td>
                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].HSN_CODE, new { @class = "form-control", @type = "text" })
@@ -134,14 +136,11 @@
                                           new { @class= "form-control" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @type = "number", @readOnly = "readonly" })
                                     </td>
                                     <td>
                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number" })
-                                    </td>
-                                      @*<td>
-                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
-                                      </td>*@
+                                    </td>                                      
                                     <td>
                                         @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control" })
                                     </td>
@@ -166,5 +165,20 @@
 <script type="text/javascript">
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
+    })
+
+    $(function () {
+        $("#jwDocDate").change(function () {
+            debugger;
+            var date = $(this).val();
+            var financial_year = "";
+            var today = new Date(date);
+            if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
+                financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
+            } else {
+                financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
+            }
+            $("#jwDocFinYear").val(financial_year);           
+        });
     })
 </script>
