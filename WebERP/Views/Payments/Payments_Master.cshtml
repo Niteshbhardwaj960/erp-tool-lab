@@ -1,0 +1,191 @@
+﻿@model WebERP.Models.Payments
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        @if (Model.Type == "Add")
+        {
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Add Payments</h3>
+        </nav>
+        }
+        @if (Model.Type == "Edit")
+        {
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Edit Payments</h3>
+        </nav>
+        }
+        @if (Model.Type == "Action")
+        {
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">View Payments</h3>
+        </nav>
+        }
+        
+        <div class="card-body">
+
+            <form id="menu-form" method="post">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Payments Details</b></h4>
+                <div class="row">
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Document Date</label>
+                            <div class="input-group">
+                                @if (Model.Type == "Add")
+                                {
+                                    @Html.TextBoxFor(a => a.DOC_DATE, new { @ID = "DOC_DATE", @class = "form-control dat fc-datepicker", @type = "date" })
+                                }
+                                @if (Model.Type == "Edit" || Model.Type == "Action")
+                                {
+                                    @Html.TextBoxFor(a => a.DOC_DATE, new { @ID = "DOC_FN_YEAR", @class = "form-control", @readOnly = "readonly" })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Document Financial Year</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.DOC_FN_YEAR, new { @ID = "DOC_FN_YEAR", @class = "form-control", @readOnly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Payment Mode</label>
+                            <div class="custom-radio">
+                                <select class="form-control" asp-for="PAYMENT_MODE" id="PAYMENT_MODE">
+                                    <option value="1">Select Payment Mode</option>
+                                    <option value="4">Bank</option>
+                                    <option value="5">Cash</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Payment Tag</label>
+                            <div class="custom-radio">
+                                <select class="form-control" asp-for="PAYMENT_TAG">
+                                    <option value="1">Payment</option>
+                                    <option value="2">Receipt</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Cash/Bank Account Name</label>
+                            <div class="custom-radio">
+                                @if (Model.Type == "Add")
+                                {
+                                    <select asp-for="CB_ACC_CODE" id="ddlCBACC" class="form-control" asp-items="@(new SelectList(string.Empty, "Value", "Text"))"></select>
+                                }
+                                @if (Model.Type == "Edit" || Model.Type == "Action")
+                                {
+                                    <select asp-for="CB_ACC_CODE" id="ddlCBACC" class="form-control" asp-items="@(new SelectList(Model.CBACCDropDown,"Value", "Text"))"></select>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Account Name</label>
+                            <div class="custom-radio">
+                                <select asp-for="ACC_CODE" id="ddlACC" class="form-control" asp-items="@(new SelectList(Model.ACCDropDown,"Value", "Text"))"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Payment Document No</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.PAY_DOC_NO, new { @ID = "PAY_DOC_NO", @class = "form-control", @type = "number" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Payment Document Date</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.PAY_DOC_DATE, new { @ID = "PAY_DOC_DATE", @class = "form-control", @type = "date", @value = Model.PAY_DOC_DATE.ToString() })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Amount</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.AMOUNT, new { @ID = "AMOUNT", @class = "form-control", @type = "decimal" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Remarks</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.REMARKS, new { @ID = "REMARKS", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Payments_Details">Close</a>
+                    @if (Model.Type == "Add")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Payments" asp-action="Payments_Master">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                    }
+                    @if (Model.Type == "Edit")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Payments" asp-action="Edit_Payments">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                    }
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#DOC_DATE").change(function () {
+            debugger;
+            var date = $(this).val();
+            var financial_year = "";
+            var today = new Date(date);
+            if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
+                financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
+            } else {
+                financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
+            }
+            $("#DOC_FN_YEAR").val(financial_year);            
+        });
+    })  
+    $(function () {
+        $("#PAYMENT_MODE").change(function () {
+            debugger;
+            $.getJSON("/payments/CBAcclists", { type: $("#PAYMENT_MODE").val() }, function (d) {
+                debugger;
+                var row = "";
+                $("#ddlCBACC").empty();
+                $.each(d, function (i, v) {
+                    row += "<option value=" + v.value + ">" + v.text + "</option>";
+                });
+                $("#ddlCBACC").html(row);
+
+            })
+
+        })
+    })
+    $(function () {
+        $("#ddlACC").chosen();
+    })
+    $(function () {
+        $("#ddlCBACC").chosen();
+    })
+</script>

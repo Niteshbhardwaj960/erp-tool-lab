@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WebERP.Models.Payments>
+
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Payments</h3></nav>
+
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary" style="width:auto" asp-controller="Payments" asp-action="Payments_Master">
+        Add
+    </a>
+    @*<a class="btn btn-success" style="width:auto" asp-controller="Company" asp-action="Excel">
+            Export
+        </a>*@
+    <hr />
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Doc Date</th>
+                            <th>Doc No</th>
+                            <th>Payment Mode</th>
+                            <th>Payment Tag</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var Data in Model)
+                        {
+                        <tr>
+                            <td>@Data.INS_DATE</td>
+                            <td>@Data.DOC_NO</td>
+                            <td>@Data.PAY_MODE</td>
+                            <td>@Data.PAY_TAG</td>
+                            <td>
+                                <a asp-action="EditPayments" asp-controller="Payments" asp-route-id="@Data.ID">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="DeletePayments" asp-controller="Payments" asp-route-id="@Data.ID">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="ActionPayments" asp-controller="Payments" asp-route-id="@Data.ID">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No Payments Entry Created Yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to Add Payments
+            </h5>
+            <a class="btn btn-primary" style="width:auto" asp-controller="Payments" asp-action="Payments_Master">
+                Add
+            </a>
+        </div>
+    </div>
+}
