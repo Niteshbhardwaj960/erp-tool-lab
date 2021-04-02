@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,5 +22,11 @@ namespace WebERP.Models
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
         public string UDT_UID { get; set; }
+        [NotMapped]
+        public string Type { get; set; }
+        [NotMapped]
+        public string Emp_Name { get; set; }
+        [NotMapped]
+        public List<SelectListItem> EMPDropDown { get; set; }
     }
 }

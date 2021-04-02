@@ -30,17 +30,30 @@ namespace WebERP.Controllers
         {
             Employee_Advance employee_Advance = new Employee_Advance();
             employee_Advance.Type = "Add";
+            employee_Advance.EMPDropDown = Emplists("P");
             return View("Emp_Adv_Master",employee_Advance);
         }
         [HttpPost]
         public IActionResult Emp_Adv_Master(Employee_Advance employee_Advance)
         {
-            employee_Advance.INS_DATE = DateTime.Now;
+            employee_Advance.INS_DATE = DateTime.Today;
             employee_Advance.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.Employee_Advance.Add(employee_Advance);
             dbContext.SaveChanges();
 
-            return RedirectToAction("Payments_Details");
+            return RedirectToAction("Emp_Adv_Details");
+        }
+        [HttpGet]
+        public IActionResult Emp_Adv_Details()
+        {
+            List<Employee_Advance> employee_Advance = new List<Employee_Advance>();
+            employee_Advance = dbContext.Employee_Advance.ToList();
+            foreach(var emp in employee_Advance.ToList())
+            {
+                var empname = dbContext.Employee_Masters.Where(e => e.ID == emp.EMP_CODE).Select(s => s.EMP_NAME).FirstOrDefault();
+                emp.Emp_Name = empname;
+            }
+            return View(employee_Advance);
         }
         [HttpGet]
         public List<SelectListItem> Emplists(string type)
@@ -60,5 +73,62 @@ namespace WebERP.Controllers
             });
             return Emplist;
         }
+
+        [HttpGet]
+        public IActionResult ActionEmpAdv(int id)
+        {
+            Employee_Advance employee_Advance = new Employee_Advance();
+            employee_Advance = dbContext.Employee_Advance.Find(id);
+            employee_Advance.EMPDropDown = Emplists(employee_Advance.EMP_TYPE);
+            employee_Advance.Type = "Action";
+            dbContext.Employee_Advance.Update(employee_Advance);
+            return View("Emp_Adv_Master", employee_Advance);
+        }
+        [HttpGet]
+        public IActionResult EditEmpAdv(int id)
+        {
+            Employee_Advance employee_Advance = new Employee_Advance();
+            employee_Advance = dbContext.Employee_Advance.Find(id);
+            employee_Advance.Type = "Edit";
+            employee_Advance.EMPDropDown = Emplists(employee_Advance.EMP_TYPE);
+            dbContext.Employee_Advance.Update(employee_Advance);
+            dbContext.SaveChanges();
+            return View("Emp_Adv_Master", employee_Advance);
+        }
+
+        [HttpPost]
+        public IActionResult EditEmpAdv(Employee_Advance employee_Advance)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = dbContext.Employee_Advance.SingleOrDefault(b => b.ID == employee_Advance.ID);
+                if (result != null)
+                {
+                    result.UDT_DATE = DateTime.Today;
+                    result.UDT_UID = userManager.GetUserName(HttpContext.User);
+                    result.ADV_AMOUNT = employee_Advance.ADV_AMOUNT;
+                    result.DOC_DATE = employee_Advance.DOC_DATE;
+                    result.EMP_CODE = employee_Advance.EMP_CODE;
+                    result.EMP_TYPE = employee_Advance.EMP_TYPE;
+                    result.SAL_YYYYMM = employee_Advance.SAL_YYYYMM;
+                    result.SAL_YYYYMM_BRK = employee_Advance.SAL_YYYYMM_BRK;
+                    dbContext.SaveChanges();
+                }
+                return RedirectToAction("Emp_Adv_Details");
+            }
+            else
+            {
+                return View("Emp_Adv_Master", employee_Advance);
+            }
+        }
+        [HttpGet]
+        public IActionResult DeleteEmpAdv(int ID)
+        {
+            var data = dbContext.Employee_Advance.Find(ID);
+            dbContext.Employee_Advance.Remove(data);
+            dbContext.SaveChanges();
+            return RedirectToAction("Emp_Adv_Details");
+        }
+
     }
 }

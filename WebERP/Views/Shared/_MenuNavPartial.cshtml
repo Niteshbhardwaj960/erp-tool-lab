@@ -8,31 +8,31 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" asp-controller="Administration" asp-action="Dashboard">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-        </a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" asp-controller="GateEntry" asp-action="GateEntry_Master">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Gate Entry</span>
-        </a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" asp-controller="PO" asp-action="POGridDetails">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>PO Master</span>
-        </a>
-    </li>
+    @*<li class="nav-item active">
+            <a class="nav-link" asp-controller="Administration" asp-action="Dashboard">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>*@
+    @*<li class="nav-item active">
+            <a class="nav-link" asp-controller="GateEntry" asp-action="GateEntry_Master">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Gate Entry</span>
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" asp-controller="PO" asp-action="POGridDetails">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>PO Master</span>
+            </a>
+        </li>*@
 
-    <li class="nav-item active">
-        <a class="nav-link" asp-controller="JobWork" asp-action="JobWorkGrid">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Job Work</span>
-        </a>
-    </li>
+    @*<li class="nav-item active">
+            <a class="nav-link" asp-controller="JobWork" asp-action="JobWorkGrid">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Job Work</span>
+            </a>
+        </li>*@
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
@@ -50,113 +50,101 @@
             </a>
         </li>
     }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {
-        <li class="nav-item active">
-            <a class="nav-link" asp-controller="GateEntry" asp-action="Gate_Entry_Details">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Gate Entry</span>
-            </a>
-        </li>
-    }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {
-        <li class="nav-item active">
-            <a class="nav-link" asp-controller="PO" asp-action="POGridDetails">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>PO Master</span>
-            </a>
-        </li>
-    }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {
-        <li class="nav-item active">
-            <a class="nav-link" asp-controller="Department" asp-action="Department_Master">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Deparment Master</span>
-            </a>
-        </li>
-    }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {
-        <li class="nav-item active">
-            <a class="nav-link" asp-controller="Employee" asp-action="Employee_Master">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Employee Master</span>
-            </a>
-        </li>
-    }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {<li class="nav-item active">
-            <a class="nav-link" asp-controller="GoDown" asp-action="GoDownStock">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Godown Stock Master</span>
-            </a>
-        </li>
-    }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {
-        <li class="nav-item active">
-            <a class="nav-link" asp-controller="Cutting" asp-action="CuttingDetail">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Cutting Order</span>
-            </a>
-        </li>
-    }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {
-        <li class="nav-item active">
-            <a class="nav-link" asp-controller="RawMaterial" asp-action="RM_Detail">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Raw Material Issue</span>
-            </a>
-        </li>
-    }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {
-        <li class="nav-item active">
-            <a class="nav-link" asp-controller="CuttingReceipt" asp-action="CuttingReceiptDetail">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Cutting Receipt</span>
-            </a>
-        </li>
-    }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {
-        <li class="nav-item active">
-            <a class="nav-link" asp-controller="MFGReceipt" asp-action="MFGReceiptDetail">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>MFG Receipt</span>
-            </a>
-        </li>
-    }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {
-        <li class="nav-item active">
-            <a class="nav-link" asp-controller="Payments" asp-action="Payments_Details">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Payments</span>
-            </a>
-        </li>
-    }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {
-        <li class="nav-item active">
-            <a class="nav-link" asp-controller="EmpAdvance" asp-action="Emp_Adv_Master">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Employee Advance</span>
-            </a>
-        </li>
-    }
-    @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
-    {
-        <li class="nav-item active">
-            <a class="nav-link" asp-controller="EmpAttandance" asp-action="Emp_Atnd_Master">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Employee Attandance</span>
-            </a>
-        </li>
-    }
+    <li class="nav-item active">
+        <a class="nav-link" asp-controller="JobWork" asp-action="JobWorkGrid">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Job Work</span>
+        </a>
+    </li>
+    @*@if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
+        {
+            <li class="nav-item active">
+                <a class="nav-link" asp-controller="GateEntry" asp-action="Gate_Entry_Details">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Gate Entry</span>
+                </a>
+            </li>
+        }*@
+    @*@if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
+        {
+            <li class="nav-item active">
+                <a class="nav-link" asp-controller="PO" asp-action="POGridDetails">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>PO Master</span>
+                </a>
+            </li>
+        }*@
+    @*@if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
+        {<li class="nav-item active">
+                <a class="nav-link" asp-controller="GoDown" asp-action="GoDownStock">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Godown Stock Master</span>
+                </a>
+            </li>
+        }*@
+    @*@if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
+        {
+            <li class="nav-item active">
+                <a class="nav-link" asp-controller="Cutting" asp-action="CuttingDetail">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Cutting Order</span>
+                </a>
+            </li>
+        }*@
+    @*@if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
+        {
+            <li class="nav-item active">
+                <a class="nav-link" asp-controller="RawMaterial" asp-action="RM_Detail">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Raw Material Issue</span>
+                </a>
+            </li>
+        }*@
+    @*@if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
+        {
+            <li class="nav-item active">
+                <a class="nav-link" asp-controller="CuttingReceipt" asp-action="CuttingReceiptDetail">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Cutting Receipt</span>
+                </a>
+            </li>
+        }*@
+    @*@if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
+        {
+            <li class="nav-item active">
+                <a class="nav-link" asp-controller="MFGReceipt" asp-action="MFGReceiptDetail">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>MFG Receipt</span>
+                </a>
+            </li>
+        }*@
+    @*@if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
+        {
+            <li class="nav-item active">
+                <a class="nav-link" asp-controller="Payments" asp-action="Payments_Details">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+        }
+        @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
+        {
+            <li class="nav-item active">
+                <a class="nav-link" asp-controller="EmpAdvance" asp-action="Emp_Adv_Details">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Employee Advance</span>
+                </a>
+            </li>
+        }
+        @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
+        {
+            <li class="nav-item active">
+                <a class="nav-link" asp-controller="EmpAttandance" asp-action="Emp_Attand_Details">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Employee Attandance</span>
+                </a>
+            </li>
+        }*@
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
@@ -166,6 +154,38 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Payments"
+           aria-expanded="true" aria-controls="Payments">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Payments</span>
+        </a>
+        <div id="Payments" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" asp-controller="Payments" asp-action="Payments_Details">Payments</a>
+                <a class="collapse-item" asp-controller="EmpAdvance" asp-action="Emp_Adv_Details">Employee Advance</a>
+                <a class="collapse-item" asp-controller="EmpAttandance" asp-action="Emp_Attand_Details">Employee Attandance</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Transactions"
+           aria-expanded="true" aria-controls="Transactions">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Transactions</span>
+        </a>
+        <div id="Transactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" asp-controller="GateEntry" asp-action="GateEntry_Master">Gate Entry</a>
+                <a class="collapse-item" asp-controller="PO" asp-action="POGridDetails">Process Order</a>
+                <a class="collapse-item" asp-controller="GoDown" asp-action="GoDownStock">GoDown Stock</a>
+                <a class="collapse-item" asp-controller="Cutting" asp-action="CuttingDetail">Cutting Order</a>
+                <a class="collapse-item" asp-controller="RawMaterial" asp-action="RM_Detail">Raw Material Issue</a>
+                <a class="collapse-item" asp-controller="CuttingReceipt" asp-action="CuttingReceiptDetail">Cutting Receipt</a>
+                <a class="collapse-item" asp-controller="MFGReceipt" asp-action="MFGReceiptDetail">MFG Receipt</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
            aria-expanded="true" aria-controls="collapseUser">
             <i class="fas fa-fw fa-cog"></i>
@@ -173,9 +193,9 @@
         </a>
         <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Users:</h6>
+                @*<h6 class="collapse-header">Users:</h6>*@
                 <a class="collapse-item" href="/Identity/Account/register">Register User</a>
-                <a class="collapse-item" asp-controller="Administration" asp-action="ListRole">Role Details</a>
+                <a class="collapse-item" asp-controller="Administration" asp-action="ListRole">Roles</a>
                 <a class="collapse-item" asp-controller="Location" asp-action="LocationDetails">Locations Details</a>
                 <a class="collapse-item" asp-area="" asp-controller="Company" asp-action="Company">Company Master</a>
                 <a class="collapse-item" asp-area="" asp-controller="Account" asp-action="Account_Master">Account Master</a>
@@ -191,6 +211,8 @@
                 <a class="collapse-item" asp-controller="Process" asp-action="Process_Master">Process Master</a>
                 <a class="collapse-item" asp-controller="ProcessRate" asp-action="ProcessRate_Master">Artical Process Rate</a>
                 <a class="collapse-item" asp-controller="GoDown" asp-action="GoDown_Master">GoDown Master</a>
+                <a class="collapse-item" asp-controller="Department" asp-action="Department_Master">Department Master</a>
+                <a class="collapse-item" asp-controller="Employee" asp-action="Employee_Master">Employee Master</a>
                 @*<a class="collapse-item" asp-area="" asp-page="/Privacy">User Profile</a>*@
 
             </div>

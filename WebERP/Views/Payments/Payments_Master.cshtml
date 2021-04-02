@@ -107,8 +107,9 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Payment Document Date</label>
-                            <div class="input-group">
-                                @Html.TextBoxFor(a => a.PAY_DOC_DATE, new { @ID = "PAY_DOC_DATE", @class = "form-control", @type = "date", @value = Model.PAY_DOC_DATE.ToString() })
+                            <div class="input-group">  
+                                <input asp-for="PAY_DOC_DATE" type="date" class="form-control" id="PAY_DOC_DATE" name="PAY_DOC_DATE" />
+                                @*@Html.HiddenFor(a => a.PAY_DOC_DATE, new {@ID = "PAY_DOC_DATE", @class = "form-control", @type = "date"})*@
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 ﻿@model WebERP.Models.Employee_Advance
 <script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/layoutcss/js/jquery-ui.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @if (Model.Type == "Add")
@@ -24,21 +25,14 @@
         <div class="card-body">
 
             <form id="menu-form" method="post">
-                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Payments Details</b></h4>
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Advance Details</b></h4>
                 <div class="row">
 
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
                             <div class="input-group">
-                                @if (Model.Type == "Add")
-                                {
-                                    @Html.TextBoxFor(a => a.DOC_DATE, new { @ID = "DOC_DATE", @class = "form-control dat fc-datepicker", @type = "date" })
-                                }
-                                @if (Model.Type == "Edit" || Model.Type == "Action")
-                                {
-                                    @Html.TextBoxFor(a => a.DOC_DATE, new { @ID = "DOC_FN_YEAR", @class = "form-control", @readOnly = "readonly" })
-                                }
+                                <input asp-for="DOC_DATE" type="date" class="form-control" id="DOC_DATE" name="DOC_DATE" />
                             </div>
                         </div>
                     </div>
@@ -58,14 +52,8 @@
                         <div class="form-group">
                             <label for="branch_id">Employee Name</label>
                             <div class="custom-radio">
-                                @if (Model.Type == "Add")
-                                {
-                                    <select asp-for="EMP_CODE" id="ddlEMP" class="form-control" asp-items="@(new SelectList(string.Empty, "Value", "Text"))"></select>
-                                }
-                                @if (Model.Type == "Edit" || Model.Type == "Action")
-                                {
-                                    <select asp-for="EMP_CODE" id="ddlEMP" class="form-control" asp-items="@(new SelectList(Model.EMPDropDown,"Value", "Text"))"></select>
-                                }
+                                <select asp-for="EMP_CODE" id="ddlEMP" class="form-control" asp-items="@(new SelectList(Model.EMPDropDown,"Value", "Text"))"></select>
+
                             </div>
                         </div>
                     </div>
@@ -73,7 +61,7 @@
                         <div class="form-group">
                             <label for="branch_id">Salary Month</label>
                             <div class="custom-radio">
-                                @Html.TextBoxFor(a => a.DOC_DATE, new { @ID = "DOC_DATE", @class = "form-control dat fc-datepicker", @type = "date" })
+                                <input asp-for="SAL_YYYYMM" type="month" class="form-control" id="SAL_YYYYMM" name="SAL_YYYYMM" />
                             </div>
                         </div>
                     </div>
@@ -82,9 +70,9 @@
                             <label for="branch_id">Salary Type</label>
                             <div class="custom-radio">
                                 <select class="form-control" asp-for="SAL_YYYYMM_BRK">
-                                    <option value="1">Full Month</option>
-                                    <option value="2">1st 15 days</option>
-                                    <option value="3">2nd 15 days</option>
+                                    <option value="0">Full Month</option>
+                                    <option value="1">1st 15 days</option>
+                                    <option value="2">2nd 15 days</option>
                                 </select>
                             </div>
                         </div>
@@ -100,7 +88,7 @@
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Payments_Details">Close</a>
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Emp_Adv_Details">Close</a>
                     @if (Model.Type == "Add")
                     {
                         <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Advance" asp-action="Emp_Adv_Master">
@@ -122,6 +110,14 @@
 </div>
 <script>
     $(function () {
+        $("#DOC_DATE").change(function () {
+            debugger;
+            $("#DOC_DATE").datepicker();
+        })
+    });
+</script>
+<script>
+    $(function () {
         $("#EMP_TYPE").change(function () {
             debugger;
             $.getJSON("/EmpAdvance/Emplists", { type: $("#EMP_TYPE").val() }, function (d) {
@@ -139,5 +135,5 @@
     })
     $(function () {
         $("#ddlEMP").chosen();
-    })    
+    })
 </script>
