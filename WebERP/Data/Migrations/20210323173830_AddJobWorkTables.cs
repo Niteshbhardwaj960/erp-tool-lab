@@ -64,29 +64,7 @@ namespace WebERP.Data.Migrations
                     table.PrimaryKey("PK_JobWorkIssue_Header", x => x.JWH_PK);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "V_GateEntryDetail",
-                columns: table => new
-                {
-                    ORDER_NO = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    POH_PK = table.Column<int>(nullable: false),
-                    COMP_CODE = table.Column<int>(nullable: false),
-                    ORDER_FINYEAR = table.Column<string>(nullable: true),
-                    ORDER_DATE = table.Column<DateTime>(nullable: false),
-                    ACC_CODE = table.Column<string>(nullable: true),
-                    POD_PK = table.Column<int>(nullable: false),
-                    QTY = table.Column<decimal>(nullable: false),
-                    QTY_UOM = table.Column<string>(nullable: true),
-                    Gate_Entry_Qty = table.Column<int>(nullable: false),
-                    BAL_QTY = table.Column<decimal>(nullable: false),
-                    ITEM_NAME = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_V_GateEntryDetail", x => x.ORDER_NO);
-                });
-
+            
             migrationBuilder.CreateTable(
                 name: "JobWorkIssue_Details",
                 columns: table => new
@@ -130,9 +108,7 @@ namespace WebERP.Data.Migrations
             migrationBuilder.DropTable(
                 name: "JobWorkIssue_Details");
 
-            migrationBuilder.DropTable(
-                name: "V_GateEntryDetail");
-
+           
             migrationBuilder.DropTable(
                 name: "JobWorkIssue_Header");
 

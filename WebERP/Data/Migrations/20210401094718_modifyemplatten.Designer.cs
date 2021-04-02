@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210401094718_modifyemplatten")]
+    partial class modifyemplatten
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -560,8 +562,6 @@ namespace WebERP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("ADV_AMOUNT");
-
                     b.Property<int>("COMP_CODE");
 
                     b.Property<DateTime?>("DOC_DATE");
@@ -573,6 +573,10 @@ namespace WebERP.Data.Migrations
                     b.Property<DateTime?>("INS_DATE");
 
                     b.Property<string>("INS_UID");
+
+                    b.Property<decimal>("OT_HRS");
+
+                    b.Property<decimal>("PAY_DAYS");
 
                     b.Property<DateTime?>("SAL_YYYYMM");
 
@@ -593,6 +597,8 @@ namespace WebERP.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal>("ADV_AMOUNT");
+
                     b.Property<int>("COMP_CODE");
 
                     b.Property<DateTime?>("DOC_DATE");
@@ -604,10 +610,6 @@ namespace WebERP.Data.Migrations
                     b.Property<DateTime?>("INS_DATE");
 
                     b.Property<string>("INS_UID");
-
-                    b.Property<decimal>("OT_HRS");
-
-                    b.Property<decimal>("PAY_DAYS");
 
                     b.Property<DateTime?>("SAL_YYYYMM");
 

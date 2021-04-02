@@ -63,6 +63,9 @@ namespace WebERP.Data
         public DbSet<RM_DTL> RM_DTL { get; set; }
         public DbSet<Cutting_Receipt> Cutting_Receipt { get; set; }
         public DbSet<MGF_RECEIPT> MGF_RECEIPT { get; set; }
+        public DbSet<Payments> Payments { get; set; }
+        public DbSet<Employee_Attandance> Employee_Attandance { get; set; }
+        public DbSet<Employee_Advance> Employee_Advance { get; set; }
     }
 
 }
