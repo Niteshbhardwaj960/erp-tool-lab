@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using WebERP.Models.GateEntry;
 
 namespace WebERP.Controllers
 {
+    [Authorize(Roles = "GoDown , Admin")]
     public class GoDownController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

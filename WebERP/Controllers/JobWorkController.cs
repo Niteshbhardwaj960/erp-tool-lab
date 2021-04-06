@@ -14,7 +14,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebERP.Controllers
 {
-    public class JobWorkController : Controller
+    [Authorize(Roles = "JobWork , Admin")]
+   public class JobWorkController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;

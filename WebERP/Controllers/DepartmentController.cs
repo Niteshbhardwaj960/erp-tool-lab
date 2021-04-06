@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebERP.Data;
@@ -11,6 +12,7 @@ using WebERP.Models;
 
 namespace WebERP.Controllers
 {
+    [Authorize(Roles = "Department , Admin")]
     public class DepartmentController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

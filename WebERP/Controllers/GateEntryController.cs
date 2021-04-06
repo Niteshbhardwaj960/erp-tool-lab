@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebERP.Controllers
 {
-    [Authorize(Roles = "GateEntryUser")]
+    [Authorize(Roles = "GateEntryUser , Admin")]
     public class GateEntryController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -60,7 +60,7 @@ namespace WebERP.Controllers
          
             foreach (var order in ckec)
             {
-                li = dbContext.V_GateEntryDetail.AsNoTracking().Where(o => o.POD_PK == Convert.ToInt32(order)).ToList();
+                li = dbContext.V_GateEntryDetail.AsNoTracking().Where(o => o.pod_pk == Convert.ToInt32(order)).ToList();
                 foreach (var item in li)
                 {
                     lli.Add(item);
@@ -97,11 +97,11 @@ namespace WebERP.Controllers
             {
                 GEList.Add(new GateEntryDetail()
                 {
-                    POD_FK = order.POD_PK,
+                    POD_FK = order.pod_pk,
                     GH_FK = GateHdrID,
                     INS_DATE = DateTime.Now,
                     INS_UID = userManager.GetUserName(HttpContext.User),
-                    Order_No = order.ORDER_NO,
+                    Order_No = order.order_no,
                     GDW_NO = 0,
                     Bill_Date = order.Bill_Date,
                     Bill_NO = order.Bill_NO,
@@ -109,11 +109,11 @@ namespace WebERP.Controllers
                     CHL_DATE = order.CHL_DATE,
                     Fin_Qty = order.Fin_Qty,
                     Fin_UOM = order.Fin_UOM,
-                    Stk_Qty = order.Gate_Entry_Qty,
+                    Stk_Qty = order.Gate_Entry_qty,
                     Stk_UOM = order.Stk_UOM,
-                    Item_Name = order.ITEM_CODE,
+                    Item_Name = order.Item_Code,
                     Item_UOM = order.QTY_CODE,
-                    Remarks = order.REMARKS,
+                    Remarks = order.Remarks,
                     ACC_NAME = Account_Name,
                     Doc_No = Document_Number
                 });

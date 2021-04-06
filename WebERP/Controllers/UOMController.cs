@@ -9,9 +9,11 @@ using WebERP.Data;
 using WebERP.Models;
 using ClosedXML.Excel;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebERP.Controllers
 {
+    [Authorize(Roles = "UOM , Admin")]
     public class UOMController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
