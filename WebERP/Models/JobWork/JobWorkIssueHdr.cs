@@ -23,6 +23,8 @@ namespace WebERP.Models
         public List<SelectListItem> companyDropDown { get; set; }
         [NotMapped]
         public List<SelectListItem> accDropDown { get; set; }
+        [NotMapped]
+        public List<SelectListItem> accTempDropDown { get; set; }
 
         public DateTime DOC_DATE { get; set; }
         public string DOC_FINYEAR { get; set; }

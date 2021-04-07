@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebERP.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "PO")]
     public class POController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -121,9 +121,13 @@ namespace WebERP.Controllers
                                   select new SelectListItem()
                                   {
                                       Text = uomList.ABV,
-                                      Value = uomList.ID.ToString()
+                                      Value = uomList.ID.ToString()                                      
                                   }).ToList();
 
+                foreach (var item in QtyUOMList.Where(s => s.Value == Convert.ToString(itemDetails.UOM_CODE)))
+                {
+                    item.Selected = true;
+                }
                 return Json(QtyUOMList, new Newtonsoft.Json.JsonSerializerSettings());
             }
             catch (Exception e)
@@ -304,7 +308,7 @@ namespace WebERP.Controllers
             var accList = (from acc in dbContext.Account_Masters
                            select new SelectListItem()
                            {
-                               Text = acc.ID.ToString() + " - " + acc.NAME,
+                               Text = acc.NAME,//acc.ID.ToString() + " - " + acc.NAME,
                                Value = Convert.ToString(acc.ID),
                            }).ToList();
             accList.Insert(0, new SelectListItem()

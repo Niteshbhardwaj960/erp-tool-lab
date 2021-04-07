@@ -13,6 +13,37 @@
     });
 });
 
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+})
+
+
+$("#jwEditDocDate").change(function () {
+    debugger;
+    var date = $(this).val();
+    var financial_year = "";
+    var today = new Date(date);
+    if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
+        financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
+    } else {
+        financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
+    }
+    $("#jwEditDocFinYear").val(financial_year);
+});
+
+$("#jwDocDate").change(function () {
+    debugger;
+    var date = $(this).val();
+    var financial_year = "";
+    var today = new Date(date);
+    if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
+        financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
+    } else {
+        financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
+    }
+    $("#jwDocFinYear").val(financial_year);
+});
+
 //$('.tickJobWork').click(function (e) {
 //    var currentRow = $(this).closest('tr');    
 //    var tempProc = $('.jwDropDown').find('option:selected').text();

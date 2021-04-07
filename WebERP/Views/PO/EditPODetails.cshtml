@@ -69,12 +69,12 @@
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
                         <label>Party Name</label>
-                        @*<select asp-for="POHeader.ACC_CODE" class="form-control poDropDown"
+                        <select asp-for="POHeader.ACC_CODE" class="form-control poDropDown"
                                 asp-items="@(new SelectList(Model.POHeader.accDropDown, "Value", "Text"))"></select>
-                        <span asp-validation-for="POHeader.ACC_CODE" class="text-danger"></span>*@
-                        @Html.DropDownListFor(m=>m.POHeader.ACC_CODE,
+                        <span asp-validation-for="POHeader.ACC_CODE" class="text-danger"></span>
+                        @*@Html.DropDownListFor(m=>m.POHeader.ACC_CODE,
                                          new SelectList(Model.POHeader.accDropDown, "Value", "Text"),
-                                         new { @class="form-control"})
+                                         new { @class="form-control"})*@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -125,7 +125,8 @@
                                           new { @class="form-control"})
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.PODetails[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
+                                        @Html.HiddenFor(a => a.PODetails[j].QTY_UOM, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.PODetails[j].QTYUOMNAME, new { @class = "form-control", @readOnly = "readonly" })
                                     </td>
                                     <td>
                                         @Html.DropDownListFor(m=>m.PODetails[j].RATE_UOM,
@@ -151,7 +152,8 @@
                                         @Html.TextBoxFor(m => m.PODetails[j].AMOUNT, new { @class = "form-control", @readOnly = "readonly" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.PODetails[j].DELV_DATE, new { @class = "form-control fc-datepicker", @type = "date" })
+                                        <input class="form-control fc-datepicker" type="date" asp-for="PODetails[j].DELV_DATE">
+                                        @*@Html.TextBoxFor(m => m.PODetails[j].DELV_DATE, new { @class = "form-control fc-datepicker", @type = "date" })*@
                                     </td>
                                     <td>
                                         @if (Model.PODetails[j].POD_PK_STATUS == "A")

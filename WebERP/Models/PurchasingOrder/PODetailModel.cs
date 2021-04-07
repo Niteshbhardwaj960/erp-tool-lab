@@ -30,6 +30,9 @@ namespace WebERP.Models
 
         public string QTY_UOM { get; set; }
 
+        [NotMapped]
+        public string QTYUOMNAME { get; set; }
+
         [DataType(DataType.Currency)]
         [RegularExpression(@"^\d+\.\d{0,2}$")]
         [Range(0, 9999999999999.99)]
