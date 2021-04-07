@@ -126,7 +126,8 @@
                                             @Html.TextBoxFor(m => m.PODetails[j].AMOUNT, new { @class = "form-control", @readOnly = "readonly" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(m => m.PODetails[j].DELV_DATE, new { @class = "form-control fc-datepicker", @readOnly = "readonly" })
+                                            <input class="form-control fc-datepicker" type="date" asp-for="PODetails[j].DELV_DATE" readonly>
+                                            @*@Html.TextBoxFor(m => m.PODetails[j].DELV_DATE, new { @class = "form-control fc-datepicker", @readOnly = "readonly" })*@
                                         </td>
                                         <td>
                                             @Html.TextBoxFor(m => m.PODetails[j].POD_PK_STATUS, new { @class = "form-control", @readOnly = "readonly" })

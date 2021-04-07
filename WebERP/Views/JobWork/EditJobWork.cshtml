@@ -41,7 +41,7 @@
                                 <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
                             </div>
                         </div>
-                        <input class="form-control fc-datepicker" id="jwEditDocDate" type="date" value="@DateTime.Now" asp-for="JobWorkIssHeader.DOC_DATE">
+                        <input class="form-control fc-datepicker" id="jwEditDocDate" type="date" asp-for="JobWorkIssHeader.DOC_DATE">
                     </div>
                 </div>
 
@@ -81,8 +81,9 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
-                        <select asp-for="JobWorkIssHeader.ACC_CODE" class="form-control jwDropDown"
-                                asp-items="@(new SelectList(Model.JobWorkIssHeader.accDropDown, "Value", "Text"))"></select>
+                        <select class="form-control jwDropDown"
+                            asp-items="@(new SelectList(Model.JobWorkIssHeader.GetProcess, "Value", "Text"))"></select>
+                        
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2">
@@ -106,8 +107,7 @@
                                     <th style="width: 128px;">HSN</th>
                                     <th style="width: 150px;">Process</th>
                                     <th style="width: 100px;">Stock Qty</th>
-                                    <th style="width: 100px;">Proc Qty</th>
-                                    @*<th style="width: 90px;">Qty UOM</th>*@
+                                    <th style="width: 100px;">Proc Qty</th>                                   
                                     <th style="width: 150px;">Remarks</th>
                                 </tr>
                             </thead>
@@ -140,7 +140,7 @@
 
                                     <td>
                                         @Html.DropDownListFor(m=>m.JobWorkIssueDetails[j].PROC_CODE,
-                                          new SelectList(string.Empty, "Value", "Text"),
+                                          new SelectList(Model.JobWorkIssueDetails[j].GetProcess, "Value", "Text"),
                                           new { @class= "form-control" })
                                     </td>
                                     <td>
@@ -148,10 +148,7 @@
                                     </td>
                                     <td>
                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number" })
-                                    </td>
-                                    @*<td>
-           @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
-        </td>*@
+                                    </td>                                   
                                     <td>
                                         @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control" })
                                     </td>
@@ -173,23 +170,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    })
 
-    $(function () {
-        $("#jwEditDocDate").change(function () {
-            debugger;
-            var date = $(this).val();
-            var financial_year = "";
-            var today = new Date(date);
-            if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
-                financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
-            } else {
-                financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
-            }
-            $("#jwEditDocFinYear").val(financial_year);
-        });
-    })
-</script>

@@ -25,8 +25,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>Company</label>
-                        <select asp-for="JobWorkIssHeader.COMP_CODE" class="form-control"
-                                asp-items="@(new SelectList(Model.JobWorkIssHeader.companyDropDown,"Value", "Text"))" readonly></select>
+                        <input type="text" class="form-control" asp-for="JobWorkIssHeader.COMP_NAME" readonly>
                     </div>
                 </div>
             </div>
@@ -40,21 +39,21 @@
                                 <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
                             </div>
                         </div>
-                        <input class="form-control fc-datepicker" id="jwDocDate" type="date" value="@DateTime.Now" asp-for="JobWorkIssHeader.DOC_DATE" readonly>
+                        <input class="form-control fc-datepicker"type="date" asp-for="JobWorkIssHeader.DOC_DATE" readonly>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>Document Financial Year</label>
-                        <input type="text" class="form-control" id="jwDocFinYear" asp-for="JobWorkIssHeader.DOC_FINYEAR" readonly>
+                        <input type="text" class="form-control"  asp-for="JobWorkIssHeader.DOC_FINYEAR" readonly>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>Document No</label>
-                        <input type="text" class="form-control" id="jwDocNo" asp-for="JobWorkIssHeader.DOC_NO" readonly>
+                        <input type="text" class="form-control" asp-for="JobWorkIssHeader.DOC_NO" readonly>
                     </div>
                 </div>
             </div>
@@ -63,8 +62,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
                         <label>Party Name</label>
-                        <select asp-for="JobWorkIssHeader.ACC_CODE" class="form-control jwDropDown"
-                                asp-items="@(new SelectList(Model.JobWorkIssHeader.accDropDown, "Value", "Text"))" readonly></select>                        
+                        <input type="text" class="form-control" asp-for="JobWorkIssHeader.ACC_NAME" readonly>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -82,7 +80,7 @@
                         <table class="table table-sm d-sm-table-cell table-bordered" id="jwDtlTable" width="100%" cellspacing="0">
                             <thead class="thead-light">
                                 <tr style="text-align:center;">
-                                    <th style="width: 30px;">Check</th>
+                                    @*<th style="width: 30px;">Check</th>*@
                                     <th style="width: 150px;">GDW</th>
                                     <th style="width: 100px;">Item</th>
                                     <th style="width: 100px;">Artical</th>
@@ -90,8 +88,7 @@
                                     <th style="width: 128px;">HSN</th>
                                     <th style="width: 150px;">Process</th>
                                     <th style="width: 100px;">Stock Qty</th>
-                                    <th style="width: 100px;">Proc Qty</th>
-                                    @*<th style="width: 90px;">Qty UOM</th>*@
+                                    <th style="width: 100px;">Proc Qty</th>                                 
                                     <th style="width: 150px;">Remarks</th>
                                 </tr>
                             </thead>
@@ -99,37 +96,34 @@
                                 @for (int j = 0; j < Model.JobWorkIssueDetails.Count(); j++)
                                 {
                                     <tr>
-                                        <td style="text-align:center;">
+                                        @*<td style="text-align:center;">
                                             <input type="checkbox" readonly/>
-                                        </td>
+                                        </td>*@
                                         <td>
-                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].GODOWN_CODE, new { @class = "form-control", @type = "text" , @readOnly = "readonly" })
+                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].GODOWN_NAME, new { @class = "form-control", @type = "text" , @readOnly = "readonly" })
                                         </td>
                                         <td>
                                             @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ITEM_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ARTICAL_CODE, new { @class = "form-control", @readOnly = "readonly" })
+                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].SIZE_CODE, new { @class = "form-control", @readOnly = "readonly" })
+                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                         </td>
                                         <td>
                                             @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].HSN_CODE, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
                                         </td>
 
                                         <td>
-                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].PROC_CODE, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
+                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].PROC_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @type = "number", @readOnly = "readonly" })
                                         </td>
                                         <td>
                                             @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number", @readOnly = "readonly" })
-                                        </td>
-                                        @*<td>
-                                               @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
-                                            </td>*@
+                                        </td>                                       
                                         <td>
                                             @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control", @readOnly = "readonly" })
                                         </td>

@@ -129,7 +129,8 @@ WebERP.PurchasingOrders = {
         WebERP.PurchasingOrders.CalculateQTotal();
     },
 
-    ItemOnChange: function (e) {      
+    ItemOnChange: function (e) {
+        debugger
         var currentrow = $(this).closest("tr");
         var nextCell = $(this).closest('td').next().next();
         $('select', nextCell).addClass('hidden');
@@ -139,12 +140,22 @@ WebERP.PurchasingOrders = {
             $(this).val(),
             function (data, textStatus, xhr) {
                 if (xhr.status == 200) {
+                    debugger
                     var itemList = $('select', nextCell);
                     itemList.empty();
                     itemList.append('<option value="">Select</option>')
                     $.each(data, function (index, val) {
-                        itemList.append('<option value="' + val.Value + '">' + val.Text + '</option>');
-                        currentrow.find("td:eq(1) input[type='text']").val(val.Text);
+                        var $option;
+                        $option = $('<option value="' + val.Value + '">' + val.Text + '</option>');
+                        if (val.Selected) {
+                        $option.attr('selected', 'selected');
+                        }
+                        //itemList.append('<option value="' + val.Value + '">' + val.Text + '</option>');
+                        itemList.append($option);
+                        if (val.Selected) {
+                            currentrow.find('input[name*="QTYUOMNAME"]').val(val.Text);
+                            currentrow.find('input[name*="QTY_UOM"]').val(val.Value);
+                        }
                     });                                       
                     itemList.removeAttr('disabled');
                 }
