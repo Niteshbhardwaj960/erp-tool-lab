@@ -13,7 +13,7 @@ using WebERP.Models;
 
 namespace WebERP.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Account , Admin")]
     public class AccountController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

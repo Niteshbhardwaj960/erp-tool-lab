@@ -78,7 +78,7 @@ namespace WebERP.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect("~/Administration/Dashboard");
+                    return LocalRedirect("~/Dashboard/Dashboard");
                 }
                 if (result.RequiresTwoFactor)
                 {

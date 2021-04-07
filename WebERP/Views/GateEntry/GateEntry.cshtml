@@ -81,89 +81,36 @@
                                         {
                                             <tr style="border:1px solid black">
                                                 <td>
-                                                    @Html.HiddenFor(a => a.v_GateEntryDetails[j].POD_PK, new { @class = "form-control" })
-                                                @Html.TextBoxFor(a => a.v_GateEntryDetails[j].ORDER_NO, new { @class = "form-control", @readOnly = "readonly"})
+                                                    @Html.HiddenFor(a => a.v_GateEntryDetails[j].pod_pk, new { @class = "form-control" })
+                                                @Html.TextBoxFor(a => a.v_GateEntryDetails[j].order_no, new { @class = "form-control", @readOnly = "readonly"})
                                             </td>
                                             <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_NO, new { @class = "form-control" })</td>
                                             <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_DATE, new { @class = "form-control fc-datepicker", @type = "date" })</td>
                                             @*<td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_NO, new { @class = "form-control" })</td>
                                             <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_Date, new { @class = "form-control fc-datepicker", @type = "date" })</td>*@
                                             <td>
-                                                @Html.HiddenFor(a => a.v_GateEntryDetails[j].ITEM_CODE, new { @class = "form-control" })
+                                                @Html.HiddenFor(a => a.v_GateEntryDetails[j].Item_Code, new { @class = "form-control" })
                                             @Html.TextBoxFor(a => a.v_GateEntryDetails[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                         </td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Qty, new { @class = "form-control", @readOnly = "readonly" })</td>
                                         <td>
                                             @Html.TextBoxFor(a => a.v_GateEntryDetails[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
                                             @Html.HiddenFor(a => a.v_GateEntryDetails[j].QTY_CODE, new { @class = "form-control" })
                                         </td>
 
                                         <td>
-                                            @Html.TextBoxFor(a => a.v_GateEntryDetails[j].BAL_QTY, new { @class = "form-control", @type = "number" })
-                                            @Html.HiddenFor(a => a.v_GateEntryDetails[j].Gate_Entry_Qty, new { @class = "form-control" })
+                                            @Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bal_Qty, new { @class = "form-control", @type = "number" })
+                                            @Html.HiddenFor(a => a.v_GateEntryDetails[j].Gate_Entry_qty, new { @class = "form-control" })
                                         </td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].BAL_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].REMARKS, new { @class = "form-control" })</td>
-                                        @*<td><input type="text" data-mdb-toggle="tooltip" title="[j].ORDER_NO" class="form-control" value="[j].ORDER_NO" name="[j].ORDER_NO"></td>
-                                            <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ACC_CODE" class="form-control" value="@Data.ACC_CODE" name="ACC_CODE"></td>
-                                            <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ORDER_NO" class="form-control numb" name="CHL_NO" id="CHL_NO"></td>
-                                            <td><input type="date" data-mdb-toggle="tooltip" title="@Data.ORDER_NO" class="form-control numb" name="CHL_DATE" id="CHL_DATE"></td>
-                                            <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ORDER_NO" class="form-control numb" name="BILL_NO" id="BILL_NO"></td>
-                                            <td><input type="date" data-mdb-toggle="tooltip" title="@Data.ORDER_NO" class="form-control numb" name="BILL_DATE" id="BILL_DATE"></td>
-                                            <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ITEM_NAME" readonly="readonly" class="form-control numb" value="@Data.ITEM_NAME" name="ITEM_NAME" id="ITEM_NAME"></td>
-                                            <td><input type="text" data-mdb-toggle="tooltip" title="@Data.QTY" readonly="readonly" class="form-control numb" value="@Data.QTY" name="QTY" id="QTY"></td>
-                                            <td><input type="text" data-mdb-toggle="tooltip" title="@Data.QTY_UOM" readonly="readonly" class="form-control numb" value="@Data.QTY_UOM" name="QTY_UOM" id="QTY_UOM"></td>
-                                            <td><input type="text" data-mdb-toggle="tooltip" title="@Data.Gate_Entry_Qty" class="form-control numb" value="@Data.Gate_Entry_Qty" name="Gate_Entry_Qty" id="Gate_Entry_Qty"></td>
-                                            <td><input type="text" data-mdb-toggle="tooltip" title="@Data.BAL_QTY" class="form-control numb" value="@Data.BAL_QTY" name="BAL_QTY" id="BAL_QTY"></td>
-                                            <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ORDER_NO" class="form-control numb" name="REMARKS" id="REMARKS"></td>*@
+                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bal_Qty, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Remarks, new { @class = "form-control" })</td>
                                     </tr>
                                     j++;
                                 }
                             }
-                            @*@foreach (var Data in Model)
-                                {
-
-                                    <tr>
-                                        <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ORDER_NO" class="form-control" value="@Data.ORDER_NO" name="ORDER_NO"></td>
-                                        <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ACC_CODE" class="form-control" value="@Data.ACC_CODE" name="ACC_CODE"></td>
-                                        <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ORDER_NO" class="form-control numb" name="CHL_NO" id="CHL_NO"></td>
-                                        <td><input type="date" data-mdb-toggle="tooltip" title="@Data.ORDER_NO" class="form-control numb" name="CHL_DATE" id="CHL_DATE"></td>
-                                        <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ORDER_NO" class="form-control numb" name="BILL_NO" id="BILL_NO"></td>
-                                        <td><input type="date" data-mdb-toggle="tooltip" title="@Data.ORDER_NO" class="form-control numb" name="BILL_DATE" id="BILL_DATE"></td>
-                                        <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ITEM_NAME" readonly="readonly" class="form-control numb" value="@Data.ITEM_NAME" name="ITEM_NAME" id="ITEM_NAME"></td>
-                                        <td><input type="text" data-mdb-toggle="tooltip" title="@Data.QTY" readonly="readonly" class="form-control numb" value="@Data.QTY" name="QTY" id="QTY"></td>
-                                        <td><input type="text" data-mdb-toggle="tooltip" title="@Data.QTY_UOM" readonly="readonly" class="form-control numb" value="@Data.QTY_UOM" name="QTY_UOM" id="QTY_UOM"></td>
-                                        <td><input type="text" data-mdb-toggle="tooltip" title="@Data.Gate_Entry_Qty" class="form-control numb" value="@Data.Gate_Entry_Qty" name="Gate_Entry_Qty" id="Gate_Entry_Qty"></td>
-                                        <td><input type="text" data-mdb-toggle="tooltip" title="@Data.BAL_QTY" class="form-control numb" value="@Data.BAL_QTY" name="BAL_QTY" id="BAL_QTY"></td>
-                                        <td><input type="text" data-mdb-toggle="tooltip" title="@Data.ORDER_NO" class="form-control numb" name="REMARKS" id="REMARKS"></td>
-                                    </tr>
-
-                                }*@
                                 </tbody>
                             </table>
                         </div>
-
-
-                        @*<table id="dataTable" border="0" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <th>Order No</th>
-                                    <th>Account Name</th>
-                                    <th></th>
-                                </tr>
-                                @if (Model != null && Model.Count > 0)
-                                {
-                                    int j = 0;
-                                    foreach (var i in Model)
-                                    {
-                                        <tr style="border:1px solid black">
-                                            <td>@Html.TextBoxFor(a => a[j].ORDER_NO)</td>
-                                            <td>@Html.TextBoxFor(a => a[j].ACC_CODE)</td>
-                                        </tr>
-                                        j++;
-                                    }
-                                }
-                            </table>
-                            <input type="submit" value="Save Bulk Data" />*@
 
                     </div>
                 </div>

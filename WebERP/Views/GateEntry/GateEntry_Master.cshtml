@@ -154,14 +154,14 @@
                 $(".dataTables_empty").remove();
                 for (var i = 0; i < json.length; i++) {
                     tr = $('<tr/>');
-                    tr.append("<td>" + '<input type="checkbox" name="ckec" value="' + json[i].poD_PK + '" id="test' + i + '">' + "</td>");
-                    tr.append("<td>" + json[i].ordeR_NO + "</td>");
+                    tr.append("<td>" + '<input type="checkbox" name="ckec" value="' + json[i].pod_pk + '" id="test' + i + '">' + "</td>");
+                    tr.append("<td>" + json[i].order_no + "</td>");
                     tr.append("<td>" + json[i].iteM_NAME + "</td>");
-                    tr.append("<td>" + json[i].ordeR_DATE + "</td>");
+                    tr.append("<td>" + json[i].order_date + "</td>");
                     tr.append("<td>" + json[i].qty + "</td>");
                     tr.append("<td>" + json[i].qtY_UOM + "</td>");
-                    tr.append("<td>" + json[i].gate_Entry_Qty + "</td>");
-                    tr.append("<td>" + json[i].baL_QTY + "</td>");
+                    tr.append("<td>" + json[i].gate_Entry_qty + "</td>");
+                    tr.append("<td>" + json[i].bal_Qty + "</td>");
                     tr.append("<td>" + json[i].remarks + "</td>");
                     $('#dataTable').append(tr);
                 }
