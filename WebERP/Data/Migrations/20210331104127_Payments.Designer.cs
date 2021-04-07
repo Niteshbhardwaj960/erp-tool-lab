@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210331104127_Payments")]
+    partial class Payments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -552,74 +554,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Department_Masters");
-                });
-
-            modelBuilder.Entity("WebERP.Models.Employee_Advance", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("ADV_AMOUNT");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<int>("EMP_CODE");
-
-                    b.Property<string>("EMP_TYPE");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<DateTime?>("SAL_YYYYMM");
-
-                    b.Property<int>("SAL_YYYYMM_BRK");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Employee_Advance");
-                });
-
-            modelBuilder.Entity("WebERP.Models.Employee_Attandance", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<int>("EMP_CODE");
-
-                    b.Property<string>("EMP_TYPE");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<decimal>("OT_HRS");
-
-                    b.Property<decimal>("PAY_DAYS");
-
-                    b.Property<DateTime?>("SAL_YYYYMM");
-
-                    b.Property<int>("SAL_YYYYMM_BRK");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Employee_Attandance");
                 });
 
             modelBuilder.Entity("WebERP.Models.Employee_Master", b =>

@@ -1,0 +1,139 @@
+﻿@model WebERP.Models.Employee_Advance
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/layoutcss/js/jquery-ui.js"></script>
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        @if (Model.Type == "Add")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Add Employee Advance</h3>
+            </nav>
+        }
+        @if (Model.Type == "Edit")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Edit Employee Advance</h3>
+            </nav>
+        }
+        @if (Model.Type == "Action")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">View Employee Advance</h3>
+            </nav>
+        }
+
+        <div class="card-body">
+
+            <form id="menu-form" method="post">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Advance Details</b></h4>
+                <div class="row">
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Document Date</label>
+                            <div class="input-group">
+                                <input asp-for="DOC_DATE" type="date" class="form-control" id="DOC_DATE" name="DOC_DATE" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Employee Type</label>
+                            <div class="custom-radio">
+                                <select class="form-control" asp-for="EMP_TYPE" id="EMP_TYPE">
+                                    <option value="P">Pc Rate</option>
+                                    <option value="S">Salary</option>
+                                    <option value="C">Contractor</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Employee Name</label>
+                            <div class="custom-radio">
+                                <select asp-for="EMP_CODE" id="ddlEMP" class="form-control" asp-items="@(new SelectList(Model.EMPDropDown,"Value", "Text"))"></select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Salary Month</label>
+                            <div class="custom-radio">
+                                <input asp-for="SAL_YYYYMM" type="month" class="form-control" id="SAL_YYYYMM" name="SAL_YYYYMM" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Salary Type</label>
+                            <div class="custom-radio">
+                                <select class="form-control" asp-for="SAL_YYYYMM_BRK">
+                                    <option value="0">Full Month</option>
+                                    <option value="1">1st 15 days</option>
+                                    <option value="2">2nd 15 days</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Advance Amount</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.ADV_AMOUNT, new { @ID = "ADVAMOUNT", @class = "form-control", @type = "decimal" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Emp_Adv_Details">Close</a>
+                    @if (Model.Type == "Add")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Advance" asp-action="Emp_Adv_Master">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                    }
+                    @if (Model.Type == "Edit")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Advance" asp-action="Edit_Advance">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                    }
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#DOC_DATE").change(function () {
+            debugger;
+            $("#DOC_DATE").datepicker();
+        })
+    });
+</script>
+<script>
+    $(function () {
+        $("#EMP_TYPE").change(function () {
+            debugger;
+            $.getJSON("/EmpAdvance/Emplists", { type: $("#EMP_TYPE").val() }, function (d) {
+                debugger;
+                var row = "";
+                $("#ddlEMP").empty();
+                $.each(d, function (i, v) {
+                    row += "<option value=" + v.value + ">" + v.text + "</option>";
+                });
+                $("#ddlEMP").html(row);
+
+            })
+
+        })
+    })
+    $(function () {
+        $("#ddlEMP").chosen();
+    })
+</script>
