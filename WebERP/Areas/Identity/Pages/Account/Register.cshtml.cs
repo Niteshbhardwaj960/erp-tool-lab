@@ -13,7 +13,7 @@ using WebERP.Models;
 
 namespace WebERP.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -45,7 +45,7 @@ namespace WebERP.Areas.Identity.Pages.Account
             public string UserName { get; set; }
 
             [Required]
-            [EmailAddress]
+            //[EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 

@@ -72,8 +72,10 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <input type="text" class="form-control" asp-for="JobWorkIssHeader.REMARKS" >
+                        <input type="text" class="form-control" asp-for="JobWorkIssHeader.REMARKS">
                     </div>
+                    @Html.HiddenFor(a => a.JobWorkIssHeader.INS_DATE, new { @class = "form-control", @readOnly = "readonly" })
+                    @Html.HiddenFor(a => a.JobWorkIssHeader.INS_UID, new { @class = "form-control", @readOnly = "readonly" })
                 </div>
             </div>
 
@@ -81,7 +83,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
-                        <select class="form-control jwDropDown"
+                        <select class="form-control jwProcDropDown"
                             asp-items="@(new SelectList(Model.JobWorkIssHeader.GetProcess, "Value", "Text"))"></select>
                         
                     </div>
@@ -148,10 +150,12 @@
                                     </td>
                                     <td>
                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number" })
-                                    </td>                                   
+                                    </td>
                                     <td>
                                         @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control" })
                                     </td>
+                                    @Html.HiddenFor(a => a.JobWorkIssueDetails[j].INS_DATE, new { @class = "form-control" })
+                                    @Html.HiddenFor(a => a.JobWorkIssueDetails[j].INS_UID, new { @class = "form-control" })
                                 </tr>
                                 }
                             </tbody>

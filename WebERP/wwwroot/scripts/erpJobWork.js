@@ -1,8 +1,8 @@
 ﻿$("#addProcess").click(function (e) {
     debugger
     e.preventDefault();
-    var tempProc = $('.jwDropDown').find('option:selected').text();
-    var gridProc = tempProc.substr(6, 1);   
+    var tempProc = $('.jwProcDropDown').find('option:selected').val();
+    var gridProc = tempProc; //.substr(6, 1);   
     $('#jwDtlTable').find('tr').each(function () {
         debugger
         var row = $(this);

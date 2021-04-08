@@ -110,7 +110,8 @@
                                               new { @class="form-control"})
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(m => m.PODetails[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
+                                            @Html.HiddenFor(a => a.PODetails[j].QTY_UOM, new { @class = "form-control" })
+                                            @Html.TextBoxFor(m => m.PODetails[j].QTYUOMNAME, new { @class = "form-control", @readOnly = "readonly" })                                            
                                         </td>
                                         <td>
                                             @Html.DropDownListFor(m=>m.PODetails[j].RATE_UOM,
@@ -118,7 +119,7 @@
                                               new { @class= "form-control" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(m => m.PODetails[j].QTY, new { @class = "form-control", @type = "number" })
+                                            @Html.TextBoxFor(m => m.PODetails[j].QTY, new { @class = "form-control poRowQty", @type = "number" })
                                         </td>
                                         <td>
                                             @Html.TextBoxFor(m => m.PODetails[j].RATE, new { @class = "form-control", @type = "number" })

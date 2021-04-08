@@ -311,11 +311,12 @@ namespace WebERP.Controllers
                                Text = acc.NAME,//acc.ID.ToString() + " - " + acc.NAME,
                                Value = Convert.ToString(acc.ID),
                            }).ToList();
-            accList.Insert(0, new SelectListItem()
-            {
-                Text = "Select",
-                Value = string.Empty
-            });
+
+            //accList.Insert(0, new SelectListItem()
+            //{
+            //    Text = "Select",
+            //    Value = string.Empty
+            //});
 
             foreach (var item in companyList.Where(s => s.Value == Convert.ToString(POHeaderList.COMP_CODE)))
             {
@@ -333,6 +334,8 @@ namespace WebERP.Controllers
             poHeader.ORDER_NO = POHeaderList.ORDER_NO;
             poHeader.REMARKS = POHeaderList.REMARKS;
             poHeader.POH_PK = POHeaderList.POH_PK;
+            poHeader.INS_DATE = POHeaderList.INS_DATE;
+            poHeader.INS_UID = POHeaderList.INS_UID;
             poViewModel.POHeader = poHeader;
             #endregion
 
