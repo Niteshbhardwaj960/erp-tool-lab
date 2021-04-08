@@ -14,7 +14,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebERP.Controllers
 {
-    [Authorize(Roles = "PO")]
+
+    [Authorize(Roles = "Admin , PO")]
     public class POController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

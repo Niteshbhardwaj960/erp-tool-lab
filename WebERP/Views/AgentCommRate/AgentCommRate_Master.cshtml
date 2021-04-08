@@ -1,0 +1,135 @@
+﻿@model WebERP.Models.AgentCommRate
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        @if (Model.Type == "Add")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Add Agent Commission Rate</h3>
+            </nav>
+        }
+        @if (Model.Type == "Edit")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Edit Agent Commission Rate</h3>
+            </nav>
+        }
+        @if (Model.Type == "View")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">View Agent Commission Rate</h3>
+            </nav>
+        }
+        <div class="card-body">
+
+            <form id="menu-form" method="post">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Basic Details</b></h4>
+                <div class="row">
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Account Name</label>
+                            <div class="input-group">
+                                <select asp-for="ACC_CODE" class="form-control" asp-items="@(new SelectList(Model.ACCDropDown, "Value", "Text"))"></select>
+                                @Html.HiddenFor(a => a.ID, new { @ID = "ID", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Commission Rate</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.COMM_RATE, new { @ID = "CommRate", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Qty Amount Tag</label>
+                            <div class="custom-radio">
+                                <select class="form-control" id="QTY_AMOUNT_TAG" name="QTY_AMOUNT_TAG">
+                                    <option value="Q">Qty</option>
+                                    <option value="A">Amount</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">From Date</label>
+                            <div class="input-group">
+                                <input asp-for="FROM_DATE" type="date" class="form-control" id="FROM_DATE" name="FROM_DATE" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">To Date</label>
+                            <div class="input-group">
+                                <input asp-for="TO_DATE" type="date" class="form-control" id="TO_DATE" name="TO_DATE" />
+                            </div>
+                        </div>
+                    </div>
+                    @if ((Model.Type == "Edit") || (Model.Type == "Action"))
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_UID" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_UID" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="AgentCommRateDetails">Close</a>
+                    @if (Model.Type == "Add")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="AgentCommRate" asp-action="AgentCommRate_Master">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                    }
+                    @if (Model.Type == "Edit")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="AgentCommRate" asp-action="SAVEACR">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                    }
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#ddlACC").chosen();
+    })
+</script>

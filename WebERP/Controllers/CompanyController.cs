@@ -16,7 +16,7 @@ using WebERP.Models;
 
 namespace WebERP.Controllers
 {
-   // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Company , Admin")]
     public class CompanyController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

@@ -36,12 +36,9 @@
                                     <a asp-action="EditRole" asp-controller="Administration" asp-route-id="@role.Id">
                                         <i class="fas fa-user-edit"></i>
                                     </a>&nbsp;&nbsp;
-                                    <a href="#">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>&nbsp;&nbsp;
-                                    <a href="#">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
+                                    @*<a asp-action="DeleteRole" asp-controller="Administration" asp-route-id="@role.Id">
+                                        <i class="far fa-trash-alt" ></i>
+                                    </a>*@
                                 </td>
                             </tr>
                         }

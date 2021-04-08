@@ -14,19 +14,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebERP.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin , Location")]
     public class LocationController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ApplicationDbContext dbContext;
 
-        public LocationController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager,ApplicationDbContext context)
+        public LocationController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.dbContext = context;
-        }       
+        }
 
         public IActionResult LocationDetails(LocationViewModel locViewModel)
         {
@@ -59,18 +59,18 @@ namespace WebERP.Controllers
                     break;
             }
 
-            return RedirectToAction(nameof(LocationController.LocationDetails),vm);
+            return RedirectToAction(nameof(LocationController.LocationDetails), vm);
 
         }
 
         #region Country CRUD
         [HttpGet]
         public ActionResult AddCountry()
-        {            
+        {
             return View();
         }
-        
-        [HttpPost]        
+
+        [HttpPost]
         public ActionResult AddCountry(CountryModel country)
         {
             if (ModelState.IsValid)
@@ -92,7 +92,7 @@ namespace WebERP.Controllers
             {
                 return RedirectToAction("LocationDetails");
             }
-            return View(countryDetails);            
+            return View(countryDetails);
         }
 
         [HttpPost]
@@ -149,7 +149,7 @@ namespace WebERP.Controllers
         [HttpPost]
         public ActionResult AddState(StateModel state)
         {
-            var vm = new LocationViewModel();            
+            var vm = new LocationViewModel();
             if (ModelState.IsValid)
             {
                 state.CountryCode = dbContext.Countries.Where(x => x.Id == state.CountryId).Select(s => s.CountryCode).FirstOrDefault();
@@ -176,11 +176,11 @@ namespace WebERP.Controllers
                                {
                                    Text = country.Name,
                                    Value = country.Id.ToString(),
-                               }).ToList();                     
+                               }).ToList();
             countryList.Insert(0, new SelectListItem()
             {
                 Text = "Select Country",
-                Value = string.Empty               
+                Value = string.Empty
             });
             foreach (var item in countryList.Where(s => s.Value == Convert.ToString(stateDetails.CountryId)))
             {
@@ -192,7 +192,7 @@ namespace WebERP.Controllers
 
         [HttpPost]
         public ActionResult EditState(StateModel state)
-        {           
+        {
             var vm = new LocationViewModel();
             if (ModelState.IsValid)
             {
@@ -230,11 +230,11 @@ namespace WebERP.Controllers
         {
             CityModel cityModel = new CityModel();
             var stateList = (from state in dbContext.States
-                               select new SelectListItem()
-                               {
-                                   Text = state.Name,
-                                   Value = state.Id.ToString(), 
-                               }).ToList();
+                             select new SelectListItem()
+                             {
+                                 Text = state.Name,
+                                 Value = state.Id.ToString(),
+                             }).ToList();
 
             stateList.Insert(0, new SelectListItem()
             {
@@ -243,7 +243,7 @@ namespace WebERP.Controllers
                 Selected = true
             });
             cityModel.stateDropDown = stateList;
-            return View(cityModel);           
+            return View(cityModel);
         }
 
         [HttpPost]
@@ -251,7 +251,7 @@ namespace WebERP.Controllers
         {
             var vm = new LocationViewModel();
             if (ModelState.IsValid)
-            {                                
+            {
                 city.Ins_Date = DateTime.Now;
                 city.Ins_Uid = userManager.GetUserName(HttpContext.User);
                 dbContext.Cities.Add(city);
@@ -271,11 +271,11 @@ namespace WebERP.Controllers
                 return RedirectToAction("LocationDetails");
             }
             var stateList = (from state in dbContext.States
-                               select new SelectListItem()
-                               {
-                                   Text = state.Name,
-                                   Value = state.Id.ToString(),
-                               }).ToList();
+                             select new SelectListItem()
+                             {
+                                 Text = state.Name,
+                                 Value = state.Id.ToString(),
+                             }).ToList();
             stateList.Insert(0, new SelectListItem()
             {
                 Text = "Select State",

@@ -9,9 +9,11 @@ using WebERP.Data;
 using WebERP.Models;
 using ClosedXML.Excel;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebERP.Controllers
 {
+    [Authorize(Roles = "Brand , Admin")]
     public class BrandController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

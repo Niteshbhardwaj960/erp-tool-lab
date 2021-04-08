@@ -9,9 +9,11 @@ using WebERP.Data;
 using WebERP.Models;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebERP.Controllers
 {
+    [Authorize(Roles = "Item , Admin")]
     public class ItemController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

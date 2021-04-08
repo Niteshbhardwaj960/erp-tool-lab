@@ -13,7 +13,7 @@ using WebERP.Data;
 
 namespace WebERP.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -27,11 +27,11 @@ namespace WebERP.Controllers
             this._dbContext = dbContext;
         }
 
-        [HttpGet]
-        public IActionResult Dashboard()
-        { 
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult Dashboard()
+        //{ 
+        //    return View();
+        //}
         [HttpGet]
         public IActionResult About()
         {
@@ -254,14 +254,14 @@ namespace WebERP.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult DeleteRole(int ID)
-        {
-            var data = _dbContext.Companies.Find(ID);
-            _dbContext.Remove(data);
-            _dbContext.SaveChanges();
-            return RedirectToAction("Company");
-        }        
+        //[HttpGet]
+        //public IActionResult DeleteRole(string ID)
+        //{
+        //    var data =  roleManager.FindByIdAsync(ID);
+        //    roleManager.(data);
+        //    _dbContext.SaveChanges();
+        //    return RedirectToAction("Company");
+        //}        
     }
 }
 
