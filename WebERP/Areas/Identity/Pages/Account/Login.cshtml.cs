@@ -39,6 +39,7 @@ namespace WebERP.Areas.Identity.Pages.Account
         {
             [Required]
             //[EmailAddress]
+            [Display(Name = "Username")]
             public string Email { get; set; }
 
             [Required]

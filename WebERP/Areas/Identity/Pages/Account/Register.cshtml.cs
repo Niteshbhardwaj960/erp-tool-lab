@@ -13,7 +13,7 @@ using WebERP.Models;
 
 namespace WebERP.Areas.Identity.Pages.Account
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -40,12 +40,12 @@ namespace WebERP.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            //[Required]
-            //[Display(Name = "UserName")]
-            //public string UserName { get; set; }
+            [Required]
+            [Display(Name = "UserName")]
+            public string UserName { get; set; }
 
             [Required]
-            //[EmailAddress]
+            [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
@@ -71,7 +71,7 @@ namespace WebERP.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
