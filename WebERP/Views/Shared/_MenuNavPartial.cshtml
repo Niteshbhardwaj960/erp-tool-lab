@@ -45,9 +45,6 @@
                     @if (User.IsInRole("JobWork") || User.IsInRole("Admin"))
                     {
                         <a class="collapse-item" asp-controller="JobWork" asp-action="JobWorkGrid">Job Work</a>
-                    }@if (User.IsInRole("AgentCommRate") || User.IsInRole("Admin"))
-                    {
-                        <a class="collapse-item" asp-controller="AgentCommRate" asp-action="AgentCommRateDetails">Agent Commission Rate</a>
                     }
                     @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
                     {
@@ -123,6 +120,10 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     @*<h6 class="collapse-header">Users:</h6>*@
 
+                    @if (User.IsInRole("AgentCommRate") || User.IsInRole("Admin"))
+                    {
+                        <a class="collapse-item" asp-controller="AgentCommRate" asp-action="AgentCommRateDetails">Agent Commission Rate</a>
+                    }
                     @if (User.IsInRole("Admin"))
                     {
                         <a class="collapse-item" href="/Identity/Account/register">Register User</a>
@@ -136,9 +137,9 @@
                         <a class="collapse-item" asp-controller="Location" asp-action="LocationDetails">Locations Details</a>
                     }
                     @*@if (User.IsInRole("Company") || User.IsInRole("Admin"))
-                    {
-                        <a class="collapse-item" asp-area="" asp-controller="Company" asp-action="Company">Company Master</a>
-                    }*@
+        {
+            <a class="collapse-item" asp-area="" asp-controller="Company" asp-action="Company">Company Master</a>
+        }*@
                     @if (User.IsInRole("Account") || User.IsInRole("Admin"))
                     {
                         <a class="collapse-item" asp-area="" asp-controller="Account" asp-action="Account_Master">Account Master</a>

@@ -28,12 +28,28 @@ namespace WebERP.Controllers
             this.userManager = userManager;
             this.dbContext = context;
         }
+        public int GetFinYear()
+        {
+            string FinYear = "";
+            DateTime date = DateTime.Now;
+            if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
+            {
+                FinYear = (date.Year - 1) + "" + date.Year;
+            }
+            else
+            {
+                FinYear = date.Year + "" + (date.Year + 1);
+            }
+            return Convert.ToInt32(FinYear);
+        }
         [HttpGet]
         public IActionResult Cut_Recpt_Master()
         {
             CuttingReceiptViewModel cuttingReceiptViewModel = new CuttingReceiptViewModel();
             cuttingReceiptViewModel.Type = "Add";
             cuttingReceiptViewModel.CUTDropDown = CUTlists();
+            cuttingReceiptViewModel.DOc_Dates = DateTime.Now;
+            cuttingReceiptViewModel.Fin_Years = GetFinYear();
             return View(cuttingReceiptViewModel);
         }
         public List<SelectListItem> CUTlists()
@@ -57,10 +73,12 @@ namespace WebERP.Controllers
         public IActionResult Cut_Recpt_Master(CuttingReceiptViewModel cuttingReceiptViewModel)
         {
             int Doc_Number = dbContext.Cutting_Receipt
-                .Where(x => x.DOC_FINYEAR == cuttingReceiptViewModel.cutting_Receipt.DOC_FINYEAR)
+                .Where(x => x.DOC_FINYEAR == cuttingReceiptViewModel.Fin_Years)
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
             cuttingReceiptViewModel.cutting_Receipt.DOC_NO = Doc_Number + 1;
             cuttingReceiptViewModel.cutting_Receipt.INS_DATE = DateTime.Now;
+            cuttingReceiptViewModel.cutting_Receipt.DOC_DATE = cuttingReceiptViewModel.DOc_Dates;
+            cuttingReceiptViewModel.cutting_Receipt.DOC_FINYEAR = cuttingReceiptViewModel.Fin_Years;
             cuttingReceiptViewModel.cutting_Receipt.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.Cutting_Receipt.Add(cuttingReceiptViewModel.cutting_Receipt);
             dbContext.SaveChanges();

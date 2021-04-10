@@ -15,6 +15,10 @@ namespace WebERP.Models
         public List<SelectListItem> CUTDropDown { get; set; }
         public List<SelectListItem> EMPDropDown { get; set; }
         public List<SelectListItem> CONEMPDropDown { get; set; }
+        public List<SelectListItem> PROCDropDown { get; set; }
+
         public string Type { get; set; }
+        public int DOC_FINYEARS { get; set; }
+        public DateTime? DOC_DATES { get; set; }
     }
 }

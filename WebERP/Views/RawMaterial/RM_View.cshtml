@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.Doc_Date, new { @ID = "Doc_Date", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.Doc_Date, new { @ID = "Doc_Date", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                         <div class="form-group">
                             <label for="branch_id">Document Financial Year</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.Doc_FN_Year, new { @ID = "Doc_FN_Year", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.Doc_FN_Year, new { @ID = "Doc_FN_Year", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                         <div class="form-group">
                             <label for="branch_id">Employee Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.EMP_NAME, new { @ID = "EmpName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.EMP_NAME, new { @ID = "EmpName", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <div class="form-group">
                             <label for="branch_id">Employee Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.EMP_NAME, new { @ID = "EmpName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.EMP_NAME, new { @ID = "EmpName", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label for="branch_id">Item Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.ITEM_NAME, new { @ID = "ItemName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.ITEM_NAME, new { @ID = "ItemName", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                         <div class="form-group">
                             <label for="branch_id">Artical Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.ART_NAME, new { @ID = "ArtName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.ART_NAME, new { @ID = "ArtName", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                         <div class="form-group">
                             <label for="branch_id">Size Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.SIZE_NAME, new { @ID = "SizeName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.SIZE_NAME, new { @ID = "SizeName", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -86,8 +86,8 @@
                         <div class="form-group">
                             <label for="branch_id">Process Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.PROC_NAME, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" })
-                                @Html.HiddenFor(a => a.RM_HDR.Cutting_Order_FK, new { @ID = "CUTPK", @class = "form-control" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.PROC_NAME, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.HiddenFor(a => a.RM_HDRs.Cutting_Order_FK, new { @ID = "CUTPK", @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                         <div class="form-group">
                             <label for="branch_id">Remarks</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.Remarks, new { @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.Remarks, new { @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>

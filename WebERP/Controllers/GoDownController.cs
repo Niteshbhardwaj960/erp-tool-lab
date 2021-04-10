@@ -180,15 +180,15 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult GoDownStock()
         {
-            var err="";
-            if(TempData["err"] != null)
-            {
-                err = TempData["err"].ToString();
-            }
-            Models.EditGateEntryModel GED = new Models.EditGateEntryModel();
-            GED.GWDERROR = err;
+            Models.EditGateEntryModel GED = new Models.EditGateEntryModel();           
             GED.GoDownDropDown = GoDownList();
             GED.EditGateEntryDetails = dbContext.gateEntryDetails.Where(G => G.GDW_NO == 0).ToList();
+            foreach( var entry in GED.EditGateEntryDetails)
+            {
+                var itemName = dbContext.Item_Master.Where(e => e.ID == entry.Item_Name).Select(ee => ee.NAME).FirstOrDefault();
+
+                entry.ITEM_NAMEs = itemName;
+            }
             return View(GED);
         }
         public List<SelectListItem> GoDownList()
