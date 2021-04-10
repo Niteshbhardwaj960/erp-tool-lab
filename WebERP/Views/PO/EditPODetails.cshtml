@@ -82,6 +82,8 @@
                         <label>Remarks</label>
                         <input type="text" class="form-control" asp-for="POHeader.REMARKS" placeholder="Place order remarks here">
                     </div>
+                    @Html.HiddenFor(a => a.POHeader.INS_DATE, new { @class = "form-control"})
+                    @Html.HiddenFor(a => a.POHeader.INS_UID, new { @class = "form-control"})
                 </div>
             </div>
 
@@ -116,9 +118,9 @@
                                 @for (int j = 0; j < Model.PODetails.Count(); j++)
                                 {
                                 <tr class="template">
-                                    
-                                        @Html.HiddenFor(m => m.PODetails[j].POD_PK, new { @class = "form-control", @readOnly = "readonly" })
-                                    
+
+                                    @Html.HiddenFor(m => m.PODetails[j].POD_PK, new { @class = "form-control", @readOnly = "readonly" })
+
                                     <td>
                                         @Html.DropDownListFor(m=>m.PODetails[j].ITEM_CODE,
                                           new SelectList(Model.PODetails[j].GetItems, "Value", "Text"),
@@ -192,6 +194,8 @@
                                             <i class="fa fa-minus-circle"></i>
                                         </a>
                                     </td>
+                                    @Html.HiddenFor(a => a.PODetails[j].INS_DATE, new { @class = "form-control" })
+                                    @Html.HiddenFor(a => a.PODetails[j].INS_UID, new { @class = "form-control" })
                                 </tr>
                                 }
                             </tbody>

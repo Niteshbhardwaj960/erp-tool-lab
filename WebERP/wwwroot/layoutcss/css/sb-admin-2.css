@@ -1767,6 +1767,14 @@ pre code {
   background-color: rgba(255, 255, 255, 0.075);
 }
 
+.error {
+    color: #5a5c69;
+    font-size: 7rem;
+    position: relative;
+    line-height: 1;
+    width: 12.5rem;
+}
+
 @media (max-width: 575.98px) {
   .table-responsive-sm {
     display: block;

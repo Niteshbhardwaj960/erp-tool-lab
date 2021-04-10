@@ -287,7 +287,7 @@ WebERP.PurchasingOrders = {
 
     CalculateQTotal: function (e) {        
         var grandQTotal = 0;
-        $.each($('#poDtlTable').find('input[name*="QTY"]'), function () {
+        $.each($('#poDtlTable').find('.poRowQty'), function () {  //input[name*="QTY"]
             if ($(this).val() != '' && !isNaN($(this).val())) {
                 grandQTotal += parseFloat($(this).val());
             }

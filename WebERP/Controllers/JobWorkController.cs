@@ -67,6 +67,7 @@ namespace WebERP.Controllers
             jwModel.JobWorkIssHeader.INS_DATE = DateTime.Now;
             jwModel.JobWorkIssHeader.INS_UID = userManager.GetUserName(HttpContext.User);
             jwModel.JobWorkIssHeader.DOC_NO = maxOrderNum + 1;
+            jwModel.JobWorkIssHeader.DOC_DATE = jwModel.JobWorkIssHeader.DOC_DATE.Date;
             dbContext.JobWorkIssue_Header.Add(jwModel.JobWorkIssHeader);
             dbContext.SaveChanges();
 
@@ -138,6 +139,8 @@ namespace WebERP.Controllers
             jwHeader.DOC_NO = jwHeaderList.DOC_NO;
             jwHeader.REMARKS = jwHeaderList.REMARKS;
             jwHeader.JWH_PK = jwHeaderList.JWH_PK;
+            jwHeader.INS_DATE = jwHeaderList.INS_DATE;
+            jwHeader.INS_UID = jwHeaderList.INS_UID;
             jwHeader.GetProcess = procHdrList;
             jbEditView.JobWorkIssHeader = jwHeader;
             var jwListDet = dbContext.JobWorkIssue_Details.Where(l => l.JWH_FK == id).AsNoTracking().ToList();           
@@ -162,8 +165,7 @@ namespace WebERP.Controllers
                                 {
                                     Text = items.NAME, /*items.ID.ToString() + " - " + items.NAME,*/
                                     Value = Convert.ToString(items.ID),
-                                }).ToList();
-
+                                }).ToList();                
                 procList.Insert(0, new SelectListItem()
                 {
                     Text = "Select",
@@ -183,6 +185,27 @@ namespace WebERP.Controllers
         [HttpPost]
         public ActionResult EditJobWork(JobWorkViewModel jwEditModel)
         {
+            int jwHdrId;
+            jwEditModel.JobWorkIssHeader.UDT_DATE = DateTime.Now;
+            jwEditModel.JobWorkIssHeader.UDT_UID = userManager.GetUserName(HttpContext.User);         
+            dbContext.JobWorkIssue_Header.Update(jwEditModel.JobWorkIssHeader);
+            dbContext.SaveChanges();
+
+            jwHdrId = jwEditModel.JobWorkIssHeader.JWH_PK;
+            if (jwHdrId != 0)
+            {
+                foreach (var jwDetailStaticUpd in jwEditModel.JobWorkIssueDetails)
+                {
+                    jwDetailStaticUpd.JWH_FK = jwHdrId;
+                    jwDetailStaticUpd.UDT_DATE = DateTime.Now;
+                    jwDetailStaticUpd.UDT_UID = userManager.GetUserName(HttpContext.User);
+                }
+                foreach (var jwDetailModel in jwEditModel.JobWorkIssueDetails)
+                {
+                    dbContext.JobWorkIssue_Details.Update(jwDetailModel);
+                    dbContext.SaveChanges();
+                }
+            }
             return RedirectToAction("JobWorkGrid");
         }
 
