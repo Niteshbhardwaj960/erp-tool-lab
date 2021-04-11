@@ -62,7 +62,9 @@
                     {
                         <div class="col-lg-4 col-md-4 col-sm-12">
                             <div class="form-group">
-                                <label for="branch_id">Cutting Order Detail</label>
+                                <label for="branch_id">Cutting Order</label>
+                                <label for="branch_id" style="color:red">**Document No/Employee/Item/Artical/Size/Process</label>
+
                                 <div class="custom-radio">
                                     <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList(Model.CUTDropDown, "Value", "Text"))"></select>
                                 </div>
@@ -186,5 +188,8 @@
     })
     $(function () {
         $("#EMPDropDown").chosen();
+    })
+    $(function () {
+        $("#PROCDropDown").chosen();
     })
 </script>

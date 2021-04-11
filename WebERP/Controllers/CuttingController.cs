@@ -34,10 +34,26 @@ namespace WebERP.Controllers
             cut = dbContext.V_CuttingDetail.ToList();
             return View(cut);
         }
+        public int GetFinYear()
+        {
+            string FinYear = "";
+            DateTime date = DateTime.Now;
+            if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
+            {
+                FinYear = (date.Year - 1) + "" + date.Year;
+            }
+            else
+            {
+                FinYear = date.Year + "" + (date.Year + 1);
+            }
+            return Convert.ToInt32(FinYear);
+        }
         [HttpGet]
         public IActionResult AddCutting()
         {
             Cutting_Order cut = new Cutting_Order();
+            cut.DOC_DATE = DateTime.Now;
+            cut.DOC_FINYEAR = GetFinYear();
             cut.EmpDropDown = Emplists();
             int DoC_No = dbContext.Cutting_Orders
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
