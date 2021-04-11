@@ -3,7 +3,11 @@
     ViewData["Title"] = "CreateJobWork";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<style>
+    thead input {
+        width: 100%;
+    }
+</style>
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-3 static-top shadow"
      style="background: linear-gradient(135deg, rgb(255 141 0 / 90%) 0%, #74009a 100%);">
     <h3 style="color:white">New Job Work Issue</h3>
@@ -41,7 +45,7 @@
                                 <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
                             </div>
                         </div>
-                        <input class="form-control fc-datepicker" id="jwDocDate" type="date" value="@DateTime.Now" asp-for="JobWorkIssHeader.DOC_DATE">
+                        <input class="form-control fc-datepicker" id="jwDocDate" type="date"  asp-for="JobWorkIssHeader.DOC_DATE">
                     </div>
                 </div>
 
@@ -74,14 +78,14 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">                       
-                        <select class="form-control jwProcDropDown"
+                        <select class="form-control jwProcDropDown" id="jwComDropDown"
                                 asp-items="@(new SelectList(Model.JobWorkIssHeader.GetProcess, "Value", "Text"))"></select>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2">
                     <a href="#" class="btn btn-dark" data-toggle="tooltip" data-placement="right"
-                       title="Use this button for Adding Process to Selected Rows" id="addProcess">
-                        <i class="fa fa-check-circle"></i>
+                       title="Select the process name to enable grid" >
+                        <i class="fa fa-info-circle"></i>
                     </a>                    
                 </div>
             </div>
@@ -90,8 +94,7 @@
                     <div class="table-responsive-sm">
                         <table class="table table-sm d-sm-table-cell table-bordered" id="jwDtlTable" width="100%" cellspacing="0">
                             <thead class="thead-light">
-                                <tr style="text-align:center;">
-                                    <th style="width: 30px;">Check</th>
+                                <tr style="text-align:center;">                                    
                                     <th style="width: 150px;">GDW</th>
                                     <th style="width: 100px;">Item</th>
                                     <th style="width: 100px;">Artical</th>
@@ -106,10 +109,7 @@
                             <tbody>
                                 @for (int j = 0; j < Model.JobWorkIssueDetails.Count(); j++)
                                 {
-                                <tr>
-                                    <td style="text-align:center;">
-                                        <input type="checkbox" class="tickJobWork"/>
-                                    </td>
+                                <tr>                                    
                                     <td>
                                         @Html.HiddenFor(a => a.JobWorkIssueDetails[j].GODOWN_CODE, new { @class = "form-control" })
                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].GODOWN_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
@@ -139,7 +139,7 @@
                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @type = "number", @readOnly = "readonly" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control jwUserFilledQty", @type = "number", @step = ".01" })
                                     </td>                                      
                                     <td>
                                         @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control" })

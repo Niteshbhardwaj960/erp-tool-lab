@@ -21,7 +21,7 @@
                     <thead>
                         <tr>
                             <th>Doc No</th>
-                            <th>Company</th>
+                            @*<th>Company</th>*@
                             <th>Document Date</th>
                             <th>Party Name</th>
                             <th>Create Date</th>
@@ -36,9 +36,9 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.DOC_NO)
                             </td>
-                            <td>
+                            @*<td>
                                 @Html.DisplayFor(modelItem => item.COMP_NAME)
-                            </td>
+                            </td>*@
                             <td>
                                 @item.DOC_DATE.ToShortDateString()                               
                             </td>

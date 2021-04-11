@@ -136,13 +136,13 @@
                                           new { @class= "form-control" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.PODetails[j].QTY, new { @class = "form-control", @type = "number" })
+                                        @Html.TextBoxFor(m => m.PODetails[j].QTY, new { @class = "form-control", @type = "number", @step = ".001" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.PODetails[j].RATE, new { @class = "form-control", @type = "number" })
+                                        @Html.TextBoxFor(m => m.PODetails[j].RATE, new { @class = "form-control", @type = "number", @step = ".01" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.PODetails[j].DISC_PER, new { @class = "form-control", @type = "number" })
+                                        @Html.TextBoxFor(m => m.PODetails[j].DISC_PER, new { @class = "form-control", @type = "number", @step = ".001" })
                                     </td>
                                     <td>
                                         @Html.TextBoxFor(m => m.PODetails[j].DISC_RATE, new { @class = "form-control", @readOnly = "readonly" })
