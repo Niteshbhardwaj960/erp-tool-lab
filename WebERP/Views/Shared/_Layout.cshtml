@@ -7,15 +7,15 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         @*<style>
-            .select2-container .select2-selection--single {
-                height: 35px !important;
-            }
+                .select2-container .select2-selection--single {
+                    height: 35px !important;
+                }
 
-            .select2-container--default .select2-selection--single {
-                border: 1px solid #ccc !important;
-                border-radius: 1px !important;
-            }
-        </style>*@
+                .select2-container--default .select2-selection--single {
+                    border: 1px solid #ccc !important;
+                    border-radius: 1px !important;
+                }
+            </style>*@
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -34,8 +34,7 @@
     <!-- Custom styles for this page -->
     <link href="~/layoutcss/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="~/lib/bootstrap/Chosen/chosen.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />    
 </head>
 <body id="page-top" class="sidebar-toggled">
     @*<header>
@@ -340,7 +339,7 @@
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
     </environment>
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>*@
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <!--Main Layout Scripts-->
