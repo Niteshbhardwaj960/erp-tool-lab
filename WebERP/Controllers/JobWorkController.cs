@@ -43,7 +43,7 @@ namespace WebERP.Controllers
             return View(JWGridList);
         }
 
-        [HttpGet]
+        [HttpGet] //Get JobWork
         public ActionResult CreateJobWork()
         {
             JobWorkViewModel jwViewModel = new JobWorkViewModel();
