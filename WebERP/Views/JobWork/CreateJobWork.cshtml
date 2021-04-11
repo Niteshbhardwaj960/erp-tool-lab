@@ -57,7 +57,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
                         <label>Party Name</label>
-                        <select asp-for="JobWorkIssHeader.ACC_CODE" class="form-control jwDropDown"
+                        <select asp-for="JobWorkIssHeader.ACC_CODE" class="form-control Select2DropDown"
                                 asp-items="@(new SelectList(Model.JobWorkIssHeader.accDropDown, "Value", "Text"))"></select>
                         <span asp-validation-for="JobWorkIssHeader.ACC_CODE" class="text-danger"></span>
                     </div>
