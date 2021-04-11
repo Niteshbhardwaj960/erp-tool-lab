@@ -1,4 +1,5 @@
-﻿$("#addProcess").click(function (e) {
+﻿
+$("#addProcess").click(function (e) {
     debugger
     e.preventDefault();
     var tempProc = $('.jwProcDropDown').find('option:selected').val();
@@ -16,7 +17,7 @@
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 })
-
+    
 
 $("#jwEditDocDate").change(function () {
     debugger;
