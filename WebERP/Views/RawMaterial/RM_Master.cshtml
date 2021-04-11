@@ -22,7 +22,8 @@
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.Doc_Date, new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" })
+                                <input type="Date" class="form-control" asp-for="Doc_Dates" name="Doc_Dates" id="Doc_Dates">
+                                @*@Html.TextBoxFor(a => a.RM_HDR.Doc_Date, "{0:yyyy-MM-dd}", new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" })*@
                             </div>
                         </div>
                     </div>
@@ -30,13 +31,14 @@
                         <div class="form-group">
                             <label for="branch_id">Document Financial Year</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.Doc_FN_Year, new { @ID = "Doc_FN_Year", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.Doc_Fins, new { @ID = "Doc_Fins", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="branch_id">Cutting Order Detail</label>
+                            <label for="branch_id">Cutting Order</label>
+                            <label for="branch_id" style="color:red">**Document No/Employee/Item/Artical/Size/Process</label>
                             <div class="custom-radio">
                                 <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList( Model.CUTDropDown ,"Value", "Text"))"></select>
                             </div>
@@ -46,7 +48,7 @@
                         <div class="form-group">
                             <label for="branch_id">Employee Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.EMP_NAME, new { @ID = "EmpName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.EMP_NAME, new { @ID = "EmpName", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -54,7 +56,7 @@
                         <div class="form-group">
                             <label for="branch_id">Item Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.ITEM_NAME, new { @ID = "ItemName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.ITEM_NAME, new { @ID = "ItemName", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -62,7 +64,7 @@
                         <div class="form-group">
                             <label for="branch_id">Artical Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.ART_NAME, new { @ID = "ArtName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.ART_NAME, new { @ID = "ArtName", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -70,7 +72,7 @@
                         <div class="form-group">
                             <label for="branch_id">Size Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.SIZE_NAME, new { @ID = "SizeName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.SIZE_NAME, new { @ID = "SizeName", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -78,8 +80,8 @@
                         <div class="form-group">
                             <label for="branch_id">Process Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.PROC_NAME, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" })
-                                @Html.HiddenFor(a => a.RM_HDR.Cutting_Order_FK, new { @ID = "CUTPK", @class = "form-control" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.PROC_NAME, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.HiddenFor(a => a.RM_HDRs.Cutting_Order_FK, new { @ID = "CUTPK", @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -87,7 +89,7 @@
                         <div class="form-group">
                             <label for="branch_id">Remarks</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.Remarks, new { @class = "form-control" })
+                                @Html.TextBoxFor(a => a.RM_HDRs.Remarks, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -163,7 +165,7 @@
 </div>
 <script>
     $(function () {
-        $("#Doc_Date").change(function () {
+        $("#Doc_Dates").change(function () {
             debugger;
             var date = $(this).val();
             var financial_year = "";
@@ -173,7 +175,7 @@
             } else {
                 financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
             }
-            $("#Doc_FN_Year").val(financial_year);
+            $("#Doc_Fins").val(financial_year);
             $.ajax({
                 // edit to add steve's suggestion.
                 //url: "/ControllerName/ActionName",

@@ -23,7 +23,7 @@
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.Gate_HDR.Doc_Date, new { @class = "form-control" })
+                                @Html.TextBoxFor(a => a.Gate_HDR.Doc_Date, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,8 @@
                                                 @Html.TextBoxFor(a => a.v_GateEntryDetails[j].order_no, new { @class = "form-control", @readOnly = "readonly"})
                                             </td>
                                             <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_NO, new { @class = "form-control" })</td>
-                                            <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_DATE, new { @class = "form-control fc-datepicker", @type = "date" })</td>
+                                            <td>@*<input type="date" class="form-control" asp-for="v_GateEntryDetails[j].CHL_DATE" name="CHL_DATE[j]" id="CHL_DATE">*@
+                                                @Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_DATE, "{0:yyyy-MM-dd}", new { @class = "form-control fc-datepicker", @type = "date" })</td>
                                             @*<td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_NO, new { @class = "form-control" })</td>
                                             <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_Date, new { @class = "form-control fc-datepicker", @type = "date" })</td>*@
                                             <td>

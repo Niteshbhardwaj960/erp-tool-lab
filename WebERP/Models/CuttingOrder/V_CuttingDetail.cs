@@ -29,8 +29,8 @@ namespace WebERP.Models
         public int PROC_CODE { get; set; }
         public string PROC_NAME { get; set; }
         public int ORDER_QTY { get; set; }
-        public int AVG_PC_WEIGHT { get; set; }
-        public int WASTAGE_PER { get; set; }
+        public decimal AVG_PC_WEIGHT { get; set; }
+        public decimal WASTAGE_PER { get; set; }
         public string ORDER_STATUS { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }

@@ -28,29 +28,49 @@ namespace WebERP.Controllers
             this.userManager = userManager;
             this.dbContext = context;
         }
+
+        public string GetFinYear()
+        {
+            string FinYear = "";
+            DateTime date = DateTime.Now;
+            if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
+            {
+                FinYear = (date.Year - 1) + "" + date.Year;
+            }
+            else
+            {
+                FinYear = date.Year + "" + (date.Year + 1);
+            }
+            return FinYear;
+        }
         [HttpGet]
         public IActionResult RM_Master()
         {
             RawMaterialDTL rawMaterialDTL = new RawMaterialDTL();
+            
             rawMaterialDTL.V_RM_DTLs = dbContext.V_RM_DTL.AsNoTracking().ToList();
             rawMaterialDTL.CUTDropDown = CUTlists();
+            rawMaterialDTL.Doc_Dates = DateTime.Now;
+            rawMaterialDTL.Doc_Fins = GetFinYear();
             return View(rawMaterialDTL);
         }
         [HttpPost]
         public IActionResult RM_Master(RawMaterialDTL rawMaterialDTL)
         {
             int Doc_Number = dbContext.RM_HDR
-                .Where(x => x.Doc_FN_Year == rawMaterialDTL.RM_HDR.Doc_FN_Year)
+                .Where(x => x.Doc_FN_Year == rawMaterialDTL.RM_HDRs.Doc_FN_Year)
                 .Select(p => Convert.ToInt32(p.Doc_No)).DefaultIfEmpty(0).Max();
             int RM_HDR_PK;
             List<RM_DTL> RMDList = new List<RM_DTL>();
-            rawMaterialDTL.RM_HDR.Doc_No = Doc_Number + 1;
-            rawMaterialDTL.RM_HDR.INS_DATE = DateTime.Now;
-            rawMaterialDTL.RM_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.RM_HDR.Add(rawMaterialDTL.RM_HDR);
+            rawMaterialDTL.RM_HDRs.Doc_No = Doc_Number + 1;
+            rawMaterialDTL.RM_HDRs.Doc_Date = rawMaterialDTL.Doc_Dates;
+            rawMaterialDTL.RM_HDRs.Doc_FN_Year = rawMaterialDTL.Doc_Fins;
+            rawMaterialDTL.RM_HDRs.INS_DATE = DateTime.Now;
+            rawMaterialDTL.RM_HDRs.INS_UID = userManager.GetUserName(HttpContext.User);
+            dbContext.RM_HDR.Add(rawMaterialDTL.RM_HDRs);
             dbContext.SaveChanges();
 
-            RM_HDR_PK = rawMaterialDTL.RM_HDR.ID;
+            RM_HDR_PK = rawMaterialDTL.RM_HDRs.ID;
             foreach (var order in rawMaterialDTL.V_RM_DTLs)
             {
                 if (order.CHK == true)
@@ -95,7 +115,7 @@ namespace WebERP.Controllers
             var CutList = (from Cut in dbContext.V_CuttingDetail.Where(e => e.ORDER_STATUS == "1").ToList()
                            select new SelectListItem()
                            {
-                               Text =Cut.DOC_NO + '/' + Cut.EMP_NAME + '/' + Cut.Item_NAME + '/' + Cut.ARTICAL_NAME + '/' + Cut.SIZE_NAME + '/' + Cut.PROC_NAME,
+                               Text = Cut.DOC_NO.ToString() + '/' + Cut.EMP_NAME + '/' + Cut.Item_NAME + '/' + Cut.ARTICAL_NAME + '/' + Cut.SIZE_NAME + '/' + Cut.PROC_NAME,
                                Value = Cut.EMP_NAME + '/' + Cut.Item_NAME + '/' + Cut.ARTICAL_NAME + '/' + Cut.SIZE_NAME + '/' + Cut.PROC_NAME + '/' + Cut.ID,
                            }).ToList();
 
@@ -111,7 +131,7 @@ namespace WebERP.Controllers
         public IActionResult EditRM(int id)
         {
             RawMaterialDTL rawMaterialDTL = new RawMaterialDTL();
-            rawMaterialDTL.RM_HDR = dbContext.RM_HDR.Where(r => r.ID == id).FirstOrDefault();
+            rawMaterialDTL.RM_HDRs = dbContext.RM_HDR.Where(r => r.ID == id).FirstOrDefault();
             var RM_DTL_LSTs = dbContext.RM_DTL.Where(l => l.RM_HDR_FK == id).AsNoTracking().ToList();           
             foreach (var RMModel in RM_DTL_LSTs.ToList())
             {
@@ -139,9 +159,9 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                RawMaterialDTLs.RM_HDR.UDT_DATE = DateTime.Now;
-                RawMaterialDTLs.RM_HDR.UDT_UID = userManager.GetUserName(HttpContext.User);
-                dbContext.RM_HDR.Update(RawMaterialDTLs.RM_HDR);
+                RawMaterialDTLs.RM_HDRs.UDT_DATE = DateTime.Now;
+                RawMaterialDTLs.RM_HDRs.UDT_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.RM_HDR.Update(RawMaterialDTLs.RM_HDRs);
                 dbContext.SaveChanges();
                 foreach (var RMDetailModel in RawMaterialDTLs.RM_DTL_LST.ToList())
                 {
@@ -165,7 +185,7 @@ namespace WebERP.Controllers
         public IActionResult ActionRM(int id)
         {
             RawMaterialDTL rawMaterialDTL = new RawMaterialDTL();
-            rawMaterialDTL.RM_HDR = dbContext.RM_HDR.Where(r => r.ID == id).FirstOrDefault();
+            rawMaterialDTL.RM_HDRs = dbContext.RM_HDR.Where(r => r.ID == id).FirstOrDefault();
             var RM_DTL_LSTs = dbContext.RM_DTL.Where(l => l.RM_HDR_FK == id).AsNoTracking().ToList();
             foreach (var RMModel in RM_DTL_LSTs.ToList())
             {

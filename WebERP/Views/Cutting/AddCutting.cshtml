@@ -26,14 +26,14 @@
             <form id="menu-form" method="post" enctype="multipart/form-data">
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Basic Details</b></h4>
                 <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-12">
+                    @*<div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label class="form-label">Company Code</label>
                             <div class="input-group">
                                 <input type="text" readonly="readonly" class="form-control numb" asp-for="COMP_CODE">
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
@@ -116,8 +116,10 @@
                         <div class="form-group">
                             <label for="branch_id">Process Name</label>
                             <div class="input-group">
-                                <select asp-for="PROC_CODE" id="PROC_CODE" class="form-control" asp-items="@(new SelectList(Model.ProcDropDown,"Value", "Text"))"></select>
-
+                                @*<select asp-for="PROC_CODE" id="PROC_CODE" class="form-control" asp-items="@(new SelectList(Model.ProcDropDown,"Value", "Text"))"></select>*@
+                                <select class="form-control" asp-for="PROC_CODE" readonly="readonly">
+                                    <option value="1">Cutting</option>
+                                </select>
                             </div>
                         </div>
                     </div>

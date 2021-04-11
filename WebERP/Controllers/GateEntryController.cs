@@ -31,18 +31,34 @@ namespace WebERP.Controllers
         }
         [HttpGet]
         public IActionResult GateEntry_Master()
-        {            
+        {
             Gate_HDR gate_HDRs = new Gate_HDR();
             GateEntryViewModel GateEtryViewModel = new GateEntryViewModel();
             GateEtryViewModel.v_GateEntryDetails = dbContext.V_GateEntryDetail.AsNoTracking().ToList();
             gate_HDRs.AccDropDown = ACClists();
+            gate_HDRs.Doc_Date = DateTime.Now;
+            gate_HDRs.Doc_FN_Year = GetFinYear();
             GateEtryViewModel.Gate_HDR = gate_HDRs;
             return View(GateEtryViewModel);
+        }
+        public string GetFinYear()
+        {
+            string FinYear = "";
+            DateTime date = DateTime.Now;
+            if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
+            {
+                FinYear = (date.Year - 1) + "" + date.Year;
+            }
+            else
+            {
+                FinYear = date.Year + "" + (date.Year + 1);
+            }
+            return FinYear;
         }
         [HttpGet]
         public IActionResult Gate_Entry_Details()
         {
-            Gate_HDR GED = new Gate_HDR();  
+            Gate_HDR GED = new Gate_HDR();
             return View(dbContext.Gate_HDR.ToList());
         }
         [HttpPost]
@@ -54,15 +70,16 @@ namespace WebERP.Controllers
             Gate_HDR gate_HDRs = new Gate_HDR();
             int Doc_Number = dbContext.gateEntryDetails
                 .Where(x => x.FIN_YEAR == gate_HDRs.Doc_FN_Year)
-                .Select(p =>Convert.ToInt32(p.Doc_No)).DefaultIfEmpty(0).Max();
+                .Select(p => Convert.ToInt32(p.Doc_No)).DefaultIfEmpty(0).Max();
             GateEntryViewModel GateEtryViewModel = new GateEntryViewModel();
             GateEtryViewModel.v_GateEntryDetails = dbContext.V_GateEntryDetail.AsNoTracking().ToList();
-         
+
             foreach (var order in ckec)
             {
                 li = dbContext.V_GateEntryDetail.AsNoTracking().Where(o => o.pod_pk == Convert.ToInt32(order)).ToList();
                 foreach (var item in li)
                 {
+                    item.CHL_DATE = DateTime.Now;
                     lli.Add(item);
                 }
             }
@@ -81,18 +98,19 @@ namespace WebERP.Controllers
         public ActionResult GateEntry(GateEntryViewModel gateEntryViewModels)
         {
             List<GateEntryDetail> GEList = new List<GateEntryDetail>();
-            GateEntryDetail li = new GateEntryDetail();           
+            GateEntryDetail li = new GateEntryDetail();
             int GateHdrID;
             string Account_Name;
             string Document_Number;
             gateEntryViewModels.Gate_HDR.Type = "Purchase Order";
-            gateEntryViewModels.Gate_HDR.INS_DATE = DateTime.Now;           
+            gateEntryViewModels.Gate_HDR.INS_DATE = DateTime.Now;
             gateEntryViewModels.Gate_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.Gate_HDR.Add(gateEntryViewModels.Gate_HDR);
             dbContext.SaveChanges();
             Account_Name = gateEntryViewModels.Gate_HDR.Acc_Name;
             GateHdrID = gateEntryViewModels.Gate_HDR.ID;
             Document_Number = gateEntryViewModels.Gate_HDR.Doc_No;
+
             foreach (var order in gateEntryViewModels.v_GateEntryDetails)
             {
                 GEList.Add(new GateEntryDetail()
@@ -137,7 +155,7 @@ namespace WebERP.Controllers
                            select new SelectListItem()
                            {
                                Text = ACC.NAME,
-                               Value = ACC.NAME +"#"+ Convert.ToString(ACC.ID),
+                               Value = ACC.NAME + "#" + Convert.ToString(ACC.ID),
                            }).ToList();
 
             AccList.Insert(0, new SelectListItem()
@@ -160,7 +178,7 @@ namespace WebERP.Controllers
         public IActionResult EditGateEntry(string id)
         {
             PODetailModel PODetailModels = new PODetailModel();
-            EditGateEntryModel GateEntryDetails = new EditGateEntryModel();           
+            EditGateEntryModel GateEntryDetails = new EditGateEntryModel();
             var GateDetailList = dbContext.gateEntryDetails.AsNoTracking().Where(g => g.Doc_No == id).ToList();
             foreach (var gateDetailModel in GateDetailList.ToList())
             {
@@ -171,15 +189,15 @@ namespace WebERP.Controllers
                 gateDetailModel.ITEM_NAMEs = dbContext.Item_Master.
                                           Where(x => x.ID == gateDetailModel.Item_Name).
                                           Select(y => y.NAME).FirstOrDefault();
-                gateDetailModel.ITEM_NAMEs = dbContext.Item_Master.
+                var uomcode = dbContext.Item_Master.
                                           Where(x => x.ID == gateDetailModel.Item_Name).
+                                          Select(y => y.UOM_CODE).FirstOrDefault();
+                gateDetailModel.UOM_NAME = dbContext.UOM_MASTER.
+                                          Where(x => x.ID == uomcode).
                                           Select(y => y.NAME).FirstOrDefault();
-                gateDetailModel.UOM_NAME = dbContext.Item_Master.
-                                          Where(x => x.ID == gateDetailModel.Item_Name).
-                                          Select(y => y.UOM_Name).FirstOrDefault();
             }
             GateEntryDetails.EditGateEntryDetails = GateDetailList;
-                GateEntryDetails.Gate_HDRs = dbContext.Gate_HDR.Where(g => g.Doc_No == id).FirstOrDefault();
+            GateEntryDetails.Gate_HDRs = dbContext.Gate_HDR.Where(g => g.Doc_No == id).FirstOrDefault();
             return View(GateEntryDetails);
         }
 
@@ -193,7 +211,7 @@ namespace WebERP.Controllers
                 dbContext.Gate_HDR.Update(EditGateEntryModels.Gate_HDRs);
                 dbContext.SaveChanges();
                 foreach (var gateDetailModel in EditGateEntryModels.EditGateEntryDetails.ToList())
-                {
+                {                   
                     var result = dbContext.gateEntryDetails.SingleOrDefault(b => b.ID == gateDetailModel.ID);
                     if (result != null)
                     {
@@ -207,7 +225,7 @@ namespace WebERP.Controllers
                         result.GDW_NO = gateDetailModel.GDW_NO;
                         result.Remarks = gateDetailModel.Remarks;
                         dbContext.SaveChanges();
-                    }                   
+                    }
                 }
                 return RedirectToAction("Gate_Entry_Details");
             }

@@ -32,11 +32,11 @@
                             <div class="input-group">
                                 @if (Model.Type == "Add")
                                 {
-                                    @Html.TextBoxFor(a => a.MGF_RECEIPTs.DOC_DATE, new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" })
+                                    @Html.TextBoxFor(a => a.DOC_DATES,"{0:yyyy-MM-dd}", new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" })
                                 }
                                 else
                                 {
-                                    @Html.TextBoxFor(a => a.MGF_RECEIPTs.DOC_DATE, new { @ID = "Doc_Date", @class = "form-control", @readOnly = "readonly" })
+                                    @Html.TextBoxFor(a => a.MGF_RECEIPTs.DOC_DATE, "{0:yyyy-MM-dd}", new { @ID = "Doc_Date", @class = "form-control", @readOnly = "readonly" })
                                 }
                             </div>
                         </div>
@@ -46,7 +46,15 @@
                             <label for="branch_id">Document Financial Year</label>
                             <div class="input-group">
                                 @Html.HiddenFor(a => a.MGF_RECEIPTs.ID, new { @ID = "ID", @class = "form-control", @readOnly = "readonly" })
-                                @Html.TextBoxFor(a => a.MGF_RECEIPTs.DOC_FINYEAR, new { @ID = "Doc_FN_Year", @class = "form-control", @readOnly = "readonly" })
+                                @if (Model.Type == "Add")
+                                {
+                                    @Html.TextBoxFor(a => a.DOC_FINYEARS, new { @ID = "Doc_FN_Year", @class = "form-control", @readOnly = "readonly" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(a => a.MGF_RECEIPTs.DOC_FINYEAR, new { @ID = "Doc_FN_Year", @class = "form-control", @readOnly = "readonly" })
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -54,7 +62,9 @@
                     {
                         <div class="col-lg-4 col-md-4 col-sm-12">
                             <div class="form-group">
-                                <label for="branch_id">Cutting Order Detail</label>
+                                <label for="branch_id">Cutting Order</label>
+                                <label for="branch_id" style="color:red">**Document No/Employee/Item/Artical/Size/Process</label>
+
                                 <div class="custom-radio">
                                     <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList(Model.CUTDropDown, "Value", "Text"))"></select>
                                 </div>
@@ -89,7 +99,7 @@
                         <div class="form-group">
                             <label for="branch_id">Process Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.MGF_RECEIPTs.PROC_NAME, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" })
+                                <select asp-for="MGF_RECEIPTs.PROC_CODE" id="PROCDropDown" name="PROCDropDown" class="form-control" asp-items="@(new SelectList(Model.PROCDropDown, "Value", "Text"))"></select>
                                 @Html.HiddenFor(a => a.MGF_RECEIPTs.CUTTING_ORDER_FK, new { @ID = "CUTPK", @class = "form-control" })
                             </div>
                         </div>
@@ -98,7 +108,7 @@
                         <div class="form-group">
                             <label for="branch_id">Employee Name</label>
                             <div class="input-group">
-                                <select asp-for="MGF_RECEIPTs.EMP_CODE" id="EMPDropDown" class="form-control" asp-items="@(new SelectList(Model.EMPDropDown, "Value", "Text"))"></select>
+                                <select asp-for="MGF_RECEIPTs.EMP_CODE" id="EMPDropDown" name="EMPDropDown" class="form-control" asp-items="@(new SelectList(Model.EMPDropDown, "Value", "Text"))"></select>
                                
                             </div>
                         </div>
@@ -107,7 +117,7 @@
                         <div class="form-group">
                             <label for="branch_id">Contract Employee Name</label>
                             <div class="input-group">
-                                <select asp-for="MGF_RECEIPTs.CONT_EMP_CODE" id="CONEMPDropDown" class="form-control" asp-items="@(new SelectList(Model.CONEMPDropDown, "Value", "Text"))"></select>
+                                <select asp-for="MGF_RECEIPTs.CONT_EMP_CODE" id="CONEMPDropDown" name="CONEMPDropDown" class="form-control" asp-items="@(new SelectList(Model.CONEMPDropDown, "Value", "Text"))"></select>
                                
                             </div>
                         </div>
@@ -178,5 +188,8 @@
     })
     $(function () {
         $("#EMPDropDown").chosen();
+    })
+    $(function () {
+        $("#PROCDropDown").chosen();
     })
 </script>

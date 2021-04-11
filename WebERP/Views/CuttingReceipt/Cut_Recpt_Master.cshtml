@@ -32,11 +32,11 @@
                             <div class="input-group">
                                 @if (Model.Type == "Add")
                                 {
-                                    @Html.TextBoxFor(a => a.cutting_Receipt.DOC_DATE, new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" })
+                                    @Html.TextBoxFor(a => a.DOc_Dates, "{0:yyyy-MM-dd}", new { @ID = "DOc_Dates", @class = "form-control dat fc-datepicker", @type = "date" })
                                 }
                                 else
                                 {
-                                    @Html.TextBoxFor(a => a.cutting_Receipt.DOC_DATE, new { @ID = "Doc_Date", @class = "form-control", @readOnly = "readonly" })
+                                    @Html.TextBoxFor(a => a.cutting_Receipt.DOC_DATE, "{0:yyyy-MM-dd}", new { @ID = "DOc_Dates", @class = "form-control", @readonly = "readonly" })
                                 }
                             </div>
                         </div>
@@ -46,7 +46,14 @@
                             <label for="branch_id">Document Financial Year</label>
                             <div class="input-group">
                                 @Html.HiddenFor(a => a.cutting_Receipt.ID, new { @ID = "Doc_FN_Year", @class = "form-control", @readOnly = "readonly" })
-                                @Html.TextBoxFor(a => a.cutting_Receipt.DOC_FINYEAR, new { @ID = "Doc_FN_Year", @class = "form-control", @readOnly = "readonly" })
+                                @if (Model.Type == "Add")
+                                {
+                                    @Html.TextBoxFor(a => a.Fin_Years, new { @ID = "Fin_Years", @class = "form-control", @readOnly = "readonly" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(a => a.cutting_Receipt.DOC_FINYEAR, new { @ID = "DOC_FINYEAR", @class = "form-control", @readOnly = "readonly" })
+                                }
                             </div>
                         </div>
                     </div>
@@ -54,7 +61,8 @@
                     {
                         <div class="col-lg-4 col-md-4 col-sm-12">
                             <div class="form-group">
-                                <label for="branch_id">Cutting Order Detail</label>
+                                <label for="branch_id">Cutting Order</label>
+                                <label for="branch_id" style="color:red">**Document No/Employee/Item/Artical/Size/Process</label>
                                 <div class="custom-radio">
                                     <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList(Model.CUTDropDown, "Value", "Text"))"></select>
                                 </div>
@@ -93,15 +101,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-12">
+                    @*<div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Process Name</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.cutting_Receipt.PROC_NAME, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.Proc_Names, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" ,@value="Cutting"})
                                 @Html.HiddenFor(a => a.cutting_Receipt.CUTTING_ORDER_FK, new { @ID = "CUTPK", @class = "form-control" })
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Receipt Qty</label>
@@ -135,7 +143,7 @@
 </div>
 <script>
     $(function () {
-        $("#Doc_Date").change(function () {
+        $("#DOc_Dates").change(function () {
             debugger;
             var date = $(this).val();
             var financial_year = "";
@@ -145,7 +153,7 @@
             } else {
                 financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
             }
-            $("#Doc_FN_Year").val(financial_year);
+            $("#Fin_Years").val(financial_year);
             $.ajax({
                 // edit to add steve's suggestion.
                 //url: "/ControllerName/ActionName",
