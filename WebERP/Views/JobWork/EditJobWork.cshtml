@@ -64,7 +64,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
                         <label>Party Name</label>
-                        <select asp-for="JobWorkIssHeader.ACC_CODE" class="form-control jwDropDown"
+                        <select asp-for="JobWorkIssHeader.ACC_CODE" class="form-control Select2DropDown"
                                 asp-items="@(new SelectList(Model.JobWorkIssHeader.accDropDown, "Value", "Text"))"></select>
                         <span asp-validation-for="JobWorkIssHeader.ACC_CODE" class="text-danger"></span>
                     </div>
@@ -83,15 +83,15 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
-                        <select class="form-control jwProcDropDown"
+                        <select class="form-control" id="jwComDropDown"
                             asp-items="@(new SelectList(Model.JobWorkIssHeader.GetProcess, "Value", "Text"))"></select>
                         
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2">
                     <a href="#" class="btn btn-dark" data-toggle="tooltip" data-placement="right"
-                       title="Use this button for Adding Process to Selected Rows" id="addProcess">
-                        <i class="fa fa-check-circle"></i>
+                       title="Select the process name to enable grid">
+                        <i class="fa fa-info-circle"></i>
                     </a>
                 </div>
             </div>
@@ -100,8 +100,7 @@
                     <div class="table-responsive-sm">
                         <table class="table table-sm d-sm-table-cell table-bordered" id="jwDtlTable" width="100%" cellspacing="0">
                             <thead class="thead-light">
-                                <tr style="text-align:center;">
-                                    <th style="width: 30px;">Check</th>
+                                <tr style="text-align:center;">                                    
                                     <th style="width: 150px;">GDW</th>
                                     <th style="width: 100px;">Item</th>
                                     <th style="width: 100px;">Artical</th>
@@ -116,10 +115,7 @@
                             <tbody>
                                 @for (int j = 0; j < Model.JobWorkIssueDetails.Count(); j++)
                                 {
-                                <tr>
-                                    <td style="text-align:center;">
-                                        <input type="checkbox" />
-                                    </td>
+                                <tr>                                    
                                     <td>
                                         @Html.HiddenFor(a => a.JobWorkIssueDetails[j].GODOWN_CODE, new { @class = "form-control" })
                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].GODOWN_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
@@ -149,7 +145,7 @@
                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control jwUserFilledQty", @type = "number",@step=".001" })
                                     </td>
                                     <td>
                                         @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control" })

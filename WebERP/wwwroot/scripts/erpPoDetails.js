@@ -143,6 +143,7 @@ WebERP.PurchasingOrders = {
                     debugger
                     var itemList = $('select', nextCell);
                     itemList.empty();
+                    itemList.addClass("Select2DropDown");
                     itemList.append('<option value="">Select</option>')
                     $.each(data, function (index, val) {
                         var $option;

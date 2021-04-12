@@ -11,6 +11,7 @@ using WebERP.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WebERP.Helpers;
 
 namespace WebERP.Controllers
 {
@@ -311,6 +312,8 @@ namespace WebERP.Controllers
             jwHeader.GetProcess = procList;
             jwHeader.companyDropDown = companyList;
             jwHeader.accDropDown = accList;
+            jwHeader.DOC_DATE = DateTime.Now;
+            jwHeader.DOC_FINYEAR = Convert.ToString(Helper.GetFinYear());
             return jwHeader;
         }
 
