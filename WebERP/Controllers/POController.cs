@@ -11,6 +11,7 @@ using WebERP.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WebERP.Helpers;
 
 namespace WebERP.Controllers
 {
@@ -166,6 +167,8 @@ namespace WebERP.Controllers
             });
             poHeader.companyDropDown = companyList;
             poHeader.accDropDown = accList;
+            poHeader.ORDER_DATE = DateTime.Now;
+            poHeader.ORDER_FINYEAR = Convert.ToString(Helper.GetFinYear());
             return poHeader;
         }
 
@@ -186,6 +189,7 @@ namespace WebERP.Controllers
                 Selected = true
             });
             poDetail.GetItems = itemList;
+            poDetail.DELV_DATE = DateTime.Now;
             return poDetail;
         }
 
@@ -234,6 +238,9 @@ namespace WebERP.Controllers
                                            Select(y => y.NAME).FirstOrDefault();
                 poDetailModel.RATEUOM_NAME = dbContext.UOM_MASTER.
                                            Where(x => x.ID == poDetailModel.RATE_UOM).
+                                           Select(y => y.NAME).FirstOrDefault();
+                poDetailModel.QTYUOMNAME = dbContext.UOM_MASTER.
+                                           Where(x => x.ID == Convert.ToInt32(poDetailModel.QTY_UOM)).
                                            Select(y => y.NAME).FirstOrDefault();
                 poDetailModel.AMOUNT = Convert.ToString(
                                         Convert.ToDouble(poDetailModel.QTY) *
