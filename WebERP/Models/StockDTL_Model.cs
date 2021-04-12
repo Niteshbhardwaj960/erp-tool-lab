@@ -20,8 +20,8 @@ namespace WebERP.Models
         public int Item_Code { get; set; }
         public int Artical_CODE { get; set; }
         public int Size_Code { get; set; }
-        public int Stk_Qty_IN { get; set; }
-        public int Stk_Qty_OUT { get; set; }
+        public decimal Stk_Qty_IN { get; set; }
+        public decimal Stk_Qty_OUT { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }

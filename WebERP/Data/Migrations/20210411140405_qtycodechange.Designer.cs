@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210411140405_qtycodechange")]
+    partial class qtycodechange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -542,8 +544,6 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("EMP_NAME");
 
-                    b.Property<int>("GDW_CODE");
-
                     b.Property<DateTime?>("INS_DATE");
 
                     b.Property<string>("INS_UID");
@@ -729,7 +729,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("FIN_YEAR");
 
-                    b.Property<decimal>("Fin_Qty");
+                    b.Property<int>("Fin_Qty");
 
                     b.Property<int>("Fin_UOM");
 
@@ -753,7 +753,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("Remarks");
 
-                    b.Property<decimal>("Stk_Qty");
+                    b.Property<int>("Stk_Qty");
 
                     b.Property<int>("Stk_UOM");
 
@@ -1241,8 +1241,6 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("ART_NAME");
 
-                    b.Property<string>("CUTTING_ORDER_NO");
-
                     b.Property<int>("Comp_Code");
 
                     b.Property<int>("Cutting_Order_FK");
@@ -1348,9 +1346,9 @@ namespace WebERP.Data.Migrations
 
                     b.Property<int>("Size_Code");
 
-                    b.Property<decimal>("Stk_Qty_IN");
+                    b.Property<int>("Stk_Qty_IN");
 
-                    b.Property<decimal>("Stk_Qty_OUT");
+                    b.Property<int>("Stk_Qty_OUT");
 
                     b.Property<string>("Tran_Table");
 
@@ -1490,20 +1488,6 @@ namespace WebERP.Data.Migrations
                     b.ToTable("V_CuttingDetail");
                 });
 
-            modelBuilder.Entity("WebERP.Models.V_GATE_ENTRY_ACC", b =>
-                {
-                    b.Property<string>("TBL_TYPE")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ACC_CODE");
-
-                    b.Property<string>("ACC_NAME");
-
-                    b.HasKey("TBL_TYPE");
-
-                    b.ToTable("V_GATE_ENTRY_ACC");
-                });
-
             modelBuilder.Entity("WebERP.Models.V_GateEntryDetail", b =>
                 {
                     b.Property<int>("poh_pk")
@@ -1516,7 +1500,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<decimal>("Bal_Qty");
 
-                    b.Property<decimal>("Gate_Entry_qty");
+                    b.Property<int>("Gate_Entry_qty");
 
                     b.Property<string>("ITEM_NAME");
 
@@ -1586,11 +1570,11 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("SIZE_NAME");
 
-                    b.Property<decimal>("STK_QTY");
+                    b.Property<int>("STK_QTY");
 
-                    b.Property<decimal>("STK_QTY_IN");
+                    b.Property<int>("STK_QTY_IN");
 
-                    b.Property<decimal>("STK_QTY_OUT");
+                    b.Property<int>("STK_QTY_OUT");
 
                     b.HasKey("ID");
 

@@ -21,8 +21,8 @@ namespace WebERP.Models
         public int pod_pk { get; set; }
         public decimal Qty { get; set; }
         public string QTY_UOM { get; set; }
-        public int QTY_CODE { get; set; }
-        public int Gate_Entry_qty { get; set; }
+        public string QTY_CODE { get; set; }
+        public decimal Gate_Entry_qty { get; set; }
         public decimal Bal_Qty { get; set; }
         public string ITEM_NAME { get; set; }
         public int Item_Code { get; set; }

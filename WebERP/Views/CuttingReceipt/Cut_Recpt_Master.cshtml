@@ -64,7 +64,7 @@
                                 <label for="branch_id">Cutting Order</label>
                                 <label for="branch_id" style="color:red">**Document No/Employee/Item/Artical/Size/Process</label>
                                 <div class="custom-radio">
-                                    <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList(Model.CUTDropDown, "Value", "Text"))"></select>
+                                    <select id="ddlCUT" name="ddlCUT" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.CUTDropDown, "Value", "Text"))"></select>
                                 </div>
                             </div>
                         </div>
@@ -102,19 +102,27 @@
                         </div>
                     </div>
                     @*<div class="col-lg-4 col-md-4 col-sm-12">
-                        <div class="form-group">
-                            <label for="branch_id">Process Name</label>
-                            <div class="input-group">
-                                @Html.TextBoxFor(a => a.Proc_Names, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" ,@value="Cutting"})
-                                @Html.HiddenFor(a => a.cutting_Receipt.CUTTING_ORDER_FK, new { @ID = "CUTPK", @class = "form-control" })
-                            </div>
-                        </div>
-                    </div>*@
+            <div class="form-group">
+                <label for="branch_id">Process Name</label>
+                <div class="input-group">
+                    @Html.TextBoxFor(a => a.Proc_Names, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" ,@value="Cutting"})
+                    @Html.HiddenFor(a => a.cutting_Receipt.CUTTING_ORDER_FK, new { @ID = "CUTPK", @class = "form-control" })
+                </div>
+            </div>
+        </div>*@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Receipt Qty</label>
                             <div class="input-group">
                                 @Html.TextBoxFor(a => a.cutting_Receipt.RECEIPT_QTY, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">GoDown</label>
+                            <div class="input-group">
+                                <select asp-for="cutting_Receipt.GDW_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.GDWDropDown, "Value", "Text"))"></select>                               
                             </div>
                         </div>
                     </div>
@@ -178,8 +186,5 @@
             $('#ProcName').val(Array[4]);
             $('#CUTPK').val(Array[5]);
         })
-    })
-    $(function () {
-        $("#ddlCUT").chosen();
     })
 </script>

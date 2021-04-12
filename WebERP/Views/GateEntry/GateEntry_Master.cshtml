@@ -67,7 +67,6 @@
                                         <th>Qty UOM</th>
                                         <th>Gate Entry Qty</th>
                                         <th>Bal Qty</th>
-                                        <th>Remarks</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tblbody">
@@ -106,7 +105,6 @@
                     tr.append("<td>" + json[i].qtY_UOM + "</td>");
                     tr.append("<td>" + json[i].gate_Entry_qty + "</td>");
                     tr.append("<td>" + json[i].bal_Qty + "</td>");
-                    tr.append("<td>" + json[i].remarks + "</td>");
                     $('#dataTable').append(tr);
                 }
             })

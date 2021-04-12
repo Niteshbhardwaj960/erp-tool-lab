@@ -67,6 +67,7 @@ namespace WebERP.Data
         public DbSet<Employee_Attandance> Employee_Attandance { get; set; }
         public DbSet<Employee_Advance> Employee_Advance { get; set; }
         public DbSet<AgentCommRate> AgentCommRate { get; set; }
+        public DbSet<V_GATE_ENTRY_ACC> V_GATE_ENTRY_ACC { get; set; }
     }
 
 }

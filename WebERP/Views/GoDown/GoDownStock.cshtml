@@ -3,19 +3,19 @@
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @*@if (Model.Type == "Action")
-        {
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-                <h3 style="color:white">Add Stock Godown</h3>
-            </nav>
-        }
-        @if (Model.Type == "Edit")
-        {
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-                <h3 style="color:white">Edit Stock Godown</h3>
-            </nav>
-        }
-        @if (Model.Type == "Add")
-        {*@
+            {
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                    <h3 style="color:white">Add Stock Godown</h3>
+                </nav>
+            }
+            @if (Model.Type == "Edit")
+            {
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                    <h3 style="color:white">Edit Stock Godown</h3>
+                </nav>
+            }
+            @if (Model.Type == "Add")
+            {*@
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
             <h3 style="color:white">Add Stock Godown</h3>
         </nav>
@@ -53,20 +53,23 @@
                                 int j = 0;
                                 foreach (var i in Model.EditGateEntryDetails)
                                 {
-                            <tr style="border:1px solid black">
-                                <td>
-                                    @Html.HiddenFor(a => a.EditGateEntryDetails[j].ID, new { @class = "form-control" })
-                                    @Html.CheckBoxFor(a => a.EditGateEntryDetails[j].CHK, new { @class = "form-control" })
-                                </td>
-                                <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_NO, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_DATE, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].ACC_NAME, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].ITEM_NAMEs, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Stk_Qty, new { @class = "form-control", @readOnly = "readonly" })</td>
-                            </tr>
-                                j++;
+                                    <tr style="border:1px solid black">
+                                        <td>
+                                            @Html.HiddenFor(a => a.EditGateEntryDetails[j].ID, new { @class = "form-control" })
+                                            @Html.CheckBoxFor(a => a.EditGateEntryDetails[j].CHK, new { @class = "form-control" })
+                                        </td>
+                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_NO, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_DATE, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].ACC_NAME, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                        <td>
+                                            @Html.TextBoxFor(a => a.EditGateEntryDetails[j].ITEM_NAMEs, new { @class = "form-control", @readOnly = "readonly" })
+                                            @Html.HiddenFor(a => a.EditGateEntryDetails[j].Item_Name, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>
+                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Stk_Qty, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                    </tr>
+                                    j++;
+                                }
                             }
-                        }
 
                         </tbody>
                     </table>

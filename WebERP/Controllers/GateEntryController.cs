@@ -127,7 +127,7 @@ namespace WebERP.Controllers
                     CHL_DATE = order.CHL_DATE,
                     Fin_Qty = order.Fin_Qty,
                     Fin_UOM = order.Fin_UOM,
-                    Stk_Qty = order.Gate_Entry_qty,
+                    Stk_Qty = order.Bal_Qty,
                     Stk_UOM = order.Stk_UOM,
                     Item_Name = order.Item_Code,
                     Item_UOM = order.QTY_CODE,
@@ -151,11 +151,11 @@ namespace WebERP.Controllers
         }
         public List<SelectListItem> ACClists()
         {
-            var AccList = (from ACC in dbContext.Account_Masters.ToList()
+            var AccList = (from ACC in dbContext.V_GATE_ENTRY_ACC.AsNoTracking().Where(ac => ac.TBL_TYPE == "PO").ToList()
                            select new SelectListItem()
                            {
-                               Text = ACC.NAME,
-                               Value = ACC.NAME + "#" + Convert.ToString(ACC.ID),
+                               Text = ACC.ACC_NAME,
+                               Value = ACC.ACC_NAME + "#" + Convert.ToString(ACC.ACC_CODE),
                            }).ToList();
 
             AccList.Insert(0, new SelectListItem()
@@ -166,7 +166,17 @@ namespace WebERP.Controllers
             });
             return AccList;
         }
+        public List<SelectListItem> GDWlists()
+        {
+            var GDWList = (from ACC in dbContext.Godown_Master.AsNoTracking().ToList()
+                           select new SelectListItem()
+                           {
+                               Text = ACC.NAME,
+                               Value = Convert.ToString(ACC.ID),
+                           }).ToList();
 
+            return GDWList;
+        }
         public JsonResult GetGrdData(string accid, string work)
         {
             string[] Account = accid.Split('#');
@@ -179,6 +189,7 @@ namespace WebERP.Controllers
         {
             PODetailModel PODetailModels = new PODetailModel();
             EditGateEntryModel GateEntryDetails = new EditGateEntryModel();
+            GateEntryDetails.GoDownDropDown = GDWlists();
             var GateDetailList = dbContext.gateEntryDetails.AsNoTracking().Where(g => g.Doc_No == id).ToList();
             foreach (var gateDetailModel in GateDetailList.ToList())
             {
@@ -239,6 +250,7 @@ namespace WebERP.Controllers
         {
             PODetailModel PODetailModels = new PODetailModel();
             EditGateEntryModel GateEntryDetails = new EditGateEntryModel();
+            GateEntryDetails.GoDownDropDown = GDWlists();
             var GateDetailList = dbContext.gateEntryDetails.AsNoTracking().Where(g => g.Doc_No == id).ToList();
             foreach (var gateDetailModel in GateDetailList.ToList())
             {
@@ -252,9 +264,12 @@ namespace WebERP.Controllers
                 gateDetailModel.ITEM_NAMEs = dbContext.Item_Master.
                                           Where(x => x.ID == gateDetailModel.Item_Name).
                                           Select(y => y.NAME).FirstOrDefault();
-                gateDetailModel.UOM_NAME = dbContext.Item_Master.
+                var uomcode = dbContext.Item_Master.
                                           Where(x => x.ID == gateDetailModel.Item_Name).
-                                          Select(y => y.UOM_Name).FirstOrDefault();
+                                          Select(y => y.UOM_CODE).FirstOrDefault();
+                gateDetailModel.UOM_NAME = dbContext.UOM_MASTER.
+                                         Where(x => x.ID == uomcode).
+                                         Select(y => y.NAME).FirstOrDefault();
             }
             GateEntryDetails.EditGateEntryDetails = GateDetailList;
             GateEntryDetails.Gate_HDRs = dbContext.Gate_HDR.Where(g => g.Doc_No == id).FirstOrDefault();

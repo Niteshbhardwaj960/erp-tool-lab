@@ -16,14 +16,14 @@ namespace WebERP.Models.GateEntry
         public int JW_FK { get; set; }
         public int Order_No { get; set; }
         public int Item_Name { get; set; }
-        public int Item_UOM { get; set; }
+        public string Item_UOM { get; set; }
         public string CHL_NO { get; set; }
         public DateTime? CHL_DATE { get; set; }
         public string Bill_NO { get; set; }
         public DateTime? Bill_Date { get; set; }
-        public int Stk_Qty { get; set; }
+        public decimal Stk_Qty { get; set; }
         public int Stk_UOM { get; set; }
-        public int Fin_Qty { get; set; }
+        public decimal Fin_Qty { get; set; }
         public int Fin_UOM { get; set; }
         public int GDW_NO { get; set; }
         public DateTime? INS_DATE { get; set; }
@@ -45,5 +45,7 @@ namespace WebERP.Models.GateEntry
         public string UOM_NAME { get; set; }
         [NotMapped]
         public bool CHK { get; set; }
+        [NotMapped]
+        public string GDW_NAME { get; set; }
     }
 }

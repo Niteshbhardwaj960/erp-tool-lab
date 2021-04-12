@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.MFGReceiptViewModel
-<script src="~/lib/jquery/dist/jquery.js"></script>
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @if (Model.Type == "Add")
@@ -99,7 +99,7 @@
                         <div class="form-group">
                             <label for="branch_id">Process Name</label>
                             <div class="input-group">
-                                <select asp-for="MGF_RECEIPTs.PROC_CODE" id="PROCDropDown" name="PROCDropDown" class="form-control" asp-items="@(new SelectList(Model.PROCDropDown, "Value", "Text"))"></select>
+                                <select asp-for="MGF_RECEIPTs.PROC_CODE" id="PROCDropDown" name="PROCDropDown" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.PROCDropDown, "Value", "Text"))"></select>
                                 @Html.HiddenFor(a => a.MGF_RECEIPTs.CUTTING_ORDER_FK, new { @ID = "CUTPK", @class = "form-control" })
                             </div>
                         </div>
@@ -153,7 +153,7 @@
 
     </div>
 </div>
-<script>
+@*<script>
     $(function () {
         $("#Doc_Date").change(function () {
             debugger;
@@ -192,4 +192,4 @@
     $(function () {
         $("#PROCDropDown").chosen();
     })
-</script>
+</script>*@
