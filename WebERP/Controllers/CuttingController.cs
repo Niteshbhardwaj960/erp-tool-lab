@@ -254,8 +254,8 @@ namespace WebERP.Controllers
 
             EmpList.Insert(0, new SelectListItem()
             {
-                Text = "Select Cont Employee",
-                Value = string.Empty,
+                Text = "NA",
+                Value = "0",
                 Selected = true
             });
             return EmpList;

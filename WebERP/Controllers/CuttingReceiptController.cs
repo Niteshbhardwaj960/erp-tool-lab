@@ -124,8 +124,8 @@ namespace WebERP.Controllers
             var result = dbContext.Cutting_Receipt.SingleOrDefault(b => b.ID == cuttingReceiptViewModel.cutting_Receipt.ID);
             if (result != null)
             {
-                cuttingReceiptViewModel.cutting_Receipt.UDT_DATE = DateTime.Now;
-                cuttingReceiptViewModel.cutting_Receipt.UDT_UID = userManager.GetUserName(HttpContext.User);
+                result.UDT_DATE = DateTime.Now;
+                result.UDT_UID = userManager.GetUserName(HttpContext.User);
                 result.RECEIPT_QTY = cuttingReceiptViewModel.cutting_Receipt.RECEIPT_QTY;
                 result.GDW_CODE = cuttingReceiptViewModel.cutting_Receipt.GDW_CODE;
                 dbContext.SaveChanges();
@@ -137,7 +137,7 @@ namespace WebERP.Controllers
         {
             CuttingReceiptViewModel cuttingReceiptViewModel = new CuttingReceiptViewModel();
             cuttingReceiptViewModel.cutting_Receipt = dbContext.Cutting_Receipt.Where(r => r.ID == id).FirstOrDefault();
-            cuttingReceiptViewModel.Type = "View";
+            cuttingReceiptViewModel.Type = "Action";
             cuttingReceiptViewModel.GDWDropDown = GDWlists();
             return View("Cut_Recpt_Master", cuttingReceiptViewModel);
         }

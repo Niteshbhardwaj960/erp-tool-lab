@@ -117,8 +117,8 @@ namespace WebERP.Controllers
 
             CutList.Insert(0, new SelectListItem()
             {
-                Text = "Select Contract Employee",
-                Value = string.Empty,
+                Text = "NA",
+                Value = "0",
                 Selected = true
             });
             return CutList;
@@ -183,7 +183,7 @@ namespace WebERP.Controllers
         {
             MFGReceiptViewModel mFGReceiptViewModel = new MFGReceiptViewModel();
             mFGReceiptViewModel.MGF_RECEIPTs = dbContext.MGF_RECEIPT.Where(r => r.ID == id).FirstOrDefault();
-            mFGReceiptViewModel.Type = "View";
+            mFGReceiptViewModel.Type = "Action";
             mFGReceiptViewModel.CONEMPDropDown = CoEmplists();
             mFGReceiptViewModel.EMPDropDown = EMPlists();
             mFGReceiptViewModel.PROCDropDown = PROClists();

@@ -99,7 +99,7 @@ namespace WebERP.Controllers
                         Item_Code = Convert.ToInt32(order.ITEM_CODE),
                         Artical_CODE = Convert.ToInt32(order.ARTICAL_CODE),
                         Size_Code = Convert.ToInt32(order.SIZE_CODE),
-                        Stk_Qty_IN = Convert.ToInt32(order.Issue_Qty),
+                        Stk_Qty_OUT = Convert.ToInt32(order.Issue_Qty),
                     });
 
                     //decimal BalQty;

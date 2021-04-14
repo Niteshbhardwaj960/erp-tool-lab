@@ -4,7 +4,7 @@
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-            <h3 style="color:white">Gate Entry</h3>
+            <h3 style="color:white">Gate Entry Inward</h3>
         </nav>
         <div class="card-body">
             <form id="menu-form" method="post" asp-controller="GateEntry" asp-action="GateEntry_Master">
@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label class="form-label">Account Name</label>
                             <div class="input-group">
-                                <select id="ddlACC" name="ddlACC" class="form-control" asp-items="@(new SelectList( Model.Gate_HDR.AccDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlACC" name="ddlACC" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.Gate_HDR.AccDropDown ,"Value", "Text"))"></select>
                             </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
                         </div>
@@ -126,8 +126,5 @@
             $("#FinYear").val(financial_year);
         });
     })
-
-    $(function () {
-        $("#ddlACC").chosen();
-    })
+    
 </script>

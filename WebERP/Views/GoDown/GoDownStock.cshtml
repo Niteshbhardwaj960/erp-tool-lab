@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.EditGateEntryModel
-<script src="~/lib/jquery/dist/jquery.js"></script>
+
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @*@if (Model.Type == "Action")
@@ -17,7 +17,7 @@
             @if (Model.Type == "Add")
             {*@
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-            <h3 style="color:white">Add Stock Godown</h3>
+            <h3 style="color:white">Godown Allocation</h3>
         </nav>
         @*}*@
         <div class="card-body">
@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label class="form-label">GoDown Name</label>
                             <div class="input-group">
-                                <select name="GDWCODE" id="GDWCODE" class="form-control" asp-items="@(new SelectList(Model.GoDownDropDown,"Value", "Text"))"></select>
+                                <select name="GDWCODE" id="GDWCODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.GoDownDropDown,"Value", "Text"))"></select>
                             </div>
                             <span asp-validation-for="GWDERROR" class="text-danger"></span>
                         </div>
@@ -87,9 +87,3 @@
 
     </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $("#GDWCODE").chosen();
-    })
-
-</script>

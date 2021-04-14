@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<WebERP.Models.MGF_RECEIPT>
 
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">MFG Receipt Details</h3></nav>
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Process Receipt Details</h3></nav>
 
 
 @if (Model.Any())
@@ -54,11 +54,11 @@ else
 {
     <div class="card">
         <div class="card-header">
-            No MGF Receipt Entry Created Yet
+            No Process Receipt Entry Created Yet
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                Use the button below to Add MFG Receipt
+                Use the button below to Add Process Receipt
             </h5>
             <a class="btn btn-primary" style="width:auto" asp-controller="MFGReceipt" asp-action="MFG_Receipt_Master">
                 Add

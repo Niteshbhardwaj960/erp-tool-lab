@@ -69,6 +69,10 @@
             </a>
             <div id="Transactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
+                    @if (User.IsInRole("StockDetails") || User.IsInRole("Admin"))
+                    {
+                    <a class="collapse-item" asp-controller="StockDetails" asp-action="StockDetails">Stock Details</a>
+                    }
                     @if (User.IsInRole("Payments") || User.IsInRole("Admin"))
                     {
                         <a class="collapse-item" asp-controller="Payments" asp-action="Payments_Details">Payments</a>
@@ -103,7 +107,7 @@
                     }
                     @if (User.IsInRole("JobWork") || User.IsInRole("Admin"))
                     {
-                        <a class="collapse-item" asp-controller="JobWork" asp-action="JobWorkGrid">Job Work</a>
+                        <a class="collapse-item" asp-controller="JobWork" asp-action="JobWorkGrid">Job Work Issue</a>
                     }
                 </div>
             </div>

@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<V_CuttingDetail>
 
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Cutting Details</h3></nav>
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Cutting order / Job Card</h3></nav>
 
 
 @if (Model.Any())
 {
     <a class="btn btn-success" style="width:auto" asp-controller="Cutting" asp-action="ADDCutting">
-        Add Cutting
+        Add
     </a>
     @*<a class="btn btn-success" style="width:auto" asp-controller="Employee" asp-action="Excel">
         Export
@@ -64,14 +64,14 @@ else
 {
     <div class="card">
         <div class="card-header">
-            No Cutting Created Yet
+            No Cutting order / Job Card Created Yet
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                Use the button below to create a Cutting
+                Use the button below to create a Cutting order / Job Card
             </h5>
             <a class="btn btn-primary" style="width:auto" asp-controller="Cutting" asp-action="ADDCutting">
-                Add Cutting
+                Add
             </a>
         </div>
     </div>

@@ -72,7 +72,7 @@
                             <div class="input-group">
                                 @if (Model.Type == "Edit")
                                 {
-                                    <select asp-for="CITY_CODE" id="ddlCity" class="form-control" asp-items="@(new SelectList(Model.cityDropDown, "Value", "Text"))"></select>
+                                    <select asp-for="CITY_CODE" id="ddlCity" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.cityDropDown, "Value", "Text"))"></select>
                                 }
                                 @if (Model.Type == "Action")
                                 {
@@ -273,8 +273,5 @@
             })
 
         })
-    })
-    $(function () {
-        $("#ddlCity").chosen();
     })
 </script>

@@ -14,6 +14,9 @@ namespace WebERP.Models
         public DateTime? DOC_DATE { get; set; }
         public string EMP_TYPE { get; set; }
         public int EMP_CODE { get; set; }
+        public string EMP_FATHER { get; set; }
+        public string EMP_MOB_NO { get; set; }
+        public string EMP_DEP { get; set; }
         public DateTime? SAL_YYYYMM { get; set; }
         public int SAL_YYYYMM_BRK { get; set; }
         public decimal PAY_DAYS { get; set; }
@@ -28,5 +31,7 @@ namespace WebERP.Models
         public string Emp_Name { get; set; }
         [NotMapped]
         public List<SelectListItem> EMPDropDown { get; set; }
+        [NotMapped]
+        public List<SelectListItem> DepDropDown { get; set; }
     }
 }

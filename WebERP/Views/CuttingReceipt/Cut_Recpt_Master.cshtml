@@ -14,7 +14,7 @@
                 <h3 style="color:white">Edit Cutting Receipt</h3>
             </nav>
         }
-        @if (Model.Type == "View")
+        @if (Model.Type == "Action")
         {
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
                 <h3 style="color:white">View Cutting Receipt</h3>
@@ -122,10 +122,45 @@
                         <div class="form-group">
                             <label for="branch_id">GoDown</label>
                             <div class="input-group">
-                                <select asp-for="cutting_Receipt.GDW_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.GDWDropDown, "Value", "Text"))"></select>                               
+                                <select asp-for="cutting_Receipt.GDW_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.GDWDropDown, "Value", "Text"))"></select>
                             </div>
                         </div>
                     </div>
+                    @if ((Model.Type == "Edit") || (Model.Type == "Action"))
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="cutting_Receipt.INS_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="cutting_Receipt.INS_UID" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="cutting_Receipt.UDT_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="cutting_Receipt.UDT_UID" />
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12">

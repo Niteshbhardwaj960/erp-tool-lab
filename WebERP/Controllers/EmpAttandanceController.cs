@@ -33,6 +33,7 @@ namespace WebERP.Controllers
             Employee_Attandance employee_Attandance = new Employee_Attandance();
             employee_Attandance.Type = "Add";
             employee_Attandance.EMPDropDown = Emplists("S");
+            employee_Attandance.DOC_DATE = DateTime.Now;
             return View("Emp_Attand_Master", employee_Attandance);
         }
         [HttpPost]
@@ -64,7 +65,7 @@ namespace WebERP.Controllers
             var Emplist = (from Emp in dbContext.Employee_Masters.Where(C => C.EMP_TYPE == type).ToList()
                            select new SelectListItem()
                            {
-                               Text = Emp.EMP_NAME,
+                               Text = Emp.EMP_NAME + "/" + Emp.Emp_Father_Name + "/" + Emp.emp_mobile_no1 + "/" + dbContext.Department_Masters.Where(C => C.ID == Emp.DEP_CODE).Select(ss => ss.NAME).FirstOrDefault(),
                                Value = Emp.ID.ToString(),
                            }).ToList();
 
@@ -76,7 +77,29 @@ namespace WebERP.Controllers
             });
             return Emplist;
         }
+        
+        public List<SelectListItem> Deplists()
+        {
+            var Emplist = (from Emp in dbContext.Department_Masters.ToList()
+                           select new SelectListItem()
+                           {
+                               Text = Emp.NAME,
+                               Value = Emp.ID.ToString(),
+                           }).ToList();
 
+            Emplist.Insert(0, new SelectListItem()
+            {
+                Text = "Select Employee",
+                Value = string.Empty,
+                Selected = true
+            });
+            return Emplist;
+        }
+        //public string Deplists(string ID)
+        //{
+        //    var Deplist = dbContext.Department_Masters.Where(d => d.ID.ToString() == ID).Select(e => e.NAME).FirstOrDefault();
+        //    return Deplist;
+        //}
         [HttpGet]
         public IActionResult ActionEmpAttn(int id)
         {
@@ -93,7 +116,7 @@ namespace WebERP.Controllers
             Employee_Attandance employee_Attandance = new Employee_Attandance();
             employee_Attandance = dbContext.Employee_Attandance.Find(id);
             employee_Attandance.Type = "Edit";
-            employee_Attandance.EMPDropDown = Emplists(employee_Attandance.EMP_TYPE);
+            employee_Attandance.EMPDropDown = Emplists(employee_Attandance.EMP_TYPE);           
             dbContext.Employee_Attandance.Update(employee_Attandance);
             dbContext.SaveChanges();
             return View("Emp_Attand_Master", employee_Attandance);
@@ -114,6 +137,9 @@ namespace WebERP.Controllers
                     result.DOC_DATE = employee_Attandance.DOC_DATE;
                     result.EMP_CODE = employee_Attandance.EMP_CODE;
                     result.EMP_TYPE = "S";
+                    result.EMP_FATHER = employee_Attandance.EMP_FATHER;
+                    result.EMP_MOB_NO = employee_Attandance.EMP_MOB_NO;
+                    result.EMP_DEP = employee_Attandance.EMP_DEP;
                     result.SAL_YYYYMM = employee_Attandance.SAL_YYYYMM;
                     result.SAL_YYYYMM_BRK = employee_Attandance.SAL_YYYYMM_BRK;
                     dbContext.SaveChanges();

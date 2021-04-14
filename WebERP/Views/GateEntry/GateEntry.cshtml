@@ -3,7 +3,7 @@
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-            <h3 style="color:white">Gate Entry</h3>
+            <h3 style="color:white">Gate Entry Inward</h3>
         </nav>
         <div class="card-body">
 
@@ -70,7 +70,6 @@
                                         <th>Qty UOM</th>
                                         <th>Gate Entry Qty</th>
                                         <th>Bal Qty</th>
-                                        <th>Remarks</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -104,7 +103,7 @@
                                             @Html.HiddenFor(a => a.v_GateEntryDetails[j].Gate_Entry_qty, new { @class = "form-control" })
                                         </td>
                                         <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bal_Qty, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Remarks, new { @class = "form-control" })</td>
+                                        
                                     </tr>
                                     j++;
                                 }
