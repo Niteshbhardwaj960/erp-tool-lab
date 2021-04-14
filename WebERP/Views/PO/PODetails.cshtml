@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>PO Item Details</b></h4>
+            <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>PO Item Details</b><b style="margin-left: auto;font-size: 12px;">Info: Below Status as(A-Active, C-Cancelled, F-Finished)</b></h4>
 
             <div class="row" style="font-size:small;">
                 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -82,19 +82,19 @@
                         <table class="table table-sm d-sm-table-cell table-bordered" id="poDtlTable" width="100%" cellspacing="0">
                             <thead class="thead-light">
                                 <tr style="text-align:center;">
-                                    <th style="width: 150px;">Item</th>
-                                    <th style="width: 90px;">Qty UOM</th>
-                                    <th style="width: 128px;">Rate UOM</th>
-                                    <th style="width: 100px;">Qty</th>
-                                    <th style="width: 150px;">Rate Per</th>
-                                    <th style="width: 100px;">Disc Per%</th>
-                                    <th style="width: 100px;">Disc Rate</th>
-                                    <th style="width: 100px;">Net Rate</th>
-                                    <th style="width: 150px;">Amt.</th>
-                                    <th style="width: 50px;">Delivery Date</th>
-                                    <th style="width: 125px;">Status</th>
-                                    <th style="width: 150px;">Remarks</th>
-                                    <th style="text-align:center;width: 50px;">
+                                    <th style="width: 300px;">Item</th>
+                                    <th style="width: 60px;">Qty UOM</th>
+                                    <th style="width: 130px;">Rate UOM</th>
+                                    <th style="width: 310px;">Qty</th>
+                                    <th style="width: 310px;">Rate Per</th>
+                                    <th style="width: 165px;">Disc Per%</th>
+                                    <th style="width: 150px;">Disc Rate</th>
+                                    <th style="width: 250px;">Net Rate</th>
+                                    <th style="width: 250px;">Amt.</th>
+                                    <th style="width: 50px;">Del-Date</th>
+                                    <th style="width: 40px;">Sts.</th>
+                                    @*<th style="width: 150px;">Remarks</th>*@
+                                    <th style="text-align:center;width: 30px;">
                                         <a href="#" class="btn btn-info" id="addRow">
                                             <i class="fa fa-plus-circle"></i>
                                         </a>
@@ -108,7 +108,7 @@
                                         <td>
                                             @Html.DropDownListFor(m=>m.PODetails[j].ITEM_CODE,
                                               new SelectList(Model.PODetails[j].GetItems, "Value", "Text"),
-                                              new { @class= "form-control Select2DropDown" })
+                                              new { @class= "form-control Select2DropDown" , style = "width:265px; " })
                                         </td>
                                         <td>
                                             @Html.HiddenFor(a => a.PODetails[j].QTY_UOM, new { @class = "form-control" })
@@ -138,19 +138,19 @@
                                             @Html.TextBoxFor(m => m.PODetails[j].AMOUNT, new { @class = "form-control", @readOnly = "readonly" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(m => m.PODetails[j].DELV_DATE, "{0:yyyy-MM-dd}" ,new { @class = "form-control fc-datepicker", @type = "date" })
+                                            @Html.TextBoxFor(m => m.PODetails[j].DELV_DATE, "{0:yyyy-MM-dd}" ,new { @class = "form-control fc-datepicker", @type = "date", style = "width:140px; " })
                                         </td>
                                         <td>
                                             @Html.DropDownListFor(m=>m.PODetails[j].POD_PK_STATUS,
                                              new SelectList(new List<Object>{
-                                                                              new { value = "A" , text = "Active"  },
-                                                                              new { value = "C" , text = "Cancelled" },
-                                                                              new { value = "F" , text = "Finished"}}, "value", "text", 0),
+                                                                              new { value = "A" , text = "A"  },
+                                                                              new { value = "C" , text = "C" },
+                                                                              new { value = "F" , text = "F"}}, "value", "text", 0),
                                              new { @class="form-control"})
                                         </td>
-                                        <td>
+                                        @*<td>
                                             @Html.TextAreaFor(m => m.PODetails[j].REMARKS, new { @class = "form-control" })
-                                        </td>
+                                        </td>*@
                                         <td style="text-align:center;">
                                             <a href="#" class="btn btn-danger" id="deleteRow">
                                                 <i class="fa fa-minus-circle"></i>
