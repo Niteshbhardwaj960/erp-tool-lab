@@ -248,11 +248,11 @@ namespace WebERP.Controllers
                 grandQTotal += Convert.ToDecimal(poDetailModel.QTY);
                 grandTotal += Convert.ToDouble(poDetailModel.AMOUNT);
                 if (poDetailModel.POD_PK_STATUS == "A")
-                    poDetailModel.POD_PK_STATUS = "Active";
+                    poDetailModel.POD_PK_STATUS = "A";
                 if (poDetailModel.POD_PK_STATUS == "F")
-                    poDetailModel.POD_PK_STATUS = "Finished";
+                    poDetailModel.POD_PK_STATUS = "F";
                 if (poDetailModel.POD_PK_STATUS == "C")
-                    poDetailModel.POD_PK_STATUS = "Cancelled";
+                    poDetailModel.POD_PK_STATUS = "C";
                 poDetailList.Add(poDetailModel);
             }
             ViewBag.pograndTotal = grandTotal;
@@ -364,6 +364,9 @@ namespace WebERP.Controllers
                 poDetailModel.AMOUNT = Convert.ToString(
                                         Convert.ToDouble(poDetailModel.QTY) *
                                         Convert.ToDouble(poDetailModel.NET_RATE));
+                poDetailModel.QTYUOMNAME = dbContext.UOM_MASTER.
+                                          Where(x => x.ID == Convert.ToInt32(poDetailModel.QTY_UOM)).
+                                          Select(y => y.NAME).FirstOrDefault();
                 var delDate = poDetailModel.DELV_DATE.ToShortDateString();
                 poDetailModel.DELV_DATE = Convert.ToDateTime(delDate);
                 grandQTotal += Convert.ToDecimal(poDetailModel.QTY);

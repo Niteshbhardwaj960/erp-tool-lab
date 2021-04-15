@@ -250,7 +250,8 @@ WebERP.PurchasingOrders = {
         WebERP.PurchasingOrders.CalculateQTotal();
     },
 
-    QuantityOnChange: function (e) {              
+    QuantityOnChange: function (e) {
+        debugger
         var currentRow = $(this).closest('tr');
         var currentQ = $(this).val();
         if (currentQ == '') currentQ = 0;
