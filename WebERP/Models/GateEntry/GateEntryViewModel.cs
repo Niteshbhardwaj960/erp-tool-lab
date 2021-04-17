@@ -12,5 +12,9 @@ namespace WebERP.Models
 
         public Gate_HDR Gate_HDR { get; set; }
 
+        public List<V_JW_DTL> V_JW_DTLs { get; set; }
+
+        public string Worktype { get; set; }
+
     }
 }

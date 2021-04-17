@@ -17,6 +17,9 @@ namespace WebERP.Models.GateEntry
         public int Order_No { get; set; }
         public int Item_Name { get; set; }
         public string Item_UOM { get; set; }
+        public int Art_Name { get; set; }
+        public int Size_Name { get; set; }
+        public int Proc_Name { get; set; }
         public string CHL_NO { get; set; }
         public DateTime? CHL_DATE { get; set; }
         public string Bill_NO { get; set; }
@@ -41,6 +44,12 @@ namespace WebERP.Models.GateEntry
         public Decimal BAL_QTY { get; set; }
         [NotMapped]
         public string ITEM_NAMEs {get; set;}
+        [NotMapped]
+        public string ART_NAMEs { get; set; }
+        [NotMapped]
+        public string PROC_NAMEs { get; set; }
+        [NotMapped]
+        public string SIZE_NAMEs { get; set; }
         [NotMapped]
         public string UOM_NAME { get; set; }
         [NotMapped]

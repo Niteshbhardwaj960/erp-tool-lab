@@ -91,13 +91,12 @@ namespace WebERP.Controllers
         }
         public List<SelectListItem> PROClists()
         {
-            var PROCList = (from PROC in dbContext.Process_Master.ToList()
+            var PROCList = (from PROC in dbContext.Process_Master.Where(aa => aa.NAME.ToUpper() != "CUTTING").ToList()
                            select new SelectListItem()
                            {
                                Text = PROC.NAME,
                                Value = PROC.ID.ToString(),
                            }).ToList();
-
             PROCList.Insert(0, new SelectListItem()
             {
                 Text = "Select Process",

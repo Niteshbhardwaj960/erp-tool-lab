@@ -90,6 +90,7 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult Cut_Recpt_Master(CuttingReceiptViewModel cuttingReceiptViewModel)
         {
+            StockDTL_Model StkDTL = new StockDTL_Model();
             int Doc_Number = dbContext.Cutting_Receipt
                 .Where(x => x.DOC_FINYEAR == cuttingReceiptViewModel.Fin_Years)
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
@@ -99,6 +100,18 @@ namespace WebERP.Controllers
             cuttingReceiptViewModel.cutting_Receipt.DOC_FINYEAR = cuttingReceiptViewModel.Fin_Years;
             cuttingReceiptViewModel.cutting_Receipt.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.Cutting_Receipt.Add(cuttingReceiptViewModel.cutting_Receipt);
+            dbContext.SaveChanges();
+            StkDTL.INS_DATE = DateTime.Now;
+            StkDTL.INS_UID = userManager.GetUserName(HttpContext.User);
+            StkDTL.COMP_CODE = 0;
+            StkDTL.Tran_Table = "Cutting Receipt Entry";
+            StkDTL.Tran_Table_PK = cuttingReceiptViewModel.cutting_Receipt.ID;
+            StkDTL.GDW_CODE = cuttingReceiptViewModel.cutting_Receipt.GDW_CODE;
+            StkDTL.Item_Code = dbContext.Item_Master.Where(i => i.NAME == cuttingReceiptViewModel.cutting_Receipt.ITEM_NAME).Select(n => n.ID).FirstOrDefault();
+            StkDTL.Artical_CODE = dbContext.Artical_Master.Where(ar => ar.NAME == cuttingReceiptViewModel.cutting_Receipt.ART_NAME).Select(na => na.ID).FirstOrDefault();
+            StkDTL.Size_Code = dbContext.Size_Master.Where(s => s.NAME == cuttingReceiptViewModel.cutting_Receipt.SIZE_NAME).Select(sn => sn.ID).FirstOrDefault();
+            StkDTL.Stk_Qty_IN = cuttingReceiptViewModel.cutting_Receipt.RECEIPT_QTY;
+            dbContext.StockDTL_Models.Add(StkDTL);
             dbContext.SaveChanges();
             return RedirectToAction("CuttingReceiptDetail");
         }
@@ -128,6 +141,15 @@ namespace WebERP.Controllers
                 result.UDT_UID = userManager.GetUserName(HttpContext.User);
                 result.RECEIPT_QTY = cuttingReceiptViewModel.cutting_Receipt.RECEIPT_QTY;
                 result.GDW_CODE = cuttingReceiptViewModel.cutting_Receipt.GDW_CODE;
+                dbContext.SaveChanges();
+            }
+            var resultStk = dbContext.StockDTL_Models.SingleOrDefault(b => b.Tran_Table_PK == cuttingReceiptViewModel.cutting_Receipt.ID && b.Tran_Table == "Cutting Receipt Entry");
+            if (resultStk != null)
+            {
+                resultStk.UDT_DATE = DateTime.Now;
+                resultStk.UDT_UID = userManager.GetUserName(HttpContext.User);
+                resultStk.Stk_Qty_IN = cuttingReceiptViewModel.cutting_Receipt.RECEIPT_QTY;
+                resultStk.GDW_CODE = cuttingReceiptViewModel.cutting_Receipt.GDW_CODE;
                 dbContext.SaveChanges();
             }
             return RedirectToAction("CuttingReceiptDetail");

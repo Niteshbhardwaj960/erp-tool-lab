@@ -57,11 +57,14 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" Name="dataTa" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
+                                <thead id="tblHDR1">
                                     <tr>
                                         <th></th>
                                         <th>Order No</th>
-                                        <th>Item Name</th>
+                                        <th>Item</th>
+                                        <th>Artical</th>
+                                        <th>Size</th>
+                                        <th>Proc</th>
                                         <th>Order Date</th>
                                         <th>Qty</th>
                                         <th>Qty UOM</th>
@@ -69,8 +72,21 @@
                                         <th>Bal Qty</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tblbody">
-                                </tbody>
+                                @*<thead id="tblHDR2">
+                                    <tr>
+                                        <th></th>
+                                        <th>Order No</th>
+                                        <th>Item</th>
+                                        <th>Artical</th>
+                                        <th>Size</th>
+                                        <th>Proc</th>
+                                        <th>Order Date</th>
+                                        <th>Qty</th>
+                                        <th>Gate Entry Qty</th>
+                                        <th>Bal Qty</th>
+                                    </tr>
+                                </thead>*@
+                                <tbody id="tblbody"></tbody>
                             </table>
                            
                         </div>
@@ -90,22 +106,57 @@
 </div>
 <script>
     $(function () {
-        $("#ddlACC").change(function () {
-            debugger;
+        $("#ddlACC").change(function () {            
             $.getJSON("/GateEntry/GetGrdData", { accid: $("#ddlACC").val(), work: $('#ddlwork').val() }, function (json) {
-                var tr = "";
+                var tr = "";  
+                debugger;
                 $("#tblbody").empty();
+                
                 for (var i = 0; i < json.length; i++) {
+                    debugger;
                     tr = $('<tr/>');
-                    tr.append("<td>" + '<input type="checkbox" name="ckec" value="' + json[i].pod_pk + '" id="test' + i + '">' + "</td>");
-                    tr.append("<td>" + json[i].order_no + "</td>");
-                    tr.append("<td>" + json[i].iteM_NAME + "</td>");
-                    tr.append("<td>" + json[i].order_date + "</td>");
-                    tr.append("<td>" + json[i].qty + "</td>");
-                    tr.append("<td>" + json[i].qtY_UOM + "</td>");
-                    tr.append("<td>" + json[i].gate_Entry_qty + "</td>");
-                    tr.append("<td>" + json[i].bal_Qty + "</td>");
-                    $('#dataTable').append(tr);
+                    if ($('#ddlwork').val() == "1")
+                    {
+                        //$("#tblHDR1").show();
+                        //$("#tblHDR2").hide();
+                        var table = $('#dataTable').DataTable();
+                        table.column(3).visible(false);    // To show
+                        table.column(4).visible(false);   // To hide
+                        table.column(5).visible(false);   // To hide
+                        table.column(8).visible(true);
+                        tr.append("<td>" + '<input type="checkbox" name="ckec" value="' + json[i].pod_pk + '" id="test' + i + '">' + "</td>");
+                        tr.append("<td>" + json[i].order_no + "</td>");
+                        tr.append("<td>" + json[i].iteM_NAME + "</td>");
+                        tr.append("<td>" + json[i].order_date + "</td>");
+                        tr.append("<td>" + json[i].qty + "</td>");
+                        tr.append("<td>" + json[i].qtY_UOM + "</td>");
+                        tr.append("<td>" + json[i].gate_Entry_qty + "</td>");
+                        tr.append("<td>" + json[i].bal_Qty + "</td>");
+                        $('#dataTable').append(tr);
+                   }
+                    else
+                    {
+                       // $("#tblHDR1").hide();
+                       // $("#tblHDR2").show();      
+                        var table = $('#dataTable').DataTable();
+                        table.column(3).visible(true);    // To show
+                        table.column(4).visible(true);   // To hide
+                        table.column(5).visible(true);   // To hide
+                        table.column(8).visible(false); 
+
+                        tr.append("<td>" + '<input type="checkbox" name="ckec" value="' + json[i].jwD_PK + '" id="test' + i + '">' + "</td>");
+                        tr.append("<td>" + json[i].doC_NO + "</td>");
+                        tr.append("<td>" + json[i].iteM_NAME + "</td>");
+                        tr.append("<td>" + json[i].articaL_NAME + "</td>");
+                        tr.append("<td>" + json[i].sizE_NAME + "</td>");
+                        tr.append("<td>" + json[i].proC_NAME + "</td>");
+                        tr.append("<td>" + json[i].doC_DATE + "</td>");
+                        tr.append("<td>" + json[i].qty + "</td>");
+                        tr.append("<td>" + json[i].gatE_ENTRY_QTY + "</td>");
+                        tr.append("<td>" + json[i].baL_QTY + "</td>");
+                        $('#dataTable').append(tr);
+                    }
+                   
                 }
             })
 
@@ -114,7 +165,6 @@
 
     $(function () {
         $("#doc_Date").change(function () {
-            debugger;
             var date = $(this).val();
             var financial_year = "";
             var today = new Date(date);
@@ -126,5 +176,20 @@
             $("#FinYear").val(financial_year);
         });
     })
-    
+
+    $(function () {
+        $("#ddlwork").change(function () {
+            $("#tblbody").empty();
+            $.getJSON("/GateEntry/ACClists", { types: $("#ddlwork").val() }, function (d) {
+                var row = "";
+                $("#ddlACC").empty();
+                $.each(d, function (i, v) {
+                    row += "<option value=" + v.value + ">" + v.text + "</option>";
+                });
+                $("#ddlACC").html(row);
+
+            })
+
+        })
+    })
 </script>

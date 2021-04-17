@@ -194,6 +194,15 @@ namespace WebERP.Controllers
                         result.ISSUE_QTY = RMDetailModel.ISSUE_QTY;
                         dbContext.SaveChanges();
                     }
+                    var resultStk = dbContext.StockDTL_Models.SingleOrDefault(b => b.Tran_Table_PK == RMDetailModel.ID && b.Tran_Table == "RM Entry");
+                    if (resultStk != null)
+                    {
+                        resultStk.UDT_DATE = DateTime.Now;
+                        resultStk.UDT_UID = userManager.GetUserName(HttpContext.User);
+                        resultStk.Stk_Qty_OUT = RMDetailModel.ISSUE_QTY;
+                        resultStk.GDW_CODE = RMDetailModel.GDW_Code;
+                        dbContext.SaveChanges();
+                    }
                 }
                 return RedirectToAction("RM_Detail");
             }
