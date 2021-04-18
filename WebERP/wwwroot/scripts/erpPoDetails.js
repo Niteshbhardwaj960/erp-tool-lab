@@ -68,7 +68,7 @@ WebERP.PurchasingOrders = {
         $.each(pogridtableRows, function (rowInd, row) {            
             var inputs = $('textarea ,select', row);
             $.each(inputs, function (inputInd, input) {                
-                var oldName = $(input).attr('name');
+                var oldName = $(input).attr('name');       
                 //oldName = oldName.replace('item', 'item[' + rowInd + ']')
                 oldName = oldName.replace(/\[\d\]/, '[' + rowInd + ']');
                 $(input).attr('name', oldName);
@@ -82,7 +82,7 @@ WebERP.PurchasingOrders = {
     },
 
     _AddRow: function (sourceRow, appendToEnd) {
-
+        debugger
         var clonedRow = sourceRow.clone(true);
         if (appendToEnd) {
             var pogridtable = $('#poDtlTable'); //div.container-fluid #dataTable table tbody
@@ -106,10 +106,15 @@ WebERP.PurchasingOrders = {
         var pogridtableRows = $('#poDtlTable tbody tr');
         $.each(pogridtableRows, function (rowInd, row) {
             debugger
-            var inputs = $('input, select , textarea', row);
+            var inputs = $('input, select', row);
             $.each(inputs, function (inputInd, input) {
                 debugger
+                var className = $(input).attr('class');
+                var Id = $(input).attr('id');
                 var oldName = $(input).attr('name');
+                if (inputInd == 0) {
+                    $(input).attr('class', className);
+                }
                 oldName = oldName.replace(/\[\d\]/, '[' + rowInd + ']');
                 $(input).attr('name', oldName);
             });
@@ -218,7 +223,7 @@ WebERP.PurchasingOrders = {
         }       
         var netprice = parseFloat(netRate);
         currentRow.find("td:eq(6) input[type='text']").val((currentRate - netprice).toFixed(2));
-        currentRow.find("td:eq(7) input[type='text']").val(netRate);
+        currentRow.find("td:eq(7) input[type='text']").val(netRate.toFixed(2));
         var currentQ = currentRow.find("td:eq(3) input[type='number']").val();
         if (currentQ.length) {
             rowAmount = WebERP.PurchasingOrders.CalculateFinalAmount(currentQ, netRate);
@@ -239,7 +244,7 @@ WebERP.PurchasingOrders = {
         }
         var netprice = parseFloat(netRate);
         currentRow.find("td:eq(6) input[type='text']").val((currentRate - netprice).toFixed(2));
-        currentRow.find("td:eq(7) input[type='text']").val(netRate);
+        currentRow.find("td:eq(7) input[type='text']").val(netRate.toFixed(2));
 
         var currentQ = currentRow.find("td:eq(3) input[type='number']").val();
         if (currentQ.length) {
@@ -284,7 +289,7 @@ WebERP.PurchasingOrders = {
                 grandTotal += parseFloat($(this).val());
             }
         });
-        $("#totalAmount").val(grandTotal);
+        $("#totalAmount").val(grandTotal.toFixed(2));
     },
 
     CalculateQTotal: function (e) {        

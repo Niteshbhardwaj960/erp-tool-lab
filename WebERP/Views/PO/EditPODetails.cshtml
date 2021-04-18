@@ -80,7 +80,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <input type="text" class="form-control" asp-for="POHeader.REMARKS" placeholder="Place order remarks here">
+                        <input type="text" class="form-control" asp-for="POHeader.REMARKS"  placeholder="Place order remarks here">
                     </div>
                     @Html.HiddenFor(a => a.POHeader.INS_DATE, new { @class = "form-control"})
                     @Html.HiddenFor(a => a.POHeader.INS_UID, new { @class = "form-control"})
@@ -105,7 +105,7 @@
                                     <th style="width: 250px;">Net Rate</th>
                                     <th style="width: 250px;">Amt.</th>
                                     <th style="width: 50px;">Del-Date</th>
-                                    <th style="width: 40px;">Sts.</th>
+                                    <th style="width: 143px;">Sts.</th>
                                     @*<th style="width: 150px;">Remarks</th>*@
                                     <th style="text-align:center;width: 30px;">
                                         <a href="#" class="btn btn-info" id="addRow">
@@ -206,14 +206,14 @@
                                         <label>Total Qty:</label>
                                     </td>
                                     <td>
-                                        <input class="form-control" id="totalQuant" value="@ViewBag.pograndQTotal" readonly />
+                                        <input class="form-control" id="totalQuant" style="text-align:left;" value="@ViewBag.pograndQTotal" readonly />
                                     </td>
                                     <td colspan="3"></td>
                                     <td>
                                         <label>Total Amt:</label>
                                     </td>
                                     <td colspan="2">
-                                        <input class="form-control" id="totalAmount" value="@ViewBag.pograndTotal" readonly />
+                                        <input class="form-control" id="totalAmount" style="text-align:left;" value="@ViewBag.pograndTotal" readonly />
                                     </td>
                                     <td colspan="4"></td>
                                 </tr>
