@@ -71,7 +71,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     @if (User.IsInRole("StockDetails") || User.IsInRole("Admin"))
                     {
-                    <a class="collapse-item" asp-controller="StockDetails" asp-action="StockDetails">Stock Details</a>
+                        <a class="collapse-item" asp-controller="StockDetails" asp-action="StockDetails">Stock Details</a>
                     }
                     @if (User.IsInRole("Payments") || User.IsInRole("Admin"))
                     {
@@ -108,6 +108,10 @@
                     @if (User.IsInRole("JobWork") || User.IsInRole("Admin"))
                     {
                         <a class="collapse-item" asp-controller="JobWork" asp-action="JobWorkGrid">Job Work Issue</a>
+                    }
+                    @if (User.IsInRole("JobWork") || User.IsInRole("Admin"))
+                    {
+                        <a class="collapse-item" asp-controller="Sales" asp-action="SalesGrid">Sales Order</a>
                     }
                 </div>
             </div>

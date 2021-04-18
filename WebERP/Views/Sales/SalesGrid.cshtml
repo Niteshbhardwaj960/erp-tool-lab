@@ -1,0 +1,84 @@
+﻿@model IEnumerable<WebERP.Models.SalesHeader>
+
+    @{
+        ViewData["Title"] = "SalesGrid";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #00ff7ee6 0%, #74009a 100%);">
+        <h3 style="color:white">Sales Order Details</h3>
+    </nav>
+    @if (Model.Any())
+    {
+        <a class="btn btn-primary text-white" href="/Sales/CreateSaleOrder">
+            Create New Sales Order
+        </a>
+        <hr />
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Doc No</th>                                
+                                <th>Document Date</th>
+                                <th>Party Name</th>
+                                <th>Create Date</th>
+                                <th>Created By</th>
+                                <th>User Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DOC_NO)
+                                    </td>                                   
+                                    <td>
+                                        @item.DOC_DATE.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ACC_NAME)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.INS_DATE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.INS_UID)
+                                    </td>
+                                    <td>
+                                        <a asp-action="EditSalesOrder" asp-controller="Sales" asp-route-id="@item.SALE_PK">
+                                            <i class="fas fa-user-edit"></i>
+                                        </a>&nbsp;&nbsp;
+                                        <a asp-action="DeleteSalesOrder" asp-controller="Sales" asp-route-id="@item.SALE_PK">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>&nbsp;&nbsp;
+                                        <a asp-action="ShowSalesOrder" asp-controller="Sales" asp-route-id="@item.SALE_PK">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                No Sales Order Has Been Created Yet
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    Use the button below to Create New Sales Order
+                </h5>
+                <a class="btn btn-primary text-white" href="/Sales/CreateSaleOrder">
+                    Create Sales Order
+                </a>
+            </div>
+        </div>
+    }

@@ -3,19 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebERP</title>
+    <title>@ViewData["Title"] - ERP</title>
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        @*<style>
-                .select2-container .select2-selection--single {
-                    height: 35px !important;
-                }
-
-                .select2-container--default .select2-selection--single {
-                    border: 1px solid #ccc !important;
-                    border-radius: 1px !important;
-                }
-            </style>*@
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />       
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -33,7 +23,7 @@
     <link href="~/layoutcss/css/sb-admin-2.min.css" rel="stylesheet">
     <!-- Custom styles for this page -->
     <link href="~/layoutcss/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    @*<link href="~/lib/bootstrap/Chosen/chosen.min.css" rel="stylesheet" />*@   
+    
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />    
 </head>
 <body id="page-top" class="sidebar-toggled">
@@ -180,17 +170,19 @@
     <script src="~/layoutcss/vendor/datatables/dataTables.bootstrap4.min.js"></script>
    
     <!-- Page level custom scripts -->
-    <script src="~/layoutcss/js/demo/datatables-demo.js"></script>
-    @*<script src="~/lib/jquery/ChosenJs/chosen.jquery.min.js"></script>*@
+    <script src="~/layoutcss/js/demo/datatables-demo.js"></script>  
 
     <script src="~/scripts/erpCommon.js"></script>
     <script src="~/scripts/erpPoDetails.js"></script>
     <script src="~/scripts/erpJobWork.js"></script>
+    <script src="~/scripts/erpSalesCalculations.js"></script>
+
     @RenderSection("Scripts", required: false)
 
     <script>
         $(function () {
             WebERP.PurchasingOrders.Init();
+            WebERP.SalesGrid.Init();
         });
     </script>
 </body>

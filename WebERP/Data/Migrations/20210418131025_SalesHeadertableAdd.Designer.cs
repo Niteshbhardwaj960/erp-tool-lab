@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210418131025_SalesHeadertableAdd")]
+    partial class SalesHeadertableAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1294,129 +1296,6 @@ namespace WebERP.Data.Migrations
                     b.ToTable("RM_HDR");
                 });
 
-            modelBuilder.Entity("WebERP.Models.SalesDetail", b =>
-                {
-                    b.Property<int>("SALEDTL_PK")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ARTICAL_CODE");
-
-                    b.Property<string>("DISCPER_TAG")
-                        .HasMaxLength(3);
-
-                    b.Property<decimal>("DISC_PER");
-
-                    b.Property<decimal>("DISC_RATE");
-
-                    b.Property<int>("GODOWN_CODE");
-
-                    b.Property<int>("HSN_CODE");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<decimal>("ITEM_AMOUNT");
-
-                    b.Property<int>("ITEM_CODE");
-
-                    b.Property<decimal>("NET_RATE");
-
-                    b.Property<decimal>("RATE");
-
-                    b.Property<string>("REMARKS")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("SALEQTY_UOM");
-
-                    b.Property<int>("SALE_FK");
-
-                    b.Property<decimal>("SALE_QTY");
-
-                    b.Property<int>("SIZE_CODE");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("SALEDTL_PK");
-
-                    b.HasIndex("SALE_FK");
-
-                    b.ToTable("SalesDetails");
-                });
-
-            modelBuilder.Entity("WebERP.Models.SalesHeader", b =>
-                {
-                    b.Property<int>("SALE_PK")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ACC_CODE");
-
-                    b.Property<int>("AGENTACC_CODE");
-
-                    b.Property<decimal>("CGST_AMOUNT");
-
-                    b.Property<decimal>("CGST_PER");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<DateTime>("DOC_DATE");
-
-                    b.Property<string>("DOC_FINYEAR");
-
-                    b.Property<int>("DOC_NO");
-
-                    b.Property<DateTime?>("GATEOUT_DATE");
-
-                    b.Property<string>("GATEOUT_UID");
-
-                    b.Property<decimal>("GROSS_AMT");
-
-                    b.Property<decimal>("IGST_AMOUNT");
-
-                    b.Property<decimal>("IGST_PER");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<decimal>("NET_AMT");
-
-                    b.Property<decimal>("OTH_AMT1");
-
-                    b.Property<decimal>("OTH_AMT2");
-
-                    b.Property<string>("OTH_AMTNAME1")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("OTH_AMTNAME2")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("REMARKS")
-                        .HasMaxLength(100);
-
-                    b.Property<decimal>("RF_AMT");
-
-                    b.Property<decimal>("SGST_AMOUNT");
-
-                    b.Property<decimal>("SGST_PER");
-
-                    b.Property<decimal>("TAX_AMT");
-
-                    b.Property<int>("TAX_CODE");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("SALE_PK");
-
-                    b.ToTable("SalesHeader");
-                });
-
             modelBuilder.Entity("WebERP.Models.Size_Master", b =>
                 {
                     b.Property<int>("ID")
@@ -1865,14 +1744,6 @@ namespace WebERP.Data.Migrations
                     b.HasOne("WebERP.Models.POHeaderModel", "POHeaderModel")
                         .WithMany()
                         .HasForeignKey("POH_FK")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("WebERP.Models.SalesDetail", b =>
-                {
-                    b.HasOne("WebERP.Models.SalesHeader", "SalesHeader")
-                        .WithMany()
-                        .HasForeignKey("SALE_FK")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
