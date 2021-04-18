@@ -1,23 +1,23 @@
 ﻿@model WebERP.Models.MFGReceiptViewModel
-<script src="~/lib/jquery/dist/jquery.js"></script>
+
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @if (Model.Type == "Add")
         {
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-                <h3 style="color:white">Add MFG Receipt</h3>
+                <h3 style="color:white">Add Process Receipt</h3>
             </nav>
         }
         @if (Model.Type == "Edit")
         {
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-                <h3 style="color:white">Edit MFG Receipt</h3>
+                <h3 style="color:white">Edit Process Receipt</h3>
             </nav>
         }
-        @if (Model.Type == "View")
+        @if (Model.Type == "Action")
         {
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-                <h3 style="color:white">View MFG Receipt</h3>
+                <h3 style="color:white">View Process Receipt</h3>
             </nav>
         }
         <div class="card-body">
@@ -32,7 +32,7 @@
                             <div class="input-group">
                                 @if (Model.Type == "Add")
                                 {
-                                    @Html.TextBoxFor(a => a.DOC_DATES,"{0:yyyy-MM-dd}", new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" })
+                                    @Html.TextBoxFor(a => a.DOC_DATES, "{0:yyyy-MM-dd}", new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" })
                                 }
                                 else
                                 {
@@ -66,7 +66,7 @@
                                 <label for="branch_id" style="color:red">**Document No/Employee/Item/Artical/Size/Process</label>
 
                                 <div class="custom-radio">
-                                    <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList(Model.CUTDropDown, "Value", "Text"))"></select>
+                                    <select id="ddlCUT" name="ddlCUT" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.CUTDropDown, "Value", "Text"))"></select>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                         <div class="form-group">
                             <label for="branch_id">Process Name</label>
                             <div class="input-group">
-                                <select asp-for="MGF_RECEIPTs.PROC_CODE" id="PROCDropDown" name="PROCDropDown" class="form-control" asp-items="@(new SelectList(Model.PROCDropDown, "Value", "Text"))"></select>
+                                <select asp-for="MGF_RECEIPTs.PROC_CODE" id="PROCDropDown" name="PROCDropDown" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.PROCDropDown, "Value", "Text"))"></select>
                                 @Html.HiddenFor(a => a.MGF_RECEIPTs.CUTTING_ORDER_FK, new { @ID = "CUTPK", @class = "form-control" })
                             </div>
                         </div>
@@ -108,8 +108,8 @@
                         <div class="form-group">
                             <label for="branch_id">Employee Name</label>
                             <div class="input-group">
-                                <select asp-for="MGF_RECEIPTs.EMP_CODE" id="EMPDropDown" name="EMPDropDown" class="form-control" asp-items="@(new SelectList(Model.EMPDropDown, "Value", "Text"))"></select>
-                               
+                                <select asp-for="MGF_RECEIPTs.EMP_CODE" id="EMPDropDown" name="EMPDropDown" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.EMPDropDown, "Value", "Text"))"></select>
+
                             </div>
                         </div>
                     </div>
@@ -117,8 +117,8 @@
                         <div class="form-group">
                             <label for="branch_id">Contract Employee Name</label>
                             <div class="input-group">
-                                <select asp-for="MGF_RECEIPTs.CONT_EMP_CODE" id="CONEMPDropDown" name="CONEMPDropDown" class="form-control" asp-items="@(new SelectList(Model.CONEMPDropDown, "Value", "Text"))"></select>
-                               
+                                <select asp-for="MGF_RECEIPTs.CONT_EMP_CODE" id="CONEMPDropDown" name="CONEMPDropDown" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.CONEMPDropDown, "Value", "Text"))"></select>
+
                             </div>
                         </div>
                     </div>
@@ -130,6 +130,41 @@
                             </div>
                         </div>
                     </div>
+                    @if ((Model.Type == "Edit") || (Model.Type == "Action"))
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="MGF_RECEIPTs.INS_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="MGF_RECEIPTs.INS_UID" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="MGF_RECEIPTs.UDT_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="MGF_RECEIPTs.UDT_UID" />
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -152,44 +187,4 @@
         </div>
 
     </div>
-</div>
-<script>
-    $(function () {
-        $("#Doc_Date").change(function () {
-            debugger;
-            var date = $(this).val();
-            var financial_year = "";
-            var today = new Date(date);
-            if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
-                financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
-            } else {
-                financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
-            }
-            $("#Doc_FN_Year").val(financial_year);           
-        });
-    })
-    $(function () {
-        $("#ddlCUT").change(function () {
-            debugger;
-            var Array = $("#ddlCUT").val().split("/");
-            $('#EmpName').val(Array[0]);
-            $('#ItemName').val(Array[1]);
-            $('#ArtName').val(Array[2]);
-            $('#SizeName').val(Array[3]);
-            $('#ProcName').val(Array[4]);
-            $('#CUTPK').val(Array[5]);
-        })
-    })
-    $(function () {
-        $("#ddlCUT").chosen();
-    })
-    $(function () {
-        $("#CONEMPDropDown").chosen();
-    })
-    $(function () {
-        $("#EMPDropDown").chosen();
-    })
-    $(function () {
-        $("#PROCDropDown").chosen();
-    })
-</script>
+</div>]

@@ -91,13 +91,12 @@ namespace WebERP.Controllers
         }
         public List<SelectListItem> PROClists()
         {
-            var PROCList = (from PROC in dbContext.Process_Master.ToList()
+            var PROCList = (from PROC in dbContext.Process_Master.Where(aa => aa.NAME.ToUpper() != "CUTTING").ToList()
                            select new SelectListItem()
                            {
                                Text = PROC.NAME,
                                Value = PROC.ID.ToString(),
                            }).ToList();
-
             PROCList.Insert(0, new SelectListItem()
             {
                 Text = "Select Process",
@@ -117,8 +116,8 @@ namespace WebERP.Controllers
 
             CutList.Insert(0, new SelectListItem()
             {
-                Text = "Select Contract Employee",
-                Value = string.Empty,
+                Text = "NA",
+                Value = "0",
                 Selected = true
             });
             return CutList;
@@ -183,7 +182,7 @@ namespace WebERP.Controllers
         {
             MFGReceiptViewModel mFGReceiptViewModel = new MFGReceiptViewModel();
             mFGReceiptViewModel.MGF_RECEIPTs = dbContext.MGF_RECEIPT.Where(r => r.ID == id).FirstOrDefault();
-            mFGReceiptViewModel.Type = "View";
+            mFGReceiptViewModel.Type = "Action";
             mFGReceiptViewModel.CONEMPDropDown = CoEmplists();
             mFGReceiptViewModel.EMPDropDown = EMPlists();
             mFGReceiptViewModel.PROCDropDown = PROClists();

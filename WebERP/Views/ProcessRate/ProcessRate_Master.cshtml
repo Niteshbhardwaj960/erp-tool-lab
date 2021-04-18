@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<ProcessRate_Master>
 
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Process Rate Details</h3></nav>
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Artical Process Rate Details</h3></nav>
 
 
 @if (Model.Any())
 {
     <a class="btn btn-success" style="width:auto" asp-controller="ProcessRate" asp-action="ADDProcessRate">
-        Add Process Rate
+        Add
     </a>
     <a class="btn btn-success" style="width:auto" asp-controller="ProcessRate" asp-action="Excel">
         Export
@@ -62,14 +62,14 @@ else
 {
     <div class="card">
         <div class="card-header">
-            No Process Rate Created Yet
+            No Artical Process Rate Created Yet
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                Use the button below to create a Process Rate
+                Use the button below to create a Artical Process Rate
             </h5>
             <a class="btn btn-primary" style="width:auto" asp-controller="ProcessRate" asp-action="ADDProcessRate">
-                Add Process Rate
+                Add
             </a>
         </div>
     </div>

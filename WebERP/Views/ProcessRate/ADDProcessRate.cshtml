@@ -4,15 +4,15 @@
     <div class="card">
         @if (Model.Type == "Add")
         {<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-             <h3 style="color:white">Add Process Rate</h3>
+             <h3 style="color:white">Add Artical Process Rate</h3>
             </nav>}
         @if (Model.Type == "Edit")
         {<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-             <h3 style="color:white">Edit Process Rate</h3>
+             <h3 style="color:white">Edit Artical Process Rate</h3>
             </nav>}
         @if (Model.Type == "Action")
         {<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-             <h3 style="color:white">View Process Rate</h3>
+             <h3 style="color:white">View Artical Process Rate</h3>
             </nav>}
         <div class="card-body">
             <form id="menu-form" method="post" enctype="multipart/form-data">
@@ -24,7 +24,7 @@
                             <div class="input-group">
                                 @if (Model.Type == "Add")
                                 {
-                                    <select asp-for="Proc_Code" id="Proc_Code" class="form-control" asp-items="@(new SelectList(Model.ProcDropDown,"Value", "Text"))"></select>
+                                    <select asp-for="Proc_Code" id="Proc_Code" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.ProcDropDown,"Value", "Text"))"></select>
                                 }
                                 else
                                 {
@@ -40,7 +40,7 @@
                             <div class="input-group">
                                 @if (Model.Type == "Add")
                                 {
-                                    <select asp-for="Artical_Code" id="Artical_Code" class="form-control" asp-items="@(new SelectList(Model.ArticalDropDown,"Value", "Text"))"></select>
+                                    <select asp-for="Artical_Code" id="Artical_Code Select2DropDown" class="form-control" asp-items="@(new SelectList(Model.ArticalDropDown,"Value", "Text"))"></select>
                                 }
                                 else
                                 {
@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <label class="form-label">UOM Name</label>
                             <div class="input-group">
-                                <select asp-for="UOM_Code" id="UOMCODE" class="form-control" asp-items="@(new SelectList(Model.UOMDropDown,"Value", "Text"))"></select>
+                                <select asp-for="UOM_Code" id="UOMCODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.UOMDropDown,"Value", "Text"))"></select>
                             </div>
                             <span asp-validation-for="UOM_Code" class="text-danger"></span>
                         </div>
@@ -148,11 +148,3 @@
 
     </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $("#UOMCODE").chosen();
-    })
-    $(function () {
-        $("#Artical_Code").chosen();
-    })
-</script>

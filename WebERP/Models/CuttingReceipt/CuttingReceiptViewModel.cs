@@ -14,6 +14,8 @@ namespace WebERP.Models
 
         public List<SelectListItem> CUTDropDown { get; set; }
 
+        public List<SelectListItem> GDWDropDown { get; set; }
+
         public string Type { get; set; }
 
         public DateTime? DOc_Dates { get; set; }

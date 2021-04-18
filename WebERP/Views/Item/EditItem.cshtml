@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.Item_Master
-<script src="~/lib/jquery/dist/jquery.js"></script>
+
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @if (Model.Type == "Edit")
@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label for="branch_id">UOM Name</label>
                             <div class="input-group">
-                                <select asp-for="UOM_CODE" id="UOMCODE" class="form-control" asp-items="@(new SelectList(Model.UOMDropDown,"Value", "Text"))"></select>
+                                <select asp-for="UOM_CODE" id="UOMCODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.UOMDropDown,"Value", "Text"))"></select>
                                 @*<input type="text" class="form-control" asp-for="UOM_CODE" />*@
                             </div>
                         </div>
@@ -128,9 +128,3 @@
 
     </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $("#UOMCODE").chosen();
-    })
-
-</script>

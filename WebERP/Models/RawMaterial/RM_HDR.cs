@@ -18,6 +18,7 @@ namespace WebERP.Models
         public int Doc_No { get; set; }
         public int Cutting_Order_FK { get; set; }
         public string EMP_NAME { get; set; }
+        public string CUTTING_ORDER_NO { get; set; }
         public string ITEM_NAME { get; set; }
         public string ART_NAME { get; set; }
         public string SIZE_NAME { get; set; }

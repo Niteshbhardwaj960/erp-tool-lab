@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<V_CuttingDetail>
 
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Cutting Details</h3></nav>
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Cutting order / Job Card</h3></nav>
 
 
 @if (Model.Any())
 {
     <a class="btn btn-success" style="width:auto" asp-controller="Cutting" asp-action="ADDCutting">
-        Add Cutting
+        Add
     </a>
     @*<a class="btn btn-success" style="width:auto" asp-controller="Employee" asp-action="Excel">
         Export
@@ -24,8 +24,8 @@
                             <th>Cont Emp Name</th>
                             <th>Item Name</th>
                             <th>Artical Name</th>
-                            <th>Process Name</th>
                             <th>Size Name</th>
+                            <th>Order Qty</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -39,8 +39,8 @@
                             <td>@Data.CONT_EMP_NAME</td>
                             <td>@Data.Item_NAME</td>
                             <td>@Data.ARTICAL_NAME</td>
-                            <td>@Data.PROC_NAME</td>
                             <td>@Data.SIZE_NAME</td>
+                            <td>@Data.ORDER_QTY</td>
                             <td>
                                 <a asp-action="EditCutting" asp-route-id="@Data.ID">
                                     <i class="fas fa-user-edit"></i>
@@ -64,14 +64,14 @@ else
 {
     <div class="card">
         <div class="card-header">
-            No Cutting Created Yet
+            No Cutting order / Job Card Created Yet
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                Use the button below to create a Cutting
+                Use the button below to create a Cutting order / Job Card
             </h5>
             <a class="btn btn-primary" style="width:auto" asp-controller="Cutting" asp-action="ADDCutting">
-                Add Cutting
+                Add
             </a>
         </div>
     </div>
