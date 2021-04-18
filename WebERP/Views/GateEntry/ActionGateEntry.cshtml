@@ -3,7 +3,7 @@
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-            <h3 style="color:white">View Gate Entry</h3>
+            <h3 style="color:white">View Gate Entry Inward</h3>
         </nav>
         <div class="card-body">
 
@@ -18,7 +18,7 @@
                                 @Html.HiddenFor(a => a.Gate_HDRs.ID, new { @class = "form-control", @readOnly = "readonly" })
                                 @Html.HiddenFor(a => a.Gate_HDRs.INS_DATE, new { @class = "form-control", @readOnly = "readonly" })
                                 @Html.HiddenFor(a => a.Gate_HDRs.INS_UID, new { @class = "form-control", @readOnly = "readonly" })
-                                @Html.TextBoxFor(a => a.Gate_HDRs.Acc_Name, new { @class = "form-control", @readOnly = "readonly" })
+                                @Html.TextBoxFor(a => a.Gate_HDRs.Acc_Name, new { @class = "form-control", @readOnly = "readonly", @type="text" })
                                 @Html.HiddenFor(a => a.Gate_HDRs.Acc_Code, new { @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
@@ -61,60 +61,126 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" Name="dataTa" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Order No</th>
-                                        <th>CHL/Bill No</th>
-                                        <th>CHL/Bill Date</th>
-                                        @*<th>Bill No</th>
-                                        <th>Bill Date</th>*@
-                                        <th>Item Name</th>
-                                        <th>Qty</th>
-                                        <th>Qty UOM</th>
-                                        <th>Gate Entry Qty</th>
-                                        <th>Bal Qty</th>
-                                        <th>Godown</th>
-                                        <th>Remarks</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Model != null && Model.EditGateEntryDetails.Count > 0)
-                                    {
-                                        int j = 0;
-                                        foreach (var i in Model.EditGateEntryDetails)
+                            @if (Model.Gate_HDRs.Type == "Purchase Order")
+                            {
+                                <table class="table table-bordered" Name="dataTa" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Order No</th>
+                                            <th>CHL/Bill No</th>
+                                            <th>CHL/Bill Date</th>
+                                            <th>Item Name</th>
+                                            <th>Qty UOM</th>
+                                            <th>Gate Entry Qty</th>
+                                            <th>Godown</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null && Model.EditGateEntryDetails.Count > 0)
                                         {
-                                    <tr style="border:1px solid black">
-                                        <td>
-                                            @Html.HiddenFor(a => a.Gate_HDRs.INS_DATE, new { @class = "form-control", @readOnly = "readonly" })
-                                            @Html.HiddenFor(a => a.Gate_HDRs.INS_UID, new { @class = "form-control", @readOnly = "readonly" })
-                                            @Html.HiddenFor(a => a.EditGateEntryDetails[j].ID, new { @class = "form-control" })
-                                            @Html.TextBoxFor(a => a.EditGateEntryDetails[j].Order_No, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_NO, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_DATE, new { @class = "form-control fc-datepicker", @type = "date", @readOnly = "readonly" })</td>
-                                        @*<td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Bill_NO, new { @class = "form-control" })</td>
-                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Bill_Date, new { @class = "form-control fc-datepicker", @type = "date", @readOnly = "readonly" })</td>*@
-                                        <td>
-                                            @Html.HiddenFor(a => a.EditGateEntryDetails[j].Item_Name, new { @class = "form-control", @readOnly = "readonly" })
-                                            @Html.TextBoxFor(a => a.EditGateEntryDetails[j].ITEM_NAMEs, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].PO_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                        <td>
-                                            @Html.TextBoxFor(a => a.EditGateEntryDetails[j].UOM_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                            @Html.HiddenFor(a => a.EditGateEntryDetails[j].Stk_UOM, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
+                                            int j = 0;
+                                            foreach (var i in Model.EditGateEntryDetails)
+                                            {
+                                                <tr style="border:1px solid black">
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.Gate_HDRs.INS_DATE, new { @class = "form-control", @readOnly = "readonly" })
+                                                        @Html.HiddenFor(a => a.Gate_HDRs.INS_UID, new { @class = "form-control", @readOnly = "readonly" })
+                                                        @Html.HiddenFor(a => a.EditGateEntryDetails[j].ID, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(a => a.EditGateEntryDetails[j].Order_No, new { @class = "form-control", @readOnly = "readonly", @type = "number" })
+                                                    </td>
+                                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_NO, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_DATE, new { @class = "form-control fc-datepicker", @type = "date", @readOnly = "readonly" })</td>
+                                                    @*<td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Bill_NO, new { @class = "form-control" })</td>
+                                <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Bill_Date, new { @class = "form-control fc-datepicker", @type = "date", @readOnly = "readonly" })</td>*@
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.EditGateEntryDetails[j].Item_Name, new { @class = "form-control", @readOnly = "readonly" })
+                                                        @Html.TextBoxFor(a => a.EditGateEntryDetails[j].ITEM_NAMEs, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(a => a.EditGateEntryDetails[j].UOM_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                        @Html.HiddenFor(a => a.EditGateEntryDetails[j].Stk_UOM, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
 
-                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Stk_Qty, new { @class = "form-control", @type = "number", @readOnly = "readonly" })</td>
-                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].BAL_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].GDW_NO, new { @class = "form-control", @readOnly = "readonly", @type = "number" })</td>
-                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Remarks, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                    </tr>
-                                            j++;
+                                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Stk_Qty, new { @class = "form-control", @type = "number", @readOnly = "readonly" })</td>
+                                                    <td>
+                                                        <select asp-for="EditGateEntryDetails[j].GDW_NO" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.GoDownDropDown, "Value", "Text"))"></select>
+                                                        @Html.HiddenFor(a => a.EditGateEntryDetails[j].GDW_NO, new { @class = "form-control" })
+                                                    </td>
+                                                </tr>
+                                                j++;
+                                            }
                                         }
-                                    }
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <table class="table table-bordered" Name="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Order No</th>
+                                            <th>CHL/Bill No</th>
+                                            <th>CHL/Bill Date</th>
+                                            <th>Item</th>
+                                            <th>Artical</th>
+                                            <th>Size</th>
+                                            <th>Process</th>
+                                            <th>Gate Entry Qty</th>
+                                            <th>Godown</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null && Model.EditGateEntryDetails.Count > 0)
+                                        {
+                                            int j = 0;
+                                            foreach (var i in Model.EditGateEntryDetails)
+                                            {
+                                                <tr style="border:1px solid black">
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.Gate_HDRs.INS_DATE, new { @class = "form-control", @readOnly = "readonly" })
+                                                        @Html.HiddenFor(a => a.Gate_HDRs.INS_UID, new { @class = "form-control", @readOnly = "readonly" })
+                                                        @Html.HiddenFor(a => a.EditGateEntryDetails[j].ID, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(a => a.EditGateEntryDetails[j].Order_No, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
+                                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_NO, new { @class = "form-control" })</td>
+                                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_DATE, "{0:yyyy-MM-dd}", new { @class = "form-control fc-datepicker", @type = "date" })</td>
+                                                    @*<td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Bill_NO, new { @class = "form-control" })</td>
+                                <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Bill_Date, new { @class = "form-control fc-datepicker", @type = "date" })</td>*@
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.EditGateEntryDetails[j].Item_Name, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(a => a.EditGateEntryDetails[j].ITEM_NAMEs, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.EditGateEntryDetails[j].Art_Name, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(a => a.EditGateEntryDetails[j].ART_NAMEs, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.EditGateEntryDetails[j].Size_Name, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(a => a.EditGateEntryDetails[j].SIZE_NAMEs, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.EditGateEntryDetails[j].Proc_Name, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(a => a.EditGateEntryDetails[j].PROC_NAMEs, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
+                                                    @*<td>
+                                    @Html.TextBoxFor(a => a.EditGateEntryDetails[j].UOM_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                    @Html.HiddenFor(a => a.EditGateEntryDetails[j].Stk_UOM, new { @class = "form-control" })
+                                </td>*@
+
+                                                    <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].Stk_Qty, new { @class = "form-control", @type = "number" })</td>
+                                                    <td>
+                                                        <select asp-for="EditGateEntryDetails[j].GDW_NO" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.GoDownDropDown, "Value", "Text"))"></select>
+                                                        @*@Html.TextBoxFor(a => a.EditGateEntryDetails[j].GDW_NAME, new { @class = "form-control" })*@
+                                                        @Html.HiddenFor(a => a.EditGateEntryDetails[j].GDW_NO, new { @class = "form-control" })
+                                                    </td>
+                                                </tr>
+                                                j++;
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                            }
                         </div>
 
 

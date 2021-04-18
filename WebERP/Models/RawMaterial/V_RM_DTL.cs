@@ -20,9 +20,9 @@ namespace WebERP.Models
         public string ARTICAL_NAME { get; set; }
         public int SIZE_CODE { get; set; }
         public string SIZE_NAME { get; set; }
-        public int STK_QTY_IN { get; set; }
-        public int STK_QTY_OUT { get; set; }
-        public int STK_QTY { get; set; }
+        public decimal STK_QTY_IN { get; set; }
+        public decimal STK_QTY_OUT { get; set; }
+        public decimal STK_QTY { get; set; }
         [NotMapped]
         public bool CHK { get; set; }
         [NotMapped]

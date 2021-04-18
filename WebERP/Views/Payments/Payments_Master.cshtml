@@ -79,11 +79,11 @@
                             <div class="custom-radio">
                                 @if (Model.Type == "Add")
                                 {
-                                    <select asp-for="CB_ACC_CODE" id="ddlCBACC" class="form-control" asp-items="@(new SelectList(string.Empty, "Value", "Text"))"></select>
+                                    <select asp-for="CB_ACC_CODE" id="ddlCBACC" class="form-control Select2DropDown" asp-items="@(new SelectList(string.Empty, "Value", "Text"))"></select>
                                 }
                                 @if (Model.Type == "Edit" || Model.Type == "Action")
                                 {
-                                    <select asp-for="CB_ACC_CODE" id="ddlCBACC" class="form-control" asp-items="@(new SelectList(Model.CBACCDropDown,"Value", "Text"))"></select>
+                                    <select asp-for="CB_ACC_CODE" id="ddlCBACC" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.CBACCDropDown,"Value", "Text"))"></select>
                                 }
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                         <div class="form-group">
                             <label for="branch_id">Account Name</label>
                             <div class="custom-radio">
-                                <select asp-for="ACC_CODE" id="ddlACC" class="form-control" asp-items="@(new SelectList(Model.ACCDropDown,"Value", "Text"))"></select>
+                                <select asp-for="ACC_CODE" id="ddlACC" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.ACCDropDown,"Value", "Text"))"></select>
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Payment Document Date</label>
-                            <div class="input-group">  
+                            <div class="input-group">
                                 <input asp-for="PAY_DOC_DATE" type="date" class="form-control" id="PAY_DOC_DATE" name="PAY_DOC_DATE" />
                                 @*@Html.HiddenFor(a => a.PAY_DOC_DATE, new {@ID = "PAY_DOC_DATE", @class = "form-control", @type = "date"})*@
                             </div>
@@ -129,6 +129,41 @@
                             </div>
                         </div>
                     </div>
+                    @if ((Model.Type == "Edit") || (Model.Type == "Action"))
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_UID" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_UID" />
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -182,11 +217,5 @@
             })
 
         })
-    })
-    $(function () {
-        $("#ddlACC").chosen();
-    })
-    $(function () {
-        $("#ddlCBACC").chosen();
     })
 </script>

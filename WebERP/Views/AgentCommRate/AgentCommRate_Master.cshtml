@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.AgentCommRate
-<script src="~/lib/jquery/dist/jquery.js"></script>
+
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @if (Model.Type == "Add")
@@ -30,7 +30,7 @@
                         <div class="form-group">
                             <label for="branch_id">Account Name</label>
                             <div class="input-group">
-                                <select asp-for="ACC_CODE" class="form-control" asp-items="@(new SelectList(Model.ACCDropDown, "Value", "Text"))"></select>
+                                <select asp-for="ACC_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.ACCDropDown, "Value", "Text"))"></select>
                                 @Html.HiddenFor(a => a.ID, new { @ID = "ID", @class = "form-control" })
                             </div>
                         </div>
@@ -128,8 +128,3 @@
 
     </div>
 </div>
-<script>
-    $(function () {
-        $("#ddlACC").chosen();
-    })
-</script>

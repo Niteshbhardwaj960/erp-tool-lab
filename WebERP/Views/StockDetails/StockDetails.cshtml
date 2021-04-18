@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebERP.Models.V_RM_DTL>
+
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Stock Details</h3></nav>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>GoDown</th>
+                            <th>Item</th>
+                            <th>Artical</th>
+                            <th>Size</th>
+                            <th>Stock Qty</th>
+                            <th>Stock IN</th>
+                            <th>Stock OUT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var Data in Model)
+                        {
+                        <tr>
+                            <td>@Data.GDW_NAME</td>
+                            <td>@Data.ITEM_NAME</td>
+                            <td>@Data.ARTICAL_NAME</td>
+                            <td>@Data.SIZE_NAME</td>
+                            <td>@Data.STK_QTY</td>
+                            <td>@Data.STK_QTY_IN</td>
+                            <td>@Data.STK_QTY_OUT</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-controller="Dashboard" asp-action="Dashboard">Close</a>                
+            </div>
+        </div>
+    </div>
+

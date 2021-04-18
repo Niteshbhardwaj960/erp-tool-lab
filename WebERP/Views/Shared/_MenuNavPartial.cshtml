@@ -42,10 +42,7 @@
             </a>
             <div id="Payments" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    @if (User.IsInRole("JobWork") || User.IsInRole("Admin"))
-                    {
-                        <a class="collapse-item" asp-controller="JobWork" asp-action="JobWorkGrid">Job Work</a>
-                    }
+                   
                     @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
                     {
                         <a class="collapse-item" asp-controller="Employee" asp-action="Employee_Master">Employee Master</a>
@@ -72,25 +69,29 @@
             </a>
             <div id="Transactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
+                    @if (User.IsInRole("StockDetails") || User.IsInRole("Admin"))
+                    {
+                    <a class="collapse-item" asp-controller="StockDetails" asp-action="StockDetails">Stock Details</a>
+                    }
                     @if (User.IsInRole("Payments") || User.IsInRole("Admin"))
                     {
                         <a class="collapse-item" asp-controller="Payments" asp-action="Payments_Details">Payments</a>
                     }
                     @if (User.IsInRole("GateEntryUser") || User.IsInRole("Admin"))
                     {
-                        <a class="collapse-item" asp-controller="GateEntry" asp-action="Gate_Entry_Details">Gate Entry</a>
+                        <a class="collapse-item" asp-controller="GateEntry" asp-action="Gate_Entry_Details">Gate Entry Inward</a>
                     }
                     @if (User.IsInRole("PO") || User.IsInRole("Admin"))
                     {
-                        <a class="collapse-item" asp-controller="PO" asp-action="POGridDetails">Process Order</a>
+                        <a class="collapse-item" asp-controller="PO" asp-action="POGridDetails">Purchase Order</a>
                     }
                     @if (User.IsInRole("GoDownStock") || User.IsInRole("Admin"))
                     {
-                        <a class="collapse-item" asp-controller="GoDown" asp-action="GoDownStock">GoDown Stock</a>
+                        <a class="collapse-item" asp-controller="GoDown" asp-action="GoDownStock">GoDown Allocation</a>
                     }
                     @if (User.IsInRole("Cutting") || User.IsInRole("Admin"))
                     {
-                        <a class="collapse-item" asp-controller="Cutting" asp-action="CuttingDetail">Cutting Order</a>
+                        <a class="collapse-item" asp-controller="Cutting" asp-action="CuttingDetail">Cutting Order / Job Card</a>
                     }
                     @if (User.IsInRole("RawMaterial") || User.IsInRole("Admin"))
                     {
@@ -102,7 +103,11 @@
                     }
                     @if (User.IsInRole("MFG") || User.IsInRole("Admin"))
                     {
-                        <a class="collapse-item" asp-controller="MFGReceipt" asp-action="MFGReceiptDetail">MFG Receipt</a>
+                        <a class="collapse-item" asp-controller="MFGReceipt" asp-action="MFGReceiptDetail">Process Receipt</a>
+                    }
+                    @if (User.IsInRole("JobWork") || User.IsInRole("Admin"))
+                    {
+                        <a class="collapse-item" asp-controller="JobWork" asp-action="JobWorkGrid">Job Work Issue</a>
                     }
                 </div>
             </div>

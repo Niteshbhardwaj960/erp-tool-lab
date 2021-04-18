@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.Artical_Master
-<script src="~/lib/jquery/dist/jquery.js"></script>
+
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label for="branch_id">Brand Name</label>
                             <div class="input-group">
-                                <select name="Brand_Code" id="Brand_Code" class="form-control" asp-items="@(new SelectList(Model.brandDropDown,"Value", "Text"))"></select>                              
+                                <select name="Brand_Code" id="Brand_Code" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.brandDropDown,"Value", "Text"))"></select>                              
                             </div>
                             <span asp-validation-for="brandDropDown" class="text-danger"></span>
                         </div>
@@ -40,9 +40,3 @@
 
     </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $("#Brand_Code").chosen();
-    })
-
-</script>

@@ -44,6 +44,14 @@
         </div>*@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
+                            <label for="branch_id">Order Number</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.RM_HDRs.CUTTING_ORDER_NO, new { @ID = "CUTTING_ORDER_NO", @class = "form-control", @readOnly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
                             <label for="branch_id">Employee Name</label>
                             <div class="input-group">
                                 @Html.TextBoxFor(a => a.RM_HDRs.EMP_NAME, new { @ID = "EmpName", @class = "form-control", @readOnly = "readonly" })
@@ -110,9 +118,7 @@
                                     <tr>
                                         <th>GDW Name</th>
                                         <th>Item Name</th>
-                                        <th>Artical Name</th>
                                         <th>Size Name</th>
-                                        <th>Stock Qty</th>
                                         <th>Issue Qty</th>
                                     </tr>
                                 </thead>
@@ -133,14 +139,9 @@
                                                     @Html.TextBoxFor(a => a.RM_DTL_LST[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    @Html.HiddenFor(a => a.RM_DTL_LST[j].ARTICAL_Code, new { @class = "form-control" })
-                                                    @Html.TextBoxFor(a => a.RM_DTL_LST[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                                </td>
-                                                <td>
                                                     @Html.HiddenFor(a => a.RM_DTL_LST[j].SIZE_Code, new { @class = "form-control" })
                                                     @Html.TextBoxFor(a => a.RM_DTL_LST[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                                </td>
-                                                <td>@Html.TextBoxFor(a => a.RM_DTL_LST[j].ORDER_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                                </td>                                               
                                                 <td>@Html.TextBoxFor(a => a.RM_DTL_LST[j].ISSUE_QTY, new { @class = "form-control", @type = "decimal", @readOnly = "readonly" })</td>
                                             </tr>
                                             j++;

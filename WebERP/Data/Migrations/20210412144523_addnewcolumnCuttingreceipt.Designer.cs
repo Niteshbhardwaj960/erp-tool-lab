@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210412144523_addnewcolumnCuttingreceipt")]
+    partial class addnewcolumnCuttingreceipt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -601,12 +603,6 @@ namespace WebERP.Data.Migrations
 
                     b.Property<int>("EMP_CODE");
 
-                    b.Property<string>("EMP_DEP");
-
-                    b.Property<string>("EMP_FATHER");
-
-                    b.Property<string>("EMP_MOB_NO");
-
                     b.Property<string>("EMP_TYPE");
 
                     b.Property<DateTime?>("INS_DATE");
@@ -637,12 +633,6 @@ namespace WebERP.Data.Migrations
                     b.Property<DateTime?>("DOC_DATE");
 
                     b.Property<int>("EMP_CODE");
-
-                    b.Property<string>("EMP_DEP");
-
-                    b.Property<string>("EMP_FATHER");
-
-                    b.Property<string>("EMP_MOB_NO");
 
                     b.Property<string>("EMP_TYPE");
 
@@ -727,8 +717,6 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("ACC_NAME");
 
-                    b.Property<int>("Art_Name");
-
                     b.Property<DateTime?>("Bill_Date");
 
                     b.Property<string>("Bill_NO");
@@ -765,11 +753,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<int>("POD_FK");
 
-                    b.Property<int>("Proc_Name");
-
                     b.Property<string>("Remarks");
-
-                    b.Property<int>("Size_Name");
 
                     b.Property<decimal>("Stk_Qty");
 
@@ -1561,67 +1545,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("poh_pk");
 
                     b.ToTable("V_GateEntryDetail");
-                });
-
-            modelBuilder.Entity("WebERP.Models.V_JW_DTL", b =>
-                {
-                    b.Property<int>("JWH_PK")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ACC_CODE");
-
-                    b.Property<string>("ACC_NAME");
-
-                    b.Property<int>("ARTICAL_CODE");
-
-                    b.Property<string>("ARTICAL_NAME");
-
-                    b.Property<decimal>("BAL_QTY");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<string>("DOC_FINYEAR");
-
-                    b.Property<int>("DOC_NO");
-
-                    b.Property<decimal>("GATE_ENTRY_QTY");
-
-                    b.Property<int>("GDW_CODE");
-
-                    b.Property<string>("GDW_NAME");
-
-                    b.Property<int>("HSN_CODE");
-
-                    b.Property<string>("HSN_NAME");
-
-                    b.Property<int>("ITEM_CODE");
-
-                    b.Property<string>("ITEM_NAME");
-
-                    b.Property<int>("JWD_PK");
-
-                    b.Property<int>("PROC_CODE");
-
-                    b.Property<string>("PROC_NAME");
-
-                    b.Property<decimal>("QTY");
-
-                    b.Property<int>("QTY_UOM");
-
-                    b.Property<string>("QTY_UOM_NAME");
-
-                    b.Property<string>("Remarks");
-
-                    b.Property<int>("SIZE_CODE");
-
-                    b.Property<string>("SIZE_NAME");
-
-                    b.HasKey("JWH_PK");
-
-                    b.ToTable("V_JW_DTL");
                 });
 
             modelBuilder.Entity("WebERP.Models.V_PODetails", b =>

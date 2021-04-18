@@ -6,19 +6,19 @@
         @if (Model.Type == "Add")
         {
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-                <h3 style="color:white">Add Cutting</h3>
+                <h3 style="color:white">Add Cutting order / Job Card</h3>
             </nav>
         }
         @if (Model.Type == "Edit")
         {
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-                <h3 style="color:white">Edit Cutting</h3>
+                <h3 style="color:white">Edit Cutting order / Job Card</h3>
             </nav>
         }
         @if (Model.Type == "Action")
         {
            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
-                <h3 style="color:white">View Cutting</h3>
+               <h3 style="color:white">View Cutting order / Job Card</h3>
             </nav>
         }
         
@@ -73,7 +73,7 @@
                         <div class="form-group">
                             <label class="form-label">Employee Name</label>
                             <div class="input-group">
-                                <select asp-for="EMP_CODE" id="EMP_CODE" class="form-control" asp-items="@(new SelectList(Model.EmpDropDown,"Value", "Text"))"></select>
+                                <select asp-for="EMP_CODE" id="EMP_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.EmpDropDown,"Value", "Text"))"></select>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         <div class="form-group">
                             <label class="form-label">Contract Employee Name</label>
                             <div class="input-group">
-                                <select asp-for="CONT_EMP_CODE" id="CONTEMP_CODE" class="form-control" asp-items="@(new SelectList(Model.ContEmpDropDown,"Value", "Text"))"></select>
+                                <select asp-for="CONT_EMP_CODE" id="CONTEMP_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.ContEmpDropDown,"Value", "Text"))"></select>
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                         <div class="form-group">
                             <label for="branch_id">Item Name</label>
                             <div class="input-group">
-                                <select asp-for="ITEM_CODE" id="ITEM_CODE" class="form-control" asp-items="@(new SelectList(Model.ItemDropDown,"Value", "Text"))"></select>
+                                <select asp-for="ITEM_CODE" id="ITEM_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.ItemDropDown,"Value", "Text"))"></select>
 
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                         <div class="form-group">
                             <label for="branch_id">Artical Name</label>
                             <div class="input-group">
-                                <select asp-for="ARTICAL_CODE" id="ARTICAL_CODE" class="form-control" asp-items="@(new SelectList(Model.ArticalDropDown,"Value", "Text"))"></select>
+                                <select asp-for="ARTICAL_CODE" id="ARTICAL_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.ArticalDropDown,"Value", "Text"))"></select>
 
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                         <div class="form-group">
                             <label for="branch_id">Size Name</label>
                             <div class="input-group">
-                                <select asp-for="SIZE_CODE" id="SIZE_CODE" class="form-control" asp-items="@(new SelectList(Model.SizeDropDown,"Value", "Text"))"></select>
+                                <select asp-for="SIZE_CODE" id="SIZE_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.SizeDropDown,"Value", "Text"))"></select>
 
                             </div>
                         </div>
@@ -159,6 +159,41 @@
                             </div>
                         </div>
                     </div>
+                    @if ((Model.Type == "Edit") || (Model.Type == "Action"))
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Insert By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_UID" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update Date</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Update By</label>
+                                <div class="input-group">
+                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_UID" />
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="CuttingDetail">Close</a>
@@ -194,24 +229,5 @@
             }
             $("#DOC_FINYEAR").val(financial_year);
         });
-    })
-
-    $(function () {
-        $("#EMP_CODE").chosen();
-    })
-    $(function () {
-        $("#CONTEMP_CODE").chosen();
-    })
-    $(function () {
-        $("#ITEM_CODE").chosen();
-    })
-    $(function () {
-        $("#ARTICAL_CODE").chosen();
-    })
-    $(function () {
-        $("#SIZE_CODE").chosen();
-    })
-    $(function () {
-        $("#PROC_CODE").chosen();
-    })
+    })    
 </script>

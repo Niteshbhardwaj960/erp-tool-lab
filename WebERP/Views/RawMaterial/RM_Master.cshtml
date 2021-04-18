@@ -11,7 +11,7 @@
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Cutting Order Details</b></h4>
                 <div class="row">
                     @*<div class="col-lg-4 col-md-4 col-sm-12">
-                            <div class="form-group">
+                            <div class="form-group">`
                                 <label for="branch_id">Document Number</label>
                                 <div class="input-group">
                                     @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
@@ -40,7 +40,7 @@
                             <label for="branch_id">Cutting Order</label>
                             <label for="branch_id" style="color:red">**Document No/Employee/Item/Artical/Size/Process</label>
                             <div class="custom-radio">
-                                <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList( Model.CUTDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlCUT" name="ddlCUT" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.CUTDropDown ,"Value", "Text"))"></select>
                             </div>
                         </div>
                     </div>
@@ -82,6 +82,7 @@
                             <div class="input-group">
                                 @Html.TextBoxFor(a => a.RM_HDRs.PROC_NAME, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" })
                                 @Html.HiddenFor(a => a.RM_HDRs.Cutting_Order_FK, new { @ID = "CUTPK", @class = "form-control" })
+                                @Html.HiddenFor(a => a.RM_HDRs.CUTTING_ORDER_NO, new { @ID = "CUTORDERNO", @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -105,7 +106,6 @@
                                         <th></th>
                                         <th>GDW Name</th>
                                         <th>Item Name</th>
-                                        <th>Artical Name</th>
                                         <th>Size Name</th>
                                         <th>Stock Qty</th>
                                         <th>Issue Qty</th>
@@ -129,10 +129,6 @@
                                                 <td>
                                                     @Html.HiddenFor(a => a.V_RM_DTLs[j].ITEM_CODE, new { @class = "form-control" })
                                                     @Html.TextBoxFor(a => a.V_RM_DTLs[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                                </td>
-                                                <td>
-                                                    @Html.HiddenFor(a => a.V_RM_DTLs[j].ARTICAL_CODE, new { @class = "form-control" })
-                                                    @Html.TextBoxFor(a => a.V_RM_DTLs[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                                 </td>
                                                 <td>
                                                     @Html.HiddenFor(a => a.V_RM_DTLs[j].SIZE_CODE, new { @class = "form-control" })
@@ -198,10 +194,8 @@
             $('#ArtName').val(Array[2]);
             $('#SizeName').val(Array[3]);
             $('#ProcName').val(Array[4]);
-            $('#CUTPK').val(Array[5]);
+            $('#CUTORDERNO').val(Array[5]);
+            $('#CUTPK').val(Array[6]);
         })
-    })
-    $(function () {
-        $("#ddlCUT").chosen();
     })
 </script>

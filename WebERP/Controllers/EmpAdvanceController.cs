@@ -33,18 +33,21 @@ namespace WebERP.Controllers
             Employee_Advance employee_Advance = new Employee_Advance();
             employee_Advance.Type = "Add";
             employee_Advance.EMPDropDown = Emplists("P");
+            employee_Advance.SalDropDown = SalType("P");
+            employee_Advance.DOC_DATE = DateTime.Now;
             return View("Emp_Adv_Master",employee_Advance);
         }
         [HttpPost]
         public IActionResult Emp_Adv_Master(Employee_Advance employee_Advance)
         {
             employee_Advance.INS_DATE = DateTime.Today;
-            employee_Advance.INS_UID = userManager.GetUserName(HttpContext.User);
+            employee_Advance.INS_UID = userManager.GetUserName(HttpContext.User); 
             dbContext.Employee_Advance.Add(employee_Advance);
             dbContext.SaveChanges();
 
             return RedirectToAction("Emp_Adv_Details");
         }
+        
         [HttpGet]
         public IActionResult Emp_Adv_Details()
         {
@@ -63,7 +66,7 @@ namespace WebERP.Controllers
             var Emplist = (from Emp in dbContext.Employee_Masters.Where(C => C.EMP_TYPE == type).ToList()
                              select new SelectListItem()
                              {
-                                 Text = Emp.EMP_NAME,
+                                 Text = Emp.EMP_NAME + "/" + Emp.Emp_Father_Name + "/" + Emp.emp_mobile_no1 + "/" + dbContext.Department_Masters.Where(C => C.ID == Emp.DEP_CODE).Select(ss => ss.NAME).FirstOrDefault(),
                                  Value = Emp.ID.ToString(),
                              }).ToList();
 
@@ -82,6 +85,7 @@ namespace WebERP.Controllers
             Employee_Advance employee_Advance = new Employee_Advance();
             employee_Advance = dbContext.Employee_Advance.Find(id);
             employee_Advance.EMPDropDown = Emplists(employee_Advance.EMP_TYPE);
+            employee_Advance.SalDropDown = SalType(employee_Advance.EMP_TYPE);
             employee_Advance.Type = "Action";
             dbContext.Employee_Advance.Update(employee_Advance);
             return View("Emp_Adv_Master", employee_Advance);
@@ -93,6 +97,7 @@ namespace WebERP.Controllers
             employee_Advance = dbContext.Employee_Advance.Find(id);
             employee_Advance.Type = "Edit";
             employee_Advance.EMPDropDown = Emplists(employee_Advance.EMP_TYPE);
+            employee_Advance.SalDropDown = SalType(employee_Advance.EMP_TYPE);
             dbContext.Employee_Advance.Update(employee_Advance);
             dbContext.SaveChanges();
             return View("Emp_Adv_Master", employee_Advance);
@@ -112,6 +117,9 @@ namespace WebERP.Controllers
                     result.DOC_DATE = employee_Advance.DOC_DATE;
                     result.EMP_CODE = employee_Advance.EMP_CODE;
                     result.EMP_TYPE = employee_Advance.EMP_TYPE;
+                    result.EMP_FATHER = employee_Advance.EMP_FATHER;
+                    result.EMP_MOB_NO = employee_Advance.EMP_MOB_NO;
+                    result.EMP_DEP = employee_Advance.EMP_DEP;
                     result.SAL_YYYYMM = employee_Advance.SAL_YYYYMM;
                     result.SAL_YYYYMM_BRK = employee_Advance.SAL_YYYYMM_BRK;
                     dbContext.SaveChanges();
@@ -122,6 +130,36 @@ namespace WebERP.Controllers
             {
                 return View("Emp_Adv_Master", employee_Advance);
             }
+        }
+        [HttpGet]
+        public List<SelectListItem> SalType(string type)
+        {
+            List<SelectListItem> Sallist = new List<SelectListItem>();
+            if (type == "S")
+            {
+                Sallist.Insert(0, new SelectListItem()
+                {
+                    Text = "Full Month",
+                    Value = "0",
+                    Selected = true
+                });
+            }
+            else
+            {
+                Sallist.Insert(0, new SelectListItem()
+                {
+                    Text = "1 to 15",
+                    Value = "1",
+                    Selected = true
+                });
+                Sallist.Insert(1, new SelectListItem()
+                {
+                    Text = "16 to 30",
+                    Value = "2",
+                    Selected = false
+                });
+            }
+            return Sallist;
         }
         [HttpGet]
         public IActionResult DeleteEmpAdv(int ID)

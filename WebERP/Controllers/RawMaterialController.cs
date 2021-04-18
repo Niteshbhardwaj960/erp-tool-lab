@@ -47,7 +47,7 @@ namespace WebERP.Controllers
         public IActionResult RM_Master()
         {
             RawMaterialDTL rawMaterialDTL = new RawMaterialDTL();
-            
+
             rawMaterialDTL.V_RM_DTLs = dbContext.V_RM_DTL.AsNoTracking().ToList();
             rawMaterialDTL.CUTDropDown = CUTlists();
             rawMaterialDTL.Doc_Dates = DateTime.Now;
@@ -58,7 +58,7 @@ namespace WebERP.Controllers
         public IActionResult RM_Master(RawMaterialDTL rawMaterialDTL)
         {
             int Doc_Number = dbContext.RM_HDR
-                .Where(x => x.Doc_FN_Year == rawMaterialDTL.RM_HDRs.Doc_FN_Year)
+                .Where(x => x.Doc_FN_Year == rawMaterialDTL.Doc_Fins)
                 .Select(p => Convert.ToInt32(p.Doc_No)).DefaultIfEmpty(0).Max();
             int RM_HDR_PK;
             List<RM_DTL> RMDList = new List<RM_DTL>();
@@ -68,6 +68,7 @@ namespace WebERP.Controllers
             rawMaterialDTL.RM_HDRs.INS_DATE = DateTime.Now;
             rawMaterialDTL.RM_HDRs.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.RM_HDR.Add(rawMaterialDTL.RM_HDRs);
+            List<StockDTL_Model> StkDTL = new List<StockDTL_Model>();
             dbContext.SaveChanges();
 
             RM_HDR_PK = rawMaterialDTL.RM_HDRs.ID;
@@ -82,23 +83,43 @@ namespace WebERP.Controllers
                         INS_UID = userManager.GetUserName(HttpContext.User),
                         GDW_Code = order.GDW_CODE,
                         ITEM_Code = order.ITEM_CODE,
+                        ITEM_NAME = order.ITEM_NAME,
                         ARTICAL_Code = order.ARTICAL_CODE,
                         SIZE_Code = order.SIZE_CODE,
                         ISSUE_QTY = order.Issue_Qty,
                     });
-                    decimal BalQty;
-                    var result = dbContext.StockDTL_Models.SingleOrDefault(b => b.ID == order.ID);
-                    if (result != null)
+                    StkDTL.Add(new StockDTL_Model()
                     {
-                        BalQty = order.Issue_Qty + result.Stk_Qty_OUT;
-                        result.Stk_Qty_OUT = Convert.ToInt32(BalQty);
-                    }
+                        INS_DATE = DateTime.Now,
+                        INS_UID = userManager.GetUserName(HttpContext.User),
+                        COMP_CODE = 0,
+                        Tran_Table = "RM Entry",
+                        Tran_Table_PK = order.ID,
+                        GDW_CODE = Convert.ToInt32(order.GDW_CODE),
+                        Item_Code = Convert.ToInt32(order.ITEM_CODE),
+                        Artical_CODE = Convert.ToInt32(order.ARTICAL_CODE),
+                        Size_Code = Convert.ToInt32(order.SIZE_CODE),
+                        Stk_Qty_OUT = Convert.ToInt32(order.Issue_Qty),
+                    });
+
+                    //decimal BalQty;
+                    //var result = dbContext.StockDTL_Models.SingleOrDefault(b => b.ID == order.ID);
+                    //if (result != null)
+                    //{
+                    //    BalQty = order.Issue_Qty + result.Stk_Qty_OUT;
+                    //    result.Stk_Qty_OUT = Convert.ToInt32(BalQty);
+                    //}
 
                 }
             }
             foreach (var item in RMDList)
             {
                 dbContext.RM_DTL.Add(item);
+                dbContext.SaveChanges();
+            }
+            foreach (var item in StkDTL)
+            {
+                dbContext.StockDTL_Models.Add(item);
                 dbContext.SaveChanges();
             }
             return RedirectToAction("RM_Detail");
@@ -116,7 +137,7 @@ namespace WebERP.Controllers
                            select new SelectListItem()
                            {
                                Text = Cut.DOC_NO.ToString() + '/' + Cut.EMP_NAME + '/' + Cut.Item_NAME + '/' + Cut.ARTICAL_NAME + '/' + Cut.SIZE_NAME + '/' + Cut.PROC_NAME,
-                               Value = Cut.EMP_NAME + '/' + Cut.Item_NAME + '/' + Cut.ARTICAL_NAME + '/' + Cut.SIZE_NAME + '/' + Cut.PROC_NAME + '/' + Cut.ID,
+                               Value = Cut.EMP_NAME + '/' + Cut.Item_NAME + '/' + Cut.ARTICAL_NAME + '/' + Cut.SIZE_NAME + '/' + Cut.PROC_NAME + '/' + Cut.DOC_NO + '/' + Cut.ID,
                            }).ToList();
 
             CutList.Insert(0, new SelectListItem()
@@ -132,7 +153,7 @@ namespace WebERP.Controllers
         {
             RawMaterialDTL rawMaterialDTL = new RawMaterialDTL();
             rawMaterialDTL.RM_HDRs = dbContext.RM_HDR.Where(r => r.ID == id).FirstOrDefault();
-            var RM_DTL_LSTs = dbContext.RM_DTL.Where(l => l.RM_HDR_FK == id).AsNoTracking().ToList();           
+            var RM_DTL_LSTs = dbContext.RM_DTL.Where(l => l.RM_HDR_FK == id).AsNoTracking().ToList();
             foreach (var RMModel in RM_DTL_LSTs.ToList())
             {
                 //RMModel. = dbContext.PODetail_Master.
@@ -151,7 +172,7 @@ namespace WebERP.Controllers
                                           Where(x => x.ID == RMModel.SIZE_Code).
                                           Select(y => y.NAME).FirstOrDefault();
             }
-            rawMaterialDTL.RM_DTL_LST= RM_DTL_LSTs;
+            rawMaterialDTL.RM_DTL_LST = RM_DTL_LSTs;
             return View("RM_Edit", rawMaterialDTL);
         }
         [HttpPost]
@@ -171,6 +192,15 @@ namespace WebERP.Controllers
                         result.UDT_DATE = DateTime.Now;
                         result.UDT_UID = userManager.GetUserName(HttpContext.User);
                         result.ISSUE_QTY = RMDetailModel.ISSUE_QTY;
+                        dbContext.SaveChanges();
+                    }
+                    var resultStk = dbContext.StockDTL_Models.SingleOrDefault(b => b.Tran_Table_PK == RMDetailModel.ID && b.Tran_Table == "RM Entry");
+                    if (resultStk != null)
+                    {
+                        resultStk.UDT_DATE = DateTime.Now;
+                        resultStk.UDT_UID = userManager.GetUserName(HttpContext.User);
+                        resultStk.Stk_Qty_OUT = RMDetailModel.ISSUE_QTY;
+                        resultStk.GDW_CODE = RMDetailModel.GDW_Code;
                         dbContext.SaveChanges();
                     }
                 }
