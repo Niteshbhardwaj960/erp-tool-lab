@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210418132056_TablesForSales")]
+    partial class TablesForSales
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -901,8 +903,6 @@ namespace WebERP.Data.Migrations
 
                     b.Property<int>("JWH_FK");
 
-                    b.Property<decimal>("JW_RATE");
-
                     b.Property<int>("PROC_CODE");
 
                     b.Property<decimal>("QTY");
@@ -1506,35 +1506,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("StockDTL_Models");
-                });
-
-            modelBuilder.Entity("WebERP.Models.TAX_MASTER", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ACTIVE_TAG");
-
-                    b.Property<decimal>("CGST_PER");
-
-                    b.Property<decimal>("IGST_PER");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<decimal>("SGST_PER");
-
-                    b.Property<string>("TAX_NAME");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("TAX_MASTER");
                 });
 
             modelBuilder.Entity("WebERP.Models.Term_Master", b =>

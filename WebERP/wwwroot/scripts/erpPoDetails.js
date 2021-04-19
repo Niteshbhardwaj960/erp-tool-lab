@@ -20,8 +20,8 @@ WebERP.PurchasingOrders = {
 
         $('#poForm').submit(WebERP.PurchasingOrders.FormOnSubmit);
 
-        WebERP.PurchasingOrders.termtemplateRow = $('tr.termtemplate').clone();
-        WebERP.PurchasingOrders.templateRow = $('tr.template').clone();
+        WebERP.PurchasingOrders.termtemplateRow = $("#poTermDtlTable tbody tr:last").clone(); //$('tr.termtemplate').clone();
+        WebERP.PurchasingOrders.templateRow = $("#poDtlTable tbody tr:last").clone(); //$('tr.template').clone();
 
         //Calculation 
         $('#poDtlTable tbody').on('change', 'input[name*="QTY"]', WebERP.PurchasingOrders.QuantityOnChange);
@@ -42,7 +42,7 @@ WebERP.PurchasingOrders = {
         WebERP.PurchasingOrders._AddTermRow(WebERP.PurchasingOrders.termtemplateRow, true);
     },
 
-    _AddTermRow: function (sourceRow, appendToEnd) {        
+    _AddTermRow: function (sourceRow, appendToEnd) {     
         var clonedRow = sourceRow.clone(true);
         if (appendToEnd) {
             var pogridtable = $('#poTermDtlTable'); //div.container-fluid #dataTable table tbody
@@ -68,7 +68,7 @@ WebERP.PurchasingOrders = {
         $.each(pogridtableRows, function (rowInd, row) {            
             var inputs = $('textarea ,select', row);
             $.each(inputs, function (inputInd, input) {                
-                var oldName = $(input).attr('name');
+                var oldName = $(input).attr('name');       
                 //oldName = oldName.replace('item', 'item[' + rowInd + ']')
                 oldName = oldName.replace(/\[\d\]/, '[' + rowInd + ']');
                 $(input).attr('name', oldName);
@@ -82,23 +82,23 @@ WebERP.PurchasingOrders = {
     },
 
     _AddRow: function (sourceRow, appendToEnd) {
-
+        debugger
+        sourceRow.find(".Select2DropDown").each(function (index) {
+            $(this).select2('destroy');
+        }); 
         var clonedRow = sourceRow.clone(true);
         if (appendToEnd) {
-            var pogridtable = $('#poDtlTable'); //div.container-fluid #dataTable table tbody
+            var pogridtable = $('#poDtlTable'); 
             pogridtable.append(clonedRow);
+            $('.Select2DropDown').select2();             
+            $('.Select2DropDown').last().next().next().remove();
         }
         else {
             clonedRow.insertAfter(sourceRow);
         }
 
-        var sourceInputs = sourceRow.find('input, select');
-        var targetInputs = clonedRow.find('input, select');
-        for (var i = 0; i < sourceInputs.length; i++) {
-            var s = $(sourceInputs[i]);
-            var t = $(targetInputs[i]);
-            t.val(s.val());
-        }
+        WebERP.PurchasingOrders.CalculateGrandTotal();
+        WebERP.PurchasingOrders.CalculateQTotal();       
         WebERP.PurchasingOrders._SetProperInputNames();
     },
 
@@ -106,12 +106,15 @@ WebERP.PurchasingOrders = {
         var pogridtableRows = $('#poDtlTable tbody tr');
         $.each(pogridtableRows, function (rowInd, row) {
             debugger
-            var inputs = $('input, select , textarea', row);
+            var inputs = $('input, select', row);
             $.each(inputs, function (inputInd, input) {
-                debugger
-                var oldName = $(input).attr('name');
+                debugger    
+                var OldId = $(input).attr('id');
+                var oldName = $(input).attr('name');               
                 oldName = oldName.replace(/\[\d\]/, '[' + rowInd + ']');
+                OldId = OldId.replace(/\_\d\_/, '_' + rowInd + '_');
                 $(input).attr('name', oldName);
+                $(input).attr('id', OldId);
             });
         });
     },
@@ -142,8 +145,7 @@ WebERP.PurchasingOrders = {
                 if (xhr.status == 200) {
                     debugger
                     var itemList = $('select', nextCell);
-                    itemList.empty();
-                    itemList.addClass("Select2DropDown");
+                    itemList.empty();                    
                     itemList.append('<option value="">Select</option>')
                     $.each(data, function (index, val) {
                         var $option;
@@ -218,7 +220,7 @@ WebERP.PurchasingOrders = {
         }       
         var netprice = parseFloat(netRate);
         currentRow.find("td:eq(6) input[type='text']").val((currentRate - netprice).toFixed(2));
-        currentRow.find("td:eq(7) input[type='text']").val(netRate);
+        currentRow.find("td:eq(7) input[type='text']").val(netprice.toFixed(2));
         var currentQ = currentRow.find("td:eq(3) input[type='number']").val();
         if (currentQ.length) {
             rowAmount = WebERP.PurchasingOrders.CalculateFinalAmount(currentQ, netRate);
@@ -239,7 +241,7 @@ WebERP.PurchasingOrders = {
         }
         var netprice = parseFloat(netRate);
         currentRow.find("td:eq(6) input[type='text']").val((currentRate - netprice).toFixed(2));
-        currentRow.find("td:eq(7) input[type='text']").val(netRate);
+        currentRow.find("td:eq(7) input[type='text']").val(netprice.toFixed(2));
 
         var currentQ = currentRow.find("td:eq(3) input[type='number']").val();
         if (currentQ.length) {
@@ -284,7 +286,7 @@ WebERP.PurchasingOrders = {
                 grandTotal += parseFloat($(this).val());
             }
         });
-        $("#totalAmount").val(grandTotal);
+        $("#totalAmount").val(grandTotal.toFixed(2));
     },
 
     CalculateQTotal: function (e) {        

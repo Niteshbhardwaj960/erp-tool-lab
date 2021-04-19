@@ -3,19 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebERP</title>
+    <title>@ViewData["Title"] - ERP</title>
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        @*<style>
-                .select2-container .select2-selection--single {
-                    height: 35px !important;
-                }
-
-                .select2-container--default .select2-selection--single {
-                    border: 1px solid #ccc !important;
-                    border-radius: 1px !important;
-                }
-            </style>*@
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />       
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -33,48 +23,10 @@
     <link href="~/layoutcss/css/sb-admin-2.min.css" rel="stylesheet">
     <!-- Custom styles for this page -->
     <link href="~/layoutcss/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="~/lib/bootstrap/Chosen/chosen.min.css" rel="stylesheet" />
+    
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />    
 </head>
 <body id="page-top" class="sidebar-toggled">
-    @*<header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebERP</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class=" collapse navbar-collapse d-sm-inline-flex flex-sm-row-reverse ">
-                        <partial name="_LoginPartial" />
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-        <div class="container">
-            <partial name="_CookieConsentPartial" />
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
-
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2021 - WebERP - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>*@
-
-
-
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
@@ -132,141 +84,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
                     <ul class="navbar-nav ml-auto">
-                        @*
-                            <div class="topbar-divider d-none d-sm-block">
-
-                            </div>*@
-
-                        @*<!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-                        <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="~/layoutcss/img/undraw_profile_1.svg"
-                                             alt="">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">
-                                            Hi there! I am wondering if you can help me with a
-                                            problem I've been having.
-                                        </div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="~/layoutcss/img/undraw_profile_2.svg"
-                                             alt="">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">
-                                            I have the photos that you ordered last month, how
-                                            would you like them sent to you?
-                                        </div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="~/layoutcss/img/undraw_profile_3.svg"
-                                             alt="">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">
-                                            Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!
-                                        </div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                             alt="">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">
-                                            Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...
-                                        </div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
-                        </li>
-                        @*<div class="topbar-divider d-none d-sm-block"></div>
-                        @*<li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link" role="button" asp-area="Identity" asp-page="/Account/Login">
-                                    Login<i class="fas fa-sign-in fa-fw"></i>
-                                </a>
-                            </li>*@
-
+                        @*<div class="topbar-divider d-none d-sm-block"></div>*@
                         <partial name="_LoginPartial" />
                     </ul>
                 </nav>
@@ -322,7 +140,7 @@
     </div>
 
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>        
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     </environment>
     <environment exclude="Development">
@@ -339,6 +157,7 @@
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
     </environment>
+
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
@@ -349,18 +168,21 @@
     <!-- Page level plugins -->
     <script src="~/layoutcss/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/layoutcss/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
+   
     <!-- Page level custom scripts -->
-    <script src="~/layoutcss/js/demo/datatables-demo.js"></script>
-    <script src="~/lib/jquery/ChosenJs/chosen.jquery.min.js"></script>
+    <script src="~/layoutcss/js/demo/datatables-demo.js"></script>  
+
     <script src="~/scripts/erpCommon.js"></script>
     <script src="~/scripts/erpPoDetails.js"></script>
     <script src="~/scripts/erpJobWork.js"></script>
+    <script src="~/scripts/erpSalesCalculations.js"></script>
+
     @RenderSection("Scripts", required: false)
 
     <script>
         $(function () {
             WebERP.PurchasingOrders.Init();
+            WebERP.SalesGrid.Init();
         });
     </script>
 </body>

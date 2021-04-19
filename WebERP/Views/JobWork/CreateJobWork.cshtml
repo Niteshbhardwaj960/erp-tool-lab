@@ -139,7 +139,7 @@
                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @type = "number", @readOnly = "readonly" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control jwUserFilledQty", @type = "number", @step = ".01" })
+                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control jwUserFilledQty", @type = "number", @step = ".001" })
                                     </td>                                      
                                     <td>
                                         @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control" })

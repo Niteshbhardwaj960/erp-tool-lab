@@ -6,6 +6,11 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20210418131356_SalesHeaderDetTable.cs" />
+    <Compile Remove="Data\Migrations\20210418131356_SalesHeaderDetTable.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.95.4" />

@@ -84,8 +84,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
                         <select class="form-control" id="jwComDropDown"
-                            asp-items="@(new SelectList(Model.JobWorkIssHeader.GetProcess, "Value", "Text"))"></select>
-                        
+                            asp-items="@(new SelectList(Model.JobWorkIssHeader.GetProcess, "Value", "Text"))"></select>                        
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2">
@@ -94,22 +93,23 @@
                         <i class="fa fa-info-circle"></i>
                     </a>
                 </div>
+              
             </div>
             <div class="row" style="font-size:small;">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="table-responsive-sm">
-                        <table class="table table-sm d-sm-table-cell table-bordered" id="jwDtlTable" width="100%" cellspacing="0">
+                        <table class="table table-sm d-sm-table-cell table-bordered jwDt" id="jwDtlTable" width="100%" cellspacing="0">
                             <thead class="thead-light">
                                 <tr style="text-align:center;">                                    
-                                    <th >GDW</th>
-                                    <th >Item</th>
-                                    <th >Artical</th>
-                                    <th >Size</th>
-                                    <th >HSN</th>
-                                    <th >Process</th>
-                                    <th >Stock Qty</th>
-                                    <th >Proc Qty</th>                                   
-                                    <th >Remarks</th>
+                                    <th style="width: 40px;" >GDW</th>
+                                    <th style="width: 40px;">Item</th>
+                                    <th style="width: 40px;">Artical</th>
+                                    <th style="width: 40px;">Size</th>
+                                    <th style="width: 40px;">HSN</th>
+                                    <th style="width: 40px;">Process</th>
+                                    <th style="width: 40px;">Stock Qty</th>
+                                    <th style="width: 40px;">Proc Qty</th>                                   
+                                    <th style="width: 40px;">Remarks</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -155,6 +155,7 @@
                                 </tr>
                                 }
                             </tbody>
+                            
                         </table>
                     </div>
                 </div>
