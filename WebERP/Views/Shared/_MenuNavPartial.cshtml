@@ -125,6 +125,10 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     @*<h6 class="collapse-header">Users:</h6>*@
 
+                    @if (User.IsInRole("Tax") || User.IsInRole("Admin"))
+                    {
+                        <a class="collapse-item" asp-controller="Tax" asp-action="Tax_Detail">Tax</a>
+                    }
                     @if (User.IsInRole("AgentCommRate") || User.IsInRole("Admin"))
                     {
                         <a class="collapse-item" asp-controller="AgentCommRate" asp-action="AgentCommRateDetails">Agent Commission Rate</a>

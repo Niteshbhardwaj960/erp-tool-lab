@@ -69,6 +69,7 @@ namespace WebERP.Data
         public DbSet<AgentCommRate> AgentCommRate { get; set; }
         public DbSet<V_GATE_ENTRY_ACC> V_GATE_ENTRY_ACC { get; set; }
         public DbSet<V_JW_DTL> V_JW_DTL { get; set; }
+        public DbSet<TAX_MASTER> TAX_MASTER { get; set; }
     }
 
 }

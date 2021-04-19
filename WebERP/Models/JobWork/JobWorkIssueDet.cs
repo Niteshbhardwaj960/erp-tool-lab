@@ -55,6 +55,11 @@ namespace WebERP.Models
 
         public string QTY_UOM { get; set; } //considering as a stock quant for now
 
+        [DataType(DataType.Currency)]
+        [RegularExpression(@"^\d+\.\d{0,2}$")]
+        [Range(0, 9999999999999.99)]
+        public decimal JW_RATE { get; set; }
+
         [StringLength(100)]
         public string REMARKS { get; set; }
 
