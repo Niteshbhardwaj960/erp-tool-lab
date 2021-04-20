@@ -74,6 +74,7 @@ namespace WebERP.Data
         public DbSet<SalesDetail> SalesDetails { get; set; }
 
         public DbSet<TAX_MASTER> TAX_MASTER { get; set; }
+        public DbSet<V_LEDGER> V_LEDGER { get; set; }
 
     }
 

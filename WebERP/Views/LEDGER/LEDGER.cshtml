@@ -1,0 +1,118 @@
+﻿@model WebERP.Models.LedgerViewModel
+
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Ledger Details</h3>
+        </nav>
+        <div class="card-body">
+
+            <form id="menu-form" method="post" asp-controller="GateEntry" asp-action="EditGateEntry">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Select Filter Details</b></h4>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Account Name</label>
+                            <div class="custom-radio">
+                                <select asp-for="Acc_Codes" id="ddlACC" name="ddlACC" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ddlAcc ,"Value", "Text"))"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">From Date</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.FromDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">To Date</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.To_Date, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Ledger" asp-action="Filter">
+                                <i class="fa fa-filter"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                @if (Model.type == "Filter")
+                {
+                    <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Detail</b></h4>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Cr Amount</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(a => a.CR_Amounts, new { @class = "form-control", @type = "text", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="branch_id">Dr Amount</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(a => a.DR_Amounts, new { @class = "form-control", @type = "text", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" name="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Account Name</th>
+                                            <th>DOC Fin Year</th>
+                                            <th>DOC No.</th>
+                                            <th>Doc Date</th>
+                                            <th>Doc Type</th>
+                                            <th>Remarks</th>
+                                            <th>Dr Amount</th>
+                                            <th>Cr Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var Data in Model.v_LEDGERs)
+                                        {
+                                            <tr>
+                                                <td>@Data.ACC_NAME</td>
+                                                <td>@Data.DOC_FN_YEAR</td>
+                                                <td>@Data.DOC_NO</td>
+                                                <td>@Data.DOC_DATE</td>
+                                                <td>@Data.DOC_TYPE</td>
+                                                <td>@Data.REMARKS</td>
+                                                <td>@Data.DR_AMOUNT</td>
+                                                <td>@Data.CR_AMOUNT</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right " asp-controller="Dashboard" asp-action="Dashboard">Close</a>
+                                &nbsp;&nbsp; <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Ledger" asp-action="Export">
+                                    <i class="fa fa-filter"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </form>
+        </div>
+
+    </div>
+</div>
