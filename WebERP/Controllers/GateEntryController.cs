@@ -181,7 +181,7 @@ namespace WebERP.Controllers
                 {
                     GEList.Add(new GateEntryDetail()
                     {
-                        POD_FK = order.JWD_PK,
+                        JW_FK = order.JWD_PK,
                         GH_FK = GateHdrID,
                         INS_DATE = DateTime.Now,
                         INS_UID = userManager.GetUserName(HttpContext.User),
