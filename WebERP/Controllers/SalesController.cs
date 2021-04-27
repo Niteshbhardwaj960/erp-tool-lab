@@ -52,7 +52,7 @@ namespace WebERP.Controllers
             List<SalesDetail> saleDetailList = new List<SalesDetail>();
             saleViewModel.SalesHeader = GetSaleHeader();
             viewStockMaster = dbContext.V_RM_DTL.AsNoTracking().ToList();
-            saleDetailList = GetJWDetails(viewStockMaster);
+            saleDetailList = GetSalesDetails(viewStockMaster);
             saleViewModel.SaleDetails = saleDetailList;
             return View(saleViewModel);
         }
@@ -96,7 +96,7 @@ namespace WebERP.Controllers
             return saleHeader;
         }
 
-        public List<SalesDetail> GetJWDetails(List<V_RM_DTL> stockMasterList)
+        public List<SalesDetail> GetSalesDetails(List<V_RM_DTL> stockMasterList)
         {
             List<SalesDetail> saleDetailList = new List<SalesDetail>();
             decimal grandQTotal = 0;
