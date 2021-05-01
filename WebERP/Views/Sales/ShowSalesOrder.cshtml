@@ -1,32 +1,31 @@
-﻿@model WebERP.Models.SalesViewModel
+﻿
+@model WebERP.Models.SalesViewModel
 @{
-    ViewData["Title"] = "CreateSaleOrder";
+    ViewData["Title"] = "ShowSalesOrder";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #00ff7ee6 0%, #74009a 100%);">
-    <h3 style="color:white">New Sales Order</h3>
+    <h3 style="color:white">View Sales Order</h3>
 </nav>
 
 <div class="card">
     <div class="card-body">
-        <form method="post" id="salesForm">
+        <form>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-controller="Sales" asp-action="SalesGrid">Sales</a></li>
-                    <li class="breadcrumb-item">Create Sales</li>
-                    <li class="breadcrumb-item active" aria-current="page">Fill Data</li>
+                    <li class="breadcrumb-item">Show Sales</li>                    
                 </ol>
             </nav>
-            <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #4be6ffb5 0%, #74009a 100%);">
                 <b>Sales Header Details</b>
             </h4>
             <div class="row">
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>Company</label>
-                        <select asp-for="SalesHeader.COMP_CODE" class="form-control"
-                                asp-items="@(new SelectList(Model.SalesHeader.companyDropDown,"Value", "Text"))" readonly></select>
+                        <input type="text" class="form-control" asp-for="SalesHeader.COMP_NAME" readonly>
                     </div>
                 </div>
             </div>
@@ -40,14 +39,43 @@
                                 <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
                             </div>
                         </div>
-                        <input class="form-control fc-datepicker" id="salesDocDate" type="date" asp-for="SalesHeader.DOC_DATE">
+                        <input class="form-control fc-datepicker" type="date" asp-for="SalesHeader.DOC_DATE" readonly>
                     </div>
                 </div>
 
                 <div class="col-lg-2 col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>Document Financial Year</label>
-                        <input type="text" class="form-control" id="salesFinancialYear" asp-for="SalesHeader.DOC_FINYEAR" readonly>
+                        <input type="text" class="form-control" asp-for="SalesHeader.DOC_FINYEAR" readonly>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Document No</label>
+                        <input type="text" class="form-control" asp-for="SalesHeader.DOC_NO" readonly>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <label>Gate Out Date</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                            </div>
+                        </div>
+                        <input class="form-control fc-datepicker" type="date" asp-for="SalesHeader.GATEOUT_DATE" readonly>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Gate Out UID</label>
+                        <input type="text" class="form-control"  asp-for="SalesHeader.GATEOUT_UID" readonly>
                     </div>
                 </div>
 
@@ -57,29 +85,27 @@
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
                         <label>Party Name</label>
-                        <select asp-for="SalesHeader.ACC_CODE" class="form-control Select2DropDown"
-                                asp-items="@(new SelectList(Model.SalesHeader.accDropDown, "Value", "Text"))"></select>                      
+                        <input type="text" class="form-control" asp-for="SalesHeader.ACC_NAME" readonly>                        
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
                         <label>Party Agent</label>
-                        <select asp-for="SalesHeader.AGENTACC_CODE" class="form-control Select2DropDown"
-                                asp-items="@(new SelectList(Model.SalesHeader.agentaccDropDown, "Value", "Text"))"></select>
+                        <input type="text" class="form-control" asp-for="SalesHeader.AGENTACC_CODE" readonly>
                     </div>
                 </div>
             </div>
 
-            <div class="row">               
+            <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <input type="text" class="form-control" asp-for="SalesHeader.REMARKS" placeholder="Place sales order remarks here">
+                        <input type="text" class="form-control" asp-for="SalesHeader.REMARKS" readonly>
                     </div>
                 </div>
             </div>
 
-            <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Sales Order Details</b></h4>
+            <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #4be6ffb5 0%, #74009a 100%);"><b>Sales Order Details</b></h4>
 
             <div class="row" style="font-size:small;">
                 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -105,44 +131,49 @@
                             <tbody>
                                 @for (int j = 0; j < Model.SaleDetails.Count(); j++)
                                 {
-                                    <tr class="template">
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].GODOWN_CODE, new { @class = "form-control" })
+                                    <tr>
+                                        <td>                                            
                                             @Html.TextBoxFor(m => m.SaleDetails[j].GODOWN_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
                                         </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].ITEM_CODE, new { @class = "form-control" })
+                                        <td>                                            
                                             @Html.TextBoxFor(m => m.SaleDetails[j].ITEM_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
                                         </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].ARTICAL_CODE, new { @class = "form-control" })
+                                        <td>                                           
                                             @Html.TextBoxFor(m => m.SaleDetails[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                         </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].SIZE_CODE, new { @class = "form-control" })
+                                        <td>                                           
                                             @Html.TextBoxFor(m => m.SaleDetails[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].HSN_CODE, new { @class = "form-control", @type = "text" })
+                                            @Html.TextBoxFor(m => m.SaleDetails[j].HSN_CODE, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].SALE_QTY, new { @class = "form-control salesRowQty", @type = "number", @step = ".001" })
+                                            @Html.TextBoxFor(m => m.SaleDetails[j].SALE_QTY, new { @class = "form-control", @type = "number", @step = ".001", @readOnly = "readonly" })
                                         </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].SALEQTYCODE, new { @class = "form-control" })
+                                        <td>                                            
                                             @Html.TextBoxFor(m => m.SaleDetails[j].SALEQTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].RATE, new { @class = "form-control", @type = "number", @step = ".01" })
+                                            @Html.TextBoxFor(m => m.SaleDetails[j].RATE, new { @class = "form-control", @type = "number", @step = ".01", @readOnly = "readonly" })
                                         </td>
                                         <td>
-                                            @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
-                                             new SelectList(new List<Object>{
-                                                                              new { value = "P" , text = "Per" },
-                                                                              new { value = "F" , text = "Fix"}}, "value", "text", 0),new { @class="form-control"})
+                                            @if (Model.SaleDetails[j].DISCPER_TAG == "P")
+                                            {
+                                                @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
+                                                                                            new SelectList(new List<Object>{
+                                                                                                                             new { value = "P" , text = "Per"  },
+                                                                                                                             new { value = "F" , text = "Fix" } }, "value", "text", 0),new { @class="form-control", @readOnly = "readonly" })
+                                            }
+                                            @if (Model.SaleDetails[j].DISCPER_TAG == "F")
+                                            {
+                                                @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
+                                                                                            new SelectList(new List<Object>{
+                                                                                                                             new { value = "P" , text = "Per"  },
+                                                                                                                             new { value = "F" , text = "Fix" } }, "value", "text", 1),new { @class="form-control", @readOnly = "readonly" })
+                                            }
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].DISC_PER, new { @class = "form-control", @type = "number", @step = ".01"  })
+                                            @Html.TextBoxFor(m => m.SaleDetails[j].DISC_PER, new { @class = "form-control", @type = "number", @step = ".01", @readOnly = "readonly" })
                                         </td>
                                         <td>
                                             @Html.TextBoxFor(m => m.SaleDetails[j].DISC_RATE, new { @class = "form-control", @readOnly = "readonly" })
@@ -163,14 +194,14 @@
                                         <label style="font-weight: bold;color: darkblue;">Total Qty:</label>
                                     </td>
                                     <td>
-                                        <input class="form-control" id="totalSaleQuant" value="@ViewBag.grandQTotal" readonly />
+                                        <input class="form-control" id="totalSaleQuant" value="@ViewBag.grandQTotal" readonly/>
                                     </td>
                                     <td colspan="5"></td>
                                     <td>
                                         <label style="font-weight: bold;color: darkblue;">Gross Amt:</label>
                                     </td>
                                     <td>
-                                        <input class="form-control" asp-for="SalesHeader.GROSS_AMT" id="TotalGrossItemAmt" readonly />
+                                        <input class="form-control" asp-for="SalesHeader.GROSS_AMT" id="TotalGrossItemAmt" readonly/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -179,7 +210,7 @@
                                         <label style="font-weight: bold;color: darkblue;">Round Off Amt(+/-):</label>
                                     </td>
                                     <td>
-                                        <input class="form-control" asp-for="SalesHeader.RF_AMT" id="RoundoffAmount" readonly />
+                                        <input class="form-control" asp-for="SalesHeader.RF_AMT" readonly/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -188,17 +219,16 @@
                                         <label style="font-weight: bold;color: darkblue;">Tax Name</label>
                                     </td>
                                     <td>
-                                        <select asp-for="SalesHeader.TAX_CODE" class="form-control" id="taxlist"
-                                                asp-items="@(new SelectList(Model.SalesHeader.taxDropDown, "Value", "Text"))"></select>                                        
+                                        <input class="form-control" asp-for="SalesHeader.TAX_NAME"  readonly />
                                     </td>
                                     <td>
                                         <label style="font-weight: bold;color: darkblue;">IGST % | Amount</label>
                                     </td>
                                     <td>
-                                        <input class="form-control" asp-for="SalesHeader.IGST_PER" id="igstper" readonly />
+                                        <input class="form-control" asp-for="SalesHeader.IGST_PER" readonly />
                                     </td>
                                     <td>
-                                        <input class="form-control" asp-for="SalesHeader.IGST_AMOUNT" id="igstamt" readonly />
+                                        <input class="form-control" asp-for="SalesHeader.IGST_AMOUNT" readonly />
                                     </td>
                                 </tr>
                                 <tr>
@@ -207,10 +237,10 @@
                                         <label style="font-weight: bold;color: darkblue;">CGST % | Amount</label>
                                     </td>
                                     <td>
-                                        <input class="form-control" asp-for="SalesHeader.CGST_PER" id="cgstper" readonly />
+                                        <input class="form-control" asp-for="SalesHeader.CGST_PER"  readonly />
                                     </td>
                                     <td>
-                                        <input class="form-control" asp-for="SalesHeader.CGST_AMOUNT" id="cgstamt" readonly />
+                                        <input class="form-control" asp-for="SalesHeader.CGST_AMOUNT"  readonly />
                                     </td>
                                 </tr>
                                 <tr>
@@ -219,10 +249,10 @@
                                         <label style="font-weight: bold;color: darkblue;">SGST % | Amount</label>
                                     </td>
                                     <td>
-                                        <input class="form-control" asp-for="SalesHeader.SGST_PER" id="sgstper" readonly />
+                                        <input class="form-control" asp-for="SalesHeader.SGST_PER" readonly />
                                     </td>
                                     <td>
-                                        <input class="form-control" asp-for="SalesHeader.SGST_AMOUNT" id="sgstamt"  readonly />
+                                        <input class="form-control" asp-for="SalesHeader.SGST_AMOUNT" readonly />
                                     </td>
                                 </tr>
                                 <tr>
@@ -240,10 +270,10 @@
                                         <label style="font-weight: bold;color: darkblue;">1.Additional Amount\Name</label>
                                     </td>
                                     <td>
-                                        <input class="form-control" asp-for="SalesHeader.OTH_AMTNAME1" id="otherAmtname1" placeholder="name1" />
+                                        <input class="form-control" asp-for="SalesHeader.OTH_AMTNAME1"  readonly />
                                     </td>
                                     <td>
-                                        <input class="form-control otheramt" asp-for="SalesHeader.OTH_AMT1" id="otherAmt1" type="number" step="0.01" />
+                                        <input class="form-control otheramt" asp-for="SalesHeader.OTH_AMT1" id="otherAmt1" type="number" step="0.01" readonly/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -252,10 +282,10 @@
                                         <label style="font-weight: bold;color: darkblue;">2.Additional Amount\Name</label>
                                     </td>
                                     <td>
-                                        <input class="form-control" asp-for="SalesHeader.OTH_AMTNAME2" id="otherAmtname2" placeholder="name2" />
+                                        <input class="form-control" asp-for="SalesHeader.OTH_AMTNAME2" readonly />
                                     </td>
                                     <td>
-                                        <input class="form-control otheramt" asp-for="SalesHeader.OTH_AMT2" id="otherAmt2" type="number" step="0.01" />
+                                        <input class="form-control otheramt" asp-for="SalesHeader.OTH_AMT2" id="otherAmt2" type="number" step="0.01" readonly />
                                     </td>
                                 </tr>
                                 <tr>
@@ -271,11 +301,7 @@
                         </table>
                     </div>
                 </div>
-            </div>
-            <hr class="alert-light" />
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-            </div>
+            </div>            
         </form>
         <hr />
         <div>
@@ -283,5 +309,9 @@
         </div>
     </div>
 </div>
+
+
+
+
 
 

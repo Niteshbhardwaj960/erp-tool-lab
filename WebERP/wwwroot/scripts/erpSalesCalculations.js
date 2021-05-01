@@ -9,11 +9,80 @@ WebERP.SalesGrid = {
        
         $('#salesDtlTable tbody').on('change', 'select[name*="DISCPER_TAG"]', WebERP.SalesGrid.DisTagOnChange);
         $('#salesForm').on('change', 'input[id="salesDocDate"]', WebERP.SalesGrid.GetFinancialYear);               
-        //Calculation 
+        $('#salesDtlTable tfoot').on('change', 'select[name*="TAX_CODE"]', WebERP.SalesGrid.TaxOnChange);
+        //Calculation
         $('#salesDtlTable tbody').on('change', 'input[name*="QTY"]', WebERP.SalesGrid.QuantityOnChange);
+        $('#salesDtlTable tfoot').on('change', 'input[name*="OTH_AMT"]', WebERP.SalesGrid.OtherAmount);
         $('#salesDtlTable tbody').on('change', 'input[name*="RATE"]', WebERP.SalesGrid.RateOnChange);
         $('#salesDtlTable tbody').on('change', 'input[name*="DISC_PER"]', WebERP.SalesGrid.DiscRateOnChange);
 
+    },
+    OtherAmount: function (e) {        
+        var grandTotal = 0;
+        $.each($('#salesDtlTable tfoot').find('input[name*="OTH_AMT"]'), function () {
+            if ($(this).val() != '' && !isNaN($(this).val())) {
+                grandTotal += parseFloat($(this).val());
+            }
+        });      
+        var TotalNet = grandTotal + parseFloat($("#TotalGrossItemAmt").val())
+                                  + parseFloat($("#RoundoffAmount").val())
+                                  + parseFloat($("#TotalTaxAmt").val());
+        $("#TotalNetAmt").val(parseFloat(TotalNet));
+    },
+
+    TaxOnChange: function (e) {        
+        WebERP.SalesGrid.TaxDataFilled(
+            $(this).val(),
+            function (data, textStatus, xhr) {
+                if (xhr.status == 200) {                    
+                    $("#igstper").val(data.igst);
+                    $("#cgstper").val(data.cgst);
+                    $("#sgstper").val(data.sgst); 
+                    var grossAmount = $("#TotalGrossItemAmt").val();
+                    $("#igstamt").val(WebERP.SalesGrid.CalculateTaxRate($("#igstper").val(), grossAmount));
+                    $("#cgstamt").val(WebERP.SalesGrid.CalculateTaxRate($("#cgstper").val(), grossAmount));
+                    $("#sgstamt").val(WebERP.SalesGrid.CalculateTaxRate($("#sgstper").val(), grossAmount));
+                    $("#TotalTaxAmt").val(parseFloat($("#igstamt").val()) + parseFloat($("#cgstamt").val()) + parseFloat($("#sgstamt").val()));
+                    $("#TotalNetAmt").val(parseFloat($("#TotalGrossItemAmt").val())
+                        + parseFloat($("#RoundoffAmount").val())
+                        + parseFloat($("#TotalTaxAmt").val())
+                        + parseFloat($("#otherAmt1").val())
+                        + parseFloat($("#otherAmt2").val()));
+                }               
+            },
+            function (data, textStatus, errorThrown) {
+                if (textStatus != "abort") {
+                    alert(errorThrown);                  
+                }
+                else {
+                    alert('Unable to Connect while getting Tax List')
+                }
+            }
+        )       
+    },
+
+    CalculateTaxRate: function (gstPer, grossAmount) {
+        debugger
+        grossamt = parseFloat(grossAmount);
+        gst = parseFloat(gstPer);
+        return (grossamt * gst / 100).toFixed(2); 
+      
+    },
+
+    TaxDataFilled: function (Code, successCallBack, errorCallBack) {
+        if (WebERP.SalesGrid.currentAjaxReq !== null) {
+            WebERP.SalesGrid.currentAjaxReq.abort();
+            WebERP.SalesGrid.currentAjaxReq = null;
+        }        
+        WebERP.SalesGrid.currentAjaxReq = $.ajax({
+            url: "/Sales/GetTaxList?code=" + Code,
+            contentType: 'application/json; charset=utf-8',
+            async: true,
+            dataType: 'json',
+            type: 'GET',
+            success: successCallBack,
+            error: errorCallBack
+        });
     },
 
     GetFinancialYear() {
@@ -27,6 +96,7 @@ WebERP.SalesGrid = {
         }
         $("#salesFinancialYear").val(financial_year);
     },
+
     DisTagOnChange: function (e) {
         debugger
         var currentRow = $(this).closest("tr");
@@ -54,6 +124,7 @@ WebERP.SalesGrid = {
         WebERP.SalesGrid.CalculateQTotal();
 
     },
+
     QuantityOnChange: function (e) {
         debugger
         var currentRow = $(this).closest('tr');
@@ -68,6 +139,7 @@ WebERP.SalesGrid = {
         WebERP.SalesGrid.CalculateGrandTotal();
         WebERP.SalesGrid.CalculateQTotal();
     },
+
     RateOnChange: function (e) {
         var currentRow = $(this).closest('tr');
         var currentRate = $(this).val();
@@ -155,6 +227,17 @@ WebERP.SalesGrid = {
         $("#TotalGrossItemAmt").val(grandTotal.toFixed(2));
         var GrossRoundOff = Math.round($("#TotalGrossItemAmt").val());
         $("#RoundoffAmount").val(GrossRoundOff - ($("#TotalGrossItemAmt").val()));
+
+        var grossAmount = $("#TotalGrossItemAmt").val();
+        $("#igstamt").val(WebERP.SalesGrid.CalculateTaxRate($("#igstper").val(), grossAmount));
+        $("#cgstamt").val(WebERP.SalesGrid.CalculateTaxRate($("#cgstper").val(), grossAmount));
+        $("#sgstamt").val(WebERP.SalesGrid.CalculateTaxRate($("#sgstper").val(), grossAmount));
+        $("#TotalTaxAmt").val(parseFloat($("#igstamt").val()) + parseFloat($("#cgstamt").val()) + parseFloat($("#sgstamt").val()));
+        $("#TotalNetAmt").val(parseFloat($("#TotalGrossItemAmt").val())
+            + parseFloat($("#RoundoffAmount").val())
+            + parseFloat($("#TotalTaxAmt").val())
+            + parseFloat($("#otherAmt1").val())
+            + parseFloat($("#otherAmt2").val()));
     },
 
     CalculateQTotal: function (e) {
