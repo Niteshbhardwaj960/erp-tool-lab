@@ -52,6 +52,9 @@ namespace WebERP.Models
         public decimal NET_AMT { get; set; }
 
         [NotMapped]
+        public List<SelectListItem> taxDropDown { get; set; }
+
+        [NotMapped]
         public string TAX_NAME { get; set; }
 
         public int TAX_CODE { get; set; }
