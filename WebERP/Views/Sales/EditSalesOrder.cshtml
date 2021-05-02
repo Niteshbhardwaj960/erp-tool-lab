@@ -1,11 +1,11 @@
 ﻿@model WebERP.Models.SalesViewModel
 @{
-    ViewData["Title"] = "CreateSaleOrder";
+    ViewData["Title"] = "EditSalesOrder";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #00ff7ee6 0%, #74009a 100%);">
-    <h3 style="color:white">New Sales Order</h3>
+    <h3 style="color:white">Update Sales Order</h3>
 </nav>
 
 <div class="card">
@@ -14,7 +14,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-controller="Sales" asp-action="SalesGrid">Sales</a></li>
-                    <li class="breadcrumb-item">Create Sales</li>
+                    <li class="breadcrumb-item">Update Sales</li>
                     <li class="breadcrumb-item active" aria-current="page">Fill Data</li>
                 </ol>
             </nav>
@@ -51,6 +51,35 @@
                     </div>
                 </div>
 
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Document No</label>
+                        <input type="text" class="form-control" id="salesDocNo" asp-for="SalesHeader.DOC_NO" readonly>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <label>Gate Out Date</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                            </div>
+                        </div>
+                        <input class="form-control fc-datepicker" id="salesGateOutDate" type="date" asp-for="SalesHeader.GATEOUT_DATE">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Gate Out UID</label>
+                        <input type="text" class="form-control" id="salesGateUid" asp-for="SalesHeader.GATEOUT_UID" readonly>
+                    </div>
+                </div>
+
             </div>
 
             <div class="row">
@@ -58,7 +87,7 @@
                     <div class="form-group">
                         <label>Party Name</label>
                         <select asp-for="SalesHeader.ACC_CODE" class="form-control Select2DropDown"
-                                asp-items="@(new SelectList(Model.SalesHeader.accDropDown, "Value", "Text"))"></select>                      
+                                asp-items="@(new SelectList(Model.SalesHeader.accDropDown, "Value", "Text"))"></select>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3">
@@ -70,7 +99,7 @@
                 </div>
             </div>
 
-            <div class="row">               
+            <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Remarks</label>
@@ -105,7 +134,7 @@
                             <tbody>
                                 @for (int j = 0; j < Model.SaleDetails.Count(); j++)
                                 {
-                                    <tr class="template">
+                                    <tr>
                                         <td>
                                             @Html.HiddenFor(a => a.SaleDetails[j].GODOWN_CODE, new { @class = "form-control" })
                                             @Html.TextBoxFor(m => m.SaleDetails[j].GODOWN_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
@@ -135,14 +164,24 @@
                                         <td>
                                             @Html.TextBoxFor(m => m.SaleDetails[j].RATE, new { @class = "form-control", @type = "number", @step = ".01" })
                                         </td>
-                                        <td>
-                                            @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
-                                             new SelectList(new List<Object>{
-                                                                              new { value = "P" , text = "Per" },
-                                                                              new { value = "F" , text = "Fix"}}, "value", "text", 0),new { @class="form-control"})
+                                        <td>                                           
+                                            @if (Model.SaleDetails[j].DISCPER_TAG == "P")
+                                            {
+                                                @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
+                                                                                            new SelectList(new List<Object>{
+                                                                                                                             new { value = "P" , text = "Per"  },
+                                                                                                                             new { value = "F" , text = "Fix" } }, "value", "text", 0),new { @class="form-control"})
+                                            }
+                                            @if (Model.SaleDetails[j].DISCPER_TAG == "F")
+                                            {
+                                                @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
+                                                                                            new SelectList(new List<Object>{
+                                                                                                                             new { value = "P" , text = "Per"  },
+                                                                                                                             new { value = "F" , text = "Fix" } }, "value", "text", 1),new { @class="form-control"})
+                                            }
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].DISC_PER, new { @class = "form-control", @type = "number", @step = ".01"  })
+                                            @Html.TextBoxFor(m => m.SaleDetails[j].DISC_PER, new { @class = "form-control", @type = "number", @step = ".01" })
                                         </td>
                                         <td>
                                             @Html.TextBoxFor(m => m.SaleDetails[j].DISC_RATE, new { @class = "form-control", @readOnly = "readonly" })
@@ -189,7 +228,7 @@
                                     </td>
                                     <td>
                                         <select asp-for="SalesHeader.TAX_CODE" class="form-control" id="taxlist"
-                                                asp-items="@(new SelectList(Model.SalesHeader.taxDropDown, "Value", "Text"))"></select>                                        
+                                                asp-items="@(new SelectList(Model.SalesHeader.taxDropDown, "Value", "Text"))"></select>
                                     </td>
                                     <td>
                                         <label style="font-weight: bold;color: darkblue;">IGST % | Amount</label>
@@ -222,7 +261,7 @@
                                         <input class="form-control" asp-for="SalesHeader.SGST_PER" id="sgstper" readonly />
                                     </td>
                                     <td>
-                                        <input class="form-control" asp-for="SalesHeader.SGST_AMOUNT" id="sgstamt"  readonly />
+                                        <input class="form-control" asp-for="SalesHeader.SGST_AMOUNT" id="sgstamt" readonly />
                                     </td>
                                 </tr>
                                 <tr>
@@ -283,5 +322,7 @@
         </div>
     </div>
 </div>
+
+
 
 
