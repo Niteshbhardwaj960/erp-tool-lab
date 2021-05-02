@@ -82,7 +82,6 @@ WebERP.PurchasingOrders = {
     },
 
     _AddRow: function (sourceRow, appendToEnd) {
-        debugger
         sourceRow.find(".Select2DropDown").each(function (index) {
             $(this).select2('destroy');
         }); 
@@ -105,10 +104,8 @@ WebERP.PurchasingOrders = {
     _SetProperInputNames() {        
         var pogridtableRows = $('#poDtlTable tbody tr');
         $.each(pogridtableRows, function (rowInd, row) {
-            debugger
             var inputs = $('input, select', row);
-            $.each(inputs, function (inputInd, input) {
-                debugger    
+            $.each(inputs, function (inputInd, input) { 
                 var OldId = $(input).attr('id');
                 var oldName = $(input).attr('name');               
                 oldName = oldName.replace(/\[\d\]/, '[' + rowInd + ']');
@@ -133,7 +130,6 @@ WebERP.PurchasingOrders = {
     },
 
     ItemOnChange: function (e) {
-        debugger
         var currentrow = $(this).closest("tr");
         var nextCell = $(this).closest('td').next().next();
         $('select', nextCell).addClass('hidden');
@@ -143,7 +139,6 @@ WebERP.PurchasingOrders = {
             $(this).val(),
             function (data, textStatus, xhr) {
                 if (xhr.status == 200) {
-                    debugger
                     var itemList = $('select', nextCell);
                     itemList.empty();                    
                     itemList.append('<option value="">Select</option>')
@@ -253,7 +248,6 @@ WebERP.PurchasingOrders = {
     },
 
     QuantityOnChange: function (e) {
-        debugger
         var currentRow = $(this).closest('tr');
         var currentQ = $(this).val();
         if (currentQ == '') currentQ = 0;

@@ -314,9 +314,7 @@
 <script>
     $(function () {
         $("#ddlCity").change(function () {
-            debugger;
             $.getJSON("/Company/Getstatelist", { ctid: $("#ddlCity").val() }, function (d) {
-                debugger;
                 var row = "";
                 $("#ddlState").empty();
                 $("#ddlCountry").empty();

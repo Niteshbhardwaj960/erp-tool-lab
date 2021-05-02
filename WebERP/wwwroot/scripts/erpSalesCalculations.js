@@ -28,7 +28,6 @@ WebERP.SalesGrid = {
         $("#salesFinancialYear").val(financial_year);
     },
     DisTagOnChange: function (e) {
-        debugger
         var currentRow = $(this).closest("tr");
         var currentRate = currentRow.find("td:eq(7) input[type='number']").val();
         var disc_per;
@@ -55,7 +54,6 @@ WebERP.SalesGrid = {
 
     },
     QuantityOnChange: function (e) {
-        debugger
         var currentRow = $(this).closest('tr');
         var currentQ = $(this).val();
         if (currentQ == '') currentQ = 0;

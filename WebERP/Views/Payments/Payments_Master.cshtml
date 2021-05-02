@@ -190,7 +190,6 @@
 <script>
     $(function () {
         $("#DOC_DATE").change(function () {
-            debugger;
             var date = $(this).val();
             var financial_year = "";
             var today = new Date(date);
@@ -204,9 +203,7 @@
     })  
     $(function () {
         $("#PAYMENT_MODE").change(function () {
-            debugger;
             $.getJSON("/payments/CBAcclists", { type: $("#PAYMENT_MODE").val() }, function (d) {
-                debugger;
                 var row = "";
                 $("#ddlCBACC").empty();
                 $.each(d, function (i, v) {

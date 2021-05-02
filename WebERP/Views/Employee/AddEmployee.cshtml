@@ -46,7 +46,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label class="form-label">Employee Type</label>
-                            <div class="" custom-radio">
+                            <div class="custom-radio">
                                 <select class="form-control" asp-for="EMP_TYPE">
                                     <option value="P">Pc Rate</option>
                                     <option value="S">Salary</option>
@@ -98,6 +98,17 @@
                                 <input type="text" class="form-control numb" asp-for="emp_salary">
                             </div>
                             <span asp-validation-for="emp_salary" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Shift Hours</label>
+                            <div class="custom-radio">
+                                <select class="form-control" asp-for="Shift_Hrs">
+                                    <option value="12.00">12</option>
+                                    <option value="8.00">8</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">

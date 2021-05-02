@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210422062915_gateentrycolumnchlnochange")]
+    partial class gateentrycolumnchlnochange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -302,74 +304,6 @@ namespace WebERP.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Artical_Master");
-                });
-
-            modelBuilder.Entity("WebERP.Models.Artical_Merge_DTL", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ARTICAL_CODE");
-
-                    b.Property<int>("GDW_CODE");
-
-                    b.Property<int>("HDR_FK");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<int>("ITEM_CODE");
-
-                    b.Property<int>("SIZE_CODE");
-
-                    b.Property<decimal>("STK_QTY_OUT");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Artical_Merge_DTL");
-                });
-
-            modelBuilder.Entity("WebERP.Models.Artical_Merge_HDR", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ARTICAL_CODE");
-
-                    b.Property<int>("COMP_CODE");
-
-                    b.Property<DateTime?>("DOC_DATE");
-
-                    b.Property<string>("DOC_FN_YEAR");
-
-                    b.Property<int>("DOC_NO");
-
-                    b.Property<int>("GDW_CODE");
-
-                    b.Property<DateTime?>("INS_DATE");
-
-                    b.Property<string>("INS_UID");
-
-                    b.Property<int>("ITEM_CODE");
-
-                    b.Property<int>("SIZE_CODE");
-
-                    b.Property<decimal>("STK_QTY_IN");
-
-                    b.Property<DateTime?>("UDT_DATE");
-
-                    b.Property<string>("UDT_UID");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Artical_Merge_HDR");
                 });
 
             modelBuilder.Entity("WebERP.Models.Brand_Master", b =>
@@ -765,8 +699,6 @@ namespace WebERP.Data.Migrations
                     b.Property<string>("NAME");
 
                     b.Property<string>("Remarks");
-
-                    b.Property<decimal>("Shift_Hrs");
 
                     b.Property<DateTime?>("UDT_DATE");
 

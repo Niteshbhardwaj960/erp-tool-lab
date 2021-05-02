@@ -30,6 +30,7 @@ namespace WebERP.Models
         public DateTime? emp_doj { get; set; }
         [Required(ErrorMessage = "Salary is Required Field")]
         public int emp_salary { get; set; }
+        public decimal Shift_Hrs { get; set; }
         public string Dep_Name { get; set; }
         public string active_tag { get; set; }
         public string Remarks { get; set; }

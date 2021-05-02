@@ -64,6 +64,7 @@
                                 <label for="branch_id">Cutting Order</label>
                                 <label for="branch_id" style="color:red">**Document No/Employee/Item/Artical/Size/Process</label>
                                 <div class="custom-radio">
+                                    @Html.HiddenFor(a => a.cutting_Receipt.CUTTING_ORDER_FK, new { @ID = "CUTPK", @class = "form-control" })
                                     <select id="ddlCUT" name="ddlCUT" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.CUTDropDown, "Value", "Text"))"></select>
                                 </div>
                             </div>
@@ -106,7 +107,7 @@
                 <label for="branch_id">Process Name</label>
                 <div class="input-group">
                     @Html.TextBoxFor(a => a.Proc_Names, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" ,@value="Cutting"})
-                    @Html.HiddenFor(a => a.cutting_Receipt.CUTTING_ORDER_FK, new { @ID = "CUTPK", @class = "form-control" })
+                    
                 </div>
             </div>
         </div>*@
@@ -187,7 +188,6 @@
 <script>
     $(function () {
         $("#DOc_Dates").change(function () {
-            debugger;
             var date = $(this).val();
             var financial_year = "";
             var today = new Date(date);
@@ -204,7 +204,6 @@
                 success: function (data) {
                     // your data could be a View or Json or what ever you returned in your action method
                     // parse your data here
-                    debugger;
                     $("#DocNo").val(data);
                 }
             });
@@ -212,7 +211,6 @@
     })
     $(function () {
         $("#ddlCUT").change(function () {
-            debugger;
             var Array = $("#ddlCUT").val().split("/");
             $('#EmpName').val(Array[0]);
             $('#ItemName').val(Array[1]);

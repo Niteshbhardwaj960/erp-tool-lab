@@ -22,9 +22,9 @@ namespace WebERP.Models
 
         public string Acc_Codes { get; set; }
 
-        public string CR_Amounts { get; set; }
+        public decimal CR_Amounts { get; set; }
 
-        public string DR_Amounts { get; set; }
+        public decimal DR_Amounts { get; set; }
 
         public string type { get; set; }
     }

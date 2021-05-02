@@ -75,6 +75,8 @@ namespace WebERP.Data
 
         public DbSet<TAX_MASTER> TAX_MASTER { get; set; }
         public DbSet<V_LEDGER> V_LEDGER { get; set; }
+        public DbSet<Artical_Merge_DTL> Artical_Merge_DTL { get; set; }
+        public DbSet<Artical_Merge_HDR> Artical_Merge_HDR { get; set; }
 
     }
 

@@ -14,7 +14,6 @@ $(document).ready(function () {
 //$(function () {
 
 //    $('#addCountry').on('click', function (e) {
-//        debugger
 //        e.preventDefault();        
 //        $.ajax({
 //            type: "POST",
