@@ -96,10 +96,15 @@
                                                     @Html.CheckBoxFor(a => a.v_STK_DTL[j].CHK, new { @class = "form-control", @readOnly = "readonly" })
                                                 </td>
                                                 <td>
+                                                    @Html.HiddenFor(a => a.v_STK_DTL[j].GDW_CODE, new { @class = "form-control", @readOnly = "readonly" })
                                                     @Html.TextBoxFor(a => a.v_STK_DTL[j].GDW_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                                 </td>
-                                                <td>@Html.TextBoxFor(a => a.v_STK_DTL[j].ITEM_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })</td>
                                                 <td>
+                                                    @Html.HiddenFor(a => a.v_STK_DTL[j].ITEM_CODE, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @Html.TextBoxFor(a => a.v_STK_DTL[j].ITEM_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.HiddenFor(a => a.v_STK_DTL[j].ARTICAL_CODE, new { @class = "form-control", @readOnly = "readonly" })
                                                     @*<input type="date" class="form-control" asp-for="v_GateEntryDetails[j].CHL_DATE" name="CHL_DATE[j]" id="CHL_DATE">*@
                                                     @Html.TextBoxFor(a => a.v_STK_DTL[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                                 </td>

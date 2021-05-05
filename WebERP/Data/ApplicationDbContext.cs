@@ -77,7 +77,7 @@ namespace WebERP.Data
         public DbSet<V_LEDGER> V_LEDGER { get; set; }
         public DbSet<Artical_Merge_DTL> Artical_Merge_DTL { get; set; }
         public DbSet<Artical_Merge_HDR> Artical_Merge_HDR { get; set; }
-
+        public DbSet<Emp_Sal> EMP_SAL { get; set; }
     }
 
 }

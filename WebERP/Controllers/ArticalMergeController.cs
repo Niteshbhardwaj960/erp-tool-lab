@@ -160,7 +160,7 @@ namespace WebERP.Controllers
                     ARTICAL_CODE = order.ARTICAL_CODE,
                     SIZE_CODE = order.SIZE_CODE,
                     STK_QTY_OUT = order.Issue_Qty,
-                });             
+                });
 
             }
             foreach (var item in artical_Merge_List)
@@ -249,6 +249,137 @@ namespace WebERP.Controllers
                             }).ToList();
 
             return SIZEList;
+        }
+
+        [HttpGet]
+        public IActionResult Edit_AM(int id)
+        {
+            Artical_Merge_HDR artical_Merge_HDR = new Artical_Merge_HDR();
+            artical_Merge_HDR = dbContext.Artical_Merge_HDR.Where(am => am.ID == id).FirstOrDefault();
+            ArticalMergeViewModel ArtMrgmodel = new ArticalMergeViewModel();
+            ArtMrgmodel.GDWDropDown = GDWlists();
+            ArtMrgmodel.ARTDropDown = Artlists();
+            ArtMrgmodel.SIZEDropDown = Sizelists();
+            ArtMrgmodel.ITEMDropDown = ITEMlists();
+            ArtMrgmodel.artical_Merge_HDR = artical_Merge_HDR;
+
+            ArtMrgmodel.artical_Merge_DTL = dbContext.Artical_Merge_DTL.Where(ad => ad.HDR_FK == id).ToList();
+            foreach (var item in ArtMrgmodel.artical_Merge_DTL)
+            {
+                item.ARTICAL_NAME = dbContext.Artical_Master.Where(a => a.ID == item.ARTICAL_CODE).Select(a => a.NAME).FirstOrDefault();
+                item.SIZE_NAME = dbContext.Size_Master.Where(a => a.ID == item.SIZE_CODE).Select(a => a.NAME).FirstOrDefault();
+                item.ITEM_NAME = dbContext.Item_Master.Where(a => a.ID == item.ITEM_CODE).Select(a => a.NAME).FirstOrDefault();
+                item.GDW_NAME = dbContext.Godown_Master.Where(a => a.ID == item.GDW_CODE).Select(a => a.NAME).FirstOrDefault();
+            }
+            ArtMrgmodel.Type = "Edit";
+            return View("Edit_AM", ArtMrgmodel);
+
+
+        }
+
+        [HttpPost]
+        public IActionResult Edit_AM(ArticalMergeViewModel articalMergeViewModel,int HDRID, decimal STK_QTY_IN, string doc_Date, string FinYear, string ddlITEM, string ddlART, string ddlSize, string ddlGDW)
+        {
+            if (ModelState.IsValid)
+            {
+                var ArtMgrHDR = dbContext.Artical_Merge_HDR.Where(hd => hd.ID == HDRID).FirstOrDefault();
+                if (ArtMgrHDR != null)
+                {
+                    ArtMgrHDR.UDT_DATE = DateTime.Now;
+                    ArtMgrHDR.UDT_UID = userManager.GetUserName(HttpContext.User);
+                    ArtMgrHDR.DOC_DATE = Convert.ToDateTime(doc_Date);
+                    ArtMgrHDR.DOC_FN_YEAR = FinYear;
+                    ArtMgrHDR.GDW_CODE = Convert.ToInt32(ddlGDW);
+                    ArtMgrHDR.ARTICAL_CODE = Convert.ToInt32(ddlART);
+                    ArtMgrHDR.SIZE_CODE = Convert.ToInt32(ddlSize);
+                    ArtMgrHDR.ITEM_CODE = Convert.ToInt32(ddlITEM);
+                    ArtMgrHDR.STK_QTY_IN = STK_QTY_IN;
+                    dbContext.SaveChanges();
+                }
+
+                var stkdetail = dbContext.StockDTL_Models.Where(s => s.Tran_Table_PK == HDRID && s.Tran_Table == "Artical Merge Entry HDR").FirstOrDefault();
+                if (stkdetail != null)
+                {
+                    stkdetail.GDW_CODE = Convert.ToInt32(ddlGDW);
+                    stkdetail.Artical_CODE = Convert.ToInt32(ddlART);
+                    stkdetail.Size_Code = Convert.ToInt32(ddlSize);
+                    stkdetail.Item_Code = Convert.ToInt32(ddlITEM);
+                    stkdetail.Stk_Qty_IN = STK_QTY_IN;
+                    dbContext.SaveChanges();
+                }                
+
+                foreach (var AMDetailModel in articalMergeViewModel.artical_Merge_DTL.ToList())
+                {
+                    var result = dbContext.Artical_Merge_DTL.SingleOrDefault(b => b.ID == AMDetailModel.ID);
+                    if (result != null)
+                    {
+                        result.UDT_DATE = DateTime.Now;
+                        result.UDT_UID = userManager.GetUserName(HttpContext.User);
+                        result.STK_QTY_OUT = AMDetailModel.STK_QTY_OUT;
+                        dbContext.SaveChanges();
+                    }
+
+                    var result2 = dbContext.StockDTL_Models.Where(s => s.Tran_Table_PK == AMDetailModel.ID && s.Tran_Table == "Artical Merge Entry DTL").FirstOrDefault();
+                    if (result2 != null)
+                    {
+                        result2.Stk_Qty_OUT = AMDetailModel.STK_QTY_OUT;
+                        dbContext.SaveChanges();
+                    }
+                }
+                return RedirectToAction("Artical_Merge_Detail");
+            }
+            else
+            {
+                return View(articalMergeViewModel);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Action_AM(int id)
+        {
+            Artical_Merge_HDR artical_Merge_HDR = new Artical_Merge_HDR();
+            artical_Merge_HDR = dbContext.Artical_Merge_HDR.Where(am => am.ID == id).FirstOrDefault();
+            ArticalMergeViewModel ArtMrgmodel = new ArticalMergeViewModel();
+            ArtMrgmodel.GDWDropDown = GDWlists();
+            ArtMrgmodel.ARTDropDown = Artlists();
+            ArtMrgmodel.SIZEDropDown = Sizelists();
+            ArtMrgmodel.ITEMDropDown = ITEMlists();
+            ArtMrgmodel.artical_Merge_HDR = artical_Merge_HDR;
+
+            ArtMrgmodel.artical_Merge_DTL = dbContext.Artical_Merge_DTL.Where(ad => ad.HDR_FK == id).ToList();
+            foreach (var item in ArtMrgmodel.artical_Merge_DTL)
+            {
+                item.ARTICAL_NAME = dbContext.Artical_Master.Where(a => a.ID == item.ARTICAL_CODE).Select(a => a.NAME).FirstOrDefault();
+                item.SIZE_NAME = dbContext.Size_Master.Where(a => a.ID == item.SIZE_CODE).Select(a => a.NAME).FirstOrDefault();
+                item.ITEM_NAME = dbContext.Item_Master.Where(a => a.ID == item.ITEM_CODE).Select(a => a.NAME).FirstOrDefault();
+                item.GDW_NAME = dbContext.Godown_Master.Where(a => a.ID == item.GDW_CODE).Select(a => a.NAME).FirstOrDefault();
+            }
+            ArtMrgmodel.Type = "View";
+            return View("Edit_AM", ArtMrgmodel);
+        }
+
+        [HttpGet]
+        public IActionResult Delete_AM(int ID)
+        {
+            var HDRdata = dbContext.Artical_Merge_HDR.Where(D => D.ID == ID).FirstOrDefault();
+            dbContext.Artical_Merge_HDR.Remove(HDRdata);
+            dbContext.SaveChanges();
+
+            var HDRSTkdata = dbContext.StockDTL_Models.Where(D => D.Tran_Table_PK == ID && D.Tran_Table == "Artical Merge Entry HDR").FirstOrDefault();
+            dbContext.StockDTL_Models.Remove(HDRSTkdata);
+            dbContext.SaveChanges();
+
+            var data = dbContext.Artical_Merge_DTL.Where(D => D.HDR_FK == ID).ToList();
+            foreach (var Datas in data)
+            {
+                dbContext.Artical_Merge_DTL.Remove(Datas);
+
+                var stkdtldata = dbContext.StockDTL_Models.Where(dd => dd.Tran_Table_PK == Datas.ID && dd.Tran_Table == "Artical Merge Entry DTL").FirstOrDefault();
+                dbContext.StockDTL_Models.Remove(stkdtldata);
+            }            
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Artical_Merge_Detail");
         }
     }
 }

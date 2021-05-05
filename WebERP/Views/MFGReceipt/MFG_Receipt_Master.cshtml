@@ -1,5 +1,5 @@
 ﻿@model WebERP.Models.MFGReceiptViewModel
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <div class="modal-content show-modal-content form_content">
     <div class="card">
         @if (Model.Type == "Add")
@@ -187,4 +187,31 @@
         </div>
 
     </div>
-</div>]
+</div>
+<script>
+    $(function () {
+        $("#Doc_Date").change(function () {
+            var date = $(this).val();
+            var financial_year = "";
+            var today = new Date(date);
+            if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
+                financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
+            } else {
+                financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
+            }
+            $("#Doc_FN_Year").val(financial_year);           
+        });
+    })
+
+    $(function () {
+        $("#ddlCUT").change(function () {
+            var Array = $("#ddlCUT").val().split("^");
+          //  $('#EmpName').val(Array[0]);
+            $('#ItemName').val(Array[1]);
+            $('#ArtName').val(Array[2]);
+            $('#SizeName').val(Array[3]);
+       //     $('#ProcName').val(Array[4]);
+            $('#CUTPK').val(Array[5]);
+        })
+    })
+</script>

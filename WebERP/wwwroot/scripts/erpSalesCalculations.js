@@ -62,7 +62,6 @@ WebERP.SalesGrid = {
     },
 
     CalculateTaxRate: function (gstPer, grossAmount) {
-        debugger
         grossamt = parseFloat(grossAmount);
         gst = parseFloat(gstPer);
         return (grossamt * gst / 100).toFixed(2); 

@@ -1,0 +1,166 @@
+﻿@model WebERP.Models.ArticalMergeViewModel
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        @if (Model.Type == "Edit")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">Edit Artical Merge</h3>
+            </nav>
+        }
+        @if (Model.Type == "View")
+        {
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+                <h3 style="color:white">View Artical Merge</h3>
+            </nav>
+        }
+        <div class="card-body">
+            <form id="menu-form" method="post" asp-controller="ArticalMerge" asp-action="Edit_AM">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Header Details</b></h4>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Document Date</label>
+                            <input type="hidden" class="form-control" asp-for="artical_Merge_HDR.ID" name="HDRID" id="HDRID">
+                            <input type="Date" class="form-control" asp-for="artical_Merge_HDR.DOC_DATE" name="doc_Date" id="doc_Date" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Document Finyear</label>
+                            <input type="text" asp-for="artical_Merge_HDR.DOC_FN_YEAR" readonly="readonly" class="form-control numb" name="FinYear" id="FinYear" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Godown Name</label>
+                            <div class="input-group">
+                                <select id="ddlGDW" name="ddlGDW" asp-for="artical_Merge_HDR.GDW_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.GDWDropDown ,"Value", "Text"))"></select>
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Item Name</label>
+                            <div class="input-group">
+                                <select id="ddlITEM" name="ddlITEM" asp-for="artical_Merge_HDR.ITEM_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ITEMDropDown ,"Value", "Text"))"></select>
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Artical Name</label>
+                            <div class="input-group">
+                                <select id="ddlART" name="ddlART" asp-for="artical_Merge_HDR.ARTICAL_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ARTDropDown ,"Value", "Text"))"></select>
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Size Name</label>
+                            <div class="input-group">
+                                <select id="ddlSize" name="ddlSize" asp-for="artical_Merge_HDR.SIZE_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.SIZEDropDown ,"Value", "Text"))"></select>
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Qty</label>
+                            <div class="input-group">
+                                <input type="text" asp-for="artical_Merge_HDR.STK_QTY_IN" class="form-control numb" name="STK_QTY_IN" id="STK_QTY_IN">
+                            </div>
+                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                </div>
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Stock Details</b></h4>
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" Name="dataTa" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>GDW Name</th>
+                                        <th>Item Name</th>
+                                        <th>Artical Name</th>
+                                        <th>Size Name</th>
+                                        @*<th>Stock Qty</th>*@
+                                        <th>Issue Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null && Model.artical_Merge_DTL.Count > 0)
+                                    {
+                                        int j = 0;
+                                        foreach (var i in Model.artical_Merge_DTL)
+                                        {
+                                            <tr style="border:1px solid black">
+                                                <td>
+                                                    @Html.HiddenFor(a => a.artical_Merge_DTL[j].ID, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(a => a.artical_Merge_DTL[j].GDW_NAME, new { @class = "form-control", @readOnly = "readonly", @type = "text" })
+                                                    @Html.HiddenFor(a => a.artical_Merge_DTL[j].GDW_CODE, new { @class = "form-control", @readOnly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.HiddenFor(a => a.artical_Merge_DTL[j].ITEM_CODE, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(a => a.artical_Merge_DTL[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly", @type = "text" })
+                                                </td>
+                                                <td>
+                                                    @Html.HiddenFor(a => a.artical_Merge_DTL[j].ARTICAL_CODE, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(a => a.artical_Merge_DTL[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly", @type = "text" })
+                                                </td>
+                                                <td>
+                                                    @Html.HiddenFor(a => a.artical_Merge_DTL[j].SIZE_CODE, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(a => a.artical_Merge_DTL[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly", @type = "text" })
+                                                </td>
+                                                @*<td>
+                                                        @Html.TextBoxFor(a => a.artical_Merge_DTL[j]., new { @class = "form-control", @readOnly = "readonly", @type = "decimal" })
+                                                    </td>*@
+                                                <td>
+                                                    @Html.TextBoxFor(a => a.artical_Merge_DTL[j].STK_QTY_OUT, new { @class = "form-control" })
+                                                </td>
+                                            </tr>
+                                            j++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Artical_Merge_Detail">Close</a>
+                    @if (Model.Type == "Edit")
+                    {
+                        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right">
+                            Update
+                        </button>
+                    }
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+@*<script>
+        $(function () {
+            $("#doc_Date").change(function () {
+                var date = $(this).val();
+                var financial_year = "";
+                var today = new Date(date);
+                if ((today.getMonth()) == 1 || (today.getMonth()) == 2 || (today.getMonth()) == 3) {
+                    financial_year = (today.getFullYear() - 1) + "" + today.getFullYear()
+                } else {
+                    financial_year = today.getFullYear() + "" + (today.getFullYear() + 1)
+                }
+                $("#FinYear").val(financial_year);
+            });
+        })
+    </script>*@

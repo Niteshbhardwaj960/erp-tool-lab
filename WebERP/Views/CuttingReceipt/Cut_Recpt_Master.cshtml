@@ -211,7 +211,7 @@
     })
     $(function () {
         $("#ddlCUT").change(function () {
-            var Array = $("#ddlCUT").val().split("/");
+            var Array = $("#ddlCUT").val().split("^");
             $('#EmpName').val(Array[0]);
             $('#ItemName').val(Array[1]);
             $('#ArtName').val(Array[2]);

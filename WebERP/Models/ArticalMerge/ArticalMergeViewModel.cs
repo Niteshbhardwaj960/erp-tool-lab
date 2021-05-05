@@ -24,6 +24,8 @@ namespace WebERP.Models
         public List<SelectListItem> SIZEDropDown { get; set; }
         [NotMapped]
         public decimal AssStockQty { get; set; }
+        [NotMapped]
+        public string Type { get; set; }
 
     }
 }
