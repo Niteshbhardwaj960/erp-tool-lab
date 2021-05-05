@@ -45,13 +45,46 @@ namespace WebERP.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateSaleOrder()
+        public IActionResult CreateSalesWithFilter()
+        {
+            SalesCreateFilter filter = new SalesCreateFilter();
+            var goDownList = (from Gdw in dbContext.Godown_Master
+                               select new SelectListItem()
+                               {
+                                   Text = Gdw.NAME,
+                                   Value = Convert.ToString(Gdw.ID)
+                               }).ToList();
+
+            var ItemList = (from item in dbContext.Item_Master
+                              select new SelectListItem()
+                              {
+                                  Text = item.NAME,
+                                  Value = Convert.ToString(item.ID)
+                              }).ToList();
+            filter.GodownDropDown = goDownList;
+            filter.ItemDropDown = ItemList;
+            return View(filter);
+        }
+
+        [HttpPost]
+        public IActionResult CreateSalesWithFilter(SalesCreateFilter filter)
+        {
+            return RedirectToAction("CreateSaleOrder", "Sales", new
+            {
+                godownCode = filter.GodownCode,
+                itemCode = filter.ItemCode                
+            });
+        }
+       
+        [HttpGet]
+        public IActionResult CreateSaleOrder(int godownCode, int itemCode)
         {
             SalesViewModel saleViewModel = new SalesViewModel();
             List<V_RM_DTL> viewStockMaster = new List<V_RM_DTL>();
             List<SalesDetail> saleDetailList = new List<SalesDetail>();
             saleViewModel.SalesHeader = GetSaleHeader();
-            viewStockMaster = dbContext.V_RM_DTL.AsNoTracking().ToList();
+            viewStockMaster = dbContext.V_RM_DTL.AsNoTracking().
+                              Where(x => x.GDW_CODE==godownCode && x.ITEM_CODE==itemCode).ToList();
             saleDetailList = GetSalesDetails(viewStockMaster);
             saleViewModel.SaleDetails = saleDetailList;
             return View(saleViewModel);

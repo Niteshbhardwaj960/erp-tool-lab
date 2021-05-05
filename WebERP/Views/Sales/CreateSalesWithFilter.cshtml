@@ -1,0 +1,37 @@
+﻿@model WebERP.Models.SalesCreateFilter
+@{
+    ViewData["Title"] = "CreateSalesWithFilter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #00ff7ee6 0%, #74009a 100%);">
+    <h3 style="color:white">Sales Order Create With Filter</h3>
+</nav>
+<div class="card">
+    <div class="card-header">
+        Use the button below to Select Filter, then create Sales Order
+    </div>
+    <div class="card-body">       
+        <form method="post" >
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>GoDown Name</label>
+                        <select asp-for="GodownCode" class="form-control Select2DropDown"
+                                asp-items="@(new SelectList(Model.GodownDropDown,"Value", "Text"))"></select>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>Item Name</label>
+                        <select asp-for="ItemCode" class="form-control Select2DropDown"
+                                asp-items="@(new SelectList(Model.ItemDropDown,"Value", "Text"))"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-searchengin"></i> Filter and Create</button>
+            </div>
+        </form>
+    </div>
+</div>
