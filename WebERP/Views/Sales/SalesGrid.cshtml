@@ -10,9 +10,9 @@
     </nav>
     @if (Model.Any())
     {
-        <a class="btn btn-primary text-white" href="/Sales/CreateSaleOrder">
-            Create New Sales Order
-        </a>
+    <a class="btn btn-primary text-white" href="/Sales/CreateSalesWithFilter">
+        Redirect To Sales Create Screen
+    </a>
         <hr />
         <div class="card mb-3">
             <div class="card-body">
@@ -68,16 +68,13 @@
     }
     else
     {
-        <div class="card">
-            <div class="card-header">
-                No Sales Order Has Been Created Yet
-            </div>
+        <div class="card">           
             <div class="card-body">
                 <h5 class="card-title">
                     Use the button below to Create New Sales Order
-                </h5>
-                <a class="btn btn-primary text-white" href="/Sales/CreateSaleOrder">
-                    Create Sales Order
+                </h5>                
+                <a class="btn btn-primary text-white" href="/Sales/CreateSalesWithFilter">
+                    Redirect To Sales Create Screen
                 </a>
             </div>
         </div>

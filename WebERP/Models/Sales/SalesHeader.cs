@@ -91,6 +91,19 @@ namespace WebERP.Models
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
-        public string UDT_UID { get; set; } 
+        public string UDT_UID { get; set; }
+
+        //Filter Properties
+        [NotMapped]
+        public int GoDownCode { get; set; }
+
+        [NotMapped]
+        public string GoDownName { get; set; }
+
+        [NotMapped]
+        public int ItemCode { get; set; }
+
+        [NotMapped]
+        public string ItemName { get; set; }
     }
 }
