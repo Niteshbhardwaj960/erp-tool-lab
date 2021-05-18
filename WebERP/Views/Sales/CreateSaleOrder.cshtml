@@ -87,73 +87,86 @@
                         <table class="table table-sm d-sm-table-cell table-bordered" id="salesDtlTable" width="100%" cellspacing="0">
                             <thead class="thead-light">
                                 <tr style="text-align:center;">
-                                    <th style="width: 200px;">GDW</th>
-                                    <th style="width: 100px;">Item</th>
-                                    <th style="width: 100px;">Artical</th>
-                                    <th style="width: 100px;">Size</th>
-                                    <th style="width: 128px;">HSN</th>
-                                    <th style="width: 170px;">Sale Qty</th>
-                                    <th style="width: 100px;">Sale Qty UOM</th>
-                                    <th style="width: 160px;">Rate Per</th>
-                                    <th style="width: 130px;">Disc Per-Tag</th>
-                                    <th style="width: 165px;">Disc Per%</th>
-                                    <th style="width: 200px;">Disc Rate</th>
+                                    <th style="width: 250px;">GDW</th>
+                                    <th style="width: 280px;">Item</th>
+                                    <th style="width: 200px;">Artical</th>
+                                    <th style="width: 90px;">Size</th>
+                                    <th style="width: 70px;">HSN</th>
+                                    <th style="width: 190px;">Sale Qty</th>
+                                    <th style="width: 70px;">Sale Qty UOM</th>
+                                    <th style="width: 190px;">Rate Per</th>
+                                    <th style="width: 135px;">Disc Per-Tag</th>
+                                    <th style="width: 160px;">Disc Per%</th>
+                                    <th style="width: 130px;">Disc Rate</th>
                                     <th style="width: 200px;">Net Rate</th>
                                     <th style="width: 200px;">Item Amt.</th>
+                                    <th style="text-align:center;width: 30px;">
+                                        <a href="#" class="btn btn-info" id="addSalesRow">
+                                            <i class="fa fa-plus-circle"></i>
+                                        </a>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @for (int j = 0; j < Model.SaleDetails.Count(); j++)
                                 {
-                                    <tr class="template">
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].GODOWN_CODE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].GODOWN_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].ITEM_CODE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].ITEM_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].ARTICAL_CODE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].SIZE_CODE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].HSN_CODE, new { @class = "form-control", @type = "text" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].SALE_QTY, new { @class = "form-control salesRowQty", @type = "number", @step = ".001" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].SALEQTYCODE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].SALEQTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].RATE, new { @class = "form-control", @type = "number", @step = ".01" })
-                                        </td>
-                                        <td>
-                                            @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
-                                             new SelectList(new List<Object>{
-                                                                              new { value = "P" , text = "Per" },
-                                                                              new { value = "F" , text = "Fix"}}, "value", "text", 0),new { @class="form-control"})
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].DISC_PER, new { @class = "form-control", @type = "number", @step = ".01"  })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].DISC_RATE, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].NET_RATE, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].ITEM_AMOUNT, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                    </tr>
+                                <tr class="template">
+                                    <td>
+                                        @Html.DropDownListFor(m=>m.SaleDetails[j].GODOWN_CODE,
+                                              new SelectList(Model.SaleDetails[j].GODOWN_LIST, "Value", "Text"),
+                                              new { @class= "form-control" })                                       
+                                    </td>
+                                    <td>
+                                        @Html.DropDownListFor(m=>m.SaleDetails[j].ITEM_CODE,
+                                              new SelectList(string.Empty, "Value", "Text"),
+                                              new { @class= "form-control" })                                      
+                                    </td>
+                                    <td>
+                                        @Html.DropDownListFor(m=>m.SaleDetails[j].ARTICAL_CODE,
+                                              new SelectList(string.Empty, "Value", "Text"),
+                                              new { @class= "form-control" })                                       
+                                    </td>
+                                    <td>                                        
+                                        @Html.HiddenFor(a => a.SaleDetails[j].SIZE_CODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].HSN_CODE, new { @class = "form-control", @type = "text" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].SALE_QTY, new { @class = "form-control salesRowQty", @type = "number", @step = ".001" })
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(a => a.SaleDetails[j].SALEQTYCODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].SALEQTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].RATE, new { @class = "form-control", @type = "number", @step = ".01" })
+                                    </td>
+                                    <td>
+                                        @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
+                                         new SelectList(new List<Object>{
+                                                                          new { value = "P" , text = "Per" },
+                                                                          new { value = "F" , text = "Fix"}}, "value", "text", 0),new { @class="form-control"})
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].DISC_PER, new { @class = "form-control", @type = "number", @step = ".01" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].DISC_RATE, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].NET_RATE, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].ITEM_AMOUNT, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td style="text-align:center;">
+                                        <a href="#" class="btn btn-danger" id="deleteSalesRow">
+                                            <i class="fa fa-minus-circle"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                             <tfoot>
@@ -169,7 +182,7 @@
                                     <td>
                                         <label style="font-weight: bold;color: darkblue;">Gross Amt:</label>
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <input class="form-control" asp-for="SalesHeader.GROSS_AMT" id="TotalGrossItemAmt" readonly />
                                     </td>
                                 </tr>
@@ -178,18 +191,18 @@
                                     <td>
                                         <label style="font-weight: bold;color: darkblue;">Round Off Amt(+/-):</label>
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <input class="form-control" asp-for="SalesHeader.RF_AMT" id="RoundoffAmount" readonly />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="8"></td>
+                                    <td colspan="7"></td>
                                     <td>
                                         <label style="font-weight: bold;color: darkblue;">Tax Name</label>
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <select asp-for="SalesHeader.TAX_CODE" class="form-control" id="taxlist"
-                                                asp-items="@(new SelectList(Model.SalesHeader.taxDropDown, "Value", "Text"))"></select>                                        
+                                                asp-items="@(new SelectList(Model.SalesHeader.taxDropDown, "Value", "Text"))"></select>
                                     </td>
                                     <td>
                                         <label style="font-weight: bold;color: darkblue;">IGST % | Amount</label>
@@ -197,7 +210,7 @@
                                     <td>
                                         <input class="form-control" asp-for="SalesHeader.IGST_PER" id="igstper" readonly />
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <input class="form-control" asp-for="SalesHeader.IGST_AMOUNT" id="igstamt" readonly />
                                     </td>
                                 </tr>
@@ -209,7 +222,7 @@
                                     <td>
                                         <input class="form-control" asp-for="SalesHeader.CGST_PER" id="cgstper" readonly />
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <input class="form-control" asp-for="SalesHeader.CGST_AMOUNT" id="cgstamt" readonly />
                                     </td>
                                 </tr>
@@ -221,8 +234,8 @@
                                     <td>
                                         <input class="form-control" asp-for="SalesHeader.SGST_PER" id="sgstper" readonly />
                                     </td>
-                                    <td>
-                                        <input class="form-control" asp-for="SalesHeader.SGST_AMOUNT" id="sgstamt"  readonly />
+                                    <td colspan="2">
+                                        <input class="form-control" asp-for="SalesHeader.SGST_AMOUNT" id="sgstamt" readonly />
                                     </td>
                                 </tr>
                                 <tr>
@@ -230,7 +243,7 @@
                                     <td>
                                         <label style="font-weight: bold;color: darkblue;">Total Tax</label>
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <input class="form-control" asp-for="SalesHeader.TAX_AMT" id="TotalTaxAmt" readonly />
                                     </td>
                                 </tr>
@@ -242,7 +255,7 @@
                                     <td>
                                         <input class="form-control" asp-for="SalesHeader.OTH_AMTNAME1" id="otherAmtname1" placeholder="name1" />
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <input class="form-control otheramt" asp-for="SalesHeader.OTH_AMT1" id="otherAmt1" type="number" step="0.01" />
                                     </td>
                                 </tr>
@@ -254,7 +267,7 @@
                                     <td>
                                         <input class="form-control" asp-for="SalesHeader.OTH_AMTNAME2" id="otherAmtname2" placeholder="name2" />
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <input class="form-control otheramt" asp-for="SalesHeader.OTH_AMT2" id="otherAmt2" type="number" step="0.01" />
                                     </td>
                                 </tr>
@@ -263,7 +276,7 @@
                                     <td colspan="3">
                                         <label style="font-weight: bold;color: darkblue;">Final Net Amount(Gross + Tax + Addt1 + Addt2 + Rf)</label>
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <input class="form-control" asp-for="SalesHeader.NET_AMT" id="TotalNetAmt" readonly />
                                     </td>
                                 </tr>
