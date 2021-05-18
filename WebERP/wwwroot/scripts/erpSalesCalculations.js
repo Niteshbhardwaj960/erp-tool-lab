@@ -4,18 +4,211 @@
 
 WebERP.SalesGrid = {    
     currentAjaxReq: null,
+    tempRow: {},
 
-    Init: function () {
-       
+    Init: function () {        
         $('#salesDtlTable tbody').on('change', 'select[name*="DISCPER_TAG"]', WebERP.SalesGrid.DisTagOnChange);
+        $('#addSalesRow').click(WebERP.SalesGrid.AddSalesRowOnClick);        
+        $('#salesDtlTable tbody').on('click', '#deleteSalesRow', WebERP.SalesGrid.DeleteSalesRowOnClick);
+        $('#salesDtlTable tbody').on('change', 'select[name*="GODOWN_CODE"]', WebERP.SalesGrid.GoDownOnChange);
+        $('#salesDtlTable tbody').on('change', 'select[name*="ITEM_CODE"]', WebERP.SalesGrid.ItemOnChange);
+        $('#salesDtlTable tbody').on('change', 'select[name*="ARTICAL_CODE"]', WebERP.SalesGrid.ArticalOnChange);
         $('#salesForm').on('change', 'input[id="salesDocDate"]', WebERP.SalesGrid.GetFinancialYear);               
         $('#salesDtlTable tfoot').on('change', 'select[name*="TAX_CODE"]', WebERP.SalesGrid.TaxOnChange);
         //Calculation
+        WebERP.SalesGrid.tempRow = $("#salesDtlTable tbody tr:last").clone();
         $('#salesDtlTable tbody').on('change', 'input[name*="QTY"]', WebERP.SalesGrid.QuantityOnChange);
         $('#salesDtlTable tfoot').on('change', 'input[name*="OTH_AMT"]', WebERP.SalesGrid.OtherAmount);
         $('#salesDtlTable tbody').on('change', 'input[name*="RATE"]', WebERP.SalesGrid.RateOnChange);
         $('#salesDtlTable tbody').on('change', 'input[name*="DISC_PER"]', WebERP.SalesGrid.DiscRateOnChange);
 
+    },
+
+    AddSalesRowOnClick: function (e) {
+        debugger
+        e.preventDefault();
+        WebERP.SalesGrid._AddRow(WebERP.SalesGrid.tempRow, true);
+    },
+    _AddRow: function (sourceRow, appendToEnd) {
+        debugger
+        //sourceRow.find(".Select2DropDown").each(function (index) {
+        //    $(this).select2('destroy');
+        //});
+        var clonedRow = sourceRow.clone(true);
+        if (appendToEnd) {
+            var salesgridtable = $('#salesDtlTable');
+            salesgridtable.append(clonedRow);
+            //$('.Select2DropDown').select2();
+            //$('.Select2DropDown').last().next().next().remove();
+        }
+        else {
+            clonedRow.insertAfter(sourceRow);
+        }
+
+        WebERP.SalesGrid.CalculateGrandTotal();
+        WebERP.SalesGrid.CalculateQTotal();
+       WebERP.SalesGrid._SetProperInputNames();
+    },
+
+    _SetProperInputNames() {
+        var salesgridtableRows = $('#salesDtlTable tbody tr');
+        $.each(salesgridtableRows, function (rowInd, row) {
+            debugger
+            var inputs = $('input, select', row);
+            $.each(inputs, function (inputInd, input) {
+                debugger
+                var OldId = $(input).attr('id');
+                var oldName = $(input).attr('name');
+                oldName = oldName.replace(/\[\d\]/, '[' + rowInd + ']');
+                OldId = OldId.replace(/\_\d\_/, '_' + rowInd + '_');
+                $(input).attr('name', oldName);
+                $(input).attr('id', OldId);
+            });
+        });
+    },
+
+    GoDownOnChange: function (e) {
+        debugger       
+        var nextCell = $(this).closest('td').next();
+        $('select', nextCell).addClass('hidden');
+        $('span', nextCell).remove();
+        nextCell.append("<span style='font-size:2em' class='col-md-push-5 glyphicon glyphicon-refresh spin'></span>");
+        WebERP.SalesGrid.GetFromVMList(
+            $(this).val(),'G', 0 , 0,
+            function (data, textStatus, xhr) {
+                if (xhr.status == 200) {
+                    debugger
+                    var itemList = $('select', nextCell);
+                    itemList.empty();
+                    itemList.append('<option value="">Select</option>')
+                    $.each(data, function (index, val) {
+                        var $option;
+                        $option = $('<option value="' + val.Value + '">' + val.Text + '</option>');
+                        if (val.Selected) {
+                            $option.attr('selected', 'selected');
+                        }
+                        //itemList.append('<option value="' + val.Value + '">' + val.Text + '</option>');
+                        itemList.append($option);                       
+                    });
+                    itemList.removeAttr('disabled');
+                }
+                $('span', nextCell).remove();
+                $('select', nextCell).removeClass('hidden');
+            },
+            function (data, textStatus, errorThrown) {
+                if (textStatus != "abort") {
+                    alert(errorThrown);
+                    $('span', nextCell).remove();
+                    $('select', nextCell).removeClass('hidden');
+                    $('span', nextCell).empty();
+                    $('select', nextCell).attr('disabled', 'disabled');
+                }
+                else {
+                    alert('Unable to Connect while getting List')
+                }
+            }
+        )
+    },
+
+    ItemOnChange: function (e) {     
+        var currentRow = $(this).closest('tr');   
+        var nextCell = $(this).closest('td').next();
+        $('select', nextCell).addClass('hidden');
+        $('span', nextCell).remove();
+        nextCell.append("<span style='font-size:2em' class='col-md-push-5 glyphicon glyphicon-refresh spin'></span>");
+        WebERP.SalesGrid.GetFromVMList(
+            currentRow.find('select[name*="GODOWN_CODE"]').find('option:selected').val(), 'I', $(this).val(), 0,
+            function (data, textStatus, xhr) {
+                if (xhr.status == 200) {
+                    debugger
+                    var itemList = $('select', nextCell);
+                    itemList.empty();
+                    itemList.append('<option value="">Select</option>')
+                    $.each(data, function (index, val) {
+                        var $option;
+                        $option = $('<option value="' + val.Value + '">' + val.Text + '</option>');
+                        if (val.Selected) {
+                            $option.attr('selected', 'selected');
+                        }
+                        //itemList.append('<option value="' + val.Value + '">' + val.Text + '</option>');
+                        itemList.append($option);
+                    });
+                    itemList.removeAttr('disabled');
+                }
+                $('span', nextCell).remove();
+                $('select', nextCell).removeClass('hidden');
+            },
+            function (data, textStatus, errorThrown) {
+                if (textStatus != "abort") {
+                    alert(errorThrown);
+                    $('span', nextCell).remove();
+                    $('select', nextCell).removeClass('hidden');
+                    $('span', nextCell).empty();
+                    $('select', nextCell).attr('disabled', 'disabled');
+                }
+                else {
+                    alert('Unable to Connect while getting List')
+                }
+            }
+        )
+    },
+
+    ArticalOnChange: function (e) {
+        var currentRow = $(this).closest('tr');             
+        WebERP.SalesGrid.GetFromVMList(
+            currentRow.find('select[name*="GODOWN_CODE"]').find('option:selected').val(), 'A',
+            currentRow.find('select[name*="ITEM_CODE"]').find('option:selected').val(), $(this).val(),
+            function (data, textStatus, xhr) {
+                if (xhr.status == 200) {
+                    debugger
+                    currentRow.find('[name*="SIZE_CODE"]').val(data.sizec);
+                    currentRow.find('[name*="SIZE_NAME"]').val(data.size);
+                    currentRow.find('[name*="SALE_QTY"]').val(data.quant);
+                    WebERP.SalesGrid.CalculateQTotal();
+                    WebERP.SalesGrid.CalculateGrandTotal();
+                }             
+            },
+            function (data, textStatus, errorThrown) {
+                if (textStatus != "abort") {
+                    alert(errorThrown);                   
+                }
+                else {
+                    alert('Unable to Connect while getting List')
+                }
+            }
+        )
+    },
+
+    GetFromVMList: function (gcode, mode, icode, acode, successCallBack, errorCallBack) {
+        if (WebERP.SalesGrid.currentAjaxReq !== null) {
+            WebERP.SalesGrid.currentAjaxReq.abort();
+            WebERP.SalesGrid.currentAjaxReq = null;
+        }
+        {
+            if (mode == 'G')
+                var ajaxUrl = "/Sales/GetVMFilter?mode=" + mode + "&gc=" + gcode; 
+            if (mode == 'I')
+                var ajaxUrl = "/Sales/GetVMFilter?mode=" + mode + "&gc=" + gcode + "&ic=" + icode; 
+            if (mode == 'A')
+                var ajaxUrl = "/Sales/GetVMFilter?mode=" + mode + "&gc=" + gcode + "&ic=" + icode + "&ac=" + acode; 
+
+            WebERP.SalesGrid.currentAjaxReq = $.ajax({
+                url: ajaxUrl,
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                dataType: 'json',
+                type: 'GET',
+                success: successCallBack,
+                error: errorCallBack
+            });
+        }
+    },
+
+    DeleteSalesRowOnClick: function (e) {
+        e.preventDefault();
+        $(this).closest('tr').remove();
+        WebERP.SalesGrid.CalculateGrandTotal();
+        WebERP.SalesGrid.CalculateQTotal();
     },
     OtherAmount: function (e) {        
         var grandTotal = 0;

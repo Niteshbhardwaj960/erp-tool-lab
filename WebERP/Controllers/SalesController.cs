@@ -83,9 +83,10 @@ namespace WebERP.Controllers
             List<V_RM_DTL> viewStockMaster = new List<V_RM_DTL>();
             List<SalesDetail> saleDetailList = new List<SalesDetail>();
             saleViewModel.SalesHeader = GetSaleHeader();
-            viewStockMaster = dbContext.V_RM_DTL.AsNoTracking().
-                              Where(x => x.GDW_CODE==godownCode && x.ITEM_CODE==itemCode).ToList();
-            saleDetailList = GetSalesDetails(viewStockMaster);
+            //viewStockMaster = dbContext.V_RM_DTL.AsNoTracking().
+            //Where(x => x.GDW_CODE==godownCode && x.ITEM_CODE==itemCode).ToList();
+            //saleDetailList = GetSalesDetails(viewStockMaster);
+            saleDetailList.Add(GetSalesDetails());
             saleViewModel.SaleDetails = saleDetailList;
             return View(saleViewModel);
         }
@@ -221,7 +222,13 @@ namespace WebERP.Controllers
             decimal grandQTotal = 0;
             foreach (var DetailItem in saleListDet.ToList())
             {
-
+                var salesDet = GetSalesDetails();
+                foreach (var item in salesDet.GODOWN_LIST.
+                   Where(s => s.Value == Convert.ToString(DetailItem.GODOWN_CODE)))
+                {
+                    item.Selected = true;
+                }
+                DetailItem.GODOWN_LIST = salesDet.GODOWN_LIST;
                 DetailItem.ITEM_NAME = dbContext.Item_Master.
                                           Where(x => x.ID == DetailItem.ITEM_CODE).
                                           Select(y => y.NAME).FirstOrDefault();
@@ -392,28 +399,42 @@ namespace WebERP.Controllers
             return saleHeader;
         }
 
-        public List<SalesDetail> GetSalesDetails(List<V_RM_DTL> stockMasterList)
+        public SalesDetail GetSalesDetails() //List<V_RM_DTL> stockMasterList)
         {
-            List<SalesDetail> saleDetailList = new List<SalesDetail>();
-            decimal grandQTotal = 0;
-            foreach (var stock in stockMasterList)
+            SalesDetail saleDetailList = new SalesDetail();
+            //decimal grandQTotal = 0;
+            //foreach (var stock in stockMasterList)
+            //{
+            //    saleDetailList.Add(new SalesDetail()
+            //    {
+            //        GODOWN_CODE = stock.GDW_CODE,
+            //        ITEM_CODE = stock.ITEM_CODE,
+            //        ARTICAL_CODE = stock.ARTICAL_CODE,
+            //        SIZE_CODE = stock.SIZE_CODE,
+            //        GODOWN_NAME = stock.GDW_NAME,
+            //        ITEM_NAME = stock.ITEM_NAME,
+            //        ARTICAL_NAME = stock.ARTICAL_NAME,
+            //        SIZE_NAME = stock.SIZE_NAME,
+            //        SALE_QTY = stock.STK_QTY,
+
+            //    });
+            //    grandQTotal += stock.STK_QTY;
+            //}           
+            //ViewBag.grandQTotal = grandQTotal;           
+            var godownList = (from stckView in dbContext.V_RM_DTL
+                              select new SelectListItem()
+                            {
+                                Text = stckView.GDW_NAME,
+                                Value = Convert.ToString(stckView.GDW_CODE),
+                            }).GroupBy(x => x.Text).Select(x => x.First()).ToList();
+
+            godownList.Insert(0, new SelectListItem()
             {
-                saleDetailList.Add(new SalesDetail()
-                {
-                    GODOWN_CODE = stock.GDW_CODE,
-                    ITEM_CODE = stock.ITEM_CODE,
-                    ARTICAL_CODE = stock.ARTICAL_CODE,
-                    SIZE_CODE = stock.SIZE_CODE,
-                    GODOWN_NAME = stock.GDW_NAME,
-                    ITEM_NAME = stock.ITEM_NAME,
-                    ARTICAL_NAME = stock.ARTICAL_NAME,
-                    SIZE_NAME = stock.SIZE_NAME,
-                    SALE_QTY = stock.STK_QTY,
-                   
-                });
-                grandQTotal += stock.STK_QTY;
-            }           
-            ViewBag.grandQTotal = grandQTotal;
+                Text = "Select",
+                Value = string.Empty,
+                Selected = true
+            });
+            saleDetailList.GODOWN_LIST = godownList;            
             return saleDetailList;
         }
 
@@ -452,6 +473,48 @@ namespace WebERP.Controllers
                 dbContext.SaveChanges();
             }
             return RedirectToAction("SalesGrid");
+        }
+
+        [HttpGet]
+        public ActionResult GetVMFilter(string mode,int gc, int ic=0, int ac=0)
+        {
+            try
+            {
+                IEnumerable<SelectListItem> itemGetList = new List<SelectListItem>();
+                if (mode == "G")
+                {
+                    itemGetList = (from itemList in dbContext.V_RM_DTL.Where(x => x.GDW_CODE == gc)
+                                       select new SelectListItem()
+                                       {
+                                           Text = itemList.ITEM_NAME,
+                                           Value = Convert.ToString(itemList.ITEM_CODE)
+                                       }).ToList();                   
+                }
+                if (mode == "I")
+                {
+                     itemGetList = (from itemList in dbContext.V_RM_DTL.Where(x => x.GDW_CODE == gc && x.ITEM_CODE == ic)
+                                       select new SelectListItem()
+                                       {
+                                           Text = string.IsNullOrEmpty(itemList.ARTICAL_NAME) ? "NA" : itemList.ARTICAL_NAME,
+                                           Value = Convert.ToString(itemList.ARTICAL_CODE)
+                                       }).ToList();                    
+                }
+                if (mode == "A")
+                {
+                    var viewDet = dbContext.V_RM_DTL.Where(x => x.GDW_CODE == gc && x.ITEM_CODE == ic && x.ARTICAL_CODE == ac).ToList();                                       
+                    return Json(new{quant = viewDet.Select(x=>x.STK_QTY).FirstOrDefault(),
+                                    size = string.IsNullOrEmpty(viewDet.Select(x => x.SIZE_NAME).FirstOrDefault()) ? "NA" : viewDet.Select(x => x.SIZE_NAME).FirstOrDefault(),
+                                    sizec = viewDet.Select(x => x.SIZE_CODE).FirstOrDefault()}, new Newtonsoft.Json.JsonSerializerSettings());
+                }
+                return Json(itemGetList, new Newtonsoft.Json.JsonSerializerSettings());
+            }
+            catch (Exception e)
+            {
+                string formattedErrMsg = e.Message;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+                return Json($"<strong>Error! </strong> { formattedErrMsg}", new Newtonsoft.Json.JsonSerializerSettings());
+            }
+
         }
     }
 }

@@ -116,83 +116,121 @@
                         <table class="table table-sm d-sm-table-cell table-bordered" id="salesDtlTable" width="100%" cellspacing="0">
                             <thead class="thead-light">
                                 <tr style="text-align:center;">
-                                    <th style="width: 200px;">GDW</th>
-                                    <th style="width: 100px;">Item</th>
-                                    <th style="width: 100px;">Artical</th>
-                                    <th style="width: 100px;">Size</th>
-                                    <th style="width: 128px;">HSN</th>
-                                    <th style="width: 170px;">Sale Qty</th>
-                                    <th style="width: 100px;">Sale Qty UOM</th>
-                                    <th style="width: 160px;">Rate Per</th>
-                                    <th style="width: 130px;">Disc Per-Tag</th>
-                                    <th style="width: 165px;">Disc Per%</th>
-                                    <th style="width: 200px;">Disc Rate</th>
+                                    <th style="width: 250px;">GDW</th>
+                                    <th style="width: 280px;">Item</th>
+                                    <th style="width: 200px;">Artical</th>
+                                    <th style="width: 90px;">Size</th>
+                                    <th style="width: 70px;">HSN</th>
+                                    <th style="width: 190px;">Sale Qty</th>
+                                    <th style="width: 70px;">Sale Qty UOM</th>
+                                    <th style="width: 190px;">Rate Per</th>
+                                    <th style="width: 135px;">Disc Per-Tag</th>
+                                    <th style="width: 160px;">Disc Per%</th>
+                                    <th style="width: 130px;">Disc Rate</th>
                                     <th style="width: 200px;">Net Rate</th>
                                     <th style="width: 200px;">Item Amt.</th>
+                                    <th style="text-align:center;width: 30px;">
+                                        <a href="#" class="btn btn-info" id="addSalesRow">
+                                            <i class="fa fa-plus-circle"></i>
+                                        </a>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @for (int j = 0; j < Model.SaleDetails.Count(); j++)
                                 {
-                                    <tr>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].GODOWN_CODE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].GODOWN_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].ITEM_CODE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].ITEM_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].ARTICAL_CODE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].SIZE_CODE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].HSN_CODE, new { @class = "form-control", @type = "text" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].SALE_QTY, new { @class = "form-control salesRowQty", @type = "number", @step = ".001" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.SaleDetails[j].SALEQTYCODE, new { @class = "form-control" })
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].SALEQTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].RATE, new { @class = "form-control", @type = "number", @step = ".01" })
-                                        </td>
-                                        <td>                                           
-                                            @if (Model.SaleDetails[j].DISCPER_TAG == "P")
-                                            {
-                                                @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
-                                                                                            new SelectList(new List<Object>{
-                                                                                                                             new { value = "P" , text = "Per"  },
-                                                                                                                             new { value = "F" , text = "Fix" } }, "value", "text", 0),new { @class="form-control"})
-                                            }
-                                            @if (Model.SaleDetails[j].DISCPER_TAG == "F")
-                                            {
-                                                @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
-                                                                                            new SelectList(new List<Object>{
-                                                                                                                             new { value = "P" , text = "Per"  },
-                                                                                                                             new { value = "F" , text = "Fix" } }, "value", "text", 1),new { @class="form-control"})
-                                            }
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].DISC_PER, new { @class = "form-control", @type = "number", @step = ".01" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].DISC_RATE, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].NET_RATE, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.SaleDetails[j].ITEM_AMOUNT, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                    </tr>
+                                <tr>                                   
+                                    <td>
+                                        @Html.DropDownListFor(m=>m.SaleDetails[j].GODOWN_CODE,
+                                              new SelectList(Model.SaleDetails[j].GODOWN_LIST, "Value", "Text"),
+                                              new { @class= "form-control" })
+                                    </td>
+                                    <td>
+                                        @if (string.IsNullOrEmpty(Model.SaleDetails[j].ITEM_NAME))
+                                        {
+                                            @Html.DropDownListFor(m => m.SaleDetails[j].ITEM_CODE,
+                                                           new SelectList(string.Empty, "Value", "Text"),
+                                                           new { @class = "form-control" })
+                                        }
+                                        else
+                                        {
+                                            var dd = new List<SelectListItem>();
+                                            dd.Add(new SelectListItem() { Text = Model.SaleDetails[j].ITEM_NAME, Value = Convert.ToString(Model.SaleDetails[j].ITEM_CODE) });
+
+                                            @Html.DropDownListFor(m => m.SaleDetails[j].ITEM_CODE,
+                                                       new SelectList(dd, "Value", "Text"),
+                                                       new { @class = "form-control" })
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (string.IsNullOrEmpty(Model.SaleDetails[j].ARTICAL_NAME))
+                                        {
+                                            @Html.DropDownListFor(m=>m.SaleDetails[j].ARTICAL_CODE,
+                                             new SelectList(string.Empty, "Value", "Text"),
+                                             new { @class= "form-control" })
+                                        }
+                                        else
+                                        {
+                                            var dda = new List<SelectListItem>();
+                                            dda.Add(new SelectListItem() { Text = Model.SaleDetails[j].ARTICAL_NAME, Value = Convert.ToString(Model.SaleDetails[j].ARTICAL_CODE) });
+
+                                            @Html.DropDownListFor(m => m.SaleDetails[j].ARTICAL_CODE,
+                                                       new SelectList(dda, "Value", "Text"),
+                                                       new { @class = "form-control" })
+                                        }
+
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(a => a.SaleDetails[j].SIZE_CODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].HSN_CODE, new { @class = "form-control", @type = "text" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].SALE_QTY, new { @class = "form-control salesRowQty", @type = "number", @step = ".001" })
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(a => a.SaleDetails[j].SALEQTYCODE, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].SALEQTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].RATE, new { @class = "form-control", @type = "number", @step = ".01" })
+                                    </td>
+                                    <td>
+                                        @if (Model.SaleDetails[j].DISCPER_TAG == "P")
+                                        {
+                                            @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
+                                                                                        new SelectList(new List<Object>{
+                                                                                                                         new { value = "P" , text = "Per"  },
+                                                                                                                         new { value = "F" , text = "Fix" } }, "value", "text", 0),new { @class="form-control"})
+                                        }
+                                        @if (Model.SaleDetails[j].DISCPER_TAG == "F")
+                                        {
+                                            @Html.DropDownListFor(m=>m.SaleDetails[j].DISCPER_TAG,
+                                                                                        new SelectList(new List<Object>{
+                                                                                                                         new { value = "P" , text = "Per"  },
+                                                                                                                         new { value = "F" , text = "Fix" } }, "value", "text", 1),new { @class="form-control"})
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].DISC_PER, new { @class = "form-control", @type = "number", @step = ".01" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].DISC_RATE, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].NET_RATE, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SaleDetails[j].ITEM_AMOUNT, new { @class = "form-control", @readOnly = "readonly" })
+                                    </td>
+                                    <td style="text-align:center;">
+                                        <a href="#" class="btn btn-danger" id="deleteSalesRow">
+                                            <i class="fa fa-minus-circle"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                             <tfoot>

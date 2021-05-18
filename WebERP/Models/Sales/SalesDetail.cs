@@ -23,6 +23,9 @@ namespace WebERP.Models
         [NotMapped]
         public string GODOWN_NAME { get; set; }
 
+        [NotMapped]
+        public IEnumerable<SelectListItem> GODOWN_LIST { get; set; }
+
         public int ITEM_CODE { get; set; }
 
         [NotMapped]
