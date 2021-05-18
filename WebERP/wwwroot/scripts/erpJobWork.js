@@ -37,7 +37,6 @@ $(function () {
     
 
 $("#jwEditDocDate").change(function () {
-    debugger;
     var date = $(this).val();
     var financial_year = "";
     var today = new Date(date);
@@ -50,7 +49,6 @@ $("#jwEditDocDate").change(function () {
 });
 
 $("#jwDocDate").change(function () {
-    debugger;
     var date = $(this).val();
     var financial_year = "";
     var today = new Date(date);

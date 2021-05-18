@@ -4,11 +4,9 @@
 // Write your JavaScript code.
 //$(function () {
 //    var PlaceHolderElement = $('#PlaceHolderHere');
-//    $('button[data-toggle="ajax-modal"]').click(function (event) {        
-//        debugger
+//    $('button[data-toggle="ajax-modal"]').click(function (event) {  
 //        var url = $(this).data('url');      
 //        $.get(url).done(function (data) {
-//            debugger
 //            //$('#PlaceHolderHere').html(data);
 //            //$('#PlaceHolderHere > .modal', data).modal('show');
 //            PlaceHolderElement.html(data);
@@ -39,7 +37,6 @@
 //                var url = $(reff).data('url');
 
 //                $.get(url).done(function (data) {
-//                    debugger;
 //                    $('#modal-create-edit-user').find(".modal-dialog").html(data);
 //                    $('#modal-create-edit-user > .modal', data).modal("show");
 //                });

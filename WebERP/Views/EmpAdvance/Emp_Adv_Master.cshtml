@@ -81,6 +81,14 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
+                            <label for="branch_id">Salary Month</label>
+                            <div class="custom-radio">
+                                <input asp-for="SAL_YYYYMM" type="month" class="form-control" id="SAL_YYYYMM" name="SAL_YYYYMM" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
                             <label for="branch_id">Salary Type</label>
                             <div class="custom-radio">
                                 <select asp-for="SAL_YYYYMM_BRK" id="SAL_YYYYMM_BRK" class="form-control" asp-items="@(new SelectList(Model.SalDropDown,"Value", "Text"))"></select>
@@ -157,9 +165,7 @@
 <script>
     $(function () {
         $("#EMP_TYPE").change(function () {
-            debugger;
             $.getJSON("/EmpAdvance/Emplists", { type: $("#EMP_TYPE").val() }, function (d) {
-                debugger;
                 var row = "";
                 $("#ddlEMP").empty();
                 $.each(d, function (i, v) {
@@ -168,7 +174,6 @@
                 $("#ddlEMP").html(row);
             })
             $.getJSON("/EmpAdvance/SalType", { type: $("#EMP_TYPE").val() }, function (d) {
-                debugger;
                 var row = "";
                 $("#SAL_YYYYMM_BRK").empty();
                 $.each(d, function (i, v) {
@@ -181,7 +186,6 @@
     })
     $(function () {
         $("#ddlEMP").change(function () {
-            debugger;
             var ddlemp = $('#ddlEMP').find('option:selected').text();
             var Array = ddlemp.split("/");
             $('#EMP_CODE').val(Array[0]);

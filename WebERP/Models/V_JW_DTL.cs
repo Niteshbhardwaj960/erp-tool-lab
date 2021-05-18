@@ -38,7 +38,7 @@ namespace WebERP.Models
         public string PROC_NAME { get; set; }
         public string Remarks { get; set; }
         [NotMapped]
-        public string CHL_NO { get; set; }
+        public int CHL_NO { get; set; }
         [NotMapped]
         public DateTime? CHL_DATE { get; set; }
         [NotMapped]

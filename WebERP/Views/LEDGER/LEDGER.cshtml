@@ -1,0 +1,130 @@
+﻿@model WebERP.Models.LedgerViewModel
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Ledger Details</h3>
+        </nav>
+        <div class="card-body">
+            <form id="menu-form">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Select Filter Details</b></h4>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Account Name</label>
+                            <div class="custom-radio">
+                                <select asp-for="Acc_Codes" id="ddlACC" name="ddlACC" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ddlAcc ,"Value", "Text"))"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">From Date</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.FromDate, "{0:yyyy-MM-dd}", new { @id = "fromdate", @class = "form-control", @type = "date" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">To Date</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.To_Date, "{0:yyyy-MM-dd}", new { @id = "todate", @class = "form-control", @type = "date" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Ledger" asp-action="Filter">
+                                <i class="fa fa-filter"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                @if (Model.type == "Filter")
+                {
+                    <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Detail</b></h4>
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" name="dataTable" width="100%" cellspacing="0">
+
+                                    <thead>
+                                        <tr>  
+                                            <td colspan="3" align="right">Opening Balance</td>
+                                            <td >@Model.DR_Amounts</td>
+                                            <td >@Model.CR_Amounts</td>                                            
+                                        </tr>
+                                        <tr>
+                                            <th>Doc Date</th>
+                                            <th>Doc Type</th>
+                                            <th>Remarks</th>
+                                            <th>Dr Amount</th>
+                                            <th>Cr Amount</th>
+                                            <th>Bal Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblbody">                                        
+                                        @foreach (var Data in Model.v_LEDGERs)
+                                            {
+                                            var bal = @Data.DR_AMOUNT - @Data.CR_AMOUNT;
+                                                <tr>
+                                                    <td>@Data.DOC_DATE</td>
+                                                    <td>@Data.DOC_TYPE</td>
+                                                    <td>@Data.REMARKS</td>
+                                                    <td>@Data.DR_AMOUNT</td>
+                                                    <td>@Data.CR_AMOUNT</td>
+                                                    <td>@Data.BAL_AMOUNT</td>
+                                                </tr>
+                                            }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right " asp-controller="Dashboard" asp-action="Dashboard">Close</a>
+                                &nbsp;&nbsp; <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Ledger" asp-action="Export">
+                                    <i class="fa fa-filter"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </form>
+        </div>
+
+    </div>
+</div>
+@*<script>
+    $(function () {
+        $("#btnfilter").click(function () {
+            $.getJSON("/Ledger/Filter", { fromdate: $("#fromdate").val(), todate: $("#todate").val(), ddlACC: $('#ddlACC').val() }, function (json) {
+                var tr = "";
+               // $("#tblbody").empty();
+                for (var i = 0; i < json.length; i++) {
+                    tr = $('<tr/>');
+                    ////$("#tblHDR1").show();
+                    ////$("#tblHDR2").hide();
+                    //var table = $('#dataTable').DataTable();
+                    //table.column(3).visible(false);    // To show
+                    //table.column(4).visible(false);   // To hide
+                    //table.column(5).visible(false);   // To hide
+                    //table.column(8).visible(true);
+                    tr.append("<td>" + "Nwew dajdajsdh" + "</td>");
+                    tr.append("<td>" + json[i].doC_TYPE + "</td>");
+                    tr.append("<td>" + json[i].remarks + "</td>");
+                    tr.append("<td>" + json[i].dR_AMOUNT + "</td>");
+                    tr.append("<td>" + json[i].cR_AMOUNT + "</td>");
+                    tr.append("<td>" + json[i].cR_AMOUNT + "</td>");
+                    $('#dataTable').append(tr);
+                }
+            })
+
+        })
+    })
+</script>*@

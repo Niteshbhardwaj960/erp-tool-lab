@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebERP.Models.Artical_Merge_HDR>
+
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Artical Merge Details</h3></nav>
+
+
+@if (Model.Any())
+{
+    <a class="btn btn-success" style="width:auto" asp-controller="ArticalMerge" asp-action="Artical_Merge_Master">
+        Add
+    </a>
+    @*<a class="btn btn-success" style="width:auto" asp-controller="Company" asp-action="Excel">
+            Export
+        </a>*@
+    <hr />
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Doc Date</th>
+                            <th>Doc No</th>
+                            <th>Doc Fin Year</th>
+                            <th>Item</th>
+                            <th>Artical</th>
+                            <th>Size</th>
+                            <th>Godown</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var Data in Model)
+                        {
+                        <tr>
+                            <td>@Data.DOC_DATE</td>
+                            <td>@Data.DOC_NO</td>
+                            <td>@Data.DOC_FN_YEAR</td>
+                            <td>@Data.ITEM_NAME</td>
+                            <td>@Data.ARTICAL_NAME</td>
+                            <td>@Data.SIZE_NAME</td>
+                            <td>@Data.GDW_NAME</td>
+                            <td>
+                                <a asp-action="Edit_AM" asp-controller="ArticalMerge" asp-route-id="@Data.ID">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="Delete_AM" asp-controller="ArticalMerge" asp-route-id="@Data.ID">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="Action_AM" asp-controller="ArticalMerge" asp-route-id="@Data.ID">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No Artical Merge Created Yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to Add Artical Merge
+            </h5>
+            <a class="btn btn-primary" style="width:auto" asp-controller="ArticalMerge" asp-action="Artical_Merge_Master">
+                Add
+            </a>
+        </div>
+    </div>
+}

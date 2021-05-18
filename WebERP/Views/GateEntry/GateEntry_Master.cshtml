@@ -108,12 +108,10 @@
     $(function () {
         $("#ddlACC").change(function () {            
             $.getJSON("/GateEntry/GetGrdData", { accid: $("#ddlACC").val(), work: $('#ddlwork').val() }, function (json) {
-                var tr = "";  
-                debugger;
+                var tr = ""; 
                 $("#tblbody").empty();
                 
                 for (var i = 0; i < json.length; i++) {
-                    debugger;
                     tr = $('<tr/>');
                     if ($('#ddlwork').val() == "1")
                     {

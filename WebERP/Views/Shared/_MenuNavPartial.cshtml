@@ -69,6 +69,14 @@
             </a>
             <div id="Transactions" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
+                    @if (User.IsInRole("ArticalMerge") || User.IsInRole("Admin"))
+                    {
+                        <a class="collapse-item" asp-controller="ArticalMerge" asp-action="Artical_Merge_Detail">Artical Merge</a>
+                    }
+                    @if (User.IsInRole("Ledger") || User.IsInRole("Admin"))
+                    {
+                        <a class="collapse-item" asp-controller="Ledger" asp-action="Ledger">Ledger Details</a>
+                    }
                     @if (User.IsInRole("StockDetails") || User.IsInRole("Admin"))
                     {
                         <a class="collapse-item" asp-controller="StockDetails" asp-action="StockDetails">Stock Details</a>

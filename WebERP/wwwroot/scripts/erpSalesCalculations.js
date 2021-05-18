@@ -255,7 +255,6 @@ WebERP.SalesGrid = {
     },
 
     CalculateTaxRate: function (gstPer, grossAmount) {
-        debugger
         grossamt = parseFloat(grossAmount);
         gst = parseFloat(gstPer);
         return (grossamt * gst / 100).toFixed(2); 
@@ -291,7 +290,6 @@ WebERP.SalesGrid = {
     },
 
     DisTagOnChange: function (e) {
-        debugger
         var currentRow = $(this).closest("tr");
         var currentRate = currentRow.find("td:eq(7) input[type='number']").val();
         var disc_per;
@@ -319,7 +317,6 @@ WebERP.SalesGrid = {
     },
 
     QuantityOnChange: function (e) {
-        debugger
         var currentRow = $(this).closest('tr');
         var currentQ = $(this).val();
         if (currentQ == '') currentQ = 0;

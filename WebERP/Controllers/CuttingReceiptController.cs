@@ -76,7 +76,7 @@ namespace WebERP.Controllers
                            select new SelectListItem()
                            {
                                Text = Cut.DOC_NO.ToString() + '/' + Cut.EMP_NAME + '/' + Cut.Item_NAME + '/' + Cut.ARTICAL_NAME + '/' + Cut.SIZE_NAME + '/' + Cut.PROC_NAME,
-                               Value = Cut.EMP_NAME + '/' + Cut.Item_NAME + '/' + Cut.ARTICAL_NAME + '/' + Cut.SIZE_NAME + '/' + Cut.PROC_NAME + '/' + Cut.ID,
+                               Value = Cut.EMP_NAME + '^' + Cut.Item_NAME + '^' + Cut.ARTICAL_NAME + '^' + Cut.SIZE_NAME + '^' + Cut.PROC_NAME + '^' + Cut.ID,
                            }).ToList();
 
             CutList.Insert(0, new SelectListItem()
@@ -94,6 +94,7 @@ namespace WebERP.Controllers
             int Doc_Number = dbContext.Cutting_Receipt
                 .Where(x => x.DOC_FINYEAR == cuttingReceiptViewModel.Fin_Years)
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
+            //cuttingReceiptViewModel.cutting_Receipt.CUTTING_ORDER_FK = 
             cuttingReceiptViewModel.cutting_Receipt.DOC_NO = Doc_Number + 1;
             cuttingReceiptViewModel.cutting_Receipt.INS_DATE = DateTime.Now;
             cuttingReceiptViewModel.cutting_Receipt.DOC_DATE = cuttingReceiptViewModel.DOc_Dates;
