@@ -16,6 +16,7 @@ namespace WebERP.Models
         public DateTime? SAL_MONTH { get; set; }
         public int SAL_TYPE { get; set; }
         public int EMP_CODE { get; set; }
+        public string EMP_TYPE { get; set; }
         public string EMP_NAME { get; set; }
         public decimal SALARY { get; set; }
         public decimal SHIFT_HRS { get; set; }
@@ -28,13 +29,15 @@ namespace WebERP.Models
         public decimal RF_SAL { get; set; }
         public decimal NET_PAY_SAL { get; set; }
         public decimal PAID_SAL { get; set; }
-        public decimal PAID_DATE { get; set; }
-        public decimal PAID_USER { get; set; }
+        public DateTime? PAID_DATE { get; set; }
+        public string PAID_USER { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
         public string UDT_UID { get; set; }
         [NotMapped]
         public string GDW_NAME { get; set; }
+        [NotMapped]
+        public List<SelectListItem> SalDropDown { get; set; }
     }
 }

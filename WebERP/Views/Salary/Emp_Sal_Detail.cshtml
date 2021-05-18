@@ -1,0 +1,143 @@
+﻿@model WebERP.Models.EmpSalViewModel
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Emp Salary Detail</h3></nav>
+
+<a class="btn btn-primary" style="width:auto" asp-controller="Salary" asp-action="Salary_Gen">
+    Genrate New Salary
+</a>
+<hr />
+<form id="menu-form" method="post">
+    <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Salary Details</b></h4>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="form-group">
+                <label for="branch_id">Salary Month</label>
+                <div class="custom-radio">
+                    <input asp-for="FilterMonth" type="month" class="form-control" id="SAL_MONTH" name="SAL_MONTH" />
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="form-group">
+                <label for="branch_id">Employee Type</label>
+                <div class="custom-radio">
+                    <select class="form-control" asp-for="Emp_Type" id="Emp_Type" name="Emp_Type">
+                        <option value="S">Salaried</option>
+                        <option value="P">Pc Rate/Contractor</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Salary" asp-action="Emp_Sal_Detail_Filter">
+            <i class="fa fa-save"></i> Filter Salary
+        </button>
+
+    </div>
+</form>
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Emp Code</th>
+                        <th>Emp Name</th>
+                        <th>Emp Salary</th>
+                        <th>Paybal Salary</th>
+                        <th>RF Salary</th>
+                        <th>Net Payable Salary</th>
+                        <th>Salary Paid</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @if (Model.emp_Sals.Any())
+                {
+                    <tbody>
+                        @foreach (var Data in Model.emp_Sals)
+                        {
+                            <tr>
+                                <td>@Data.EMP_CODE</td>
+                                <td>@Data.EMP_NAME</td>
+                                <td>@Data.SALARY</td>
+                                <td>@Data.PAYABAL_SALARY</td>
+                                <td>@Data.RF_SAL</td>
+                                <td>@Data.NET_PAY_SAL</td>
+                                <td>@Data.PAID_SAL</td>
+                                <td>
+                                    <a href="javascript:void(0);" class="PayDetail" data-id="@Data.ID">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8">
+                            Salary not Generated Yet
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+
+</div>
+@*}
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                No Salary Entry Created Yet
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    Use the button below to Genrate Salary
+                </h5>
+                <a class="btn btn-primary" style="width:auto" asp-controller="Salary" asp-action="Salary_Gen">
+                    Add
+                </a>
+            </div>
+        </div>
+    }*@
+
+<script>
+
+    var TeamDetailPostBackURL = '/Salary/PopSal';
+    $(function () {
+        $(".PayDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: false };
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+</script>  

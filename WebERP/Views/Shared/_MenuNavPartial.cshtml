@@ -34,7 +34,7 @@
     <!-- Nav Item - Pages Collapse Menu -->
     @if (User.IsInRole("JobWork") || User.IsInRole("Admin") || User.IsInRole("Employee") || User.IsInRole("Advance") || User.IsInRole("Attandance"))
     {
-        <li class="nav-item">
+        <li class="nav-item collapse-item" >
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Payments"
                aria-expanded="true" aria-controls="Payments">
                 <i class="fas fa-fw fa-cog"></i>
@@ -42,7 +42,7 @@
             </a>
             <div id="Payments" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                   
+
                     @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
                     {
                         <a class="collapse-item" asp-controller="Employee" asp-action="Employee_Master">Employee Master</a>
@@ -55,6 +55,10 @@
                     {
                         <a class="collapse-item" asp-controller="EmpAttandance" asp-action="Emp_Attand_Details">Employee Attandance</a>
                     }
+                    @if (User.IsInRole("Attandance") || User.IsInRole("Admin"))
+                    {
+                        <a class="collapse-item" asp-controller="Salary" asp-action="Emp_Sal_Detail">Salary Generation</a>
+                    }                    
                 </div>
             </div>
         </li>

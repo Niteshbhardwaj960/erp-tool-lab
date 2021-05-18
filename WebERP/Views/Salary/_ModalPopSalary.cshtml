@@ -1,0 +1,156 @@
+﻿@model WebERP.Models.EmpSalViewModel
+
+
+<div class="card">
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+        <h3 style="color:white">Employee Salary Details</h3>
+    </nav>
+
+    <div class="card-body">
+        <form id="menu-form" method="post" enctype="multipart/form-data">
+            <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Basic Details</b></h4>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Employee Name</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control numb" asp-for="emp_sal.EMP_NAME" readonly="readonly">
+                            <input type="hidden" class="form-control numb" asp-for="emp_sal.SAL_MONTH" name="SAL_MONTH" readonly="readonly">
+                            <input type="hidden" class="form-control numb" asp-for="emp_sal.ID" name="IDD" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Emp Code</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control numb" asp-for="emp_sal.EMP_CODE" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Employee Type</label>
+                        <div class="custom-radio">
+                            <select class="form-control" asp-for="emp_sal.EMP_TYPE" name="EMP_TYPE" readonly="readonly">
+                                <option value="S">Salary</option>
+                                <option value="P">Pc Rate/Contractor</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Employee Salary</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control numb" asp-for="emp_sal.SALARY" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                @if (Model.emp_sal.EMP_TYPE == "S")
+                {
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Pay Days</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="emp_sal.PAY_DAYS" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Earn Salary</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="emp_sal.ERN_SAL" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Shift Hours</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="emp_sal.SHIFT_HRS" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Overtime Hours</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="emp_sal.OT_HRS" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Earn OT</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control numb" asp-for="emp_sal.ERN_OT" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Advance Amount</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control numb" asp-for="emp_sal.ADVANCE_AMOUNT" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Net-Payable Salary</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control numb" asp-for="emp_sal.NET_PAY_SAL" name="NET_PAY_SAL" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.emp_sal.EMP_TYPE == "P")
+                {
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Artical Name</th>
+                                <th>Proc Name</th>
+                                <th>Qty</th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        @if (Model.emp_sal_dtl.Any())
+                        {
+                            <tbody>
+                                @foreach (var Data in Model.emp_sal_dtl)
+                                {
+                                    <tr>
+                                        <td>@Data.ART_NAME</td>
+                                        <td>@Data.PROC_NAME</td>
+                                        <td>@Data.PRODUCT_QTY</td>
+                                        <td>@Data.PRODUCT_RATE</td>
+                                        <td>@Data.ART_AMOUNT</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        }
+                    </table>
+                }
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Salary" asp-action="CloseSal">
+                    <i class="fa fa-close"></i> Close
+                </button>
+                &nbsp;&nbsp;
+                <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" asp-controller="Salary" asp-action="PaidSal">
+                    <i class="fa fa-save"></i> Pay
+                </button>
+
+            </div>
+        </form>
+    </div>
+
+</div>

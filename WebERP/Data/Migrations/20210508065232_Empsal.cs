@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebERP.Data.Migrations
 {
-    public partial class EMPSAL : Migration
+    public partial class Empsal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,24 +14,25 @@ namespace WebERP.Data.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    COMP_CODE = table.Column<int>(nullable: false),
+                    COMP_CODE = table.Column<int>(nullable: true),
                     SAL_MONTH = table.Column<DateTime>(nullable: true),
-                    SAL_TYPE = table.Column<int>(nullable: false),
-                    EMP_CODE = table.Column<int>(nullable: false),
+                    SAL_TYPE = table.Column<int>(nullable: true),
+                    EMP_CODE = table.Column<int>(nullable: true),
+                    EMP_TYPE = table.Column<string>(nullable: true),
                     EMP_NAME = table.Column<string>(nullable: true),
-                    SALARY = table.Column<decimal>(nullable: false),
-                    SHIFT_HRS = table.Column<decimal>(nullable: false),
-                    PAY_DAYS = table.Column<decimal>(nullable: false),
-                    OT_HRS = table.Column<decimal>(nullable: false),
-                    ERN_SAL = table.Column<decimal>(nullable: false),
-                    ERN_OT = table.Column<decimal>(nullable: false),
-                    ADVANCE_AMOUNT = table.Column<decimal>(nullable: false),
-                    PAYABAL_SALARY = table.Column<decimal>(nullable: false),
-                    RF_SAL = table.Column<decimal>(nullable: false),
-                    NET_PAY_SAL = table.Column<decimal>(nullable: false),
-                    PAID_SAL = table.Column<decimal>(nullable: false),
-                    PAID_DATE = table.Column<decimal>(nullable: false),
-                    PAID_USER = table.Column<decimal>(nullable: false),
+                    SALARY = table.Column<decimal>(nullable: true),
+                    SHIFT_HRS = table.Column<decimal>(nullable: true),
+                    PAY_DAYS = table.Column<decimal>(nullable: true),
+                    OT_HRS = table.Column<decimal>(nullable: true),
+                    ERN_SAL = table.Column<decimal>(nullable: true),
+                    ERN_OT = table.Column<decimal>(nullable: true),
+                    ADVANCE_AMOUNT = table.Column<decimal>(nullable: true),
+                    PAYABAL_SALARY = table.Column<decimal>(nullable: true),
+                    RF_SAL = table.Column<decimal>(nullable: true),
+                    NET_PAY_SAL = table.Column<decimal>(nullable: true),
+                    PAID_SAL = table.Column<decimal>(nullable: true),
+                    PAID_DATE = table.Column<DateTime>(nullable: true),
+                    PAID_USER = table.Column<string>(nullable: true),
                     INS_DATE = table.Column<DateTime>(nullable: true),
                     INS_UID = table.Column<string>(nullable: true),
                     UDT_DATE = table.Column<DateTime>(nullable: true),

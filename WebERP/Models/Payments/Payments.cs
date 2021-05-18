@@ -12,6 +12,8 @@ namespace WebERP.Models
     {
         public int ID { get; set; }
         public int COMP_CODE { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(HtmlEncode = false, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime? DOC_DATE { get; set; }
         public string DOC_FN_YEAR { get; set; }
         public int DOC_NO { get; set; }

@@ -78,6 +78,8 @@ namespace WebERP.Data
         public DbSet<Artical_Merge_DTL> Artical_Merge_DTL { get; set; }
         public DbSet<Artical_Merge_HDR> Artical_Merge_HDR { get; set; }
         public DbSet<Emp_Sal> EMP_SAL { get; set; }
+        public DbSet<Emp_Sal_PC_Cont_Dtl> Emp_Sal_PC_Cont_Dtl { get; set; }
+        public DbSet<V_PRODUCTION_DETAIL> V_PRODUCTION_DETAIL { get; set; }
     }
 
 }

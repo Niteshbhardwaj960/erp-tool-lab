@@ -66,7 +66,7 @@ namespace WebERP.Controllers
                            select new SelectListItem()
                            {
                                Text = Emp.EMP_NAME + "/" + Emp.Emp_Father_Name + "/" + Emp.emp_mobile_no1 + "/" + dbContext.Department_Masters.Where(C => C.ID == Emp.DEP_CODE).Select(ss => ss.NAME).FirstOrDefault(),
-                               Value = Emp.ID.ToString(),
+                               Value = Emp.EMP_CODE.ToString(),
                            }).ToList();
 
             Emplist.Insert(0, new SelectListItem()

@@ -10,8 +10,8 @@ using WebERP.Data;
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210505103320_EMPSAL")]
-    partial class EMPSAL
+    [Migration("20210515124500_EMPSALPCCONTDTL")]
+    partial class EMPSALPCCONTDTL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -671,6 +671,8 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("EMP_NAME");
 
+                    b.Property<string>("EMP_TYPE");
+
                     b.Property<decimal>("ERN_OT");
 
                     b.Property<decimal>("ERN_SAL");
@@ -683,11 +685,11 @@ namespace WebERP.Data.Migrations
 
                     b.Property<decimal>("OT_HRS");
 
-                    b.Property<decimal>("PAID_DATE");
+                    b.Property<DateTime?>("PAID_DATE");
 
                     b.Property<decimal>("PAID_SAL");
 
-                    b.Property<decimal>("PAID_USER");
+                    b.Property<string>("PAID_USER");
 
                     b.Property<decimal>("PAYABAL_SALARY");
 
@@ -710,6 +712,37 @@ namespace WebERP.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("EMP_SAL");
+                });
+
+            modelBuilder.Entity("WebERP.Models.Emp_Sal_PC_Cont_Dtl", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("ART_AMOUNT");
+
+                    b.Property<int>("ART_CODE");
+
+                    b.Property<int>("EMP_SAL_FK");
+
+                    b.Property<DateTime?>("INS_DATE");
+
+                    b.Property<string>("INS_UID");
+
+                    b.Property<int>("PROC_CODE");
+
+                    b.Property<decimal>("PRODUCT_QTY");
+
+                    b.Property<decimal>("PRODUCT_RATE");
+
+                    b.Property<DateTime?>("UDT_DATE");
+
+                    b.Property<string>("UDT_UID");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Emp_Sal_PC_Cont_Dtl");
                 });
 
             modelBuilder.Entity("WebERP.Models.Employee_Advance", b =>
