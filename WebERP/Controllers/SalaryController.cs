@@ -147,7 +147,7 @@ namespace WebERP.Controllers
                     {
                         if (ProcessRate.proc_rate == "0")
                         {
-                            proc_rate_error = proc_rate_error + "Add ProcessRate for Artical Name = " + dbContext.Artical_Master.Where(am => am.ID == ProcessRate.artical_code).Select(aam => aam.NAME).FirstOrDefault() + ", ";
+                            proc_rate_error = proc_rate_error + "Add ProcessRate for Artical Name = " + dbContext.Artical_Master.Where(am => am.ID == ProcessRate.artical_code).Select(aam => aam.NAME).FirstOrDefault() + " , ";
                         }
                     }
 

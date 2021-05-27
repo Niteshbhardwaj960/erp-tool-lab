@@ -39,5 +39,7 @@ namespace WebERP.Models
         public string GDW_NAME { get; set; }
         [NotMapped]
         public List<SelectListItem> SalDropDown { get; set; }
+        [NotMapped]
+        public List<SelectListItem> Error { get; set; }
     }
 }

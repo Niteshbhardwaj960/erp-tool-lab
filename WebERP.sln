@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.1321
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebERP", "WebERP\WebERP.csproj", "{2104826D-B474-4DB9-A755-76D50B1CFAB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDLCREPORT", "RDLCREPORT\RDLCREPORT.csproj", "{7310B98B-DFE4-44B2-A38B-B5898EDBB04F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2104826D-B474-4DB9-A755-76D50B1CFAB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2104826D-B474-4DB9-A755-76D50B1CFAB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2104826D-B474-4DB9-A755-76D50B1CFAB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7310B98B-DFE4-44B2-A38B-B5898EDBB04F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7310B98B-DFE4-44B2-A38B-B5898EDBB04F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7310B98B-DFE4-44B2-A38B-B5898EDBB04F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7310B98B-DFE4-44B2-A38B-B5898EDBB04F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

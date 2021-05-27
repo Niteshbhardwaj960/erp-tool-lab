@@ -1,0 +1,7 @@
+﻿namespace RDLCREPORT
+{
+}
+
+namespace RDLCREPORT
+{
+}

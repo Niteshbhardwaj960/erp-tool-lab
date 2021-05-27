@@ -4,8 +4,7 @@
     <div class="card">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
             <h3 style="color:white">Salary Generation</h3>
-        </nav>
-
+        </nav>           
         <div class="card-body">
 
             <form id="menu-form" method="post">
@@ -42,14 +41,15 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Emp_Sal_Detail">Close</a>
 
                     <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Salary" asp-action="Salary_Ge">
                         <i class="fa fa-save"></i> Generate Salary
                     </button>
-                    <span asp-validation-for="EMP_TYPE" class="text-danger"></span>
+                </div>
+                <div class="row text-danger">
+                    @Html.ValidationSummary()
                 </div>
             </form>
 

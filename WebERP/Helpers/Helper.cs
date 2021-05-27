@@ -21,5 +21,10 @@ namespace WebERP.Helpers
             }
             return Convert.ToInt32(FinYear);
         }
+        public static string DateFormat(string ParamDate)
+        {
+            DateTime date = DateTime.Parse(ParamDate);
+            return date.ToString("dd/MMM/yyyy");
+        }
     }
 }

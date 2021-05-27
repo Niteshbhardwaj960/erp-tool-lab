@@ -6,7 +6,7 @@
             <h3 style="color:white">Ledger Details</h3>
         </nav>
         <div class="card-body">
-            <form id="menu-form">
+            <form id="menu-form" method="post">
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Select Filter Details</b></h4>
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -45,17 +45,17 @@
                 @if (Model.type == "Filter")
                 {
                     <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Detail</b></h4>
-                    
+
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" name="dataTable" width="100%" cellspacing="0">
 
                                     <thead>
-                                        <tr>  
+                                        <tr>
                                             <td colspan="3" align="right">Opening Balance</td>
-                                            <td >@Model.DR_Amounts</td>
-                                            <td >@Model.CR_Amounts</td>                                            
+                                            <td><input asp-for="DR_Amounts" type="text" name="DRAMNT" id="DRAMNT" /></td>
+                                            <td><input asp-for="CR_Amounts" type="text" name="CRAMNT" id="CRAMNT" /></td>
                                         </tr>
                                         <tr>
                                             <th>Doc Date</th>
@@ -66,19 +66,19 @@
                                             <th>Bal Amount</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tblbody">                                        
-                                        @foreach (var Data in Model.v_LEDGERs)
-                                            {
-                                            var bal = @Data.DR_AMOUNT - @Data.CR_AMOUNT;
-                                                <tr>
-                                                    <td>@Data.DOC_DATE</td>
-                                                    <td>@Data.DOC_TYPE</td>
-                                                    <td>@Data.REMARKS</td>
-                                                    <td>@Data.DR_AMOUNT</td>
-                                                    <td>@Data.CR_AMOUNT</td>
-                                                    <td>@Data.BAL_AMOUNT</td>
-                                                </tr>
-                                            }
+                                    <tbody id="tblbody">
+                                        @for (int j = 0; j < Model.v_LEDGERs.Count(); j++)
+                                        {
+
+                                            <tr>
+                                                <td>@Model.v_LEDGERs[j].DOC_DATE @Html.HiddenFor(m => m.v_LEDGERs[j].DOC_DATE)</td>
+                                                <td>@Model.v_LEDGERs[j].DOC_TYPE @Html.HiddenFor(m => m.v_LEDGERs[j].DOC_TYPE)</td>
+                                                <td>@Model.v_LEDGERs[j].REMARKS @Html.HiddenFor(m => m.v_LEDGERs[j].REMARKS)</td>
+                                                <td>@Model.v_LEDGERs[j].DR_AMOUNT @Html.HiddenFor(m => m.v_LEDGERs[j].DR_AMOUNT)</td>
+                                                <td>@Model.v_LEDGERs[j].CR_AMOUNT @Html.HiddenFor(m => m.v_LEDGERs[j].CR_AMOUNT)</td>
+                                                <td>@Model.v_LEDGERs[j].BAL_AMOUNT @Html.HiddenFor(m => m.v_LEDGERs[j].BAL_AMOUNT)</td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -88,7 +88,8 @@
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="form-group">
                                 <a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right " asp-controller="Dashboard" asp-action="Dashboard">Close</a>
-                                &nbsp;&nbsp; <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Ledger" asp-action="Export">
+                                &nbsp;&nbsp; @*<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right " asp-controller="Ledger" asp-action="Export">Close</a>*@
+                                <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Ledger" asp-action="Print">
                                     <i class="fa fa-filter"></i> Export
                                 </button>
                             </div>
@@ -101,30 +102,30 @@
     </div>
 </div>
 @*<script>
-    $(function () {
-        $("#btnfilter").click(function () {
-            $.getJSON("/Ledger/Filter", { fromdate: $("#fromdate").val(), todate: $("#todate").val(), ddlACC: $('#ddlACC').val() }, function (json) {
-                var tr = "";
-               // $("#tblbody").empty();
-                for (var i = 0; i < json.length; i++) {
-                    tr = $('<tr/>');
-                    ////$("#tblHDR1").show();
-                    ////$("#tblHDR2").hide();
-                    //var table = $('#dataTable').DataTable();
-                    //table.column(3).visible(false);    // To show
-                    //table.column(4).visible(false);   // To hide
-                    //table.column(5).visible(false);   // To hide
-                    //table.column(8).visible(true);
-                    tr.append("<td>" + "Nwew dajdajsdh" + "</td>");
-                    tr.append("<td>" + json[i].doC_TYPE + "</td>");
-                    tr.append("<td>" + json[i].remarks + "</td>");
-                    tr.append("<td>" + json[i].dR_AMOUNT + "</td>");
-                    tr.append("<td>" + json[i].cR_AMOUNT + "</td>");
-                    tr.append("<td>" + json[i].cR_AMOUNT + "</td>");
-                    $('#dataTable').append(tr);
-                }
-            })
+        $(function () {
+            $("#btnfilter").click(function () {
+                $.getJSON("/Ledger/Filter", { fromdate: $("#fromdate").val(), todate: $("#todate").val(), ddlACC: $('#ddlACC').val() }, function (json) {
+                    var tr = "";
+                   // $("#tblbody").empty();
+                    for (var i = 0; i < json.length; i++) {
+                        tr = $('<tr/>');
+                        ////$("#tblHDR1").show();
+                        ////$("#tblHDR2").hide();
+                        //var table = $('#dataTable').DataTable();
+                        //table.column(3).visible(false);    // To show
+                        //table.column(4).visible(false);   // To hide
+                        //table.column(5).visible(false);   // To hide
+                        //table.column(8).visible(true);
+                        tr.append("<td>" + "Nwew dajdajsdh" + "</td>");
+                        tr.append("<td>" + json[i].doC_TYPE + "</td>");
+                        tr.append("<td>" + json[i].remarks + "</td>");
+                        tr.append("<td>" + json[i].dR_AMOUNT + "</td>");
+                        tr.append("<td>" + json[i].cR_AMOUNT + "</td>");
+                        tr.append("<td>" + json[i].cR_AMOUNT + "</td>");
+                        $('#dataTable').append(tr);
+                    }
+                })
 
+            })
         })
-    })
-</script>*@
+    </script>*@
