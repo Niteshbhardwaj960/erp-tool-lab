@@ -279,7 +279,7 @@ namespace WebERP.Controllers
         }
 
         [HttpGet]
-        public IActionResult ShowSalesOrder(int id)
+        public IActionResult ShowSalesOrder(int id, string btn= "")
         {
             SalesViewModel saleViewModel = new SalesViewModel();
             SalesHeader saleHeader = new SalesHeader();
