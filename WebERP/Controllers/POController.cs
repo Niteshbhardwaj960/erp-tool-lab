@@ -38,7 +38,7 @@ namespace WebERP.Controllers
             poViewModel.POHeader = GetPOHeader();
             poViewModel.POTerms = GetPOTerm();
             poDetailList.Add(GetPODetails());
-            poViewModel.PODetails = poDetailList;
+            poViewModel.PODetails = poDetailList;            
             return View(poViewModel);
         }
 

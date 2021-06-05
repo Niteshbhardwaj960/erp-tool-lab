@@ -56,6 +56,9 @@
                                         </a>&nbsp;&nbsp;
                                         <a asp-action="ShowSalesOrder" asp-controller="Sales" asp-route-id="@item.SALE_PK">
                                             <i class="fas fa-eye"></i>
+                                        </a>&nbsp;&nbsp;
+                                        <a asp-action="ShowSalesOrder" asp-controller="Sales" asp-route-id="@item.SALE_PK" asp-route-btn="print">
+                                            <i class="fas fa-print"></i>
                                         </a>
                                     </td>
                                 </tr>
