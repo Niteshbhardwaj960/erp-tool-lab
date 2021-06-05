@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -77,7 +78,9 @@ namespace WebERP.Controllers
                 CuttingOrder.INS_DATE = DateTime.Now;
                 CuttingOrder.INS_UID = userManager.GetUserName(HttpContext.User);
                 CuttingOrder.DOC_NO = DoC_No + 1;
+                CuttingOrder.DOC_DATE = Helper.DateFormatDate(Convert.ToString(CuttingOrder.DOC_DATE));
                 dbContext.Cutting_Orders.Add(CuttingOrder);
+
                 dbContext.SaveChanges();
                 return RedirectToAction("CuttingDetail");
             }
