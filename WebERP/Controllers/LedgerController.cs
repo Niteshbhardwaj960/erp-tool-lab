@@ -77,6 +77,7 @@ namespace WebERP.Controllers
                 cramount = cramount + data.CR_AMOUNT;
                 bal = (opnball + dramount - cramount);
                 data.BAL_AMOUNT = Math.Abs(bal);
+                data.DOC_DATE = Helper.DateFormat(data.DOC_DATE);
             }
 
             return View("Ledger", ledgers);

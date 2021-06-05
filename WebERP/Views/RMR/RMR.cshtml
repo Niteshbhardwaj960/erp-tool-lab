@@ -1,0 +1,157 @@
+﻿@model WebERP.Models.RMRViewModel
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class="modal-content show-modal-content form_content">
+    <div class="card">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);">
+            <h3 style="color:white">Raw Material Return</h3>
+        </nav>
+        <div class="card-body">
+
+            <form id="menu-form" method="post" asp-controller="RMR" asp-action="RMR">
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Cutting Order Details</b></h4>
+                <div class="row">
+                    @*<div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">`
+                                <label for="branch_id">Document Number</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Document Date</label>
+                            <div class="input-group">                               
+                                @Html.TextBoxFor(a => a.RMR_HDR.Doc_Date, "{0:yyyy-MM-dd}", new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" , @readonly="readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Document Financial Year</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.RMR_HDR.Doc_FN_Year, new { @ID = "Doc_Fins", @class = "form-control", @readOnly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Employee Name</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.RMR_HDR.EMP_NAME, new { @ID = "EmpName", @class = "form-control", @readOnly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Item Name</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.RMR_HDR.ITEM_NAME, new { @ID = "ItemName", @class = "form-control", @readOnly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Artical Name</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.RMR_HDR.ART_NAME, new { @ID = "ArtName", @class = "form-control", @readOnly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Size Name</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.RMR_HDR.SIZE_NAME, new { @ID = "SizeName", @class = "form-control", @readOnly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Process Name</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.RMR_HDR.PROC_NAME, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" })
+                                @Html.HiddenFor(a => a.RMR_HDR.Cutting_Order_FK, new { @ID = "CUTPK", @class = "form-control" })
+                                @Html.HiddenFor(a => a.RMR_HDR.CUTTING_ORDER_NO, new { @ID = "CUTORDERNO", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Remarks</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.RMR_HDR.Remarks, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Raw Material Issue Details</b></h4>
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" Name="dataTa" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Item Name</th>
+                                        <th>Artical Name</th>
+                                        <th>Size Name</th>
+                                        <th>Issue Qty</th>
+                                        <th>Return Qty</th>
+                                        <th>GDW Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblbody">
+                                    @if (Model != null && Model.v_RM_ISSUEs.Count > 0)
+                                        {
+                                            int j = 0;
+                                            foreach (var i in Model.v_RM_ISSUEs)
+                                            {
+                                    <tr style="border:1px solid black">
+
+                                        @*<td>
+            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].GDW_CODE, new { @class = "form-control" })
+            @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].GDW_NAME, new { @class = "form-control", @readOnly = "readonly" })
+        </td>*@<td>@Html.CheckBoxFor(a => a.v_RM_ISSUEs[j].CHK, new { @class = "form-control"})</td>
+                                        <td>
+                                            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].Cutting_Order_FK, new { @class = "form-control" })
+                                            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].ITEM_Code, new { @class = "form-control" })
+                                            @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>
+                                        <td>
+                                            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].ARTICAL_Code, new { @class = "form-control" })
+                                            @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].ART_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>
+                                        <td>
+                                            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].SIZE_Code, new { @class = "form-control" })
+                                            @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>
+                                        <td>@Html.TextBoxFor(a => a.v_RM_ISSUEs[j].ISSUE_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                       
+                                        <td>@Html.TextBoxFor(a => a.v_RM_ISSUEs[j].return_qty, new { @class = "form-control", @type = "decimal" })</td>
+                                    <td>@Html.DropDownListFor(a=>a.v_RM_ISSUEs[j].GDW_Code,new SelectList(Model.GDWDropDown, "Value", "Text")) </td>
+                                    </tr>
+                                                j++;
+                                            }
+                                        }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="RMR_DETAIL">Close</a>
+
+                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
