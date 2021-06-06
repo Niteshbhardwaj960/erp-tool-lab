@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -55,7 +56,7 @@ namespace WebERP.Controllers
             }
             if (ModelState.IsValid)
             {
-                tAX_MASTER.INS_DATE = DateTime.Now;
+                tAX_MASTER.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 tAX_MASTER.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.TAX_MASTER.Add(tAX_MASTER);
                 dbContext.SaveChanges();
@@ -93,7 +94,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.UDT_DATE = DateTime.Now;
+                obj.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 obj.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.TAX_MASTER.Update(obj);
                 dbContext.SaveChanges();

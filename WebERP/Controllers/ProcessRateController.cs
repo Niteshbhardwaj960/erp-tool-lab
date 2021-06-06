@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -63,7 +64,7 @@ namespace WebERP.Controllers
             }
             if (ModelState.IsValid)
             {
-                objProcessRate.INS_DATE = DateTime.Now;
+                objProcessRate.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 objProcessRate.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.ProcessRate_Master.Add(objProcessRate);
                 var result = await dbContext.SaveChangesAsync();
@@ -102,7 +103,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.UDT_DATE = DateTime.Now;
+                obj.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 obj.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.ProcessRate_Master.Update(obj);
                 dbContext.SaveChanges();

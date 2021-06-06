@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -39,7 +40,7 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult Emp_Attand_Master(Employee_Attandance employee_Attandance)
         {
-            employee_Attandance.INS_DATE = DateTime.Today;
+            employee_Attandance.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             employee_Attandance.INS_UID = userManager.GetUserName(HttpContext.User);
             employee_Attandance.EMP_TYPE = "S";
             dbContext.Employee_Attandance.Add(employee_Attandance);

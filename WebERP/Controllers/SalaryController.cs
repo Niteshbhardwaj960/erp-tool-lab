@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -40,7 +41,7 @@ namespace WebERP.Controllers
             }
             else
             {
-                empSalViewModel.FilterMonth = DateTime.Now;
+                empSalViewModel.FilterMonth = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 empSalViewModel.Emp_Type = emmp_type;
                 empSalViewModel.emp_Sals = dbContext.EMP_SAL.AsNoTracking().Where(at => at.SAL_MONTH.Value.Month == DateTime.Now.Month && at.SAL_MONTH.Value.Year == DateTime.Now.Year && at.EMP_TYPE == "S").ToList();
             }
@@ -59,7 +60,7 @@ namespace WebERP.Controllers
         public IActionResult Salary_Gen()
         {
             Emp_Sal emp_Sal = new Emp_Sal();
-            emp_Sal.SAL_MONTH = DateTime.Now;
+            emp_Sal.SAL_MONTH = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             return View("Salary_Gen", emp_Sal);
         }
         [HttpPost]
@@ -185,7 +186,7 @@ namespace WebERP.Controllers
                                 PAYABAL_SALARY = Pay_sal,
                                 RF_SAL = RFF_SAL,
                                 NET_PAY_SAL = Pay_sal + RFF_SAL,
-                                INS_DATE = DateTime.Now,
+                                INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
                                 INS_UID = userManager.GetUserName(HttpContext.User),
                             });
                         }
@@ -206,7 +207,7 @@ namespace WebERP.Controllers
                                 PROC_CODE = Emp_pro.proc_code,
                                 PRODUCT_QTY = Emp_pro.prod_qty,
                                 PRODUCT_RATE = Convert.ToDecimal(Emp_pro.proc_rate),
-                                INS_DATE = DateTime.Now,
+                                INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
                                 INS_UID = userManager.GetUserName(HttpContext.User),
                             });
                         }
@@ -257,7 +258,7 @@ namespace WebERP.Controllers
 
             if (result != null)
             {
-                result.PAID_DATE = DateTime.Now;
+                result.PAID_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 result.PAID_USER = userManager.GetUserName(HttpContext.User);
                 result.PAID_SAL = NET_PAY_SAL;
                 dbContext.SaveChanges();

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -52,7 +53,7 @@ namespace WebERP.Controllers
             }
             if (ModelState.IsValid)
             {
-                objProcess.INS_DATE = DateTime.Now;
+                objProcess.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 objProcess.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Process_Master.Add(objProcess);
                 var result = await dbContext.SaveChangesAsync();

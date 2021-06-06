@@ -10,6 +10,7 @@ using WebERP.Models;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using WebERP.Helpers;
 
 namespace WebERP.Controllers
 {
@@ -61,7 +62,7 @@ namespace WebERP.Controllers
 
             if (ModelState.IsValid)
             {
-                objArtical.INS_DATE = DateTime.Now;
+                objArtical.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 objArtical.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Artical_Master.Add(objArtical);
                 var result = await dbContext.SaveChangesAsync();
@@ -95,7 +96,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                objArtical.UDT_DATE = DateTime.Now;
+                objArtical.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 objArtical.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Artical_Master.Update(objArtical);
                 dbContext.SaveChanges();

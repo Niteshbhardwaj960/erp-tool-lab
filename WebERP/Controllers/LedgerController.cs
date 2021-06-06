@@ -115,7 +115,7 @@ namespace WebERP.Controllers
         public string GetFinYear()
         {
             string FinYear = "";
-            DateTime date = DateTime.Now;
+            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -44,7 +45,7 @@ namespace WebERP.Controllers
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
             
             payments.DOC_NO = Doc_Number + 1;
-            payments.INS_DATE = DateTime.Now;
+            payments.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             payments.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.Payments.Add(payments);
             dbContext.SaveChanges();
@@ -145,7 +146,7 @@ namespace WebERP.Controllers
                 var result = dbContext.Payments.SingleOrDefault(b => b.ID == payments.ID);
                 if (result != null)
                 {
-                    result.UDT_DATE = DateTime.Now;
+                    result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                     result.UDT_UID = userManager.GetUserName(HttpContext.User);
                     result.CB_ACC_CODE = payments.CB_ACC_CODE;
                     result.ACC_CODE = payments.ACC_CODE;

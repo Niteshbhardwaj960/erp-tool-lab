@@ -110,7 +110,7 @@ namespace WebERP.Controllers
         public IActionResult RMR(RMRViewModel rMRViewModel)
         {
             int Doc_Number = dbContext.RMR_HDR
-                .Where(x => x.Doc_FN_Year == rMRViewModel.Doc_Fins)
+                .Where(x => x.Doc_FN_Year == rMRViewModel.RMR_HDR.Doc_FN_Year)
                 .Select(p => Convert.ToInt32(p.Doc_No)).DefaultIfEmpty(0).Max();
             int RMR_HDR_PK;
             List<RMR_DTL> RMDList = new List<RMR_DTL>();

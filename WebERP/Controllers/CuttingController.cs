@@ -38,7 +38,7 @@ namespace WebERP.Controllers
         public int GetFinYear()
         {
             string FinYear = "";
-            DateTime date = DateTime.Now;
+            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;
@@ -53,7 +53,7 @@ namespace WebERP.Controllers
         public IActionResult AddCutting()
         {
             Cutting_Order cut = new Cutting_Order();
-            cut.DOC_DATE = DateTime.Now;
+            cut.DOC_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             cut.DOC_FINYEAR = GetFinYear();
             cut.EmpDropDown = Emplists();
             int DoC_No = dbContext.Cutting_Orders
@@ -75,7 +75,7 @@ namespace WebERP.Controllers
             {
                 int DoC_No = dbContext.Cutting_Orders
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
-                CuttingOrder.INS_DATE = DateTime.Now;
+                CuttingOrder.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 CuttingOrder.INS_UID = userManager.GetUserName(HttpContext.User);
                 CuttingOrder.DOC_NO = DoC_No + 1;
                 CuttingOrder.DOC_DATE = Helper.DateFormatDate(Convert.ToString(CuttingOrder.DOC_DATE));
@@ -130,7 +130,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.UDT_DATE = DateTime.Now;
+                obj.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 obj.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Cutting_Orders.Update(obj);
                 dbContext.SaveChanges();

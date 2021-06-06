@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 using WebERP.Models.GateEntry;
 
@@ -74,7 +75,7 @@ namespace WebERP.Controllers
             }
             if (ModelState.IsValid)
             {
-                objGoDown.INS_DATE = DateTime.Now;
+                objGoDown.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 objGoDown.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Godown_Master.Add(objGoDown);
                 var result = await dbContext.SaveChangesAsync();
@@ -112,7 +113,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.UDT_DATE = DateTime.Now;
+                obj.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 obj.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Godown_Master.Update(obj);
                 dbContext.SaveChanges();
@@ -228,7 +229,7 @@ namespace WebERP.Controllers
                     {
                         StkDTL.Add(new StockDTL_Model()
                         {
-                            INS_DATE = DateTime.Now,
+                            INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
                             INS_UID = userManager.GetUserName(HttpContext.User),
                             COMP_CODE = 0,
                             Tran_Table = "Gate Entry",

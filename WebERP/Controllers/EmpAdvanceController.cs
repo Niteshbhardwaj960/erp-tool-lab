@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -34,13 +35,13 @@ namespace WebERP.Controllers
             employee_Advance.Type = "Add";
             employee_Advance.EMPDropDown = Emplists("P");
             employee_Advance.SalDropDown = SalType("P");
-            employee_Advance.DOC_DATE = DateTime.Now;
+            employee_Advance.DOC_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             return View("Emp_Adv_Master",employee_Advance);
         }
         [HttpPost]
         public IActionResult Emp_Adv_Master(Employee_Advance employee_Advance)
         {
-            employee_Advance.INS_DATE = DateTime.Today;
+            employee_Advance.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             employee_Advance.INS_UID = userManager.GetUserName(HttpContext.User); 
             dbContext.Employee_Advance.Add(employee_Advance);
             dbContext.SaveChanges();

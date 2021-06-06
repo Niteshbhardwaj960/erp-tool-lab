@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -31,7 +32,7 @@ namespace WebERP.Controllers
         public int GetFinYear()
         {
             string FinYear = "";
-            DateTime date = DateTime.Now;
+            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;
@@ -138,7 +139,7 @@ namespace WebERP.Controllers
                 .Where(x => x.DOC_FINYEAR == mFGReceiptViewModel.DOC_FINYEARS)
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
             mFGReceiptViewModel.MGF_RECEIPTs.DOC_NO = Doc_Number + 1;
-            mFGReceiptViewModel.MGF_RECEIPTs.INS_DATE = DateTime.Now;
+            mFGReceiptViewModel.MGF_RECEIPTs.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             mFGReceiptViewModel.MGF_RECEIPTs.EMP_CODE = Convert.ToInt32(EMPDropDown);
             mFGReceiptViewModel.MGF_RECEIPTs.CONT_EMP_CODE = Convert.ToInt32(CONEMPDropDown);
             mFGReceiptViewModel.MGF_RECEIPTs.EMP_NAME = emps;
@@ -167,7 +168,7 @@ namespace WebERP.Controllers
             var result = dbContext.MGF_RECEIPT.SingleOrDefault(b => b.ID == mFGReceiptViewModel.MGF_RECEIPTs.ID);
             if (result != null)
             {
-                result.UDT_DATE = DateTime.Now;
+                result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 result.UDT_UID = userManager.GetUserName(HttpContext.User);
                 result.EMP_CODE = mFGReceiptViewModel.MGF_RECEIPTs.EMP_CODE;
                 result.CONT_EMP_CODE = mFGReceiptViewModel.MGF_RECEIPTs.CONT_EMP_CODE;

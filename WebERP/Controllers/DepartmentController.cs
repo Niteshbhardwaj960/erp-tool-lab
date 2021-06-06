@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -53,7 +54,7 @@ namespace WebERP.Controllers
             }
             if (ModelState.IsValid)
             {
-                objDep.INS_DATE = DateTime.Now;
+                objDep.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 objDep.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Department_Masters.Add(objDep);
                 var result = await dbContext.SaveChangesAsync();
@@ -91,7 +92,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.UDT_DATE = DateTime.Now;
+                obj.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 obj.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Department_Masters.Update(obj);
                 dbContext.SaveChanges();

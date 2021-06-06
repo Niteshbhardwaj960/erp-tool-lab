@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -32,7 +33,7 @@ namespace WebERP.Controllers
         public string GetFinYear()
         {
             string FinYear = "";
-            DateTime date = DateTime.Now;
+            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;
@@ -50,7 +51,7 @@ namespace WebERP.Controllers
 
             rawMaterialDTL.V_RM_DTLs = dbContext.V_RM_DTL.AsNoTracking().ToList();
             rawMaterialDTL.CUTDropDown = CUTlists();
-            rawMaterialDTL.Doc_Dates = DateTime.Now;
+            rawMaterialDTL.Doc_Dates = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             rawMaterialDTL.Doc_Fins = GetFinYear();
             return View(rawMaterialDTL);
         }
@@ -65,7 +66,7 @@ namespace WebERP.Controllers
             rawMaterialDTL.RM_HDRs.Doc_No = Doc_Number + 1;
             rawMaterialDTL.RM_HDRs.Doc_Date = rawMaterialDTL.Doc_Dates;
             rawMaterialDTL.RM_HDRs.Doc_FN_Year = rawMaterialDTL.Doc_Fins;
-            rawMaterialDTL.RM_HDRs.INS_DATE = DateTime.Now;
+            rawMaterialDTL.RM_HDRs.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             rawMaterialDTL.RM_HDRs.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.RM_HDR.Add(rawMaterialDTL.RM_HDRs);
             List<StockDTL_Model> StkDTL = new List<StockDTL_Model>();
@@ -79,7 +80,7 @@ namespace WebERP.Controllers
                     RMDList.Add(new RM_DTL()
                     {
                         RM_HDR_FK = RM_HDR_PK,
-                        INS_DATE = DateTime.Now,
+                        INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
                         INS_UID = userManager.GetUserName(HttpContext.User),
                         GDW_Code = order.GDW_CODE,
                         ITEM_Code = order.ITEM_CODE,
@@ -90,7 +91,7 @@ namespace WebERP.Controllers
                     });
                     StkDTL.Add(new StockDTL_Model()
                     {
-                        INS_DATE = DateTime.Now,
+                        INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
                         INS_UID = userManager.GetUserName(HttpContext.User),
                         COMP_CODE = 0,
                         Tran_Table = "RM Entry",
@@ -180,7 +181,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                RawMaterialDTLs.RM_HDRs.UDT_DATE = DateTime.Now;
+                RawMaterialDTLs.RM_HDRs.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 RawMaterialDTLs.RM_HDRs.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.RM_HDR.Update(RawMaterialDTLs.RM_HDRs);
                 dbContext.SaveChanges();
@@ -189,7 +190,7 @@ namespace WebERP.Controllers
                     var result = dbContext.RM_DTL.SingleOrDefault(b => b.ID == RMDetailModel.ID);
                     if (result != null)
                     {
-                        result.UDT_DATE = DateTime.Now;
+                        result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                         result.UDT_UID = userManager.GetUserName(HttpContext.User);
                         result.ISSUE_QTY = RMDetailModel.ISSUE_QTY;
                         dbContext.SaveChanges();
@@ -197,7 +198,7 @@ namespace WebERP.Controllers
                     var resultStk = dbContext.StockDTL_Models.SingleOrDefault(b => b.Tran_Table_PK == RMDetailModel.ID && b.Tran_Table == "RM Entry");
                     if (resultStk != null)
                     {
-                        resultStk.UDT_DATE = DateTime.Now;
+                        resultStk.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                         resultStk.UDT_UID = userManager.GetUserName(HttpContext.User);
                         resultStk.Stk_Qty_OUT = RMDetailModel.ISSUE_QTY;
                         resultStk.GDW_CODE = RMDetailModel.GDW_Code;
