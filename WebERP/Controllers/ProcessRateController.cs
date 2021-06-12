@@ -35,6 +35,7 @@ namespace WebERP.Controllers
         public IActionResult ProcessRate_Master()
         {
             var UOM_list = dbContext.ProcessRate_Master.ToList();
+            
             foreach (var item in UOM_list)
             {
                 item.UOM_Name = dbContext.UOM_MASTER.Where(s => s.ID == Convert.ToInt64(item.UOM_Code)).Select(s => s.NAME).FirstOrDefault();
@@ -50,20 +51,24 @@ namespace WebERP.Controllers
             obj.UOMDropDown = UOMlists();
             obj.ArticalDropDown = Articallists();
             obj.ProcDropDown = Processlists();
+            //obj.From_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            //obj.To_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             obj.Type = "Add";
             return View("AddProcessRate", obj);
         }
         [HttpPost]
         public async Task<IActionResult> SAVEProcessRate(ProcessRate_Master objProcessRate)
         {
-            var NAME = dbContext.ProcessRate_Master.FirstOrDefault(x => x.Proc_Code == objProcessRate.Proc_Code);
+            //var NAME = dbContext.ProcessRate_Master.FirstOrDefault(x => x.Proc_Code == objProcessRate.Proc_Code);
 
-            if (NAME != null)
-            {
+            //if (NAME != null)
+            //{
                 ModelState.AddModelError("Proc_Code", "Proc Name Already Exists.");
-            }
+            //}
             if (ModelState.IsValid)
             {
+                objProcessRate.To_DATE = Helper.DateFormatDate(Convert.ToString(objProcessRate.To_DATE));
+                objProcessRate.From_DATE = Helper.DateFormatDate(Convert.ToString(objProcessRate.From_DATE));
                 objProcessRate.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 objProcessRate.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.ProcessRate_Master.Add(objProcessRate);
@@ -74,6 +79,8 @@ namespace WebERP.Controllers
             {
                 objProcessRate.Type = "Add";
                 objProcessRate.UOMDropDown = UOMlists();
+                objProcessRate.ArticalDropDown = Articallists();
+                objProcessRate.ProcDropDown = Processlists();
                 return View("ADDProcessRate",objProcessRate);
             }
         }

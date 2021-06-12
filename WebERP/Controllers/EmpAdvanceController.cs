@@ -41,6 +41,7 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult Emp_Adv_Master(Employee_Advance employee_Advance)
         {
+           employee_Advance.Emp_Name = dbContext.Employee_Masters.Where(e => e.EMP_CODE == employee_Advance.EMP_CODE).Select(ep => ep.EMP_NAME).FirstOrDefault();
             employee_Advance.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             employee_Advance.INS_UID = userManager.GetUserName(HttpContext.User); 
             dbContext.Employee_Advance.Add(employee_Advance);
@@ -56,7 +57,7 @@ namespace WebERP.Controllers
             employee_Advance = dbContext.Employee_Advance.ToList();
             foreach(var emp in employee_Advance.ToList())
             {
-                var empname = dbContext.Employee_Masters.Where(e => e.ID == emp.EMP_CODE).Select(s => s.EMP_NAME).FirstOrDefault();
+                var empname = dbContext.Employee_Masters.Where(e => e.EMP_CODE == emp.EMP_CODE).Select(s => s.EMP_NAME).FirstOrDefault();
                 emp.Emp_Name = empname;
             }
             return View(employee_Advance);

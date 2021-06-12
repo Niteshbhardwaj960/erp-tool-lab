@@ -59,6 +59,10 @@ namespace WebERP.Controllers
             {
                 ModelState.AddModelError("NAME", "Name Already Exists.");
             }
+            if (objArtical.BRAND_CODE == 0)
+            {
+                ModelState.AddModelError("BRAND_CODE", "Brand is Mandatory.");
+            }
 
             if (ModelState.IsValid)
             {
@@ -71,6 +75,7 @@ namespace WebERP.Controllers
             else
             {
                 objArtical.brandDropDown = Brandlists();
+                objArtical.Brand_Name = objArtical.Brand_Name;
                 return View("ADDArtical", objArtical);
             }
         }
@@ -166,7 +171,7 @@ namespace WebERP.Controllers
             BrandList.Insert(0, new SelectListItem()
             {
                 Text = "Select Brand",
-                Value = string.Empty,
+                Value = "0",
                 Selected = true
             });
             return BrandList;
