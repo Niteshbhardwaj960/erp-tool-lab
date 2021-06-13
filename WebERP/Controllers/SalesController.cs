@@ -98,7 +98,7 @@ namespace WebERP.Controllers
                 .Where(x => x.DOC_FINYEAR == salesModel.SalesHeader.DOC_FINYEAR)
                 .Select(p => p.DOC_NO).DefaultIfEmpty(0).Max();
 
-            salesModel.SalesHeader.INS_DATE = DateTime.Now;
+            salesModel.SalesHeader.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             salesModel.SalesHeader.INS_UID = userManager.GetUserName(HttpContext.User);
             salesModel.SalesHeader.DOC_NO = maxdocNum + 1;
             salesModel.SalesHeader.DOC_DATE = salesModel.SalesHeader.DOC_DATE.Date;
@@ -111,7 +111,7 @@ namespace WebERP.Controllers
                 foreach (var salesDetStatic in salesModel.SaleDetails)
                 {
                     salesDetStatic.SALE_FK = saleNewId;
-                    salesDetStatic.INS_DATE = DateTime.Now;
+                    salesDetStatic.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                     salesDetStatic.INS_UID = userManager.GetUserName(HttpContext.User);
                 }
                 foreach (var saleDetailModel in salesModel.SaleDetails)
@@ -255,7 +255,7 @@ namespace WebERP.Controllers
         public ActionResult EditSalesOrder(SalesViewModel saleEditModel)
         {
             int saleHdrId;
-            saleEditModel.SalesHeader.UDT_DATE = DateTime.Now;
+            saleEditModel.SalesHeader.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             saleEditModel.SalesHeader.UDT_UID = userManager.GetUserName(HttpContext.User);
             dbContext.SalesHeader.Update(saleEditModel.SalesHeader);
             dbContext.SaveChanges();
@@ -266,7 +266,7 @@ namespace WebERP.Controllers
                 foreach (var saleDetailUpd in saleEditModel.SaleDetails)
                 {
                     saleDetailUpd.SALE_FK = saleHdrId;
-                    saleDetailUpd.UDT_DATE = DateTime.Now;
+                    saleDetailUpd.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                     saleDetailUpd.UDT_UID = userManager.GetUserName(HttpContext.User);
                 }
                 foreach (var saleDetailModel in saleEditModel.SaleDetails)
@@ -394,7 +394,7 @@ namespace WebERP.Controllers
             saleHeader.agentaccDropDown = agentacclist;
             saleHeader.companyDropDown = companyList;
             saleHeader.accDropDown = accList;
-            saleHeader.DOC_DATE = DateTime.Now;
+            saleHeader.DOC_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             saleHeader.DOC_FINYEAR = Convert.ToString(Helper.GetFinYear());
             return saleHeader;
         }

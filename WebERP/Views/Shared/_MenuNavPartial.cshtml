@@ -121,9 +121,13 @@
                     {
                         <a class="collapse-item" asp-controller="JobWork" asp-action="JobWorkGrid">Job Work Issue</a>
                     }
-                    @if (User.IsInRole("JobWork") || User.IsInRole("Admin"))
+                    @if (User.IsInRole("Sales") || User.IsInRole("Admin"))
                     {
                         <a class="collapse-item" asp-controller="Sales" asp-action="SalesGrid">Sale Invoice</a>
+                    }
+                    @if (User.IsInRole("RawMaterialReturn") || User.IsInRole("Admin"))
+                    {
+                        <a class="collapse-item" asp-controller="RMR" asp-action="RMR_DETAIL">RawMaterial Return</a>
                     }
                 </div>
             </div>

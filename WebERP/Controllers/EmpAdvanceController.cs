@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -34,13 +35,14 @@ namespace WebERP.Controllers
             employee_Advance.Type = "Add";
             employee_Advance.EMPDropDown = Emplists("P");
             employee_Advance.SalDropDown = SalType("P");
-            employee_Advance.DOC_DATE = DateTime.Now;
+            employee_Advance.DOC_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             return View("Emp_Adv_Master",employee_Advance);
         }
         [HttpPost]
         public IActionResult Emp_Adv_Master(Employee_Advance employee_Advance)
         {
-            employee_Advance.INS_DATE = DateTime.Today;
+           employee_Advance.Emp_Name = dbContext.Employee_Masters.Where(e => e.EMP_CODE == employee_Advance.EMP_CODE).Select(ep => ep.EMP_NAME).FirstOrDefault();
+            employee_Advance.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             employee_Advance.INS_UID = userManager.GetUserName(HttpContext.User); 
             dbContext.Employee_Advance.Add(employee_Advance);
             dbContext.SaveChanges();
@@ -55,7 +57,7 @@ namespace WebERP.Controllers
             employee_Advance = dbContext.Employee_Advance.ToList();
             foreach(var emp in employee_Advance.ToList())
             {
-                var empname = dbContext.Employee_Masters.Where(e => e.ID == emp.EMP_CODE).Select(s => s.EMP_NAME).FirstOrDefault();
+                var empname = dbContext.Employee_Masters.Where(e => e.EMP_CODE == emp.EMP_CODE).Select(s => s.EMP_NAME).FirstOrDefault();
                 emp.Emp_Name = empname;
             }
             return View(employee_Advance);

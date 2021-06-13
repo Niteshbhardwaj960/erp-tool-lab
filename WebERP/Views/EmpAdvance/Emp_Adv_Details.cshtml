@@ -20,6 +20,7 @@
                         <tr>
                             <th>Doc Date</th>
                             <th>Employee Name</th>
+                            <th>Advance Month</th>
                             <th>Advance Amount</th>
                             <th></th>
                         </tr>
@@ -30,6 +31,7 @@
                         <tr>
                             <td>@Data.INS_DATE</td>
                             <td>@Data.Emp_Name</td>
+                            <td>@Data.SAL_YYYYMM.Value.Month / @Data.SAL_YYYYMM.Value.Year </td>
                             <td>@Data.ADV_AMOUNT</td>
                             <td>
                                 <a asp-action="EditEmpAdv" asp-controller="EmpAdvance" asp-route-id="@Data.ID">

@@ -10,6 +10,7 @@ using WebERP.Models;
 using WebERP.Models.GateEntry;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using WebERP.Helpers;
 
 namespace WebERP.Controllers
 {
@@ -37,7 +38,7 @@ namespace WebERP.Controllers
             GateEtryViewModel.v_GateEntryDetails = dbContext.V_GateEntryDetail.AsNoTracking().ToList();
             GateEtryViewModel.V_JW_DTLs = dbContext.V_JW_DTL.AsNoTracking().ToList();
             gate_HDRs.AccDropDown = ACClists("1");
-            gate_HDRs.Doc_Date = DateTime.Now;
+            gate_HDRs.Doc_Date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             gate_HDRs.Doc_FN_Year = GetFinYear();
             GateEtryViewModel.Gate_HDR = gate_HDRs;
             return View(GateEtryViewModel);
@@ -45,7 +46,7 @@ namespace WebERP.Controllers
         public string GetFinYear()
         {
             string FinYear = "";
-            DateTime date = DateTime.Now;
+            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;
@@ -84,7 +85,7 @@ namespace WebERP.Controllers
                     li = dbContext.V_GateEntryDetail.AsNoTracking().Where(o => o.pod_pk == Convert.ToInt32(order)).ToList();
                     foreach (var item in li)
                     {
-                        item.CHL_DATE = DateTime.Now;
+                        item.CHL_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                         lli.Add(item);
                     }
                 }                
@@ -100,7 +101,7 @@ namespace WebERP.Controllers
                     JWli = dbContext.V_JW_DTL.AsNoTracking().Where(o => o.JWD_PK == Convert.ToInt32(order)).ToList();
                     foreach (var item in JWli)
                     {
-                        item.CHL_DATE = DateTime.Now;
+                        item.CHL_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                         JWlli.Add(item);
                     }
                 }
@@ -128,7 +129,7 @@ namespace WebERP.Controllers
             if (gateEntryViewModels.Worktype == "1")
             {
                 gateEntryViewModels.Gate_HDR.Type = "Purchase Order";
-                gateEntryViewModels.Gate_HDR.INS_DATE = DateTime.Now;
+                gateEntryViewModels.Gate_HDR.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 gateEntryViewModels.Gate_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Gate_HDR.Add(gateEntryViewModels.Gate_HDR);
                 dbContext.SaveChanges();
@@ -170,7 +171,7 @@ namespace WebERP.Controllers
             else
             {
                 gateEntryViewModels.Gate_HDR.Type = "Job Work";
-                gateEntryViewModels.Gate_HDR.INS_DATE = DateTime.Now;
+                gateEntryViewModels.Gate_HDR.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 gateEntryViewModels.Gate_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Gate_HDR.Add(gateEntryViewModels.Gate_HDR);
                 dbContext.SaveChanges();
@@ -183,7 +184,7 @@ namespace WebERP.Controllers
                     {
                         JW_FK = order.JWD_PK,
                         GH_FK = GateHdrID,
-                        INS_DATE = DateTime.Now,
+                        INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
                         INS_UID = userManager.GetUserName(HttpContext.User),
                         Order_No = order.DOC_NO,
                         GDW_NO = 0,
@@ -303,7 +304,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                EditGateEntryModels.Gate_HDRs.UDT_DATE = DateTime.Now;
+                EditGateEntryModels.Gate_HDRs.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 EditGateEntryModels.Gate_HDRs.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Gate_HDR.Update(EditGateEntryModels.Gate_HDRs);
                 dbContext.SaveChanges();
@@ -312,7 +313,7 @@ namespace WebERP.Controllers
                     var result = dbContext.gateEntryDetails.SingleOrDefault(b => b.ID == gateDetailModel.ID);
                     if (result != null)
                     {
-                        result.UDT_DATE = DateTime.Now;
+                        result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                         result.UDT_UID = userManager.GetUserName(HttpContext.User);
                         result.CHL_NO = gateDetailModel.CHL_NO;
                         result.CHL_DATE = gateDetailModel.CHL_DATE;

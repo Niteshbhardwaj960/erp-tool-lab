@@ -24,7 +24,13 @@ namespace WebERP.Helpers
         public static string DateFormat(string ParamDate)
         {
             DateTime date = DateTime.Parse(ParamDate);
-            return date.ToString("dd/MMM/yyyy");
+            return date.ToString("dd/MM/yyyy");
+        }
+        public static DateTime DateFormatDate(string ParamDate)
+        {
+           // var dt = Convert.ToString(ParamDate);
+            DateTime date = DateTime.Parse(ParamDate);
+            return Convert.ToDateTime(date.ToString("dd/MM/yyyy"));
         }
     }
 }

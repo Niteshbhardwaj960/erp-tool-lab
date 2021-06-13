@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label class="form-label">Process Name</label>
+                            <label class="form-label">Artical Name</label>
                             <div class="input-group">
                                 @if (Model.Type == "Add")
                                 {
@@ -80,7 +80,7 @@
                         <div class="form-group">
                             <label class="form-label">From Date</label>
                             <div class="input-group">
-                                <input type="date" class="form-control numb" asp-for="From_DATE">
+                                <input type="date" class="form-control numb" asp-for="From_DATE" data-date-format="dd-mm-yyyy">
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                         <div class="form-group">
                             <label class="form-label">To Date</label>
                             <div class="input-group">
-                                <input type="date" class="form-control numb" asp-for="To_DATE">
+                                <input type="date" class="form-control numb" asp-for="To_DATE" data-date-format="dd-mm-yyyy">
                             </div>
                         </div>
                     </div>

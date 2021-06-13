@@ -77,6 +77,7 @@ namespace WebERP.Controllers
                 cramount = cramount + data.CR_AMOUNT;
                 bal = (opnball + dramount - cramount);
                 data.BAL_AMOUNT = Math.Abs(bal);
+                data.DOC_DATE = Helper.DateFormat(data.DOC_DATE);
             }
 
             return View("Ledger", ledgers);
@@ -114,7 +115,7 @@ namespace WebERP.Controllers
         public string GetFinYear()
         {
             string FinYear = "";
-            DateTime date = DateTime.Now;
+            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;

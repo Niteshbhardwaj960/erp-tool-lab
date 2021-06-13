@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebERP.Data;
+using WebERP.Helpers;
 using WebERP.Models;
 
 namespace WebERP.Controllers
@@ -103,7 +104,7 @@ namespace WebERP.Controllers
                 articalMergeViewModelss.ARTDropDown = Artlists();
                 articalMergeViewModelss.SIZEDropDown = Sizelists();
                 articalMergeViewModelss.ITEMDropDown = ITEMlists();
-                artical_Merge_HDR.DOC_DATE = DateTime.Now;
+                artical_Merge_HDR.DOC_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 artical_Merge_HDR.DOC_FN_YEAR = GetFinYear();
                 articalMergeViewModelss.artical_Merge_HDR = artical_Merge_HDR;
                 return View(articalMergeViewModelss);
@@ -129,13 +130,13 @@ namespace WebERP.Controllers
             artical_Merge_HDR.SIZE_CODE = Convert.ToInt32(ddlSize);
             artical_Merge_HDR.ITEM_CODE = Convert.ToInt32(ddlITEM);
             artical_Merge_HDR.STK_QTY_IN = STK_QTY_IN;
-            artical_Merge_HDR.INS_DATE = DateTime.Now;
+            artical_Merge_HDR.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             artical_Merge_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.Artical_Merge_HDR.Add(artical_Merge_HDR);
             dbContext.SaveChanges();
             var ID = artical_Merge_HDR.ID;
 
-            StkDTLHDR.INS_DATE = DateTime.Now;
+            StkDTLHDR.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             StkDTLHDR.INS_UID = userManager.GetUserName(HttpContext.User);
             StkDTLHDR.COMP_CODE = 0;
             StkDTLHDR.Tran_Table = "Artical Merge Entry HDR";
@@ -194,7 +195,7 @@ namespace WebERP.Controllers
         public string GetFinYear()
         {
             string FinYear = "";
-            DateTime date = DateTime.Now;
+            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;
@@ -285,7 +286,7 @@ namespace WebERP.Controllers
                 var ArtMgrHDR = dbContext.Artical_Merge_HDR.Where(hd => hd.ID == HDRID).FirstOrDefault();
                 if (ArtMgrHDR != null)
                 {
-                    ArtMgrHDR.UDT_DATE = DateTime.Now;
+                    ArtMgrHDR.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                     ArtMgrHDR.UDT_UID = userManager.GetUserName(HttpContext.User);
                     ArtMgrHDR.DOC_DATE = Convert.ToDateTime(doc_Date);
                     ArtMgrHDR.DOC_FN_YEAR = FinYear;
@@ -313,7 +314,7 @@ namespace WebERP.Controllers
                     var result = dbContext.Artical_Merge_DTL.SingleOrDefault(b => b.ID == AMDetailModel.ID);
                     if (result != null)
                     {
-                        result.UDT_DATE = DateTime.Now;
+                        result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                         result.UDT_UID = userManager.GetUserName(HttpContext.User);
                         result.STK_QTY_OUT = AMDetailModel.STK_QTY_OUT;
                         dbContext.SaveChanges();

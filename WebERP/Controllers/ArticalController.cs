@@ -10,6 +10,7 @@ using WebERP.Models;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using WebERP.Helpers;
 
 namespace WebERP.Controllers
 {
@@ -58,10 +59,14 @@ namespace WebERP.Controllers
             {
                 ModelState.AddModelError("NAME", "Name Already Exists.");
             }
+            if (objArtical.BRAND_CODE == 0)
+            {
+                ModelState.AddModelError("BRAND_CODE", "Brand is Mandatory.");
+            }
 
             if (ModelState.IsValid)
             {
-                objArtical.INS_DATE = DateTime.Now;
+                objArtical.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 objArtical.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Artical_Master.Add(objArtical);
                 var result = await dbContext.SaveChangesAsync();
@@ -70,6 +75,7 @@ namespace WebERP.Controllers
             else
             {
                 objArtical.brandDropDown = Brandlists();
+                objArtical.Brand_Name = objArtical.Brand_Name;
                 return View("ADDArtical", objArtical);
             }
         }
@@ -95,7 +101,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                objArtical.UDT_DATE = DateTime.Now;
+                objArtical.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
                 objArtical.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Artical_Master.Update(objArtical);
                 dbContext.SaveChanges();
@@ -165,7 +171,7 @@ namespace WebERP.Controllers
             BrandList.Insert(0, new SelectListItem()
             {
                 Text = "Select Brand",
-                Value = string.Empty,
+                Value = "0",
                 Selected = true
             });
             return BrandList;
