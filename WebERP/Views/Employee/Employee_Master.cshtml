@@ -32,7 +32,7 @@
                             <td>@Data.EMP_CODE</td>
                             <td>@Data.EMP_NAME</td>
                             <td>@Data.emp_mobile_no1</td>
-                            <td>@Data.emp_doj</td>
+                            <td>@Data.emp_doj.Value.Day-@Data.emp_doj.Value.Month-@Data.emp_doj.Value.Year</td>
                             <td>
                                 <a asp-action="EditEmployee" asp-controller="Employee" asp-route-id="@Data.ID">
                                     <i class="fas fa-user-edit"></i>

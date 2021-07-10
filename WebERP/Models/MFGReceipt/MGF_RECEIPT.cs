@@ -22,6 +22,7 @@ namespace WebERP.Models
         public string ART_NAME { get; set; }
         public string SIZE_NAME { get; set; }
         public string PROC_NAME { get; set; }
+        public string CUT_DOC_NO { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }

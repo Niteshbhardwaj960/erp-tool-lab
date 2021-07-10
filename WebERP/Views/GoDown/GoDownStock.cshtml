@@ -59,7 +59,8 @@
                                             @Html.CheckBoxFor(a => a.EditGateEntryDetails[j].CHK, new { @class = "form-control" })
                                         </td>
                                         <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_NO, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                        <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].CHL_DATE, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                        <td><input asp-for="EditGateEntryDetails[j].CHL_DATE" type="date" class="form-control" readOnly="readonly" />
+                                        @Html.HiddenFor(a => a.EditGateEntryDetails[j].CHL_DATE, new { @class = "form-control", @readOnly = "readonly" })</td>
                                         <td>@Html.TextBoxFor(a => a.EditGateEntryDetails[j].ACC_NAME, new { @class = "form-control", @readOnly = "readonly" })</td>
                                         <td>
                                             @Html.TextBoxFor(a => a.EditGateEntryDetails[j].ITEM_NAMEs, new { @class = "form-control", @readOnly = "readonly" })

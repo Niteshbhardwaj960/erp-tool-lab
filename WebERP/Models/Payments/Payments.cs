@@ -16,8 +16,12 @@ namespace WebERP.Models
         [DisplayFormat(HtmlEncode = false, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime? DOC_DATE { get; set; }
         public string DOC_FN_YEAR { get; set; }
-        public int DOC_NO { get; set; }
+        public int DOC_NO { get; set; }      
         public int ACC_CODE { get; set; }
+        [NotMapped]
+        public string ACC_NAME { get; set; }
+        [NotMapped]
+        public string CB_ACC_NAME{ get; set; }
         public int CB_ACC_CODE { get; set; }
         public int PAYMENT_TAG { get; set; }
         public int PAYMENT_MODE  { get; set; }

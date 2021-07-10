@@ -35,7 +35,7 @@ namespace WebERP.Controllers
         public string GetFinYear()
         {
             string FinYear = "";
-            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            DateTime date = DateTime.Now;
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;
@@ -52,7 +52,7 @@ namespace WebERP.Controllers
             RMRViewModel rMRViewModel = new RMRViewModel();
             //rMRViewModel.V_RM_DTLs = dbContext.V_RM_DTL.AsNoTracking().ToList();
             rMRViewModel.CUTDropDown = CUTlists();
-            rMRViewModel.Doc_Dates = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            rMRViewModel.Doc_Dates = DateTime.Now;
             rMRViewModel.Doc_Fins = GetFinYear();
             return View("RMR_MASTER", rMRViewModel);
         }
@@ -115,9 +115,9 @@ namespace WebERP.Controllers
             int RMR_HDR_PK;
             List<RMR_DTL> RMDList = new List<RMR_DTL>();
             rMRViewModel.RMR_HDR.Doc_No = Doc_Number + 1;
-            rMRViewModel.RMR_HDR.Doc_Date = Helper.DateFormatDate(Convert.ToString(rMRViewModel.RMR_HDR.Doc_Date));
+            rMRViewModel.RMR_HDR.Doc_Date = rMRViewModel.RMR_HDR.Doc_Date;
             rMRViewModel.RMR_HDR.Doc_FN_Year = rMRViewModel.RMR_HDR.Doc_FN_Year;
-            rMRViewModel.RMR_HDR.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            rMRViewModel.RMR_HDR.INS_DATE = DateTime.Now;
             rMRViewModel.RMR_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.RMR_HDR.Add(rMRViewModel.RMR_HDR);
             List<StockDTL_Model> StkDTL = new List<StockDTL_Model>();
@@ -132,7 +132,7 @@ namespace WebERP.Controllers
                     RMDList.Add(new RMR_DTL()
                     {
                         RM_HDR_FK = RMR_HDR_PK,
-                        INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
+                        INS_DATE = DateTime.Now,
                         INS_UID = userManager.GetUserName(HttpContext.User),
                         GDW_Code = order.GDW_Code,
                         ITEM_Code = order.ITEM_Code,
@@ -152,7 +152,7 @@ namespace WebERP.Controllers
 
                 StkDTL.Add(new StockDTL_Model()
                 {
-                    INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
+                    INS_DATE = DateTime.Now,
                     INS_UID = userManager.GetUserName(HttpContext.User),
                     COMP_CODE = 0,
                     Tran_Table = "RMR Entry",
@@ -177,10 +177,10 @@ namespace WebERP.Controllers
         {
             RMRViewModel rMRViewModel = new RMRViewModel();
             rMRViewModel.RMR_HDR = dbContext.RMR_HDR.Where(r => r.ID == id).FirstOrDefault();
-            rMRViewModel.RMR_HDR.Doc_Date = Helper.DateFormatDate(Convert.ToString(rMRViewModel.RMR_HDR.Doc_Date));
+            rMRViewModel.RMR_HDR.Doc_Date = rMRViewModel.RMR_HDR.Doc_Date;
             rMRViewModel.RMR_DTL_LIST = dbContext.RMR_DTL.Where(r => r.RM_HDR_FK == id).ToList();
-
-            foreach(var item in rMRViewModel.RMR_DTL_LIST)
+            rMRViewModel.Type = "Edit";
+            foreach (var item in rMRViewModel.RMR_DTL_LIST)
             {
                 item.ARTICAL_NAME = dbContext.Artical_Master.Where(a => a.ID == item.ARTICAL_Code).Select(aa =>aa.NAME).FirstOrDefault();
                 item.SIZE_NAME = dbContext.Size_Master.Where(a => a.ID == item.SIZE_Code).Select(aa => aa.NAME).FirstOrDefault();
@@ -189,7 +189,23 @@ namespace WebERP.Controllers
             rMRViewModel.GDWDropDown = GDWlists();            
             return View("RMR_EDIT", rMRViewModel);
         }
-
+        [HttpGet]
+        public IActionResult RMRVIEW(int id)
+        {
+            RMRViewModel rMRViewModel = new RMRViewModel();
+            rMRViewModel.RMR_HDR = dbContext.RMR_HDR.Where(r => r.ID == id).FirstOrDefault();
+            rMRViewModel.RMR_HDR.Doc_Date = rMRViewModel.RMR_HDR.Doc_Date;
+            rMRViewModel.RMR_DTL_LIST = dbContext.RMR_DTL.Where(r => r.RM_HDR_FK == id).ToList();
+            rMRViewModel.Type = "View";
+            foreach (var item in rMRViewModel.RMR_DTL_LIST)
+            {
+                item.ARTICAL_NAME = dbContext.Artical_Master.Where(a => a.ID == item.ARTICAL_Code).Select(aa => aa.NAME).FirstOrDefault();
+                item.SIZE_NAME = dbContext.Size_Master.Where(a => a.ID == item.SIZE_Code).Select(aa => aa.NAME).FirstOrDefault();
+                item.ITEM_NAME = dbContext.Item_Master.Where(a => a.ID == item.ITEM_Code).Select(aa => aa.NAME).FirstOrDefault();
+            }
+            rMRViewModel.GDWDropDown = GDWlists();
+            return View("RMR_EDIT", rMRViewModel);
+        }
         [HttpPost]
         public IActionResult RMREDIT(RMRViewModel rMRViewModel)
         {
@@ -203,7 +219,7 @@ namespace WebERP.Controllers
 
                     if (result != null)
                     {
-                        result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                        result.UDT_DATE = DateTime.Now;
                         result.UDT_UID = userManager.GetUserName(HttpContext.User);           
                         result.GDW_Code = order.GDW_Code;
                         result.ORDER_QTY = order.ORDER_QTY;
@@ -213,7 +229,7 @@ namespace WebERP.Controllers
                     var resultstk = dbContext.StockDTL_Models.Where(r => r.Tran_Table_PK == order.ID && r.Tran_Table == "RMR Entry").FirstOrDefault();
                     if (resultstk != null)
                     {
-                        resultstk.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                        resultstk.UDT_DATE = DateTime.Now;
                         resultstk.UDT_UID = userManager.GetUserName(HttpContext.User);
                         resultstk.GDW_CODE = order.GDW_Code;
                         resultstk.Stk_Qty_IN = order.ORDER_QTY;

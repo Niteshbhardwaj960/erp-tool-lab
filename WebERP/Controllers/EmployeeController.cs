@@ -60,7 +60,7 @@ namespace WebERP.Controllers
                 .Select(p => Convert.ToInt32(p.EMP_CODE)).DefaultIfEmpty(0).Max();
                 objEmp.EMP_CODE = Emp_No + 1;
                 objEmp.Dep_Name = objEmp.DEP_CODE.ToString();
-                objEmp.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objEmp.INS_DATE = DateTime.Now;
                 objEmp.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Employee_Masters.Add(objEmp);
                 var result = await dbContext.SaveChangesAsync();
@@ -102,7 +102,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                obj.UDT_DATE = DateTime.Now;
                 obj.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Employee_Masters.Update(obj);
                 dbContext.SaveChanges();

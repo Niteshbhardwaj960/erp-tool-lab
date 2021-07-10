@@ -86,7 +86,10 @@
                                                         @Html.HiddenFor(a => a.v_GateEntryDetails[j].pod_pk, new { @class = "form-control" })
                                                         @Html.TextBoxFor(a => a.v_GateEntryDetails[j].order_no, new { @class = "form-control", @readOnly = "readonly" })
                                                     </td>
-                                                    <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_NO, new { @class = "form-control" })</td>
+                                                    <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_NO, new {@class = "form-control" })
+                                                        <span asp-validation-for="v_GateEntryDetails[j].CHL_NO" class="text-danger"></span>
+                                                    </td>
+                                                    
                                                     <td>
                                                         @*<input type="date" class="form-control" asp-for="v_GateEntryDetails[j].CHL_DATE" name="CHL_DATE[j]" id="CHL_DATE">*@
                                                     @Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_DATE, "{0:yyyy-MM-dd}", new { @class = "form-control fc-datepicker", @type = "date" })
@@ -104,8 +107,9 @@
                                                 </td>
 
                                                 <td>
-                                                    @Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bal_Qty, new { @class = "form-control", @type = "number" })
+                                                    @Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bal_Qty, new { @class = "form-control", @type = "decimal" })
                                                     @Html.HiddenFor(a => a.v_GateEntryDetails[j].Gate_Entry_qty, new { @class = "form-control" })
+                                                    <span asp-validation-for="v_GateEntryDetails[j].Gate_Entry_qty" class="text-danger"></span>
                                                 </td>
                                                 <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bal_Qty, new { @class = "form-control", @readOnly = "readonly" })</td>
 
@@ -167,14 +171,14 @@
                                                 @Html.HiddenFor(a => a.V_JW_DTLs[j].PROC_CODE, new { @class = "form-control" })
                                                 @Html.TextBoxFor(a => a.V_JW_DTLs[j].PROC_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                             </td>
-                                            <td>@Html.TextBoxFor(a => a.V_JW_DTLs[j].QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                            <td>@Html.TextBoxFor(a => a.V_JW_DTLs[j].QTY, new { @class = "form-control", @readOnly = "readonly", @type = "decimal", @step = ".001" })</td>
                                             @*<td>
                                                 @Html.TextBoxFor(a => a.V_JW_DTLs[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
                                                 @Html.HiddenFor(a => a.V_JW_DTLs[j]._CODE, new { @class = "form-control" })
                                             </td>*@
 
                                             <td>
-                                                @Html.TextBoxFor(a => a.V_JW_DTLs[j].BAL_QTY, new { @class = "form-control", @type = "number" })
+                                                @Html.TextBoxFor(a => a.V_JW_DTLs[j].BAL_QTY , new { @class = "form-control", @type = "decimal" })
                                                 @Html.HiddenFor(a => a.V_JW_DTLs[j].GATE_ENTRY_QTY, new { @class = "form-control" })
                                             </td>
                                             <td>@Html.TextBoxFor(a => a.V_JW_DTLs[j].BAL_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>

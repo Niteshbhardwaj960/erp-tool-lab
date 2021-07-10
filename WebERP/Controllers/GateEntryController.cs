@@ -38,7 +38,7 @@ namespace WebERP.Controllers
             GateEtryViewModel.v_GateEntryDetails = dbContext.V_GateEntryDetail.AsNoTracking().ToList();
             GateEtryViewModel.V_JW_DTLs = dbContext.V_JW_DTL.AsNoTracking().ToList();
             gate_HDRs.AccDropDown = ACClists("1");
-            gate_HDRs.Doc_Date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            gate_HDRs.Doc_Date = DateTime.Now;
             gate_HDRs.Doc_FN_Year = GetFinYear();
             GateEtryViewModel.Gate_HDR = gate_HDRs;
             return View(GateEtryViewModel);
@@ -46,7 +46,7 @@ namespace WebERP.Controllers
         public string GetFinYear()
         {
             string FinYear = "";
-            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            DateTime date = DateTime.Now;
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;
@@ -85,7 +85,7 @@ namespace WebERP.Controllers
                     li = dbContext.V_GateEntryDetail.AsNoTracking().Where(o => o.pod_pk == Convert.ToInt32(order)).ToList();
                     foreach (var item in li)
                     {
-                        item.CHL_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                        item.CHL_DATE = DateTime.Now;
                         lli.Add(item);
                     }
                 }                
@@ -101,7 +101,7 @@ namespace WebERP.Controllers
                     JWli = dbContext.V_JW_DTL.AsNoTracking().Where(o => o.JWD_PK == Convert.ToInt32(order)).ToList();
                     foreach (var item in JWli)
                     {
-                        item.CHL_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                        item.CHL_DATE = DateTime.Now;
                         JWlli.Add(item);
                     }
                 }
@@ -124,96 +124,102 @@ namespace WebERP.Controllers
             GateEntryDetail li = new GateEntryDetail();
             int GateHdrID;
             string Account_Name;
-            string Document_Number;           
+            string Document_Number;
 
-            if (gateEntryViewModels.Worktype == "1")
+            //Validation Check
+                        
+            if (ModelState.IsValid)
             {
-                gateEntryViewModels.Gate_HDR.Type = "Purchase Order";
-                gateEntryViewModels.Gate_HDR.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
-                gateEntryViewModels.Gate_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
-                dbContext.Gate_HDR.Add(gateEntryViewModels.Gate_HDR);
-                dbContext.SaveChanges();
-                Account_Name = gateEntryViewModels.Gate_HDR.Acc_Name;
-                GateHdrID = gateEntryViewModels.Gate_HDR.ID;
-                Document_Number = gateEntryViewModels.Gate_HDR.Doc_No;
-                foreach (var order in gateEntryViewModels.v_GateEntryDetails)
+                if (gateEntryViewModels.Worktype == "1")
                 {
-                    GEList.Add(new GateEntryDetail()
-                    {
-                        POD_FK = order.pod_pk,
-                        GH_FK = GateHdrID,
-                        INS_DATE = DateTime.Now,
-                        INS_UID = userManager.GetUserName(HttpContext.User),
-                        Order_No = order.order_no,
-                        GDW_NO = 0,
-                        Bill_Date = order.Bill_Date,
-                        Bill_NO = order.Bill_NO,
-                        CHL_NO = order.CHL_NO,
-                        CHL_DATE = order.CHL_DATE,
-                        Fin_Qty = order.Fin_Qty,
-                        Fin_UOM = order.Fin_UOM,
-                        Stk_Qty = order.Bal_Qty,
-                        Stk_UOM = order.Stk_UOM,
-                        Item_Name = order.Item_Code,
-                        Item_UOM = order.QTY_CODE,
-                        Remarks = order.Remarks,
-                        ACC_NAME = Account_Name,
-                        Doc_No = Document_Number
-                    });
-                }
-                foreach (var item in GEList)
-                {
-                    dbContext.gateEntryDetails.Add(item);
+                    gateEntryViewModels.Gate_HDR.Type = "Purchase Order";
+                    gateEntryViewModels.Gate_HDR.INS_DATE = DateTime.Now;
+                    gateEntryViewModels.Gate_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
+                    dbContext.Gate_HDR.Add(gateEntryViewModels.Gate_HDR);
                     dbContext.SaveChanges();
-
-                }
-            }
-            else
-            {
-                gateEntryViewModels.Gate_HDR.Type = "Job Work";
-                gateEntryViewModels.Gate_HDR.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
-                gateEntryViewModels.Gate_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
-                dbContext.Gate_HDR.Add(gateEntryViewModels.Gate_HDR);
-                dbContext.SaveChanges();
-                Account_Name = gateEntryViewModels.Gate_HDR.Acc_Name;
-                GateHdrID = gateEntryViewModels.Gate_HDR.ID;
-                Document_Number = gateEntryViewModels.Gate_HDR.Doc_No;
-                foreach (var order in gateEntryViewModels.V_JW_DTLs)
-                {
-                    GEList.Add(new GateEntryDetail()
+                    Account_Name = gateEntryViewModels.Gate_HDR.Acc_Name;
+                    GateHdrID = gateEntryViewModels.Gate_HDR.ID;
+                    Document_Number = gateEntryViewModels.Gate_HDR.Doc_No;
+                    foreach (var order in gateEntryViewModels.v_GateEntryDetails)
+                    {                       
+                        GEList.Add(new GateEntryDetail()
+                        {
+                            POD_FK = order.pod_pk,
+                            GH_FK = GateHdrID,
+                            INS_DATE = DateTime.Now,
+                            INS_UID = userManager.GetUserName(HttpContext.User),
+                            Order_No = order.order_no,
+                            GDW_NO = 0,
+                            Bill_Date = order.Bill_Date,
+                            Bill_NO = order.Bill_NO,
+                            CHL_NO = order.CHL_NO,
+                            CHL_DATE = order.CHL_DATE,
+                            Fin_Qty = order.Fin_Qty,
+                            Fin_UOM = order.Fin_UOM,
+                            Stk_Qty = order.Bal_Qty,
+                            Stk_UOM = order.Stk_UOM,
+                            Item_Name = order.Item_Code,
+                            Item_UOM = order.QTY_CODE,
+                            Remarks = order.Remarks,
+                            ACC_NAME = Account_Name,
+                            Doc_No = Document_Number
+                        });
+                    }
+                    foreach (var item in GEList)
                     {
-                        JW_FK = order.JWD_PK,
-                        GH_FK = GateHdrID,
-                        INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
-                        INS_UID = userManager.GetUserName(HttpContext.User),
-                        Order_No = order.DOC_NO,
-                        GDW_NO = 0,
-                        Bill_Date = order.Bill_Date,
-                        Bill_NO = order.Bill_NO,
-                        CHL_NO = order.CHL_NO,
-                        CHL_DATE = order.CHL_DATE,
-                        Fin_Qty = order.Fin_Qty,
-                        Fin_UOM = order.Fin_UOM,
-                        Stk_Qty = order.BAL_QTY,
-                        Stk_UOM = order.Stk_UOM,
-                        Item_Name = order.ITEM_CODE,
-                        Art_Name = order.ARTICAL_CODE,
-                        Size_Name = order.SIZE_CODE,
-                        Proc_Name = order.PROC_CODE,
-                        Item_UOM = order.QTY_UOM_NAME,
-                        Remarks = order.Remarks,
-                        ACC_NAME = Account_Name,
-                        Doc_No = Document_Number
-                    });
-                }
-                foreach (var item in GEList)
-                {
-                    dbContext.gateEntryDetails.Add(item);
-                    dbContext.SaveChanges();
+                        dbContext.gateEntryDetails.Add(item);
+                        dbContext.SaveChanges();
 
+                    }
                 }
+                else
+                {
+                    gateEntryViewModels.Gate_HDR.Type = "Job Work";
+                    gateEntryViewModels.Gate_HDR.INS_DATE = DateTime.Now;
+                    gateEntryViewModels.Gate_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
+                    dbContext.Gate_HDR.Add(gateEntryViewModels.Gate_HDR);
+                    dbContext.SaveChanges();
+                    Account_Name = gateEntryViewModels.Gate_HDR.Acc_Name;
+                    GateHdrID = gateEntryViewModels.Gate_HDR.ID;
+                    Document_Number = gateEntryViewModels.Gate_HDR.Doc_No;
+                    foreach (var order in gateEntryViewModels.V_JW_DTLs)
+                    {
+                        GEList.Add(new GateEntryDetail()
+                        {
+                            JW_FK = order.JWD_PK,
+                            GH_FK = GateHdrID,
+                            INS_DATE = DateTime.Now,
+                            INS_UID = userManager.GetUserName(HttpContext.User),
+                            Order_No = order.DOC_NO,
+                            GDW_NO = 0,
+                            Bill_Date = order.Bill_Date,
+                            Bill_NO = order.Bill_NO,
+                            CHL_NO = order.CHL_NO,
+                            CHL_DATE = order.CHL_DATE,
+                            Fin_Qty = order.Fin_Qty,
+                            Fin_UOM = order.Fin_UOM,
+                            Stk_Qty = order.BAL_QTY,
+                            Stk_UOM = order.Stk_UOM,
+                            Item_Name = order.ITEM_CODE,
+                            Art_Name = order.ARTICAL_CODE,
+                            Size_Name = order.SIZE_CODE,
+                            Proc_Name = order.PROC_CODE,
+                            Item_UOM = order.QTY_UOM_NAME,
+                            Remarks = order.Remarks,
+                            ACC_NAME = Account_Name,
+                            Doc_No = Document_Number
+                        });
+                    }
+                    foreach (var item in GEList)
+                    {
+                        dbContext.gateEntryDetails.Add(item);
+                        dbContext.SaveChanges();
+
+                    }
+                }
+                return RedirectToAction("Gate_Entry_Details");
             }
-            return RedirectToAction("Gate_Entry_Details");
+            return View("GateEntry", gateEntryViewModels);
         }
         [HttpPost]
         public IActionResult AddGateEntry(List<string> ORDER_NO, List<string> CHL_NO, List<DateTime> CHL_DATE, List<string> BILL_NO, List<string> BILL_DATE, List<string> Gate_Entry_Qty, List<string> BAL_QTY, List<string> REMARKS, List<string> ITEM_NAME)
@@ -225,7 +231,7 @@ namespace WebERP.Controllers
             var AccList = (from ACC in dbContext.V_GATE_ENTRY_ACC.AsNoTracking().Where(ac => ac.TBL_TYPE == types).ToList()
                            select new SelectListItem()
                            {
-                               Text = ACC.ACC_NAME,
+                               Text = Convert.ToString(ACC.ACC_CODE) + " / " +ACC.ACC_NAME,
                                Value = Convert.ToString(ACC.ACC_CODE),
                            }).ToList();
 
@@ -245,7 +251,12 @@ namespace WebERP.Controllers
                                Text = ACC.NAME,
                                Value = Convert.ToString(ACC.ID),
                            }).ToList();
-
+            GDWList.Insert(0, new SelectListItem()
+            {
+                Text = "Select GDW",
+                Value = string.Empty,
+                Selected = true
+            });
             return GDWList;
         }
         public JsonResult GetGrdData(string accid, string work)
@@ -296,6 +307,7 @@ namespace WebERP.Controllers
             }
             GateEntryDetails.EditGateEntryDetails = GateDetailList;
             GateEntryDetails.Gate_HDRs = dbContext.Gate_HDR.Where(g => g.Doc_No == id).FirstOrDefault();
+           
             return View(GateEntryDetails);
         }
 
@@ -304,7 +316,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                EditGateEntryModels.Gate_HDRs.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                EditGateEntryModels.Gate_HDRs.UDT_DATE = DateTime.Now;
                 EditGateEntryModels.Gate_HDRs.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Gate_HDR.Update(EditGateEntryModels.Gate_HDRs);
                 dbContext.SaveChanges();
@@ -313,7 +325,7 @@ namespace WebERP.Controllers
                     var result = dbContext.gateEntryDetails.SingleOrDefault(b => b.ID == gateDetailModel.ID);
                     if (result != null)
                     {
-                        result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                        result.UDT_DATE = DateTime.Now;
                         result.UDT_UID = userManager.GetUserName(HttpContext.User);
                         result.CHL_NO = gateDetailModel.CHL_NO;
                         result.CHL_DATE = gateDetailModel.CHL_DATE;

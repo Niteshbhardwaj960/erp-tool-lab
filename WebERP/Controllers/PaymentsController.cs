@@ -45,7 +45,7 @@ namespace WebERP.Controllers
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
             
             payments.DOC_NO = Doc_Number + 1;
-            payments.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            payments.INS_DATE = DateTime.Now;
             payments.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.Payments.Add(payments);
             dbContext.SaveChanges();
@@ -75,6 +75,8 @@ namespace WebERP.Controllers
                 {
                     pay.PAY_TAG = "Receipt";
                 }
+                pay.ACC_NAME = dbContext.Account_Masters.Where(a => a.ID == pay.ACC_CODE).Select(aa => aa.NAME).FirstOrDefault();
+                pay.CB_ACC_NAME = dbContext.Account_Masters.Where(a => a.ID == pay.CB_ACC_CODE).Select(aa => aa.NAME).FirstOrDefault();
             }
             return View(payments);
         }
@@ -146,7 +148,7 @@ namespace WebERP.Controllers
                 var result = dbContext.Payments.SingleOrDefault(b => b.ID == payments.ID);
                 if (result != null)
                 {
-                    result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                    result.UDT_DATE = DateTime.Now;
                     result.UDT_UID = userManager.GetUserName(HttpContext.User);
                     result.CB_ACC_CODE = payments.CB_ACC_CODE;
                     result.ACC_CODE = payments.ACC_CODE;

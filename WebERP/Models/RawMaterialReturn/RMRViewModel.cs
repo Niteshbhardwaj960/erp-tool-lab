@@ -22,7 +22,8 @@ namespace WebERP.Models
 
         [NotMapped]
         public string Doc_Fins { get; set; }
-
+        [NotMapped]
+        public string Type { get; set; }
         [NotMapped]
         public List<SelectListItem> CUTDropDown { get; set; }
         [NotMapped]

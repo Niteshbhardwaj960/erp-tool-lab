@@ -41,7 +41,7 @@ namespace WebERP.Controllers
             }
             else
             {
-                empSalViewModel.FilterMonth = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                empSalViewModel.FilterMonth = DateTime.Now;
                 empSalViewModel.Emp_Type = emmp_type;
                 empSalViewModel.emp_Sals = dbContext.EMP_SAL.AsNoTracking().Where(at => at.SAL_MONTH.Value.Month == DateTime.Now.Month && at.SAL_MONTH.Value.Year == DateTime.Now.Year && at.EMP_TYPE == "S").ToList();
             }
@@ -60,24 +60,24 @@ namespace WebERP.Controllers
         public IActionResult Salary_Gen()
         {
             Emp_Sal emp_Sal = new Emp_Sal();
-            emp_Sal.SAL_MONTH = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            emp_Sal.SAL_MONTH = DateTime.Now;
             return View("Salary_Gen", emp_Sal);
         }
         [HttpPost]
         public IActionResult Salary_Gen(Emp_Sal emp_Sal)
         {
-            var DuplicateSal = dbContext.EMP_SAL.Where(ds => ds.SAL_MONTH.Value.Month == emp_Sal.SAL_MONTH.Value.Month && ds.SAL_MONTH.Value.Year == emp_Sal.SAL_MONTH.Value.Year && ds.EMP_TYPE == emp_Sal.EMP_TYPE).FirstOrDefault();
             var emp_sal_year = emp_Sal.SAL_MONTH.Value.Year;
             var emp_sal_month = emp_Sal.SAL_MONTH.Value.Month;
             var proc_rate_error = "";
-            if (DuplicateSal != null)
-            {
-                ModelState.AddModelError("EMP_TYPE", "Salary Already Genrated for this Month");
-            }
+           
             if (ModelState.IsValid)
             {
                 if (emp_Sal.EMP_TYPE == "S")
                 {
+                    var delete_sal = dbContext.EMP_SAL.Where(ds => ds.SAL_MONTH.Value.Month == emp_Sal.SAL_MONTH.Value.Month && ds.SAL_MONTH.Value.Year == emp_Sal.SAL_MONTH.Value.Year && ds.PAID_SAL == 0).ToList();
+                    dbContext.EMP_SAL.RemoveRange(delete_sal);
+                    dbContext.SaveChanges();
+
                     var EMP_ATT = dbContext.Employee_Attandance.AsNoTracking().Where(at => at.SAL_YYYYMM.Value.Month == emp_Sal.SAL_MONTH.Value.Month && at.SAL_YYYYMM.Value.Year == emp_Sal.SAL_MONTH.Value.Year).ToList();
                     Employee_Master employee_master = new Employee_Master();
                     List<Emp_Sal> EmppSalAdd = new List<Emp_Sal>();
@@ -87,31 +87,35 @@ namespace WebERP.Controllers
                     {
                         foreach (var Emp in EMP_ATT)
                         {
-                            decimal empAdvance = dbContext.Employee_Advance.AsNoTracking().Where(ea => ea.EMP_CODE == Emp.EMP_CODE && ea.SAL_YYYYMM.Value.Month == emp_sal_month && ea.SAL_YYYYMM.Value.Year == emp_sal_year).Select(aa => aa.ADV_AMOUNT).Sum();
-                            employee_master = dbContext.Employee_Masters.AsNoTracking().Where(em => em.EMP_CODE == Emp.EMP_CODE).FirstOrDefault();
-                            decimal Ern_Sal = Math.Round((employee_master.emp_salary / Noofdays) * Emp.PAY_DAYS, 2);
-                            decimal Ern_OT = Math.Round(((employee_master.emp_salary / Noofdays) / 12) * Emp.OT_HRS, 2);
-                            decimal Pay_sal = Ern_Sal + Ern_OT - empAdvance;
-                            decimal RFF_SAL = (Math.Round(Pay_sal / 50) * 50) - Pay_sal;
-                            EmppSalAdd.Add(new Emp_Sal()
+                            var DuplicateSal = dbContext.EMP_SAL.Where(ds => ds.PAID_SAL >= 0 && ds.EMP_CODE== Emp.EMP_CODE && ds.INS_DATE.Value.Month == emp_Sal.SAL_MONTH.Value.Month && ds.INS_DATE.Value.Year == emp_Sal.SAL_MONTH.Value.Year).Select(ss => ss.EMP_NAME).FirstOrDefault();
+                            if (DuplicateSal == null)
                             {
-                                SAL_MONTH = Emp.SAL_YYYYMM,
-                                EMP_CODE = Emp.EMP_CODE,
-                                EMP_TYPE = Emp.EMP_TYPE,
-                                EMP_NAME = employee_master.EMP_NAME,
-                                SALARY = employee_master.emp_salary,
-                                SHIFT_HRS = employee_master.Shift_Hrs,
-                                PAY_DAYS = Emp.PAY_DAYS,
-                                OT_HRS = Emp.OT_HRS,
-                                ERN_SAL = Ern_Sal,
-                                ERN_OT = Ern_OT,
-                                ADVANCE_AMOUNT = empAdvance,
-                                PAYABAL_SALARY = Pay_sal,
-                                RF_SAL = RFF_SAL,
-                                NET_PAY_SAL = Pay_sal + RFF_SAL,
-                                INS_DATE = DateTime.Now,
-                                INS_UID = userManager.GetUserName(HttpContext.User),
-                            });
+                                decimal empAdvance = dbContext.Employee_Advance.AsNoTracking().Where(ea => ea.EMP_CODE == Emp.EMP_CODE && ea.SAL_YYYYMM.Value.Month == emp_sal_month && ea.SAL_YYYYMM.Value.Year == emp_sal_year).Select(aa => aa.ADV_AMOUNT).Sum();
+                                employee_master = dbContext.Employee_Masters.AsNoTracking().Where(em => em.EMP_CODE == Emp.EMP_CODE).FirstOrDefault();
+                                decimal Ern_Sal = Math.Round((employee_master.emp_salary / Noofdays) * Emp.PAY_DAYS, 2);
+                                decimal Ern_OT = Math.Round(((employee_master.emp_salary / Noofdays) / 12) * Emp.OT_HRS, 2);
+                                decimal Pay_sal = Ern_Sal + Ern_OT - empAdvance;
+                                decimal RFF_SAL = (Math.Round(Pay_sal / 50) * 50) - Pay_sal;
+                                EmppSalAdd.Add(new Emp_Sal()
+                                {
+                                    SAL_MONTH = Emp.SAL_YYYYMM,
+                                    EMP_CODE = Emp.EMP_CODE,
+                                    EMP_TYPE = Emp.EMP_TYPE,
+                                    EMP_NAME = employee_master.EMP_NAME,
+                                    SALARY = employee_master.emp_salary,
+                                    SHIFT_HRS = employee_master.Shift_Hrs,
+                                    PAY_DAYS = Emp.PAY_DAYS,
+                                    OT_HRS = Emp.OT_HRS,
+                                    ERN_SAL = Ern_Sal,
+                                    ERN_OT = Ern_OT,
+                                    ADVANCE_AMOUNT = empAdvance,
+                                    PAYABAL_SALARY = Pay_sal,
+                                    RF_SAL = RFF_SAL,
+                                    NET_PAY_SAL = Pay_sal + RFF_SAL,
+                                    INS_DATE = DateTime.Now,
+                                    INS_UID = userManager.GetUserName(HttpContext.User),
+                                });
+                            }
                         }
                         foreach (var item in EmppSalAdd)
                         {
@@ -186,7 +190,7 @@ namespace WebERP.Controllers
                                 PAYABAL_SALARY = Pay_sal,
                                 RF_SAL = RFF_SAL,
                                 NET_PAY_SAL = Pay_sal + RFF_SAL,
-                                INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
+                                INS_DATE = DateTime.Now,
                                 INS_UID = userManager.GetUserName(HttpContext.User),
                             });
                         }
@@ -207,7 +211,7 @@ namespace WebERP.Controllers
                                 PROC_CODE = Emp_pro.proc_code,
                                 PRODUCT_QTY = Emp_pro.prod_qty,
                                 PRODUCT_RATE = Convert.ToDecimal(Emp_pro.proc_rate),
-                                INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
+                                INS_DATE = DateTime.Now,
                                 INS_UID = userManager.GetUserName(HttpContext.User),
                             });
                         }
@@ -258,7 +262,7 @@ namespace WebERP.Controllers
 
             if (result != null)
             {
-                result.PAID_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                result.PAID_DATE = DateTime.Now;
                 result.PAID_USER = userManager.GetUserName(HttpContext.User);
                 result.PAID_SAL = NET_PAY_SAL;
                 dbContext.SaveChanges();

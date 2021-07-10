@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace WebERP.Models
         public int SIZE_CODE { get; set; }
         public int PROC_CODE { get; set; }
         public int ORDER_QTY { get; set; }
+        //[Range(0, 9999999999999999.999)]
         public decimal AVG_PC_WEIGHT { get; set; }
         public decimal WASTAGE_PER { get; set; }
         public string ORDER_STATUS { get; set; }

@@ -53,7 +53,7 @@ namespace WebERP.Controllers
             }
             if (ModelState.IsValid)
             {
-                objProcess.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objProcess.INS_DATE = DateTime.Now;
                 objProcess.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Process_Master.Add(objProcess);
                 var result = await dbContext.SaveChangesAsync();

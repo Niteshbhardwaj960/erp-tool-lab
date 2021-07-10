@@ -35,14 +35,14 @@ namespace WebERP.Controllers
             employee_Advance.Type = "Add";
             employee_Advance.EMPDropDown = Emplists("P");
             employee_Advance.SalDropDown = SalType("P");
-            employee_Advance.DOC_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            employee_Advance.DOC_DATE = DateTime.Now;
             return View("Emp_Adv_Master",employee_Advance);
         }
         [HttpPost]
         public IActionResult Emp_Adv_Master(Employee_Advance employee_Advance)
         {
            employee_Advance.Emp_Name = dbContext.Employee_Masters.Where(e => e.EMP_CODE == employee_Advance.EMP_CODE).Select(ep => ep.EMP_NAME).FirstOrDefault();
-            employee_Advance.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            employee_Advance.INS_DATE = DateTime.Now;
             employee_Advance.INS_UID = userManager.GetUserName(HttpContext.User); 
             dbContext.Employee_Advance.Add(employee_Advance);
             dbContext.SaveChanges();
@@ -59,6 +59,18 @@ namespace WebERP.Controllers
             {
                 var empname = dbContext.Employee_Masters.Where(e => e.EMP_CODE == emp.EMP_CODE).Select(s => s.EMP_NAME).FirstOrDefault();
                 emp.Emp_Name = empname;
+                if(emp.SAL_YYYYMM_BRK == 0)
+                {
+                    emp.Emp_Sal_Type = "Full Month";
+                }
+                if (emp.SAL_YYYYMM_BRK == 1)
+                {
+                    emp.Emp_Sal_Type = "1 to 15";
+                }
+                if (emp.SAL_YYYYMM_BRK == 2)
+                {
+                    emp.Emp_Sal_Type = "16 to 30";
+                }
             }
             return View(employee_Advance);
         }

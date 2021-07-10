@@ -32,11 +32,12 @@
                             <div class="input-group">
                                 @if (Model.Type == "Add")
                                 {
-                                    @Html.TextBoxFor(a => a.DOc_Dates, "{0:yyyy-MM-dd}", new { @ID = "DOc_Dates", @class = "form-control dat fc-datepicker", @type = "date" })
+                                    <input asp-for="DOc_Dates" type="date" class="form-control" readOnly="readonly" />
+                                    @Html.HiddenFor(a => a.DOc_Dates, new { @ID = "DOc_Dates", @class = "form-control dat fc-datepicker", @type = "date" })
                                 }
                                 else
-                                {
-                                    @Html.TextBoxFor(a => a.cutting_Receipt.DOC_DATE, "{0:yyyy-MM-dd}", new { @ID = "DOc_Dates", @class = "form-control", @readonly = "readonly" })
+                                {<input asp-for="cutting_Receipt.DOC_DATE" type="date" class="form-control" readOnly="readonly" />
+                                    @Html.HiddenFor(a => a.cutting_Receipt.DOC_DATE, new { @ID = "DOc_Dates", @class = "form-control", @readonly = "readonly" })
                                 }
                             </div>
                         </div>
@@ -115,7 +116,7 @@
                         <div class="form-group">
                             <label for="branch_id">Receipt Qty</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.cutting_Receipt.RECEIPT_QTY, new { @class = "form-control" })
+                                @Html.TextBoxFor(a => a.cutting_Receipt.RECEIPT_QTY, new { @class = "form-control", @type="number"})
                             </div>
                         </div>
                     </div>
@@ -133,7 +134,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Insert Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="cutting_Receipt.INS_DATE" />
+                                    <input type="date" readonly="readonly" class="form-control" asp-for="cutting_Receipt.INS_DATE" />
                                 </div>
                             </div>
                         </div>
@@ -149,7 +150,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Update Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="cutting_Receipt.UDT_DATE" />
+                                    <input type="date" readonly="readonly" class="form-control" asp-for="cutting_Receipt.UDT_DATE" />
                                 </div>
                             </div>
                         </div>

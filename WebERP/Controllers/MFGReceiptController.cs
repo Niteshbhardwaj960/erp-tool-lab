@@ -32,7 +32,7 @@ namespace WebERP.Controllers
         public int GetFinYear()
         {
             string FinYear = "";
-            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            DateTime date = DateTime.Now;
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;
@@ -62,7 +62,7 @@ namespace WebERP.Controllers
                            select new SelectListItem()
                            {
                                Text = Cut.DOC_NO.ToString() + '/' + Cut.EMP_NAME + '/' + Cut.Item_NAME + '/' + Cut.ARTICAL_NAME + '/' + Cut.SIZE_NAME + '/' + Cut.PROC_NAME,
-                               Value = Cut.EMP_NAME + '^' + Cut.Item_NAME + '^' + Cut.ARTICAL_NAME + '^' + Cut.SIZE_NAME + '^' + Cut.PROC_NAME + '^' + Cut.ID,
+                               Value = Cut.EMP_NAME + '^' + Cut.Item_NAME + '^' + Cut.ARTICAL_NAME + '^' + Cut.SIZE_NAME + '^' + Cut.PROC_NAME + '^' + Cut.ID + '^' + Cut.DOC_NO.ToString(),
                            }).ToList();
 
             CutList.Insert(0, new SelectListItem()
@@ -78,7 +78,7 @@ namespace WebERP.Controllers
             var empList = (from emp in dbContext.Employee_Masters.Where(e => e.EMP_TYPE == "S").ToList()
                            select new SelectListItem()
                            {
-                               Text = emp.EMP_NAME,
+                               Text = emp.EMP_NAME + " / " + emp.EMP_CODE,
                                Value = emp.EMP_CODE.ToString(),
                            }).ToList();
 
@@ -111,7 +111,7 @@ namespace WebERP.Controllers
             var CutList = (from emp in dbContext.Employee_Masters.Where(e => e.EMP_TYPE == "C").ToList()
                            select new SelectListItem()
                            {
-                               Text = emp.EMP_NAME,
+                               Text = emp.EMP_NAME + " / " + emp.EMP_CODE,
                                Value = emp.EMP_CODE.ToString(),
                            }).ToList();
 
@@ -128,6 +128,10 @@ namespace WebERP.Controllers
         {
             List<MGF_RECEIPT> mGF_RECEIPTs = new List<MGF_RECEIPT>();
             mGF_RECEIPTs = dbContext.MGF_RECEIPT.AsNoTracking().ToList();
+            foreach(var mGF in mGF_RECEIPTs)
+            {
+                mGF.PROC_NAME = dbContext.Process_Master.Where(m => m.ID == mGF.PROC_CODE).Select(mm => mm.NAME).FirstOrDefault();
+            }
             return View("MFG_Details", mGF_RECEIPTs);
         }
         [HttpPost]
@@ -139,7 +143,7 @@ namespace WebERP.Controllers
                 .Where(x => x.DOC_FINYEAR == mFGReceiptViewModel.DOC_FINYEARS)
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
             mFGReceiptViewModel.MGF_RECEIPTs.DOC_NO = Doc_Number + 1;
-            mFGReceiptViewModel.MGF_RECEIPTs.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            mFGReceiptViewModel.MGF_RECEIPTs.INS_DATE = DateTime.Now;
             mFGReceiptViewModel.MGF_RECEIPTs.EMP_CODE = Convert.ToInt32(EMPDropDown);
             mFGReceiptViewModel.MGF_RECEIPTs.CONT_EMP_CODE = Convert.ToInt32(CONEMPDropDown);
             mFGReceiptViewModel.MGF_RECEIPTs.EMP_NAME = emps;
@@ -163,16 +167,20 @@ namespace WebERP.Controllers
             return View("MFG_Receipt_Master", mFGReceiptViewModel);
         }
         [HttpPost]
-        public IActionResult SAVEMFG(MFGReceiptViewModel mFGReceiptViewModel)
+        public IActionResult SAVEMFG(MFGReceiptViewModel mFGReceiptViewModel,int EMP_CODE,int CONT_EMP_CODE,int PROC_CODE)
         {
             var result = dbContext.MGF_RECEIPT.SingleOrDefault(b => b.ID == mFGReceiptViewModel.MGF_RECEIPTs.ID);
+            var emps = dbContext.Employee_Masters.Where(e => e.EMP_CODE == EMP_CODE).Select(ee => ee.EMP_NAME).FirstOrDefault();
+
             if (result != null)
             {
-                result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                result.UDT_DATE = DateTime.Now;
                 result.UDT_UID = userManager.GetUserName(HttpContext.User);
-                result.EMP_CODE = mFGReceiptViewModel.MGF_RECEIPTs.EMP_CODE;
-                result.CONT_EMP_CODE = mFGReceiptViewModel.MGF_RECEIPTs.CONT_EMP_CODE;
-                result.PROC_CODE = mFGReceiptViewModel.MGF_RECEIPTs.PROC_CODE;
+                result.EMP_CODE = EMP_CODE;
+                result.CONT_EMP_CODE = CONT_EMP_CODE;
+                result.PROC_CODE = PROC_CODE;
+                result.EMP_NAME = emps;
+                result.CUT_DOC_NO = mFGReceiptViewModel.MGF_RECEIPTs.CUT_DOC_NO;
                 result.RECEIPT_QTY = mFGReceiptViewModel.MGF_RECEIPTs.RECEIPT_QTY;
                 dbContext.SaveChanges();
             }

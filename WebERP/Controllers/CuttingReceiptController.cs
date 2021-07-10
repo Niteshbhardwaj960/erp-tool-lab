@@ -32,7 +32,7 @@ namespace WebERP.Controllers
         public int GetFinYear()
         {
             string FinYear = "";
-            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            DateTime date = DateTime.Now;
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;
@@ -97,13 +97,13 @@ namespace WebERP.Controllers
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
             //cuttingReceiptViewModel.cutting_Receipt.CUTTING_ORDER_FK = 
             cuttingReceiptViewModel.cutting_Receipt.DOC_NO = Doc_Number + 1;
-            cuttingReceiptViewModel.cutting_Receipt.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            cuttingReceiptViewModel.cutting_Receipt.INS_DATE = DateTime.Now;
             cuttingReceiptViewModel.cutting_Receipt.DOC_DATE = cuttingReceiptViewModel.DOc_Dates;
             cuttingReceiptViewModel.cutting_Receipt.DOC_FINYEAR = cuttingReceiptViewModel.Fin_Years;
             cuttingReceiptViewModel.cutting_Receipt.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.Cutting_Receipt.Add(cuttingReceiptViewModel.cutting_Receipt);
             dbContext.SaveChanges();
-            StkDTL.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            StkDTL.INS_DATE = DateTime.Now;
             StkDTL.INS_UID = userManager.GetUserName(HttpContext.User);
             StkDTL.COMP_CODE = 0;
             StkDTL.Tran_Table = "Cutting Receipt Entry";
@@ -139,7 +139,7 @@ namespace WebERP.Controllers
             var result = dbContext.Cutting_Receipt.SingleOrDefault(b => b.ID == cuttingReceiptViewModel.cutting_Receipt.ID);
             if (result != null)
             {
-                result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                result.UDT_DATE = DateTime.Now;
                 result.UDT_UID = userManager.GetUserName(HttpContext.User);
                 result.RECEIPT_QTY = cuttingReceiptViewModel.cutting_Receipt.RECEIPT_QTY;
                 result.GDW_CODE = cuttingReceiptViewModel.cutting_Receipt.GDW_CODE;
@@ -148,7 +148,7 @@ namespace WebERP.Controllers
             var resultStk = dbContext.StockDTL_Models.SingleOrDefault(b => b.Tran_Table_PK == cuttingReceiptViewModel.cutting_Receipt.ID && b.Tran_Table == "Cutting Receipt Entry");
             if (resultStk != null)
             {
-                resultStk.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                resultStk.UDT_DATE = DateTime.Now;
                 resultStk.UDT_UID = userManager.GetUserName(HttpContext.User);
                 resultStk.Stk_Qty_IN = cuttingReceiptViewModel.cutting_Receipt.RECEIPT_QTY;
                 resultStk.GDW_CODE = cuttingReceiptViewModel.cutting_Receipt.GDW_CODE;

@@ -22,12 +22,15 @@ namespace WebERP.Models
         public decimal Qty { get; set; }
         public string QTY_UOM { get; set; }
         public string QTY_CODE { get; set; }
-        public decimal Gate_Entry_qty { get; set; }
         public decimal Bal_Qty { get; set; }
+        [RegularExpression(@"^\d+\.\d{0,3}$")]
+        [Range(0, 999999999999.999, ErrorMessage = "Price can't have more than 3 decimal places")]
+        public decimal Gate_Entry_qty { get; set; }        
         public string ITEM_NAME { get; set; }
         public int Item_Code { get; set; }
         public string Remarks { get; set; }
         [NotMapped]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
         public int CHL_NO { get; set; }
         [NotMapped]
         public DateTime? CHL_DATE { get; set; }

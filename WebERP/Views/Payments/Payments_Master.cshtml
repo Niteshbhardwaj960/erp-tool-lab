@@ -37,7 +37,7 @@
                                 }
                                 @if (Model.Type == "Edit" || Model.Type == "Action")
                                 {
-                                    @Html.TextBoxFor(a => a.DOC_DATE, new { @ID = "DOC_FN_YEAR", @class = "form-control", @readOnly = "readonly" })
+                                    <input asp-for="DOC_DATE" type="date" class="form-control" id="PAY_DOC_DATE" name="PAY_DOC_DATE" readOnly = "readonly" />
                                 }
                             </div>
                         </div>
@@ -108,8 +108,7 @@
                         <div class="form-group">
                             <label for="branch_id">Payment Document Date</label>
                             <div class="input-group">
-                                <input asp-for="PAY_DOC_DATE" type="date" class="form-control" id="PAY_DOC_DATE" name="PAY_DOC_DATE" />
-                                @*@Html.HiddenFor(a => a.PAY_DOC_DATE, new {@ID = "PAY_DOC_DATE", @class = "form-control", @type = "date"})*@
+                                <input asp-for="PAY_DOC_DATE" type="date" class="form-control" id="PAY_DOC_DATE" name="PAY_DOC_DATE" />                         
                             </div>
                         </div>
                     </div>
@@ -135,7 +134,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Insert Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                                    <input type="date" readonly="readonly" class="form-control" asp-for="INS_DATE" />
                                 </div>
                             </div>
                         </div>
@@ -151,7 +150,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Update Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                                    <input type="date" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
                                 </div>
                             </div>
                         </div>

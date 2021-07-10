@@ -20,27 +20,35 @@
                         <tr>
                             <th>Doc Date</th>
                             <th>Employee Name</th>
+                            <th>Salary Type</th>
+                            <th>Salary Month</th>
+                            <th>Pay Days</th>
+                            <th>OT Hr</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var Data in Model)
                         {
-                            <tr>
-                                <td>@Data.INS_DATE</td>
-                                <td>@Data.Emp_Name</td>
-                                <td>
-                                    <a asp-action="EditEmpAttn" asp-controller="EmpAttandance" asp-route-id="@Data.ID">
-                                        <i class="fas fa-user-edit"></i>
-                                    </a>&nbsp;&nbsp;
-                                    <a asp-action="DeleteEmpAttn" asp-controller="EmpAttandance" asp-route-id="@Data.ID">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>&nbsp;&nbsp;
-                                    <a asp-action="ActionEmpAttn" asp-controller="EmpAttandance" asp-route-id="@Data.ID">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>@Data.INS_DATE.Value.Day-@Data.INS_DATE.Value.Month-@Data.INS_DATE.Value.Year</td>
+                            <td>@Data.Emp_Name</td>
+                            <td>@Data.Emp_Sal_Type</td>
+                            <td>@Data.SAL_YYYYMM.Value.Month-@Data.SAL_YYYYMM.Value.Year</td>
+                            <td>@Data.PAY_DAYS</td>
+                            <td>@Data.OT_HRS</td>
+                            <td>
+                                <a asp-action="EditEmpAttn" asp-controller="EmpAttandance" asp-route-id="@Data.ID">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="DeleteEmpAttn" asp-controller="EmpAttandance" asp-route-id="@Data.ID">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="ActionEmpAttn" asp-controller="EmpAttandance" asp-route-id="@Data.ID">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

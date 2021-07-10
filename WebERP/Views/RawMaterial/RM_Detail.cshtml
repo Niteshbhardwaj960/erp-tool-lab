@@ -28,7 +28,7 @@
                         @foreach (var Data in Model)
                         {
                             <tr>
-                                <td>@Data.INS_DATE</td>
+                                <td>@Data.INS_DATE.Value.Day-@Data.INS_DATE.Value.Month-@Data.INS_DATE.Value.Year</td>
                                 <td>@Data.Doc_No</td>
                                 <td>@Data.EMP_NAME</td>
                                 <td>

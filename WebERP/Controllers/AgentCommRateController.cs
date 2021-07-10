@@ -76,7 +76,7 @@ namespace WebERP.Controllers
         public IActionResult AgentCommRate_Master(AgentCommRate agentCommRate)
         {
             var accname = dbContext.Account_Masters.Where(a => a.ID == agentCommRate.ACC_CODE).Select(aa => aa.NAME).FirstOrDefault();
-            agentCommRate.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            agentCommRate.INS_DATE = DateTime.Now;
             agentCommRate.INS_UID = userManager.GetUserName(HttpContext.User);
             agentCommRate.ACC_CODE = agentCommRate.ACC_CODE;
             agentCommRate.ACC_NAME = accname;
@@ -100,7 +100,8 @@ namespace WebERP.Controllers
             var result = dbContext.AgentCommRate.SingleOrDefault(b => b.ID == agentCommRate.ID);
             if (result != null)
             {
-                result.UDT_DATE = DateTime.Now; Helper.DateFormatDate(Convert.ToString(DateTime.Now)); result.UDT_UID = userManager.GetUserName(HttpContext.User);
+                result.UDT_DATE = DateTime.Now;
+                result.UDT_UID = userManager.GetUserName(HttpContext.User);
                 result.ACC_CODE = agentCommRate.ACC_CODE;
                 result.ACC_NAME = accname;
                 result.COMM_RATE = agentCommRate.COMM_RATE;

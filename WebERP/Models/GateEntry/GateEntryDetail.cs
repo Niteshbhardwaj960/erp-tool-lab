@@ -20,6 +20,7 @@ namespace WebERP.Models.GateEntry
         public int Art_Name { get; set; }
         public int Size_Name { get; set; }
         public int Proc_Name { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
         public int CHL_NO { get; set; }
         public DateTime? CHL_DATE { get; set; }
         public string Bill_NO { get; set; }

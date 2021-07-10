@@ -40,7 +40,7 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult Emp_Attand_Master(Employee_Attandance employee_Attandance)
         {
-            employee_Attandance.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            employee_Attandance.INS_DATE = DateTime.Now;
             employee_Attandance.INS_UID = userManager.GetUserName(HttpContext.User);
             employee_Attandance.EMP_TYPE = "S";
             dbContext.Employee_Attandance.Add(employee_Attandance);
@@ -57,6 +57,18 @@ namespace WebERP.Controllers
             {
                 var empname = dbContext.Employee_Masters.Where(e => e.ID == emp.EMP_CODE).Select(s => s.EMP_NAME).FirstOrDefault();
                 emp.Emp_Name = empname;
+                if (emp.SAL_YYYYMM_BRK == 0)
+                {
+                    emp.Emp_Sal_Type = "Full Month";
+                }
+                if (emp.SAL_YYYYMM_BRK == 1)
+                {
+                    emp.Emp_Sal_Type = "1 to 15";
+                }
+                if (emp.SAL_YYYYMM_BRK == 2)
+                {
+                    emp.Emp_Sal_Type = "16 to 30";
+                }
             }
             return View(employee_Attandance);
         }

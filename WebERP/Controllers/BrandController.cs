@@ -52,7 +52,7 @@ namespace WebERP.Controllers
             }
             if (ModelState.IsValid)
             {
-                objBrand.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objBrand.INS_DATE = DateTime.Now;
                 objBrand.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Brand_Master.Add(objBrand);
                 var result = await dbContext.SaveChangesAsync();
@@ -89,7 +89,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                objBrand.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objBrand.UDT_DATE = DateTime.Now;
                 objBrand.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Brand_Master.Update(objBrand);
                 dbContext.SaveChanges();

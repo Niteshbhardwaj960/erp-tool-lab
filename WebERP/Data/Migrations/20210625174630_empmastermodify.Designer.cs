@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebERP.Data;
 
 namespace WebERP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210625174630_empmastermodify")]
+    partial class empmastermodify
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -620,7 +622,7 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("PROC_NAME");
 
-                    b.Property<int>("RECEIPT_QTY");
+                    b.Property<decimal>("RECEIPT_QTY");
 
                     b.Property<string>("SIZE_NAME");
 
@@ -1128,8 +1130,6 @@ namespace WebERP.Data.Migrations
                     b.Property<int>("CONT_EMP_CODE");
 
                     b.Property<int>("CUTTING_ORDER_FK");
-
-                    b.Property<string>("CUT_DOC_NO");
 
                     b.Property<DateTime?>("DOC_DATE");
 

@@ -22,6 +22,7 @@
                             <th>Employee Name</th>
                             <th>Advance Month</th>
                             <th>Advance Amount</th>
+                            <th>Salary Type</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -29,10 +30,11 @@
                         @foreach (var Data in Model)
                         {
                         <tr>
-                            <td>@Data.INS_DATE</td>
+                            <td>@Data.INS_DATE.Value.Day-@Data.INS_DATE.Value.Month-@Data.INS_DATE.Value.Year</td>
                             <td>@Data.Emp_Name</td>
                             <td>@Data.SAL_YYYYMM.Value.Month / @Data.SAL_YYYYMM.Value.Year </td>
                             <td>@Data.ADV_AMOUNT</td>
+                            <td>@Data.Emp_Sal_Type</td>
                             <td>
                                 <a asp-action="EditEmpAdv" asp-controller="EmpAdvance" asp-route-id="@Data.ID">
                                     <i class="fas fa-user-edit"></i>

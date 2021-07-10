@@ -31,6 +31,8 @@ namespace WebERP.Models
         [NotMapped]
         public string Emp_Name { get; set; }
         [NotMapped]
+        public string Emp_Sal_Type { get; set; }
+        [NotMapped]
         public List<SelectListItem>EMPDropDown { get; set; }
         [NotMapped]
         public List<SelectListItem> DepDropDown { get; set; }
