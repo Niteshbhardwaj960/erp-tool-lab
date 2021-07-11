@@ -34,6 +34,7 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Account_Master()
         {
+            ViewBag.Message = null;
             return View(dbContext.Account_Masters.ToList());
         }
         [HttpGet]
@@ -151,9 +152,26 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteAccount(int ID)
         {
-            var data = dbContext.Account_Masters.Find(ID);
-            dbContext.Account_Masters.Remove(data);
-            dbContext.SaveChanges();
+            var duplPurchaseOrder = dbContext.POHeader_Master.Where(p => p.ACC_CODE == ID).FirstOrDefault();
+            var duplPayment = dbContext.Payments.Where(p => p.ACC_CODE == ID).FirstOrDefault();
+            var duplJobWork = dbContext.JobWorkIssue_Header.Where(p => p.ACC_CODE == ID).FirstOrDefault();
+            //var duplCutting = dbContext.Cutting_Orders.Where(p => p. == ID).FirstOrDefault();
+            var duplSaleInv = dbContext.SalesHeader.Where(p => p.ACC_CODE == ID).FirstOrDefault();
+
+            if (duplJobWork == null && duplPayment == null && duplPurchaseOrder == null && duplSaleInv == null)
+            {
+                var data = dbContext.Account_Masters.Find(ID);
+                dbContext.Account_Masters.Remove(data);
+                dbContext.SaveChanges();
+               
+            }
+            else
+            {
+               var accountMaster = dbContext.Account_Masters.ToList();
+                ViewBag.Message = string.Format("Can not delete entry. Record present either in Purchase order OR Payment OR JobWork OR Sale Invoice.");
+                ViewBag.Color = "red";
+                return View("Account_Master", accountMaster);
+            }
             return RedirectToAction("Account_Master");
         }
 

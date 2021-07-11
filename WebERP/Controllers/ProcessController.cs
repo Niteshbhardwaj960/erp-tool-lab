@@ -33,6 +33,7 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Process_Master()
         {
+            ViewBag.Message = null;
             return View(dbContext.Process_Master.ToList());
         }
         [HttpGet]
@@ -105,9 +106,22 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteProcess(int ID)
         {
-            var data = dbContext.Process_Master.Find(ID);
-            dbContext.Process_Master.Remove(data);
-            dbContext.SaveChanges();
+            var duplJobWork = dbContext.JobWorkIssue_Details.Where(p => p.PROC_CODE == ID).FirstOrDefault();
+            var duplCutting = dbContext.Cutting_Orders.Where(p => p.PROC_CODE == ID).FirstOrDefault();
+           
+            if (duplJobWork == null && duplCutting == null)
+            {
+                var data = dbContext.Process_Master.Find(ID);
+                dbContext.Process_Master.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                var Process_Master = dbContext.Process_Master.ToList();
+                ViewBag.Message = string.Format("Can not delete entry. Record present either in Cutting order OR JobWork.");
+                ViewBag.Color = "red";
+                return View("Process_Master", Process_Master);
+            }
             return RedirectToAction("Process_Master");
         }
         [HttpGet]

@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Account_Master>
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background: linear-gradient(135deg, #ff00b1 0%, #3b009a 100%);"> <h3 style="color:white">Account Details</h3></nav>
 
 
@@ -15,10 +15,11 @@
     <div class="card mb-3">
         <div class="card-body">
             <div class="table-responsive">
+                
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Name </th>
                             <th>Address</th>
                             <th>GST NO</th>
                             <th>Opening Balance</th>
@@ -29,7 +30,8 @@
                         @foreach (var Data in Model)
                         {
                             <tr>
-                                <td>@Data.NAME</td>
+                                <td>@Data.NAME <span asp-validation-for="@Data.error" class="text-danger"> </span> </td>
+
                                 <td>@Data.ADD1  @Data.ADD2  @Data.CITY_CODE @Data.State_Code</td>
                                 <td>@Data.GST_NO</td>
                                 <td>@Data.OP_BAL</td>
@@ -45,6 +47,14 @@
                                     </a>
                                 </td>
                             </tr>
+                        }
+                        @if (ViewBag.Message != null)
+                        {
+                            <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+                            </script>
                         }
                     </tbody>
                 </table>

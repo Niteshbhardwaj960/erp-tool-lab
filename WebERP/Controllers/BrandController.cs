@@ -34,6 +34,7 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Brand_Master()
         {
+            ViewBag.Message = null;
             return View(dbContext.Brand_Master.ToList());
         }
         [HttpGet]

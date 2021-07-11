@@ -34,7 +34,7 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Employee_Master()
         {
-
+            ViewBag.Message = null;
             return View(dbContext.Employee_Masters.ToList());
         }
         [HttpGet]
@@ -116,9 +116,21 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteEmployee(int ID)
         {
-            var data = dbContext.Employee_Masters.Find(ID);
-            dbContext.Employee_Masters.Remove(data);
-            dbContext.SaveChanges();
+            var emp_code = dbContext.Employee_Masters.Where(p => p.ID == ID).Select(e => e.EMP_CODE).FirstOrDefault();
+            var dupladv = dbContext.Employee_Advance.Where(p => p.EMP_CODE == emp_code).FirstOrDefault();
+            var duplaTT = dbContext.Employee_Attandance.Where(p => p.EMP_CODE == emp_code).FirstOrDefault();
+
+            if (dupladv == null && duplaTT == null)
+            {
+                var data = dbContext.Employee_Masters.Find(ID);
+                dbContext.Employee_Masters.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Employee Advance or Employee Attndance");
+                return View("Employee_Master", dbContext.Employee_Masters.ToList());
+            }
             return RedirectToAction("Employee_Master");
         }
         [HttpGet]

@@ -35,11 +35,12 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult GoDown_Master()
         {
-            List<Godown_Master> gd = new List<Godown_Master>();
+            ViewBag.Message = null;
+            List <Godown_Master> gd = new List<Godown_Master>();
             gd = dbContext.Godown_Master.ToList();
             foreach (var obj in gd)
             {
-                if (obj.SALE_TAG == "0")
+                if (obj.SALE_TAG == "2")
                 {
                     obj.SALE_TAG = "Yes";
                 }
@@ -127,9 +128,25 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteGoDown(int ID)
         {
-            var data = dbContext.Godown_Master.Find(ID);
-            dbContext.Godown_Master.Remove(data);
-            dbContext.SaveChanges();
+            var duplart = dbContext.Artical_Merge_HDR.Where(p => p.GDW_CODE == ID).FirstOrDefault();
+            var duplstock = dbContext.StockDTL_Models.Where(p => p.GDW_CODE == ID).FirstOrDefault();
+            var duplGate = dbContext.gateEntryDetails.Where(p => p.GDW_NO == ID).FirstOrDefault();
+            var duplCUtting = dbContext.Cutting_Receipt.Where(p => p.GDW_CODE == ID).FirstOrDefault();
+            var dupljob = dbContext.JobWorkIssue_Details.Where(p => p.GODOWN_CODE == ID).FirstOrDefault();
+            var duplSale = dbContext.SalesHeader.Where(p => p.GoDownCode == ID).FirstOrDefault();
+            var duplrawmaterreturn = dbContext.RMR_DTL.Where(p => p.GDW_Code == ID).FirstOrDefault();
+
+            if (duplart == null && duplstock == null && duplGate == null && duplCUtting == null && dupljob == null && duplSale == null && duplrawmaterreturn == null)
+            {
+                var data = dbContext.Godown_Master.Find(ID);
+                dbContext.Godown_Master.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record used somewhere");
+                return View("GoDown_Master", dbContext.Godown_Master.ToList());
+            }
             return RedirectToAction("Godown_Master");
         }
         [HttpGet]

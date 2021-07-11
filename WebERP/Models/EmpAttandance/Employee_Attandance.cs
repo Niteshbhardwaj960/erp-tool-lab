@@ -28,6 +28,8 @@ namespace WebERP.Models
         [NotMapped]
         public string Type { get; set; }
         [NotMapped]
+        public string paidType { get; set; }
+        [NotMapped]
         public string Emp_Sal_Type { get; set; }
         [NotMapped]
         public string Emp_Name { get; set; }

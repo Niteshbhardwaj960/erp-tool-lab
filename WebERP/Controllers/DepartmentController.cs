@@ -33,7 +33,7 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Department_Master()
         {
-
+            ViewBag.Message = null;
             return View(dbContext.Department_Masters.ToList());
         }
         [HttpGet]
@@ -62,6 +62,7 @@ namespace WebERP.Controllers
             }
             else
             {
+                objDep.Type = "Add";
                 return View("AddDepartment", objDep);
             }
         }
@@ -106,9 +107,20 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteDepartment(int ID)
         {
-            var data = dbContext.Department_Masters.Find(ID);
-            dbContext.Department_Masters.Remove(data);
-            dbContext.SaveChanges();
+
+            var dupl = dbContext.Employee_Masters.Where(p => p.DEP_CODE == ID).FirstOrDefault();
+           
+            if (dupl == null)
+            {
+                var data = dbContext.Department_Masters.Find(ID);
+                dbContext.Department_Masters.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Employee Master");
+                return View("Department_Master", dbContext.Department_Masters.ToList());
+            }
             return RedirectToAction("Department_Master");
         }
         [HttpGet]

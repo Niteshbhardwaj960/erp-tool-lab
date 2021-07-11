@@ -32,7 +32,9 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Tax_Detail()
         {
-            List<TAX_MASTER> tAX_MASTER = new List<TAX_MASTER>();
+            ViewBag.Message = null;
+
+               List <TAX_MASTER> tAX_MASTER = new List<TAX_MASTER>();
 
             tAX_MASTER = dbContext.TAX_MASTER.AsNoTracking().ToList();
 
@@ -102,15 +104,28 @@ namespace WebERP.Controllers
             }
             else
             {
+                obj.Type = "Edit";
                 return View(obj);
             }
         }
         [HttpGet]
         public IActionResult DeleteTax(int ID)
         {
-            var data = dbContext.TAX_MASTER.Find(ID);
-            dbContext.TAX_MASTER.Remove(data);
-            dbContext.SaveChanges();
+           var dupl = dbContext.SalesHeader.Where(p => p.TAX_CODE == ID).FirstOrDefault();
+
+            if (dupl == null)
+            {
+                var data = dbContext.TAX_MASTER.Find(ID);
+                dbContext.TAX_MASTER.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                var TAX_MASTER = dbContext.TAX_MASTER.ToList();
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Sale Invoice.");
+                ViewBag.Color = "red";
+                return View("Tax_Detail", TAX_MASTER);
+            }
             return RedirectToAction("Tax_Detail");
         }
     }

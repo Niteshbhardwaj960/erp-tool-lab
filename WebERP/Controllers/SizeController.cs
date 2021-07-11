@@ -105,9 +105,19 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteSize(int ID)
         {
-            var data = dbContext.Size_Master.Find(ID);
-            dbContext.Size_Master.Remove(data);
-            dbContext.SaveChanges();
+            var dupl = dbContext.Cutting_Orders.Where(p => p.SIZE_CODE == ID).FirstOrDefault();
+
+            if (dupl == null)
+            {
+                var data = dbContext.Size_Master.Find(ID);
+                dbContext.Size_Master.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Cutting order");
+                return View("Size_Master", dbContext.Size_Master.ToList());
+            }
             return RedirectToAction("Size_Master");
         }
         [HttpGet]

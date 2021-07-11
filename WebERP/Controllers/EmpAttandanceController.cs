@@ -51,6 +51,7 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Emp_Attand_Details()
         {
+            ViewBag.Message = null;
             List<Employee_Attandance> employee_Attandance = new List<Employee_Attandance>();
             employee_Attandance = dbContext.Employee_Attandance.ToList();
             foreach (var emp in employee_Attandance.ToList())
@@ -126,8 +127,19 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult EditEmpAttn(int id)
         {
+            var emp_code = dbContext.Employee_Attandance.Where(p => p.ID == id).FirstOrDefault();
+            var salpaid = dbContext.EMP_SAL.Where(p => p.EMP_CODE == emp_code.EMP_CODE && p.SAL_MONTH.Value.Month == emp_code.SAL_YYYYMM.Value.Month && p.SAL_MONTH.Value.Year == emp_code.SAL_YYYYMM.Value.Year && p.PAID_SAL > 0).FirstOrDefault();
+
             Employee_Attandance employee_Attandance = new Employee_Attandance();
             employee_Attandance = dbContext.Employee_Attandance.Find(id);
+            if (salpaid == null)
+            {
+                employee_Attandance.paidType = "NonPaid";
+            }
+            else
+            {
+                employee_Attandance.paidType = "Paid";
+            }
             employee_Attandance.Type = "Edit";
             employee_Attandance.EMPDropDown = Emplists(employee_Attandance.EMP_TYPE);           
             dbContext.Employee_Attandance.Update(employee_Attandance);
@@ -167,9 +179,40 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteEmpAttn(int ID)
         {
-            var data = dbContext.Employee_Attandance.Find(ID);
-            dbContext.Employee_Attandance.Remove(data);
-            dbContext.SaveChanges();
+            var empattn = dbContext.Employee_Attandance.Where(p => p.ID == ID).FirstOrDefault();
+            var duplsal = dbContext.EMP_SAL.Where(p => p.EMP_CODE == empattn.EMP_CODE).FirstOrDefault();
+            var duplpaidsal = dbContext.EMP_SAL.Where(p => p.EMP_CODE == empattn.EMP_CODE && p.PAID_SAL > 0 && p.SAL_MONTH.Value.Month == empattn.SAL_YYYYMM.Value.Month && p.SAL_MONTH.Value.Year == empattn.SAL_YYYYMM.Value.Year).FirstOrDefault();
+            var dupladvs = dbContext.Employee_Advance.Where(p => p.EMP_CODE == empattn.EMP_CODE && p.SAL_YYYYMM.Value.Month == empattn.SAL_YYYYMM.Value.Month && p.SAL_YYYYMM.Value.Year == empattn.SAL_YYYYMM.Value.Year).FirstOrDefault();
+
+            if (duplsal == null && dupladvs == null && duplpaidsal == null)
+            {
+                var data = dbContext.Employee_Attandance.Find(ID);
+                dbContext.Employee_Attandance.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                var employee_Att = dbContext.Employee_Attandance.ToList();
+                foreach (var emp in employee_Att.ToList())
+                {
+                    var empname = dbContext.Employee_Masters.Where(e => e.ID == emp.EMP_CODE).Select(s => s.EMP_NAME).FirstOrDefault();
+                    emp.Emp_Name = empname;
+                    if (emp.SAL_YYYYMM_BRK == 0)
+                    {
+                        emp.Emp_Sal_Type = "Full Month";
+                    }
+                    if (emp.SAL_YYYYMM_BRK == 1)
+                    {
+                        emp.Emp_Sal_Type = "1 to 15";
+                    }
+                    if (emp.SAL_YYYYMM_BRK == 2)
+                    {
+                        emp.Emp_Sal_Type = "16 to 30";
+                    }
+                }
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Employee Advance or Salary");
+                return View("Emp_Attand_Details", employee_Att);
+            }            
             return RedirectToAction("Emp_Attand_Details");
         }
     }

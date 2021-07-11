@@ -22,9 +22,17 @@
                         <div class="form-group">
                             <label for="branch_id">Brand Name</label>
                             <div class="input-group">
-                                <select name="Brand_Code" id="Brand_Code" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.brandDropDown,"Value", "Text"))"></select>                              
+                                <select name="Brand_Code" id="Brand_Code" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.brandDropDown,"Value", "Text"))"></select>
                             </div>
                             <span asp-validation-for="BRAND_CODE" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="branch_id">Rate</label>
+                            <div class="input-group">
+                                <input type="decimal" class="form-control numb" name="RATE" id="RATE">
+                            </div>
                         </div>
                     </div>
                 </div>

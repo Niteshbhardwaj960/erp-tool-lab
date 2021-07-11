@@ -87,7 +87,7 @@ namespace WebERP.Controllers
                     {
                         foreach (var Emp in EMP_ATT)
                         {
-                            var DuplicateSal = dbContext.EMP_SAL.Where(ds => ds.PAID_SAL >= 0 && ds.EMP_CODE== Emp.EMP_CODE && ds.INS_DATE.Value.Month == emp_Sal.SAL_MONTH.Value.Month && ds.INS_DATE.Value.Year == emp_Sal.SAL_MONTH.Value.Year).Select(ss => ss.EMP_NAME).FirstOrDefault();
+                            var DuplicateSal = dbContext.EMP_SAL.Where(ds => ds.PAID_SAL > 0 && ds.EMP_CODE== Emp.EMP_CODE && ds.INS_DATE.Value.Month == emp_Sal.SAL_MONTH.Value.Month && ds.INS_DATE.Value.Year == emp_Sal.SAL_MONTH.Value.Year).Select(ss => ss.EMP_NAME).FirstOrDefault();
                             if (DuplicateSal == null)
                             {
                                 decimal empAdvance = dbContext.Employee_Advance.AsNoTracking().Where(ea => ea.EMP_CODE == Emp.EMP_CODE && ea.SAL_YYYYMM.Value.Month == emp_sal_month && ea.SAL_YYYYMM.Value.Year == emp_sal_year).Select(aa => aa.ADV_AMOUNT).Sum();

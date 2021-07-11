@@ -31,7 +31,8 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Emp_Adv_Master()
         {
-            Employee_Advance employee_Advance = new Employee_Advance();
+           
+           Employee_Advance employee_Advance = new Employee_Advance();
             employee_Advance.Type = "Add";
             employee_Advance.EMPDropDown = Emplists("P");
             employee_Advance.SalDropDown = SalType("P");
@@ -53,6 +54,7 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Emp_Adv_Details()
         {
+            ViewBag.Message = null;
             List<Employee_Advance> employee_Advance = new List<Employee_Advance>();
             employee_Advance = dbContext.Employee_Advance.ToList();
             foreach(var emp in employee_Advance.ToList())
@@ -107,8 +109,19 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult EditEmpAdv(int id)
         {
+            var emp_code = dbContext.Employee_Advance.Where(p => p.ID == id).FirstOrDefault();
+            var salpaid = dbContext.EMP_SAL.Where(p => p.EMP_CODE == emp_code.EMP_CODE && p.SAL_MONTH.Value.Month == emp_code.SAL_YYYYMM.Value.Month && p.SAL_MONTH.Value.Year == emp_code.SAL_YYYYMM.Value.Year && p.PAID_SAL > 0).FirstOrDefault();
+            
             Employee_Advance employee_Advance = new Employee_Advance();
             employee_Advance = dbContext.Employee_Advance.Find(id);
+            if (salpaid == null)
+            {
+                employee_Advance.paidType = "NonPaid";
+            }
+            else
+            {
+                employee_Advance.paidType = "Paid";
+            }
             employee_Advance.Type = "Edit";
             employee_Advance.EMPDropDown = Emplists(employee_Advance.EMP_TYPE);
             employee_Advance.SalDropDown = SalType(employee_Advance.EMP_TYPE);
@@ -178,9 +191,40 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteEmpAdv(int ID)
         {
-            var data = dbContext.Employee_Advance.Find(ID);
-            dbContext.Employee_Advance.Remove(data);
-            dbContext.SaveChanges();
+            var empadv = dbContext.Employee_Advance.Where(p => p.ID == ID).FirstOrDefault();
+            var duplsal = dbContext.EMP_SAL.Where(p => p.EMP_CODE == empadv.EMP_CODE).FirstOrDefault();
+            var duplpaidsal = dbContext.EMP_SAL.Where(p => p.EMP_CODE == empadv.EMP_CODE && p.PAID_SAL > 0 && p.SAL_MONTH.Value.Month == empadv.SAL_YYYYMM.Value.Month && p.SAL_MONTH.Value.Year == empadv.SAL_YYYYMM.Value.Year).FirstOrDefault();
+           var duplaTT = dbContext.Employee_Attandance.Where(p => p.EMP_CODE == empadv.EMP_CODE).FirstOrDefault();
+
+            if (duplsal == null && duplaTT == null && duplpaidsal == null )
+            {
+                var data = dbContext.Employee_Advance.Find(ID);
+                dbContext.Employee_Advance.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                var employee_Advance = dbContext.Employee_Advance.ToList();
+                foreach (var emp in employee_Advance.ToList())
+                {
+                    var empname = dbContext.Employee_Masters.Where(e => e.EMP_CODE == emp.EMP_CODE).Select(s => s.EMP_NAME).FirstOrDefault();
+                    emp.Emp_Name = empname;
+                    if (emp.SAL_YYYYMM_BRK == 0)
+                    {
+                        emp.Emp_Sal_Type = "Full Month";
+                    }
+                    if (emp.SAL_YYYYMM_BRK == 1)
+                    {
+                        emp.Emp_Sal_Type = "1 to 15";
+                    }
+                    if (emp.SAL_YYYYMM_BRK == 2)
+                    {
+                        emp.Emp_Sal_Type = "16 to 30";
+                    }
+                }
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Employee Advance or Employee Attndance");
+                return View("Emp_Adv_Details", employee_Advance);
+            }
             return RedirectToAction("Emp_Adv_Details");
         }
 

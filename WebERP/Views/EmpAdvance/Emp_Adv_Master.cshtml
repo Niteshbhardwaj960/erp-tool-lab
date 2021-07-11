@@ -110,7 +110,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Insert Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="INS_DATE" />
                                 </div>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Update Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
                                 </div>
                             </div>
                         </div>
@@ -149,10 +149,10 @@
                             <i class="fa fa-save"></i> Save
                         </button>
                     }
-                    @if (Model.Type == "Edit")
+                    @if (Model.Type == "Edit" && Model.paidType == "NonPaid")
                     {
                         <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" type="submit" asp-controller="Advance" asp-action="Edit_Advance">
-                            <i class="fa fa-save"></i> Save
+                            <i class="fa fa-save"></i> update
                         </button>
                     }
                 </div>

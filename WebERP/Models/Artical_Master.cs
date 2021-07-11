@@ -18,7 +18,7 @@ namespace WebERP.Models
         public string NAME { get; set; }
        
         public int BRAND_CODE { get; set; }
-        //public int BRAND_NAME { get; set; }
+        public decimal RATE { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
