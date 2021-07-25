@@ -206,6 +206,10 @@ namespace WebERP.Controllers
                 var itemName = dbContext.Item_Master.Where(e => e.ID == entry.Item_Name).Select(ee => ee.NAME).FirstOrDefault();
 
                 entry.ITEM_NAMEs = itemName;
+
+                entry.ART_NAMEs = dbContext.Artical_Master.Where(e => e.ID == entry.Art_Name).Select(ee => ee.NAME).FirstOrDefault();
+                entry.PROC_NAMEs = dbContext.Process_Master.Where(e => e.ID == entry.Proc_Name).Select(ee => ee.NAME).FirstOrDefault();
+                entry.SIZE_NAMEs = dbContext.Size_Master.Where(e => e.ID == entry.Size_Name).Select(ee => ee.NAME).FirstOrDefault();
             }
             return View(GED);
         }

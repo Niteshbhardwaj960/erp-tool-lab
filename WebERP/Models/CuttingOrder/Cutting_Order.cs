@@ -15,14 +15,20 @@ namespace WebERP.Models
         public DateTime? DOC_DATE { get; set; }
         public int DOC_FINYEAR { get; set; }
         public int DOC_NO { get; set; }
+        [Required(ErrorMessage ="Required Field")]
         public int EMP_CODE { get; set; }
+        [Required(ErrorMessage = "Required Field")]
         public int CONT_EMP_CODE { get; set; }
+        [Required(ErrorMessage = "Required Field")]
         public int ITEM_CODE { get; set; }
+        [Required(ErrorMessage = "Required Field")]
         public int ARTICAL_CODE { get; set; }
+        [Required(ErrorMessage = "Required Field")]
         public int SIZE_CODE { get; set; }
         public int PROC_CODE { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than 0")]
         public int ORDER_QTY { get; set; }
-        //[Range(0, 9999999999999999.999)]
+        [RegularExpression(@"\d+(\.\d{1,3})?", ErrorMessage = "Upto 3 decimal place is allowed")]
         public decimal AVG_PC_WEIGHT { get; set; }
         public decimal WASTAGE_PER { get; set; }
         public string ORDER_STATUS { get; set; }

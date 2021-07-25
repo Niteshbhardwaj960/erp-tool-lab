@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using WebERP.Models;
@@ -16,5 +17,7 @@ namespace WebERP.Models
 
         public string Worktype { get; set; }
 
+        [NotMapped]
+        public string gateEntryValCheck { get; set; }
     }
 }

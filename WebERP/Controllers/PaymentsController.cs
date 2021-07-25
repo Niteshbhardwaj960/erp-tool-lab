@@ -34,12 +34,40 @@ namespace WebERP.Controllers
         {
             Payments payments = new Payments();
             payments.Type = "Add";
+            payments.DOC_DATE = DateTime.Now;
+            payments.PAY_DOC_DATE = DateTime.Now;
+            payments.DOC_FN_YEAR = GetFinYear();
             payments.ACCDropDown = Acclists();
+            payments.CBACCDropDown = CBAcclists("4");
             return View(payments);
+        }
+        public string GetFinYear()
+        {
+            string FinYear = "";
+            DateTime date = DateTime.Now;
+            if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
+            {
+                FinYear = (date.Year - 1) + "" + date.Year;
+            }
+            else
+            {
+                FinYear = date.Year + "" + (date.Year + 1);
+            }
+            return FinYear;
         }
         [HttpPost]
         public IActionResult Payments_Master(Payments payments)
         {
+            if (payments.PAYMENT_MODE == 1)
+            {
+                ModelState.AddModelError("PAYMENT_MODE", "Please select some value");
+            }
+            if (payments.CB_ACC_CODE == null || payments.CB_ACC_CODE == 0)
+            {
+                ModelState.AddModelError("CB_ACC_CODE", "Please select some value");
+            }
+            if (ModelState.IsValid)
+            { 
             int Doc_Number = dbContext.Payments
                 .Where(x => x.DOC_FN_YEAR == payments.DOC_FN_YEAR)
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
@@ -51,6 +79,17 @@ namespace WebERP.Controllers
             dbContext.SaveChanges();
             
             return RedirectToAction("Payments_Details");
+            }
+            else
+            {
+                payments.Type = "Add";
+                payments.CBACCDropDown = CBAcclists(payments.PAYMENT_MODE.ToString());
+                payments.DOC_DATE = DateTime.Now;
+                payments.PAY_DOC_DATE = DateTime.Now;
+                payments.DOC_FN_YEAR = GetFinYear();
+                payments.ACCDropDown = Acclists();
+                return View(payments);
+            }
         }
         [HttpGet]
         public IActionResult Payments_Details()
@@ -164,6 +203,9 @@ namespace WebERP.Controllers
             }
             else
             {
+                payments.Type = "Edit";
+                payments.ACCDropDown = Acclists();
+                payments.CBACCDropDown = CBAcclists(payments.PAYMENT_MODE.ToString());
                 return View("Payments_Master", payments);
             }
         }

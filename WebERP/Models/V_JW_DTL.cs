@@ -38,6 +38,9 @@ namespace WebERP.Models
         public string PROC_NAME { get; set; }
         public string Remarks { get; set; }
         [NotMapped]
+        public string DOC_DATE_STRING { get; set; }
+        [NotMapped]        
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than 0")]
         public int CHL_NO { get; set; }
         [NotMapped]
         public DateTime? CHL_DATE { get; set; }
@@ -55,5 +58,9 @@ namespace WebERP.Models
         public int Fin_UOM { get; set; }
         [NotMapped]
         public bool? Chart { get; set; }
+        [NotMapped]
+        [RegularExpression(@"\d+(\.\d{1,3})?", ErrorMessage = "Upto 3 decimal place is allowed")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than 0")]
+        public decimal Bal_Qty_stk { get; set; }
     }
 }

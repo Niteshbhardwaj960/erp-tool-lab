@@ -31,8 +31,9 @@
                             <label for="branch_id">Document Date</label>
                             <div class="input-group">
                                 @if (Model.Type == "Add")
-                                {<input asp-for="DOC_DATES" type="date" class="form-control" readOnly="readonly" />
-                                    @Html.HiddenFor(a => a.DOC_DATES, new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" })
+                                {
+                                    <input asp-for="DOC_DATES" type="date" class="form-control" />
+                                    @Html.HiddenFor(a => a.DOC_DATES, new { @ID = "Doc_Date", @class = "form-control" })                                    
                                 }
                                 else
                                 {<input asp-for="MGF_RECEIPTs.DOC_DATE" type="date" class="form-control" readOnly="readonly" />
@@ -109,6 +110,7 @@
                             <div class="input-group">
                                 <select asp-for="MGF_RECEIPTs.PROC_CODE" id="PROC_CODE" name="PROC_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.PROCDropDown, "Value", "Text"))"></select>
                                 @Html.HiddenFor(a => a.MGF_RECEIPTs.CUTTING_ORDER_FK, new { @ID = "CUTPK", @class = "form-control" })
+                                @Html.HiddenFor(a => a.MGF_RECEIPTs.ORDER_QTY, new { @ID = "ORDER_QTY", @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -135,6 +137,8 @@
                             <label for="branch_id">Receipt Qty</label>
                             <div class="input-group">
                                 @Html.TextBoxFor(a => a.MGF_RECEIPTs.RECEIPT_QTY, new { @class = "form-control" })
+                                <label class="text-danger">@Model.error </label>
+                                <label class="text-danger">@Model.errorOrder </label>
                             </div>
                         </div>
                     </div>
@@ -144,7 +148,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Insert Date</label>
                                 <div class="input-group">
-                                    <input type="date" readonly="readonly" class="form-control" asp-for="MGF_RECEIPTs.INS_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="MGF_RECEIPTs.INS_DATE" />
                                 </div>
                             </div>
                         </div>
@@ -160,7 +164,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Update Date</label>
                                 <div class="input-group">
-                                    <input type="date" readonly="readonly" class="form-control" asp-for="MGF_RECEIPTs.UDT_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="MGF_RECEIPTs.UDT_DATE" />
                                 </div>
                             </div>
                         </div>
@@ -221,6 +225,7 @@
        //     $('#ProcName').val(Array[4]);
             $('#CUTPK').val(Array[5]);
             $('#CutDocNo').val(Array[6]);
+            $('#ORDER_QTY').val(Array[7]);
         })
     })
 </script>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,7 +18,8 @@ namespace WebERP.Models
         public List<SelectListItem> GDWDropDown { get; set; }
 
         public string Type { get; set; }
-
+        [NotMapped]
+        public string error { get; set; }
         public DateTime? DOc_Dates { get; set; }
         public int Fin_Years { get; set; }
         public string Proc_Names { get; set; }

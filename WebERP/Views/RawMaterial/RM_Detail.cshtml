@@ -21,28 +21,30 @@
                             <th>Doc Date</th>
                             <th>Doc No</th>
                             <th>Employee Name</th>
+                            <th>Item Name</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var Data in Model)
                         {
-                            <tr>
-                                <td>@Data.INS_DATE.Value.Day-@Data.INS_DATE.Value.Month-@Data.INS_DATE.Value.Year</td>
-                                <td>@Data.Doc_No</td>
-                                <td>@Data.EMP_NAME</td>
-                                <td>
-                                    <a asp-action="EditRM" asp-controller="RawMaterial" asp-route-id="@Data.ID">
-                                        <i class="fas fa-user-edit"></i>
-                                    </a>&nbsp;&nbsp;
-                                    <a asp-action="DeleteRM" asp-controller="RawMaterial" asp-route-id="@Data.ID">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>&nbsp;&nbsp;
-                                    <a asp-action="ActionRM" asp-controller="RawMaterial" asp-route-id="@Data.ID">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>@Data.INS_DATE.Value.Day-@Data.INS_DATE.Value.Month-@Data.INS_DATE.Value.Year</td>
+                            <td>@Data.Doc_No</td>
+                            <td>@Data.EMP_NAME</td>
+                            <td>@Data.ITEM_NAME</td>
+                            <td>
+                               <a asp-action="EditRM" asp-controller="RawMaterial" asp-route-id="@Data.ID">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="DeleteRM" asp-controller="RawMaterial" asp-route-id="@Data.ID">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="ActionRM" asp-controller="RawMaterial" asp-route-id="@Data.ID">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

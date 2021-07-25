@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -58,72 +59,89 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult RM_Master(RawMaterialDTL rawMaterialDTL)
         {
-            int Doc_Number = dbContext.RM_HDR
+            //var j = 0;
+            //foreach (var order in rawMaterialDTL.V_RM_DTLs)
+            //{                
+            //    if(order.Issue_Qty <= 0 && order.CHK == true)
+            //    {
+            //        ModelState.AddModelError("Issue_Qty", "value should be greater than 0");
+            //    }               
+            //    j = j + 1;
+            //}
+               
+            if (ModelState.IsValid)
+            {
+                int Doc_Number = dbContext.RM_HDR
                 .Where(x => x.Doc_FN_Year == rawMaterialDTL.Doc_Fins)
                 .Select(p => Convert.ToInt32(p.Doc_No)).DefaultIfEmpty(0).Max();
-            int RM_HDR_PK;
-            List<RM_DTL> RMDList = new List<RM_DTL>();
-            rawMaterialDTL.RM_HDRs.Doc_No = Doc_Number + 1;
-            rawMaterialDTL.RM_HDRs.Doc_Date = rawMaterialDTL.Doc_Dates;
-            rawMaterialDTL.RM_HDRs.Doc_FN_Year = rawMaterialDTL.Doc_Fins;
-            rawMaterialDTL.RM_HDRs.INS_DATE = DateTime.Now;
-            rawMaterialDTL.RM_HDRs.INS_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.RM_HDR.Add(rawMaterialDTL.RM_HDRs);
-            List<StockDTL_Model> StkDTL = new List<StockDTL_Model>();
-            dbContext.SaveChanges();
+                int RM_HDR_PK;
+                List<RM_DTL> RMDList = new List<RM_DTL>();
+                rawMaterialDTL.RM_HDRs.Doc_No = Doc_Number + 1;
+                rawMaterialDTL.RM_HDRs.Doc_Date = rawMaterialDTL.Doc_Dates;
+                rawMaterialDTL.RM_HDRs.Doc_FN_Year = rawMaterialDTL.Doc_Fins;
+                rawMaterialDTL.RM_HDRs.INS_DATE = DateTime.Now;
+                rawMaterialDTL.RM_HDRs.INS_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.RM_HDR.Add(rawMaterialDTL.RM_HDRs);
+                List<StockDTL_Model> StkDTL = new List<StockDTL_Model>();
+                dbContext.SaveChanges();
 
-            RM_HDR_PK = rawMaterialDTL.RM_HDRs.ID;
-            foreach (var order in rawMaterialDTL.V_RM_DTLs)
-            {
-                if (order.CHK == true)
+                RM_HDR_PK = rawMaterialDTL.RM_HDRs.ID;
+                foreach (var order in rawMaterialDTL.V_RM_DTLs)
                 {
-                    RMDList.Add(new RM_DTL()
+                    if (order.CHK == true)
                     {
-                        RM_HDR_FK = RM_HDR_PK,
-                        INS_DATE = DateTime.Now,
-                        INS_UID = userManager.GetUserName(HttpContext.User),
-                        GDW_Code = order.GDW_CODE,
-                        ITEM_Code = order.ITEM_CODE,
-                        ITEM_NAME = order.ITEM_NAME,
-                        ARTICAL_Code = order.ARTICAL_CODE,
-                        SIZE_Code = order.SIZE_CODE,
-                        ISSUE_QTY = order.Issue_Qty,
-                    });
-                    StkDTL.Add(new StockDTL_Model()
-                    {
-                        INS_DATE = DateTime.Now,
-                        INS_UID = userManager.GetUserName(HttpContext.User),
-                        COMP_CODE = 0,
-                        Tran_Table = "RM Entry",
-                        Tran_Table_PK = order.ID,
-                        GDW_CODE = Convert.ToInt32(order.GDW_CODE),
-                        Item_Code = Convert.ToInt32(order.ITEM_CODE),
-                        Artical_CODE = Convert.ToInt32(order.ARTICAL_CODE),
-                        Size_Code = Convert.ToInt32(order.SIZE_CODE),
-                        Stk_Qty_OUT = Convert.ToInt32(order.Issue_Qty),
-                    });
+                        RMDList.Add(new RM_DTL()
+                        {
+                            RM_HDR_FK = RM_HDR_PK,
+                            INS_DATE = DateTime.Now,
+                            INS_UID = userManager.GetUserName(HttpContext.User),
+                            GDW_Code = order.GDW_CODE,
+                            ITEM_Code = order.ITEM_CODE,
+                            ITEM_NAME = order.ITEM_NAME,
+                            ARTICAL_Code = order.ARTICAL_CODE,
+                            SIZE_Code = order.SIZE_CODE,
+                            ISSUE_QTY = order.Issue_Qty,
+                        });
+                        StkDTL.Add(new StockDTL_Model()
+                        {
+                            INS_DATE = DateTime.Now,
+                            INS_UID = userManager.GetUserName(HttpContext.User),
+                            COMP_CODE = 0,
+                            Tran_Table = "RM Entry",
+                            Tran_Table_PK = order.ID,
+                            GDW_CODE = Convert.ToInt32(order.GDW_CODE),
+                            Item_Code = Convert.ToInt32(order.ITEM_CODE),
+                            Artical_CODE = Convert.ToInt32(order.ARTICAL_CODE),
+                            Size_Code = Convert.ToInt32(order.SIZE_CODE),
+                            Stk_Qty_OUT = Convert.ToInt32(order.Issue_Qty),
+                        });
 
-                    //decimal BalQty;
-                    //var result = dbContext.StockDTL_Models.SingleOrDefault(b => b.ID == order.ID);
-                    //if (result != null)
-                    //{
-                    //    BalQty = order.Issue_Qty + result.Stk_Qty_OUT;
-                    //    result.Stk_Qty_OUT = Convert.ToInt32(BalQty);
-                    //}
+                        //decimal BalQty;
+                        //var result = dbContext.StockDTL_Models.SingleOrDefault(b => b.ID == order.ID);
+                        //if (result != null)
+                        //{
+                        //    BalQty = order.Issue_Qty + result.Stk_Qty_OUT;
+                        //    result.Stk_Qty_OUT = Convert.ToInt32(BalQty);
+                        //}
 
+                    }
                 }
+                foreach (var item in RMDList)
+                {
+                    dbContext.RM_DTL.Add(item);
+                    dbContext.SaveChanges();
+                }
+                foreach (var item in StkDTL)
+                {
+                    dbContext.StockDTL_Models.Add(item);
+                    dbContext.SaveChanges();
+                }
+                return RedirectToAction("RM_Detail");
             }
-            foreach (var item in RMDList)
-            {
-                dbContext.RM_DTL.Add(item);
-                dbContext.SaveChanges();
+            else {
+                rawMaterialDTL.CUTDropDown = CUTlists();
+                return View("RM_Master", rawMaterialDTL);
             }
-            foreach (var item in StkDTL)
-            {
-                dbContext.StockDTL_Models.Add(item);
-                dbContext.SaveChanges();
-            }
-            return RedirectToAction("RM_Detail");
         }
         [HttpGet]
         public IActionResult RM_Detail()

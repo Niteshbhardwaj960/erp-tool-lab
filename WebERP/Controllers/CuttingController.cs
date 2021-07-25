@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WebERP.Data;
 using WebERP.Helpers;
 using WebERP.Models;
@@ -32,7 +33,7 @@ namespace WebERP.Controllers
         public IActionResult CuttingDetail()
         {
             List<V_CuttingDetail> cut = new List<V_CuttingDetail>();
-            cut = dbContext.V_CuttingDetail.OrderByDescending(a => a.DOC_DATE).ToList();
+            cut = dbContext.V_CuttingDetail.OrderByDescending(a => a.DOC_DATE).AsNoTracking().ToList();
             return View(cut);
         }
         public int GetFinYear()
@@ -86,6 +87,7 @@ namespace WebERP.Controllers
             }
             else
             {
+                CuttingOrder.Type = "Add";
                 CuttingOrder.EmpDropDown = Emplists();
                 CuttingOrder.ArticalDropDown = Articallists();
                 CuttingOrder.ContEmpDropDown = ContEmplists();
@@ -138,12 +140,20 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View(obj);
+                obj.EmpDropDown = Emplists();
+                obj.ArticalDropDown = Articallists();
+                obj.ContEmpDropDown = ContEmplists();
+                obj.ItemDropDown = Itemlists();
+                obj.ProcDropDown = Proclists();
+                obj.SizeDropDown = Sizelists();
+                obj.Type = "Edit";
+                return View("AddCutting",obj);
             }
         }
         [HttpGet]
         public IActionResult DeleteCutting(int ID)
         {
+
             var data = dbContext.Cutting_Orders.Find(ID);
             dbContext.Cutting_Orders.Remove(data);
             dbContext.SaveChanges();

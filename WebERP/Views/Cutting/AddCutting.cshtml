@@ -74,6 +74,7 @@
                             <label class="form-label">Employee Name</label>
                             <div class="input-group">
                                 <select asp-for="EMP_CODE" id="EMP_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.EmpDropDown,"Value", "Text"))"></select>
+                                <span asp-validation-for="EMP_CODE" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -82,6 +83,7 @@
                             <label class="form-label">Contract Employee Name</label>
                             <div class="input-group">
                                 <select asp-for="CONT_EMP_CODE" id="CONTEMP_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.ContEmpDropDown,"Value", "Text"))"></select>
+                                <span asp-validation-for="CONT_EMP_CODE" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -90,7 +92,7 @@
                             <label for="branch_id">Item Name</label>
                             <div class="input-group">
                                 <select asp-for="ITEM_CODE" id="ITEM_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.ItemDropDown,"Value", "Text"))"></select>
-
+                                <span asp-validation-for="ITEM_CODE" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -99,7 +101,7 @@
                             <label for="branch_id">Artical Name</label>
                             <div class="input-group">
                                 <select asp-for="ARTICAL_CODE" id="ARTICAL_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.ArticalDropDown,"Value", "Text"))"></select>
-
+                                <span asp-validation-for="ARTICAL_CODE" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -108,7 +110,7 @@
                             <label for="branch_id">Size Name</label>
                             <div class="input-group">
                                 <select asp-for="SIZE_CODE" id="SIZE_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.SizeDropDown,"Value", "Text"))"></select>
-
+                                <span asp-validation-for="SIZE_CODE" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -128,6 +130,7 @@
                             <label for="branch_id">Order Qty</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" asp-for="ORDER_QTY">
+                                <span asp-validation-for="ORDER_QTY" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -136,6 +139,7 @@
                             <label for="branch_id">Average Pic Weight</label>
                             <div class="input-group">
                                 <input type="text" class="form-control numb" asp-for="AVG_PC_WEIGHT">
+                                <span asp-validation-for="AVG_PC_WEIGHT" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -165,7 +169,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Insert Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="INS_DATE" />
                                 </div>
                             </div>
                         </div>
@@ -181,7 +185,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Update Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
                                 </div>
                             </div>
                         </div>

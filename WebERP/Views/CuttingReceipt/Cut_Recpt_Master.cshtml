@@ -24,16 +24,17 @@
 
             <form id="menu-form" method="post" >
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Basic Details</b></h4>
+               
                 <div class="row">
-
+                   
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
                             <div class="input-group">
                                 @if (Model.Type == "Add")
                                 {
-                                    <input asp-for="DOc_Dates" type="date" class="form-control" readOnly="readonly" />
-                                    @Html.HiddenFor(a => a.DOc_Dates, new { @ID = "DOc_Dates", @class = "form-control dat fc-datepicker", @type = "date" })
+                                    <input asp-for="DOc_Dates" type="date" class="form-control" />
+                                    @Html.HiddenFor(a => a.DOc_Dates, new { @ID = "DOc_Dates", @class = "form-control" })
                                 }
                                 else
                                 {<input asp-for="cutting_Receipt.DOC_DATE" type="date" class="form-control" readOnly="readonly" />
@@ -108,7 +109,7 @@
                 <label for="branch_id">Process Name</label>
                 <div class="input-group">
                     @Html.TextBoxFor(a => a.Proc_Names, new { @ID = "ProcName", @class = "form-control", @readOnly = "readonly" ,@value="Cutting"})
-                    
+
                 </div>
             </div>
         </div>*@
@@ -116,7 +117,8 @@
                         <div class="form-group">
                             <label for="branch_id">Receipt Qty</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.cutting_Receipt.RECEIPT_QTY, new { @class = "form-control", @type="number"})
+                                @Html.TextBoxFor(a => a.cutting_Receipt.RECEIPT_QTY, new { @class = "form-control", @type = "number" })
+                                <label class="text-danger">@Model.error </label>
                             </div>
                         </div>
                     </div>
@@ -134,7 +136,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Insert Date</label>
                                 <div class="input-group">
-                                    <input type="date" readonly="readonly" class="form-control" asp-for="cutting_Receipt.INS_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="cutting_Receipt.INS_DATE" />
                                 </div>
                             </div>
                         </div>
@@ -150,7 +152,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Update Date</label>
                                 <div class="input-group">
-                                    <input type="date" readonly="readonly" class="form-control" asp-for="cutting_Receipt.UDT_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="cutting_Receipt.UDT_DATE" />
                                 </div>
                             </div>
                         </div>
