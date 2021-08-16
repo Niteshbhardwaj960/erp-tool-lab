@@ -163,6 +163,24 @@ namespace WebERP.Controllers
                 mFGReceiptViewModel.MGF_RECEIPTs.PROC_CODE = PROC_CODE;
                 dbContext.MGF_RECEIPT.Add(mFGReceiptViewModel.MGF_RECEIPTs);
                 dbContext.SaveChanges();
+
+                if(dbContext.Process_Master.Where(p => p.ID == PROC_CODE).Select(m => m.NAME).FirstOrDefault() == "Packing")
+                {
+                    StockDTL_Model StkDTL = new StockDTL_Model();
+                    var gdwcode = dbContext.Godown_Master.Where(g => g.NAME == "Ready Stock").Select(m => m.ID).FirstOrDefault();
+                    StkDTL.INS_DATE = DateTime.Now;
+                    StkDTL.INS_UID = userManager.GetUserName(HttpContext.User);
+                    StkDTL.COMP_CODE = 0;
+                    StkDTL.Tran_Table = "Process Receipt Entry";
+                    StkDTL.Tran_Table_PK = mFGReceiptViewModel.MGF_RECEIPTs.ID;
+                    StkDTL.GDW_CODE = gdwcode;
+                    StkDTL.Item_Code = dbContext.Item_Master.Where(i => i.NAME == mFGReceiptViewModel.MGF_RECEIPTs.ITEM_NAME).Select(n => n.ID).FirstOrDefault();
+                    StkDTL.Artical_CODE = dbContext.Artical_Master.Where(ar => ar.NAME == mFGReceiptViewModel.MGF_RECEIPTs.ART_NAME).Select(na => na.ID).FirstOrDefault();
+                    StkDTL.Size_Code = dbContext.Size_Master.Where(s => s.NAME == mFGReceiptViewModel.MGF_RECEIPTs.SIZE_NAME).Select(sn => sn.ID).FirstOrDefault();
+                    StkDTL.Stk_Qty_IN = mFGReceiptViewModel.MGF_RECEIPTs.RECEIPT_QTY;
+                    dbContext.StockDTL_Models.Add(StkDTL);
+                    dbContext.SaveChanges();
+                }
                 return RedirectToAction("MFGReceiptDetail");
             }
             else

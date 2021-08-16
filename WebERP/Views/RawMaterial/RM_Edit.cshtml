@@ -11,13 +11,13 @@
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Cutting Order Details</b></h4>
                 <div class="row">
                     @*<div class="col-lg-4 col-md-4 col-sm-12">
-            <div class="form-group">
-                <label for="branch_id">Document Number</label>
-                <div class="input-group">
-                    @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
+                <div class="form-group">
+                    <label for="branch_id">Document Number</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
@@ -36,13 +36,13 @@
                         </div>
                     </div>
                     @*<div class="col-lg-4 col-md-4 col-sm-12">
-            <div class="form-group">
-                <label for="branch_id">Cutting Order Detail</label>
-                <div class="custom-radio">
-                    <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList( Model.CUTDropDown ,"Value", "Text"))"></select>
+                <div class="form-group">
+                    <label for="branch_id">Cutting Order Detail</label>
+                    <div class="custom-radio">
+                        <select id="ddlCUT" name="ddlCUT" class="form-control" asp-items="@(new SelectList( Model.CUTDropDown ,"Value", "Text"))"></select>
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Order Number</label>
@@ -102,7 +102,7 @@
                     </div>
                 </div>
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Stock Details</b></h4>
-
+                <label class="text-danger">@Model.error </label>
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -138,7 +138,7 @@
                                                 <td>
                                                     @Html.HiddenFor(a => a.RM_DTL_LST[j].SIZE_Code, new { @class = "form-control" })
                                                     @Html.TextBoxFor(a => a.RM_DTL_LST[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                                </td>                                                
+                                                </td>
                                                 <td>@Html.TextBoxFor(a => a.RM_DTL_LST[j].ISSUE_QTY, new { @class = "form-control", @type = "decimal" })</td>
                                             </tr>
                                             j++;

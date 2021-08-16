@@ -31,29 +31,38 @@
                     <tbody>
                         @foreach (var Data in Model)
                         {
-                        <tr>
-                            <td>@Data.DOC_DATE.Value.Day-@Data.DOC_DATE.Value.Month-@Data.DOC_DATE.Value.Year</td>
-                            <td>@Data.DOC_NO</td>
-                            <td>@Data.EMP_NAME</td>
-                            <td>@Data.ART_NAME</td>
-                            <td>@Data.ITEM_NAME</td>
-                            <td>@Data.SIZE_NAME</td>
-                            <td>@Data.RECEIPT_QTY</td>
-                            <td>
-                                <a asp-action="EditCR" asp-controller="CuttingReceipt" asp-route-id="@Data.ID">
-                                    <i class="fas fa-user-edit"></i>
-                                </a>&nbsp;&nbsp;
-                                <a asp-action="DeleteCR" asp-controller="CuttingReceipt" asp-route-id="@Data.ID">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>&nbsp;&nbsp;
-                                <a asp-action="ActionCR" asp-controller="CuttingReceipt" asp-route-id="@Data.ID">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>@Data.DOC_DATE.Value.Day-@Data.DOC_DATE.Value.Month-@Data.DOC_DATE.Value.Year</td>
+                                <td>@Data.DOC_NO</td>
+                                <td>@Data.EMP_NAME</td>
+                                <td>@Data.ART_NAME</td>
+                                <td>@Data.ITEM_NAME</td>
+                                <td>@Data.SIZE_NAME</td>
+                                <td>@Data.RECEIPT_QTY</td>
+                                <td>
+                                    <a asp-action="EditCR" asp-controller="CuttingReceipt" asp-route-id="@Data.ID">
+                                        <i class="fas fa-user-edit"></i>
+                                    </a>&nbsp;&nbsp;
+                                    <a asp-action="DeleteCR" asp-controller="CuttingReceipt" asp-route-id="@Data.ID">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>&nbsp;&nbsp;
+                                    <a asp-action="ActionCR" asp-controller="CuttingReceipt" asp-route-id="@Data.ID">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        @if (ViewBag.Message != null)
+                        {
+                            <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+                            </script>
                         }
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>

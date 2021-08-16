@@ -28,5 +28,8 @@ namespace WebERP.Models
         public List<SelectListItem> CUTDropDown { get; set; }
         [NotMapped]
         public List<SelectListItem> GDWDropDown { get; set; }
+        [NotMapped]
+        public string rowcheck { get; set; }
+        
     }
 }

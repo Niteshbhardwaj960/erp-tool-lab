@@ -20,13 +20,13 @@
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Cutting Order Details</b></h4>
                 <div class="row">
                     @*<div class="col-lg-4 col-md-4 col-sm-12">
-                        <div class="form-group">`
-                            <label for="branch_id">Document Number</label>
-                            <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
-                            </div>
-                        </div>
-                    </div>*@
+                <div class="form-group">`
+                    <label for="branch_id">Document Number</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
+                    </div>
+                </div>
+            </div>*@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Raw Material Issue Details</b></h4>
-
+                <label class="form-label text-danger">@Model.rowcheck</label>
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -121,9 +121,9 @@
                                             <tr style="border:1px solid black">
 
                                                 @*<td>
-                                                    @Html.HiddenFor(a => a.v_RM_ISSUEs[j].GDW_CODE, new { @class = "form-control" })
-                                                    @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].GDW_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                                </td>*@
+                                            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].GDW_CODE, new { @class = "form-control" })
+                                            @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].GDW_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>*@
                                                 <td>@Html.CheckBoxFor(a => a.RMR_DTL_LIST[j].CHK, new { @class = "form-control" })</td>
                                                 <td>
                                                     @Html.HiddenFor(a => a.RMR_DTL_LIST[j].ID, new { @class = "form-control" })
@@ -160,7 +160,7 @@
                             <i class="fa fa-save"></i> Save
                         </button>
                     }
-                    </div>
+                </div>
             </form>
 
         </div>

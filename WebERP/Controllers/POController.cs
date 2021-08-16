@@ -45,49 +45,62 @@ namespace WebERP.Controllers
         [HttpPost]
         public ActionResult PODetails(POViewModel poViewModel)
         {
-            int poNewId;
-            var maxOrderNum = dbContext.POHeader_Master
-                .Where(x => x.ORDER_FINYEAR == poViewModel.POHeader.ORDER_FINYEAR)
-                .Select(p => p.ORDER_NO).DefaultIfEmpty(0).Max();
+        //    if (ModelState.IsValid)
+        //    {
+               int poNewId;
+                var maxOrderNum = dbContext.POHeader_Master
+                    .Where(x => x.ORDER_FINYEAR == poViewModel.POHeader.ORDER_FINYEAR)
+                    .Select(p => p.ORDER_NO).DefaultIfEmpty(0).Max();
 
-            poViewModel.POHeader.INS_DATE = DateTime.Now;
-            poViewModel.POHeader.INS_UID = userManager.GetUserName(HttpContext.User);
-            poViewModel.POHeader.ORDER_NO = maxOrderNum + 1;
-            dbContext.POHeader_Master.Add(poViewModel.POHeader);
-            dbContext.SaveChanges();
+                poViewModel.POHeader.INS_DATE = DateTime.Now;
+                poViewModel.POHeader.INS_UID = userManager.GetUserName(HttpContext.User);
+                poViewModel.POHeader.ORDER_NO = maxOrderNum + 1;
+                dbContext.POHeader_Master.Add(poViewModel.POHeader);
+                dbContext.SaveChanges();
 
-            poNewId = poViewModel.POHeader.POH_PK;
-            if (poNewId != 0)
-            {
-                foreach (var pODetailStaticUpd in poViewModel.PODetails)
+                poNewId = poViewModel.POHeader.POH_PK;
+                if (poNewId != 0)
                 {
-                    pODetailStaticUpd.POH_FK = poNewId;
-                    pODetailStaticUpd.INS_DATE = DateTime.Now;
-                    pODetailStaticUpd.INS_UID = userManager.GetUserName(HttpContext.User);
-                    pODetailStaticUpd.APPROVED_DATE = DateTime.Now;
-                    pODetailStaticUpd.APPROVED_UID = "N/A";
-                }
+                    foreach (var pODetailStaticUpd in poViewModel.PODetails)
+                    {
+                        pODetailStaticUpd.POH_FK = poNewId;
+                        pODetailStaticUpd.INS_DATE = DateTime.Now;
+                        pODetailStaticUpd.INS_UID = userManager.GetUserName(HttpContext.User);
+                        pODetailStaticUpd.APPROVED_DATE = DateTime.Now;
+                        pODetailStaticUpd.APPROVED_UID = "N/A";
+                    }
 
-                foreach (var pOTermsStaticUpd in poViewModel.POTerms)
-                {
-                    pOTermsStaticUpd.POH_FK = poNewId;
-                    pOTermsStaticUpd.INS_DATE = DateTime.Now;
-                    pOTermsStaticUpd.INS_UID = userManager.GetUserName(HttpContext.User);
-                }
+                    foreach (var pOTermsStaticUpd in poViewModel.POTerms)
+                    {
+                        pOTermsStaticUpd.POH_FK = poNewId;
+                        pOTermsStaticUpd.INS_DATE = DateTime.Now;
+                        pOTermsStaticUpd.INS_UID = userManager.GetUserName(HttpContext.User);
+                    }
 
-                foreach (var pODetailModel in poViewModel.PODetails)
-                {
-                    dbContext.PODetail_Master.Add(pODetailModel);
-                    dbContext.SaveChanges();
-                }
+                    foreach (var pODetailModel in poViewModel.PODetails)
+                    {
+                        dbContext.PODetail_Master.Add(pODetailModel);
+                        dbContext.SaveChanges();
+                    }
 
-                foreach (var pOTermsModel in poViewModel.POTerms)
-                {
-                    dbContext.POTerm_Master.Add(pOTermsModel);
-                    dbContext.SaveChanges();
+                    foreach (var pOTermsModel in poViewModel.POTerms)
+                    {
+                        dbContext.POTerm_Master.Add(pOTermsModel);
+                        dbContext.SaveChanges();
+                    }
                 }
-            }
-            return RedirectToAction("POGridDetails");
+                return RedirectToAction("POGridDetails");
+            //}
+            //else
+            //{                
+            //    List<PODetailModel> poDetailList = new List<PODetailModel>();
+            //    poViewModel.POHeader = GetPOHeader();
+            //    poViewModel.POTerms = GetPOTerm();
+            //   // poDetailList.Add(GetPODetails());               
+            //  //  poViewModel.PODetails = poDetailList;
+
+            //    return View(poViewModel);
+            //}
         }
 
         public List<POTermsModel> GetPOTerm()
@@ -206,7 +219,7 @@ namespace WebERP.Controllers
                                         Where(x => x.ID == item.ACC_CODE).
                                         Select(y => y.NAME).FirstOrDefault();
             }
-            return View(POGridList);
+            return View(POGridList.OrderByDescending(a => a.ORDER_NO));
         }
 
         [HttpGet]

@@ -12,8 +12,7 @@ namespace WebERP.Models
     {
         [Key]
         public int POH_PK { get; set; }
-
-        [Required(ErrorMessage = "Please select Company Name")]
+        
         public int COMP_CODE { get; set; }
         
         public DateTime ORDER_DATE { get; set; }
