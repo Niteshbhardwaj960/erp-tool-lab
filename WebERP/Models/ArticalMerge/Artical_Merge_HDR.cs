@@ -20,7 +20,7 @@ namespace WebERP.Models
         public int ITEM_CODE{ get; set; }
         public int ARTICAL_CODE { get; set; }
         public int SIZE_CODE { get; set; }
-        [Range(typeof(decimal), "1", "79228162514264337593543950335", ErrorMessage ="Value should be greater then 0")]
+        [Range(typeof(decimal), "1", "1234534545435.000", ErrorMessage ="Value should be greater then 0")]
         public decimal STK_QTY_IN { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }

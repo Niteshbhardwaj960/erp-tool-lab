@@ -197,9 +197,19 @@ namespace WebERP.Controllers
         public IActionResult DeleteCR(int ID)
         {
             var CRdata = dbContext.Cutting_Receipt.Where(D => D.ID == ID).FirstOrDefault();
-            dbContext.Cutting_Receipt.Remove(CRdata);
-            dbContext.SaveChanges();
-            return RedirectToAction("CuttingReceiptDetail");
+            var ProcessRecipt = dbContext.MGF_RECEIPT.Where(p => p.CUTTING_ORDER_FK == CRdata.CUTTING_ORDER_FK).FirstOrDefault();
+            var StkDetail = dbContext.StockDTL_Models.Where(s => s.Tran_Table == "Cutting Receipt Entry" && s.Tran_Table_PK == CRdata.ID).FirstOrDefault();
+            if (ProcessRecipt == null || StkDetail == null) 
+            {
+                dbContext.Cutting_Receipt.Remove(CRdata);
+                dbContext.SaveChanges();
+                return RedirectToAction("CuttingReceiptDetail");
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Process Receipt or Stock");
+                return View("CuttingReceiptDetail", dbContext.Cutting_Receipt.ToList());
+            }
         }
     }
 }

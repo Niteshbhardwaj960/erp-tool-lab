@@ -152,12 +152,21 @@ namespace WebERP.Controllers
         }
         [HttpGet]
         public IActionResult DeleteCutting(int ID)
-        {
-
+        {  
+            var materialissue = dbContext.RM_HDR.Where(r => r.Cutting_Order_FK == ID).FirstOrDefault();
+            var cuttingreciept = dbContext.Cutting_Receipt.Where(c => c.CUTTING_ORDER_FK == ID).FirstOrDefault();
+            if(materialissue == null && cuttingreciept == null)
+            { 
             var data = dbContext.Cutting_Orders.Find(ID);
             dbContext.Cutting_Orders.Remove(data);
             dbContext.SaveChanges();
             return RedirectToAction("CuttingDetail");
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record present either in Raw Material Issue or Cutting Receipt.");
+                return View("CuttingDetail", dbContext.V_CuttingDetail.ToList());
+            }
         }
         //[HttpGet]
         //public IActionResult Excel()

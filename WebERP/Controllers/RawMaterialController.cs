@@ -49,8 +49,16 @@ namespace WebERP.Controllers
         public IActionResult RM_Master()
         {
             RawMaterialDTL rawMaterialDTL = new RawMaterialDTL();
-
-            rawMaterialDTL.V_RM_DTLs = dbContext.V_RM_DTL.AsNoTracking().ToList();
+            List<V_RM_DTL> v_rm_dtl = new List<V_RM_DTL>();           
+            foreach(var rm in dbContext.V_RM_DTL.AsNoTracking().ToList())
+            {
+                var gdw = dbContext.Godown_Master.Where(g => g.ID == rm.GDW_CODE && g.SALE_TAG == "1").FirstOrDefault();
+                if(gdw != null)
+                {
+                    v_rm_dtl.Add(rm);
+                }
+            }
+            rawMaterialDTL.V_RM_DTLs = v_rm_dtl;
             rawMaterialDTL.CUTDropDown = CUTlists();
             rawMaterialDTL.Doc_Dates = DateTime.Now;
             rawMaterialDTL.Doc_Fins = GetFinYear();
@@ -58,18 +66,16 @@ namespace WebERP.Controllers
         }
         [HttpPost]
         public IActionResult RM_Master(RawMaterialDTL rawMaterialDTL)
-        {
-            //var j = 0;
-            //foreach (var order in rawMaterialDTL.V_RM_DTLs)
-            //{                
-            //    if(order.Issue_Qty <= 0 && order.CHK == true)
-            //    {
-            //        ModelState.AddModelError("Issue_Qty", "value should be greater than 0");
-            //    }               
-            //    j = j + 1;
-            //}
-               
-            if (ModelState.IsValid)
+        {           
+            foreach (var order in rawMaterialDTL.V_RM_DTLs)
+            {
+                if (order.Issue_Qty <= 0 && order.CHK == true)
+                {
+                   rawMaterialDTL.error = "Issue Qty should be greater than 0";
+                }
+            }
+
+            if (rawMaterialDTL.error == null)
             {
                 int Doc_Number = dbContext.RM_HDR
                 .Where(x => x.Doc_FN_Year == rawMaterialDTL.Doc_Fins)
@@ -147,7 +153,7 @@ namespace WebERP.Controllers
         public IActionResult RM_Detail()
         {
             List<RM_HDR> RM_HDRs = new List<RM_HDR>();
-            RM_HDRs = dbContext.RM_HDR.AsNoTracking().ToList();
+            RM_HDRs = dbContext.RM_HDR.AsNoTracking().OrderByDescending(r =>Convert.ToString(r.Doc_No)).ToList();
             return View(RM_HDRs);
         }
         public List<SelectListItem> CUTlists()
@@ -197,8 +203,16 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult SAVERM(RawMaterialDTL RawMaterialDTLs)
         {
-            if (ModelState.IsValid)
+            foreach (var order in RawMaterialDTLs.RM_DTL_LST)
             {
+                if (order.ISSUE_QTY <= 0 && order.CHK == true)
+                {
+                    RawMaterialDTLs.error = "Issue Qty should be greater than 0";
+                }
+            }
+
+            if (RawMaterialDTLs.error == null)
+            {             
                 RawMaterialDTLs.RM_HDRs.UDT_DATE = DateTime.Now;
                 RawMaterialDTLs.RM_HDRs.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.RM_HDR.Update(RawMaterialDTLs.RM_HDRs);
@@ -227,7 +241,7 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View(RawMaterialDTLs);
+                return View("RM_Edit", RawMaterialDTLs);
             }
         }
         [HttpGet]
@@ -261,15 +275,25 @@ namespace WebERP.Controllers
         public IActionResult DeleteRM(int ID)
         {
             var HDRdata = dbContext.RM_HDR.Where(D => D.ID == ID).FirstOrDefault();
-            dbContext.RM_HDR.Remove(HDRdata);
-            dbContext.SaveChanges();
-            var data = dbContext.RM_DTL.Where(D => D.RM_HDR_FK == ID).ToList();
-            foreach (var Datas in data)
-            {
-                dbContext.RM_DTL.Remove(Datas);
+            var cuttingreciept = dbContext.Cutting_Receipt.Where(c => c.CUTTING_ORDER_FK == HDRdata.Cutting_Order_FK).FirstOrDefault();
+            if (cuttingreciept == null)
+            {                
+                dbContext.RM_HDR.Remove(HDRdata);
+                dbContext.SaveChanges();
+                var data = dbContext.RM_DTL.Where(D => D.RM_HDR_FK == ID).ToList();
+                foreach (var Datas in data)
+                {
+                    dbContext.RM_DTL.Remove(Datas);
+                }
+                dbContext.SaveChanges();
+                return RedirectToAction("RM_Detail");
             }
-            dbContext.SaveChanges();
-            return RedirectToAction("RM_Detail");
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Cutting Receipt.");
+                return View("RM_Detail", dbContext.RM_HDR.ToList());
+            }
+            
         }
     }
 }

@@ -26,9 +26,9 @@
                         <div class="form-group">
                             <label class="form-label">Godown Name</label>
                             <div class="input-group">
-                                <select id="ddlGDW" name="ddlGDW" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.GDWDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlGDW" asp-for="artical_Merge_HDR.GDW_CODE" name="ddlGDW" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.GDWDropDown ,"Value", "Text"))"></select>
                             </div>
-                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                            <span asp-validation-for="artical_Merge_HDR.GDW_CODE" class="text-danger"></span>
                         </div>
 
                     </div>
@@ -36,40 +36,41 @@
                         <div class="form-group">
                             <label class="form-label">Item Name</label>
                             <div class="input-group">
-                                <select id="ddlITEM" name="ddlITEM" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ITEMDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlITEM" asp-for="artical_Merge_HDR.ITEM_CODE" name="ddlITEM" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ITEMDropDown ,"Value", "Text"))"></select>
                             </div>
-                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                            <span asp-validation-for="artical_Merge_HDR.ITEM_CODE" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label class="form-label">Artical Name</label>
                             <div class="input-group">
-                                <select id="ddlART" name="ddlART" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ARTDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlART" asp-for="artical_Merge_HDR.ARTICAL_CODE" name="ddlART" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ARTDropDown ,"Value", "Text"))"></select>
                             </div>
-                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                            <span asp-validation-for="artical_Merge_HDR.ARTICAL_CODE" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label class="form-label">Size Name</label>
                             <div class="input-group">
-                                <select id="ddlSize" name="ddlSize" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.SIZEDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlSize" asp-for="artical_Merge_HDR.SIZE_CODE" name="ddlSize" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.SIZEDropDown ,"Value", "Text"))"></select>
                             </div>
-                            @*<span asp-validation-for="NAME" class="text-danger"></span>*@
+                            <span asp-validation-for="artical_Merge_HDR.SIZE_CODE" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label class="form-label">Qty</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.artical_Merge_HDR.STK_QTY_IN, new { @id = "STK_QTY_IN" , @name = "STK_QTY_IN", @class = "form-control", @type = "decimal" })
+                                @Html.TextBoxFor(a => a.artical_Merge_HDR.STK_QTY_IN, new { @id = "STK_QTY_IN", @name = "STK_QTY_IN", @class = "form-control", @type = "decimal" })
                             </div>
                             <span asp-validation-for="artical_Merge_HDR.STK_QTY_IN" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Stock Details</b></h4>
+                <span asp-validation-for="rowcheck" class="text-danger"></span>
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -97,23 +98,28 @@
                                                 </td>
                                                 <td>
                                                     @Html.HiddenFor(a => a.v_STK_DTL[j].GDW_CODE, new { @class = "form-control", @readOnly = "readonly" })
-                                                    @Html.TextBoxFor(a => a.v_STK_DTL[j].GDW_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @Html.HiddenFor(a => a.v_STK_DTL[j].GDW_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @i.GDW_NAME
                                                 </td>
                                                 <td>
                                                     @Html.HiddenFor(a => a.v_STK_DTL[j].ITEM_CODE, new { @class = "form-control", @readOnly = "readonly" })
-                                                    @Html.TextBoxFor(a => a.v_STK_DTL[j].ITEM_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
+                                                    @Html.HiddenFor(a => a.v_STK_DTL[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @i.ITEM_NAME
                                                 </td>
                                                 <td>
                                                     @Html.HiddenFor(a => a.v_STK_DTL[j].ARTICAL_CODE, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @Html.HiddenFor(a => a.v_STK_DTL[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                                     @*<input type="date" class="form-control" asp-for="v_GateEntryDetails[j].CHL_DATE" name="CHL_DATE[j]" id="CHL_DATE">*@
-                                                    @Html.TextBoxFor(a => a.v_STK_DTL[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @i.ARTICAL_NAME
                                                 </td>
                                                 <td>
                                                     @Html.HiddenFor(a => a.v_STK_DTL[j].SIZE_CODE, new { @class = "form-control" })
-                                                    @Html.TextBoxFor(a => a.v_STK_DTL[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @Html.HiddenFor(a => a.v_STK_DTL[j].SIZE_NAME, new { @class = "form-control" })
+                                                    @i.SIZE_NAME
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(a => a.v_STK_DTL[j].STK_QTY, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @Html.HiddenFor(a => a.v_STK_DTL[j].STK_QTY, new { @class = "form-control", @readOnly = "readonly" })
+                                                    @i.STK_QTY
                                                 </td>
                                             </tr>
                                             j++;
@@ -127,7 +133,7 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     &nbsp;&nbsp;<a class="btn btn-app mr-2 mt-1 mb-1 btn-secondary pull-right" asp-action="Artical_Merge_Detail">Close</a>
-                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right" >
+                    <button class="btn btn-app btn-danger mr-2 mt-1 mb-1 us-button pull-right">
                         Add
                     </button>
 

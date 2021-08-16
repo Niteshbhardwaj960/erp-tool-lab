@@ -26,6 +26,8 @@ namespace WebERP.Models
         public decimal AssStockQty { get; set; }
         [NotMapped]
         public string Type { get; set; }
+        [NotMapped]
+        public string rowcheck { get; set; }
 
     }
 }

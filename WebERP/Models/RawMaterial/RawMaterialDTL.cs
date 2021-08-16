@@ -23,5 +23,7 @@ namespace WebERP.Models
         public DateTime? Doc_Dates { get; set; }
 
         public string Doc_Fins { get; set; }
+
+        public string error { get; set; }
     }
 }

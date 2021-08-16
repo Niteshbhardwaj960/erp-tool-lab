@@ -66,8 +66,8 @@ namespace WebERP.Controllers
             return View(GEDs);
         }
         [HttpPost]
-        public IActionResult GateEntry_Master(List<string> ckec,string ddlwork, string FinYear, DateTime doc_Date, string ddlACC, string Remarks)
-        {            
+        public IActionResult GateEntry_Master(List<string> ckec, string ddlwork, string FinYear, DateTime doc_Date, string ddlACC, string Remarks)
+        {
             List<V_GateEntryDetail> li = new List<V_GateEntryDetail>();
             List<V_GateEntryDetail> lli = new List<V_GateEntryDetail>();
             List<V_JW_DTL> JWli = new List<V_JW_DTL>();
@@ -79,7 +79,7 @@ namespace WebERP.Controllers
             GateEntryViewModel GateEtryViewModel = new GateEntryViewModel();
 
             if (ddlwork == "1")
-            {                
+            {
                 GateEtryViewModel.v_GateEntryDetails = dbContext.V_GateEntryDetail.AsNoTracking().ToList();
 
                 foreach (var order in ckec)
@@ -91,7 +91,7 @@ namespace WebERP.Controllers
                         item.CHL_DATE = DateTime.Now;
                         lli.Add(item);
                     }
-                }                
+                }
                 GateEtryViewModel.Worktype = "1";
                 GateEtryViewModel.v_GateEntryDetails = lli.ToList();
             }
@@ -129,7 +129,7 @@ namespace WebERP.Controllers
             int GateHdrID;
             string Account_Name;
             string Document_Number;
-            var i = 0;      
+            var i = 0;
             //foreach (var order in gateEntryViewModels.v_GateEntryDetails)
             //{
             //    if (order.Bal_Qty <= 0)
@@ -138,7 +138,7 @@ namespace WebERP.Controllers
             //    }
             //    i = i + 1;
             //}
-             
+
             //Validation Check
 
             if (ModelState.IsValid)
@@ -154,7 +154,7 @@ namespace WebERP.Controllers
                     GateHdrID = gateEntryViewModels.Gate_HDR.ID;
                     Document_Number = gateEntryViewModels.Gate_HDR.Doc_No;
                     foreach (var order in gateEntryViewModels.v_GateEntryDetails)
-                    {                       
+                    {
                         GEList.Add(new GateEntryDetail()
                         {
                             POD_FK = order.pod_pk,
@@ -240,11 +240,11 @@ namespace WebERP.Controllers
             return View("GateEntry_Master");
         }
         public List<SelectListItem> ACClists(string types)
-        {            
+        {
             var AccList = (from ACC in dbContext.V_GATE_ENTRY_ACC.AsNoTracking().Where(ac => ac.TBL_TYPE == types).ToList()
                            select new SelectListItem()
                            {
-                               Text = Convert.ToString(ACC.ACC_CODE) + " / " +ACC.ACC_NAME,
+                               Text = Convert.ToString(ACC.ACC_CODE) + " / " + ACC.ACC_NAME,
                                Value = Convert.ToString(ACC.ACC_CODE),
                            }).ToList();
 
@@ -277,9 +277,9 @@ namespace WebERP.Controllers
             if (work == "1")
             {
                 var grddata = dbContext.V_GateEntryDetail.AsNoTracking().Where(x => x.ACC_CODE == Convert.ToInt32(accid)).ToList();
-                foreach(var grd in grddata)
+                foreach (var grd in grddata)
                 {
-                  grd.order_date_string =  Helper.DateFormat(grd.order_date.ToString());
+                    grd.order_date_string = Helper.DateFormat(grd.order_date.ToString());
                 }
                 return Json(grddata);
             }
@@ -289,9 +289,9 @@ namespace WebERP.Controllers
                 foreach (var grd in grddata)
                 {
                     grd.DOC_DATE_STRING = Helper.DateFormat(grd.DOC_DATE.ToString());
-                }               
+                }
                 return Json(grddata);
-            }            
+            }
         }
 
         [HttpGet]
@@ -329,42 +329,96 @@ namespace WebERP.Controllers
             }
             GateEntryDetails.EditGateEntryDetails = GateDetailList;
             GateEntryDetails.Gate_HDRs = dbContext.Gate_HDR.Where(g => g.Doc_No == id).FirstOrDefault();
-           
+
             return View(GateEntryDetails);
         }
 
         [HttpPost]
         public IActionResult EditGateEntry(EditGateEntryModel EditGateEntryModels)
         {
+            decimal updateYesNo = 0;
             if (ModelState.IsValid)
             {
+                // var GateDetail = dbContext.gateEntryDetails.Where(g => g.Item_Name == EditGateEntryModels.EditGateEntryDetails) 
                 EditGateEntryModels.Gate_HDRs.UDT_DATE = DateTime.Now;
                 EditGateEntryModels.Gate_HDRs.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Gate_HDR.Update(EditGateEntryModels.Gate_HDRs);
                 dbContext.SaveChanges();
+
                 foreach (var gateDetailModel in EditGateEntryModels.EditGateEntryDetails.ToList())
-                {                   
+                {
                     var result = dbContext.gateEntryDetails.SingleOrDefault(b => b.ID == gateDetailModel.ID);
-                    if (result != null)
+                    var stkdetail = dbContext.V_RM_DTL.Where(s => s.COMP_CODE == 0 && s.GDW_CODE == result.GDW_NO && s.ITEM_CODE == result.Item_Name && s.SIZE_CODE == result.Size_Name && s.ARTICAL_CODE == result.Art_Name).FirstOrDefault();
+                    //condition to update yes aur no ----stk qty - current gate qty + updated gate qty
+                    updateYesNo = stkdetail.STK_QTY - result.Stk_Qty + gateDetailModel.Stk_Qty;
+
+                    if (updateYesNo >= 0)
                     {
-                        result.UDT_DATE = DateTime.Now;
-                        result.UDT_UID = userManager.GetUserName(HttpContext.User);
-                        result.CHL_NO = gateDetailModel.CHL_NO;
-                        result.CHL_DATE = gateDetailModel.CHL_DATE;
-                        result.Bill_Date = gateDetailModel.Bill_Date;
-                        result.Bill_NO = gateDetailModel.Bill_NO;
-                        result.Stk_Qty = gateDetailModel.Stk_Qty;
-                        result.GDW_NO = gateDetailModel.GDW_NO;
-                        result.Remarks = gateDetailModel.Remarks;
-                        dbContext.SaveChanges();
+                        if (result != null)
+                        {
+                            result.UDT_DATE = DateTime.Now;
+                            result.UDT_UID = userManager.GetUserName(HttpContext.User);
+                            result.CHL_NO = gateDetailModel.CHL_NO;
+                            result.CHL_DATE = gateDetailModel.CHL_DATE;
+                            result.Bill_Date = gateDetailModel.Bill_Date;
+                            result.Bill_NO = gateDetailModel.Bill_NO;
+                            result.Stk_Qty = gateDetailModel.Stk_Qty;
+                            result.GDW_NO = gateDetailModel.GDW_NO;
+                            result.Remarks = gateDetailModel.Remarks;
+                            dbContext.SaveChanges();
+                            var resultstk = dbContext.StockDTL_Models.SingleOrDefault(rs => rs.Tran_Table == "Gate Entry" && rs.Tran_Table_PK == result.ID);
+                            if (resultstk != null)
+                            {
+                                resultstk.GDW_CODE = gateDetailModel.GDW_NO;
+                                resultstk.Stk_Qty_IN = gateDetailModel.Stk_Qty;
+                                dbContext.SaveChanges();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Message = string.Format("Can not Modify Stock qty / Godown. Check Stock Qty");
+                        PODetailModel PODetailModels = new PODetailModel();
+                        EditGateEntryModel GateEntryDetails = new EditGateEntryModel();
+                        GateEntryDetails.GoDownDropDown = GDWlists();
+                        var GateDetailList = dbContext.gateEntryDetails.AsNoTracking().Where(g => g.ID == gateDetailModel.ID).ToList();
+                        foreach (var gateDetailModell in GateDetailList.ToList())
+                        {
+                            gateDetailModell.PO_QTY = dbContext.PODetail_Master.
+                                                       Where(x => x.POD_PK == gateDetailModell.POD_FK).
+                                                       Select(y => y.QTY).FirstOrDefault();
+                            gateDetailModell.BAL_QTY = gateDetailModell.PO_QTY - gateDetailModell.Stk_Qty;
+                            gateDetailModell.ITEM_NAMEs = dbContext.Item_Master.
+                                                      Where(x => x.ID == gateDetailModell.Item_Name).
+                                                      Select(y => y.NAME).FirstOrDefault();
+                            gateDetailModell.ART_NAMEs = dbContext.Artical_Master.
+                                                      Where(x => x.ID == gateDetailModell.Art_Name).
+                                                      Select(y => y.NAME).FirstOrDefault();
+                            gateDetailModell.SIZE_NAMEs = dbContext.Size_Master.
+                                                      Where(x => x.ID == gateDetailModell.Size_Name).
+                                                      Select(y => y.NAME).FirstOrDefault();
+                            gateDetailModell.PROC_NAMEs = dbContext.Process_Master.
+                                                      Where(x => x.ID == gateDetailModell.Proc_Name).
+                                                      Select(y => y.NAME).FirstOrDefault();
+                            var uomcode = dbContext.Item_Master.
+                                                      Where(x => x.ID == gateDetailModell.Item_Name).
+                                                      Select(y => y.UOM_CODE).FirstOrDefault();
+                            gateDetailModell.UOM_NAME = dbContext.UOM_MASTER.
+                                                      Where(x => x.ID == uomcode).
+                                                      Select(y => y.NAME).FirstOrDefault();
+                        }
+                        GateEntryDetails.EditGateEntryDetails = GateDetailList;
+                        GateEntryDetails.Gate_HDRs = dbContext.Gate_HDR.Where(g => g.Doc_No == GateEntryDetails.EditGateEntryDetails[0].Doc_No).FirstOrDefault();
+                        return View("EditGateEntry", GateEntryDetails);
                     }
                 }
+
                 return RedirectToAction("Gate_Entry_Details");
             }
             else
             {
                 EditGateEntryModels.GoDownDropDown = GDWlists();
-                return View(EditGateEntryModels);
+                return View("EditGateEntry",EditGateEntryModels);
             }
         }
         [HttpGet]

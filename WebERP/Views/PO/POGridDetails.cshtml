@@ -21,11 +21,9 @@
                     <thead>
                         <tr>
                             <th>Order No</th>
-                            @*<th>Company</th>*@
                             <th>Order Date</th>
                             <th>Party Name</th>
                             <th>Create Date</th>
-                            @*<th>Created By</th>*@
                             <th>User Action</th>
                         </tr>
                     </thead>
@@ -36,11 +34,8 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ORDER_NO)
                                 </td>
-                                @*<td>
-                                    @Html.DisplayFor(modelItem => item.COMP_NAME)
-                                </td>*@
                                 <td>
-                                    @item.ORDER_DATE.ToShortDateString()                                   
+                                    @item.ORDER_DATE.Day-@item.ORDER_DATE.Month-@item.ORDER_DATE.Year
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ACC_NAME)
@@ -48,9 +43,6 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.INS_DATE)
                                 </td>
-                                @*<td>
-                                    @Html.DisplayFor(modelItem => item.INS_UID)
-                                </td>*@
                                 <td>
                                     <a asp-action="EditPODetails" asp-controller="PO" asp-route-id="@item.POH_PK">
                                             <i class="fas fa-user-edit"></i>

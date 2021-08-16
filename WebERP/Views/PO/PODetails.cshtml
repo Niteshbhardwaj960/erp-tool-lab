@@ -22,17 +22,7 @@
             </nav>
             <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                 <b>PO Header Details</b>
-            </h4>
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="form-group">
-                        <label>Company</label>
-                        <select asp-for="POHeader.COMP_CODE" class="form-control"
-                                asp-items="@(new SelectList(Model.POHeader.companyDropDown,"Value", "Text"))" readonly></select>
-                    </div>
-                </div>
-            </div>
-
+            </h4>    
             <div class="row">
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <label>Date of Purchase</label>
@@ -114,11 +104,11 @@
                                             @Html.HiddenFor(a => a.PODetails[j].QTY_UOM, new { @class = "form-control" })
                                             @Html.TextBoxFor(m => m.PODetails[j].QTYUOMNAME, new { @class = "form-control", @readOnly = "readonly" })
                                         </td>
-                                        <td>
+                                        @*<td>
                                             @Html.DropDownListFor(m=>m.PODetails[j].RATE_UOM,
-                                              new SelectList(string.Empty, "Value", "Text"),
+                                              new SelectList(Model.PODetails[j].Getuom, "Value", "Text"),
                                               new { @class= "form-control" })
-                                        </td>
+                                        </td>*@
                                         <td>
                                             @Html.TextBoxFor(m => m.PODetails[j].QTY, new { @class = "form-control poRowQty", @type = "number", @step = ".001" })
                                         </td>

@@ -109,67 +109,93 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult RMR(RMRViewModel rMRViewModel)
         {
-            int Doc_Number = dbContext.RMR_HDR
-                .Where(x => x.Doc_FN_Year == rMRViewModel.RMR_HDR.Doc_FN_Year)
-                .Select(p => Convert.ToInt32(p.Doc_No)).DefaultIfEmpty(0).Max();
-            int RMR_HDR_PK;
-            List<RMR_DTL> RMDList = new List<RMR_DTL>();
-            rMRViewModel.RMR_HDR.Doc_No = Doc_Number + 1;
-            rMRViewModel.RMR_HDR.Doc_Date = rMRViewModel.RMR_HDR.Doc_Date;
-            rMRViewModel.RMR_HDR.Doc_FN_Year = rMRViewModel.RMR_HDR.Doc_FN_Year;
-            rMRViewModel.RMR_HDR.INS_DATE = DateTime.Now;
-            rMRViewModel.RMR_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
-            dbContext.RMR_HDR.Add(rMRViewModel.RMR_HDR);
-            List<StockDTL_Model> StkDTL = new List<StockDTL_Model>();
-            dbContext.SaveChanges();
-
-            RMR_HDR_PK = rMRViewModel.RMR_HDR.ID;
+            var rowCheck = 0;
             foreach (var order in rMRViewModel.v_RM_ISSUEs)
             {
-                if (order.CHK)
+                if (order.CHK && order.return_qty <= 0 || order.return_qty > order.ISSUE_QTY)
                 {
-                    // var RMRISSUE = dbContext.V_RM_ISSUE.Where(r => r.ID = )
-                    RMDList.Add(new RMR_DTL()
+                    rMRViewModel.rowcheck = "Value Issue Qty should be greater then 0 and Less then Stock Qty";
+                }
+                if (order.CHK == true)
+                {
+                    rowCheck = rowCheck + 1;
+                    break;
+                }
+                if (rowCheck == 0)
+                {
+                    rMRViewModel.rowcheck = "Please select atleast one value from Grid";
+                }
+            }
+
+            if (rMRViewModel.rowcheck == null)
+            {
+                int Doc_Number = dbContext.RMR_HDR
+                .Where(x => x.Doc_FN_Year == rMRViewModel.RMR_HDR.Doc_FN_Year)
+                .Select(p => Convert.ToInt32(p.Doc_No)).DefaultIfEmpty(0).Max();
+                int RMR_HDR_PK;
+                List<RMR_DTL> RMDList = new List<RMR_DTL>();
+                rMRViewModel.RMR_HDR.Doc_No = Doc_Number + 1;
+                rMRViewModel.RMR_HDR.Doc_Date = rMRViewModel.RMR_HDR.Doc_Date;
+                rMRViewModel.RMR_HDR.Doc_FN_Year = rMRViewModel.RMR_HDR.Doc_FN_Year;
+                rMRViewModel.RMR_HDR.INS_DATE = DateTime.Now;
+                rMRViewModel.RMR_HDR.INS_UID = userManager.GetUserName(HttpContext.User);
+                dbContext.RMR_HDR.Add(rMRViewModel.RMR_HDR);
+                List<StockDTL_Model> StkDTL = new List<StockDTL_Model>();
+                dbContext.SaveChanges();
+
+                RMR_HDR_PK = rMRViewModel.RMR_HDR.ID;
+                foreach (var order in rMRViewModel.v_RM_ISSUEs)
+                {
+                    if (order.CHK)
                     {
-                        RM_HDR_FK = RMR_HDR_PK,
+                        // var RMRISSUE = dbContext.V_RM_ISSUE.Where(r => r.ID = )
+                        RMDList.Add(new RMR_DTL()
+                        {
+                            RM_HDR_FK = RMR_HDR_PK,
+                            INS_DATE = DateTime.Now,
+                            INS_UID = userManager.GetUserName(HttpContext.User),
+                            GDW_Code = order.GDW_Code,
+                            ITEM_Code = order.ITEM_Code,
+                            ITEM_NAME = order.ITEM_NAME,
+                            ARTICAL_Code = order.ARTICAL_Code,
+                            SIZE_Code = order.SIZE_Code,
+                            ISSUE_QTY = order.ISSUE_QTY,
+                            ORDER_QTY = order.return_qty,
+                        });
+
+                    }
+                }
+                foreach (var item in RMDList)
+                {
+                    dbContext.RMR_DTL.Add(item);
+                    dbContext.SaveChanges();
+
+                    StkDTL.Add(new StockDTL_Model()
+                    {
                         INS_DATE = DateTime.Now,
                         INS_UID = userManager.GetUserName(HttpContext.User),
-                        GDW_Code = order.GDW_Code,
-                        ITEM_Code = order.ITEM_Code,
-                        ITEM_NAME = order.ITEM_NAME,
-                        ARTICAL_Code = order.ARTICAL_Code,
-                        SIZE_Code = order.SIZE_Code,
-                        ISSUE_QTY = order.ISSUE_QTY,
-                        ORDER_QTY = order.return_qty,
+                        COMP_CODE = 0,
+                        Tran_Table = "RMR Entry",
+                        Tran_Table_PK = item.ID,
+                        GDW_CODE = Convert.ToInt32(item.GDW_Code),
+                        Item_Code = Convert.ToInt32(item.ITEM_Code),
+                        Artical_CODE = Convert.ToInt32(item.ARTICAL_Code),
+                        Size_Code = Convert.ToInt32(item.SIZE_Code),
+                        Stk_Qty_IN = Convert.ToInt32(item.ORDER_QTY),
                     });
-
-                }                
-            }
-            foreach (var item in RMDList)
-            {
-                dbContext.RMR_DTL.Add(item);
-                dbContext.SaveChanges();
-
-                StkDTL.Add(new StockDTL_Model()
+                }
+                foreach (var item in StkDTL)
                 {
-                    INS_DATE = DateTime.Now,
-                    INS_UID = userManager.GetUserName(HttpContext.User),
-                    COMP_CODE = 0,
-                    Tran_Table = "RMR Entry",
-                    Tran_Table_PK = item.ID,
-                    GDW_CODE = Convert.ToInt32(item.GDW_Code),
-                    Item_Code = Convert.ToInt32(item.ITEM_Code),
-                    Artical_CODE = Convert.ToInt32(item.ARTICAL_Code),
-                    Size_Code = Convert.ToInt32(item.SIZE_Code),
-                    Stk_Qty_IN = Convert.ToInt32(item.ORDER_QTY),
-                });
+                    dbContext.StockDTL_Models.Add(item);
+                    dbContext.SaveChanges();
+                }
+                return RedirectToAction("RMR_DETAIL");
             }
-            foreach (var item in StkDTL)
+            else
             {
-                dbContext.StockDTL_Models.Add(item);
-                dbContext.SaveChanges();
+                rMRViewModel.GDWDropDown = GDWlists();
+                return View(rMRViewModel);
             }
-            return RedirectToAction("RMR_DETAIL");
         }
 
         [HttpGet]
@@ -209,35 +235,68 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult RMREDIT(RMRViewModel rMRViewModel)
         {
-            List<StockDTL_Model> StkDTL = new List<StockDTL_Model>();
-            dbContext.SaveChanges();           
+            var rowCheck = 0;
             foreach (var order in rMRViewModel.RMR_DTL_LIST)
             {
-                if (order.CHK)
+                if (order.CHK && order.ORDER_QTY  <= 0 || order.ORDER_QTY > order.ISSUE_QTY)
                 {
-                    var result = dbContext.RMR_DTL.Where(r => r.ID == order.ID).FirstOrDefault();
+                    rMRViewModel.rowcheck = "Value Issue Qty should be greater then 0 and Less then Stock Qty";
+                }
+                if (order.CHK == true)
+                {
+                    rowCheck = rowCheck + 1;
+                    break;
+                }
+                if (rowCheck == 0)
+                {
+                    rMRViewModel.rowcheck = "Please select atleast one value from Grid";
+                }
+            }
 
-                    if (result != null)
+            if (rMRViewModel.rowcheck == null)
+            {
+                List<StockDTL_Model> StkDTL = new List<StockDTL_Model>();
+                dbContext.SaveChanges();
+                foreach (var order in rMRViewModel.RMR_DTL_LIST)
+                {
+                    if (order.CHK)
                     {
-                        result.UDT_DATE = DateTime.Now;
-                        result.UDT_UID = userManager.GetUserName(HttpContext.User);           
-                        result.GDW_Code = order.GDW_Code;
-                        result.ORDER_QTY = order.ORDER_QTY;
-                        dbContext.SaveChanges();
-                    }
+                        var result = dbContext.RMR_DTL.Where(r => r.ID == order.ID).FirstOrDefault();
 
-                    var resultstk = dbContext.StockDTL_Models.Where(r => r.Tran_Table_PK == order.ID && r.Tran_Table == "RMR Entry").FirstOrDefault();
-                    if (resultstk != null)
-                    {
-                        resultstk.UDT_DATE = DateTime.Now;
-                        resultstk.UDT_UID = userManager.GetUserName(HttpContext.User);
-                        resultstk.GDW_CODE = order.GDW_Code;
-                        resultstk.Stk_Qty_IN = order.ORDER_QTY;
-                        dbContext.SaveChanges();
+                        if (result != null)
+                        {
+                            result.UDT_DATE = DateTime.Now;
+                            result.UDT_UID = userManager.GetUserName(HttpContext.User);
+                            result.GDW_Code = order.GDW_Code;
+                            result.ORDER_QTY = order.ORDER_QTY;
+                            dbContext.SaveChanges();
+                        }
+
+                        var resultstk = dbContext.StockDTL_Models.Where(r => r.Tran_Table_PK == order.ID && r.Tran_Table == "RMR Entry").FirstOrDefault();
+                        if (resultstk != null)
+                        {
+                            resultstk.UDT_DATE = DateTime.Now;
+                            resultstk.UDT_UID = userManager.GetUserName(HttpContext.User);
+                            resultstk.GDW_CODE = order.GDW_Code;
+                            resultstk.Stk_Qty_IN = order.ORDER_QTY;
+                            dbContext.SaveChanges();
+                        }
                     }
                 }
-            }          
-            return RedirectToAction("RMR_DETAIL");
+                return RedirectToAction("RMR_DETAIL");
+            }
+            else
+            {
+                rMRViewModel.Type = "Edit";
+                foreach (var item in rMRViewModel.RMR_DTL_LIST)
+                {
+                    item.ARTICAL_NAME = dbContext.Artical_Master.Where(a => a.ID == item.ARTICAL_Code).Select(aa => aa.NAME).FirstOrDefault();
+                    item.SIZE_NAME = dbContext.Size_Master.Where(a => a.ID == item.SIZE_Code).Select(aa => aa.NAME).FirstOrDefault();
+                    item.ITEM_NAME = dbContext.Item_Master.Where(a => a.ID == item.ITEM_Code).Select(aa => aa.NAME).FirstOrDefault();
+                 }
+                 rMRViewModel.GDWDropDown = GDWlists();
+                   return View("RMR_EDIT", rMRViewModel);
+            }
         }
         [HttpGet]
         public IActionResult RMRDelete(int ID)

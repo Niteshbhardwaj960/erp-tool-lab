@@ -11,18 +11,18 @@
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Cutting Order Details</b></h4>
                 <div class="row">
                     @*<div class="col-lg-4 col-md-4 col-sm-12">
-                            <div class="form-group">`
-                                <label for="branch_id">Document Number</label>
-                                <div class="input-group">
-                                    @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
-                                </div>
-                            </div>
-                        </div>*@
+                <div class="form-group">`
+                    <label for="branch_id">Document Number</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
+                    </div>
+                </div>
+            </div>*@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
-                            <div class="input-group">                               
-                                @Html.TextBoxFor(a => a.RMR_HDR.Doc_Date, "{0:yyyy-MM-dd}", new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date" , @readonly="readonly" })
+                            <div class="input-group">
+                                @Html.TextBoxFor(a => a.RMR_HDR.Doc_Date, "{0:yyyy-MM-dd}", new { @ID = "Doc_Date", @class = "form-control dat fc-datepicker", @type = "date", @readonly = "readonly" })
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Employee Name</label>
@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Raw Material Issue Details</b></h4>
-
+                <label class="form-label text-danger">@Model.rowcheck</label>
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -105,37 +105,38 @@
                                 </thead>
                                 <tbody id="tblbody">
                                     @if (Model != null && Model.v_RM_ISSUEs.Count > 0)
+                                    {
+                                        int j = 0;
+                                        foreach (var i in Model.v_RM_ISSUEs)
                                         {
-                                            int j = 0;
-                                            foreach (var i in Model.v_RM_ISSUEs)
-                                            {
-                                    <tr style="border:1px solid black">
+                                            <tr style="border:1px solid black">
 
-                                        @*<td>
-            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].GDW_CODE, new { @class = "form-control" })
-            @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].GDW_NAME, new { @class = "form-control", @readOnly = "readonly" })
-        </td>*@<td>@Html.CheckBoxFor(a => a.v_RM_ISSUEs[j].CHK, new { @class = "form-control"})</td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].Cutting_Order_FK, new { @class = "form-control" })
-                                            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].ITEM_Code, new { @class = "form-control" })
-                                            @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].ARTICAL_Code, new { @class = "form-control" })
-                                            @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].ART_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>
-                                            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].SIZE_Code, new { @class = "form-control" })
-                                            @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                        </td>
-                                        <td>@Html.TextBoxFor(a => a.v_RM_ISSUEs[j].ISSUE_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                       
-                                        <td>@Html.TextBoxFor(a => a.v_RM_ISSUEs[j].return_qty, new { @class = "form-control", @type = "decimal" })</td>
-                                    <td>@Html.DropDownListFor(a=>a.v_RM_ISSUEs[j].GDW_Code,new SelectList(Model.GDWDropDown, "Value", "Text")) </td>
-                                    </tr>
-                                                j++;
-                                            }
+                                                @*<td>
+                                            @Html.HiddenFor(a => a.v_RM_ISSUEs[j].GDW_CODE, new { @class = "form-control" })
+                                            @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].GDW_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>*@
+                                                <td>@Html.CheckBoxFor(a => a.v_RM_ISSUEs[j].CHK, new { @class = "form-control" })</td>
+                                                <td>
+                                                    @Html.HiddenFor(a => a.v_RM_ISSUEs[j].Cutting_Order_FK, new { @class = "form-control" })
+                                                    @Html.HiddenFor(a => a.v_RM_ISSUEs[j].ITEM_Code, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.HiddenFor(a => a.v_RM_ISSUEs[j].ARTICAL_Code, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].ART_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.HiddenFor(a => a.v_RM_ISSUEs[j].SIZE_Code, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(a => a.v_RM_ISSUEs[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                </td>
+                                                <td>@Html.TextBoxFor(a => a.v_RM_ISSUEs[j].ISSUE_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
+
+                                                <td>@Html.TextBoxFor(a => a.v_RM_ISSUEs[j].return_qty, new { @class = "form-control", @type = "decimal" })</td>
+                                                <td>@Html.DropDownListFor(a => a.v_RM_ISSUEs[j].GDW_Code, new SelectList(Model.GDWDropDown, "Value", "Text")) </td>
+                                            </tr>
+                                            j++;
                                         }
+                                    }
                                 </tbody>
                             </table>
                         </div>

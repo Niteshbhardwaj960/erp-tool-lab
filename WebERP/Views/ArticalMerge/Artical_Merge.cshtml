@@ -25,7 +25,8 @@
                         <div class="form-group">
                             <label class="form-label">Godown Name</label>
                             <div class="input-group">
-                                <select id="ddlGDW" name="ddlGDW" asp-for="artical_Merge_HDR.GDW_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.GDWDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlGDW" disabled="disabled" name="ddlGDW" asp-for="artical_Merge_HDR.GDW_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.GDWDropDown ,"Value", "Text"))"></select>
+                                @Html.HiddenFor(a => a.artical_Merge_HDR.GDW_CODE, new { @class = "form-control" })
                             </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
                         </div>
@@ -35,7 +36,8 @@
                         <div class="form-group">
                             <label class="form-label">Item Name</label>
                             <div class="input-group">
-                                <select id="ddlITEM" name="ddlITEM" asp-for="artical_Merge_HDR.ITEM_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ITEMDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlITEM" disabled="disabled" name="ddlITEM" asp-for="artical_Merge_HDR.ITEM_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ITEMDropDown ,"Value", "Text") )"></select>
+                                @Html.HiddenFor(a => a.artical_Merge_HDR.ITEM_CODE, new { @class = "form-control" })
                             </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
                         </div>
@@ -44,7 +46,8 @@
                         <div class="form-group">
                             <label class="form-label">Artical Name</label>
                             <div class="input-group">
-                                <select id="ddlART" name="ddlART" asp-for="artical_Merge_HDR.ARTICAL_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ARTDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlART" disabled="disabled" name="ddlART" asp-for="artical_Merge_HDR.ARTICAL_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ARTDropDown ,"Value", "Text"))"></select>
+                                @Html.HiddenFor(a => a.artical_Merge_HDR.ARTICAL_CODE, new { @class = "form-control" })
                             </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
                         </div>
@@ -53,7 +56,8 @@
                         <div class="form-group">
                             <label class="form-label">Size Name</label>
                             <div class="input-group">
-                                <select id="ddlSize" name="ddlSize" asp-for="artical_Merge_HDR.SIZE_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.SIZEDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlSize" disabled="disabled" name="ddlSize" asp-for="artical_Merge_HDR.SIZE_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.SIZEDropDown ,"Value", "Text"))"></select>
+                                @Html.HiddenFor(a => a.artical_Merge_HDR.SIZE_CODE, new { @class = "form-control" })
                             </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
                         </div>
@@ -69,7 +73,7 @@
                     </div>
                 </div>
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Stock Details</b></h4>
-
+                <label class="form-label text-danger">@Model.rowcheck</label>
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -113,6 +117,7 @@
                                                 </td>
                                                 <td>
                                                     @Html.TextBoxFor(a => a.v_STK_DTL[j].Issue_Qty, new { @class = "form-control" })
+
                                                 </td>
                                             </tr>
                                             j++;

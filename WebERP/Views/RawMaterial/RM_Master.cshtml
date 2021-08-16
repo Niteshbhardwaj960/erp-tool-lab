@@ -11,13 +11,13 @@
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Cutting Order Details</b></h4>
                 <div class="row">
                     @*<div class="col-lg-4 col-md-4 col-sm-12">
-                            <div class="form-group">`
-                                <label for="branch_id">Document Number</label>
-                                <div class="input-group">
-                                    @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
-                                </div>
-                            </div>
-                        </div>*@
+                <div class="form-group">`
+                    <label for="branch_id">Document Number</label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(a => a.RM_HDR.Doc_No, new { @ID = "DocNo", @class = "form-control", @readOnly = "readonly" })
+                    </div>
+                </div>
+            </div>*@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Stock Details</b></h4>
-
+                <label class="text-danger">@Model.error </label>
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -135,16 +135,14 @@
                                                     @Html.TextBoxFor(a => a.V_RM_DTLs[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                                 </td>
                                                 <td>@Html.TextBoxFor(a => a.V_RM_DTLs[j].STK_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                                <td>@Html.TextBoxFor(a => a.V_RM_DTLs[j].Issue_Qty, new {@id = "id_issue_qty", @class = "form-control", @type = "decimal" })
-                                                    <asp:RegularExpressionValidator ID="Regex1" runat="server" ValidationExpression="((\d+)((\.\d{1,3})?))$"
-                                                                                    ErrorMessage="Please enter valid integer or decimal number with 2 decimal places."
-                                                                                    ControlToValidate="id_issue_qty" />
-                                                
-                                                </td>
-                                            </tr>
-                                            j++;
-                                        }
+                                                <td>
+                                                    @Html.TextBoxFor(a => a.V_RM_DTLs[j].Issue_Qty, new { @id = "id_issue_qty", @class = "form-control", @type = "decimal" })
+
+                                            </td>
+                                        </tr>
+                                        j++;
                                     }
+                                }
                                 </tbody>
                             </table>
                         </div>
