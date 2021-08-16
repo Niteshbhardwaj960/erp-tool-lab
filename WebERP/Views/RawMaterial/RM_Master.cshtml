@@ -135,7 +135,12 @@
                                                     @Html.TextBoxFor(a => a.V_RM_DTLs[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
                                                 </td>
                                                 <td>@Html.TextBoxFor(a => a.V_RM_DTLs[j].STK_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                                <td>@Html.TextBoxFor(a => a.V_RM_DTLs[j].Issue_Qty, new { @class = "form-control", @type = "decimal" })</td>
+                                                <td>@Html.TextBoxFor(a => a.V_RM_DTLs[j].Issue_Qty, new {@id = "id_issue_qty", @class = "form-control", @type = "decimal" })
+                                                    <asp:RegularExpressionValidator ID="Regex1" runat="server" ValidationExpression="((\d+)((\.\d{1,3})?))$"
+                                                                                    ErrorMessage="Please enter valid integer or decimal number with 2 decimal places."
+                                                                                    ControlToValidate="id_issue_qty" />
+                                                
+                                                </td>
                                             </tr>
                                             j++;
                                         }

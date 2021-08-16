@@ -20,6 +20,10 @@
                         <tr>
                             <th>Doc Date</th>
                             <th>Employee Name</th>
+                            <th>Salary Type</th>
+                            <th>Salary Month</th>
+                            <th>Pay Days</th>
+                            <th>OT Hr</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -27,8 +31,12 @@
                         @foreach (var Data in Model)
                         {
                             <tr>
-                                <td>@Data.INS_DATE</td>
+                                <td>@Data.INS_DATE.Value.Day-@Data.INS_DATE.Value.Month-@Data.INS_DATE.Value.Year</td>
                                 <td>@Data.Emp_Name</td>
+                                <td>@Data.Emp_Sal_Type</td>
+                                <td>@Data.SAL_YYYYMM.Value.Month-@Data.SAL_YYYYMM.Value.Year</td>
+                                <td>@Data.PAY_DAYS</td>
+                                <td>@Data.OT_HRS</td>
                                 <td>
                                     <a asp-action="EditEmpAttn" asp-controller="EmpAttandance" asp-route-id="@Data.ID">
                                         <i class="fas fa-user-edit"></i>
@@ -41,6 +49,14 @@
                                     </a>
                                 </td>
                             </tr>
+                        }
+                        @if (ViewBag.Message != null)
+                        {
+                            <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+                            </script>
                         }
                     </tbody>
                 </table>

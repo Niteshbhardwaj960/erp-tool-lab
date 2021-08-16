@@ -27,22 +27,30 @@
                     <tbody>
                         @foreach (var Data in Model)
                         {
-                        <tr>
-                            <td>@Data.NAME</td>
-                            <td>@Data.SALE_TAG</td>
-                            <td>@Data.GO_DOWN_TYPE</td>
-                            <td>
-                                <a asp-action="EditGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
-                                    <i class="fas fa-user-edit"></i>
-                                </a>&nbsp;&nbsp;
-                                <a asp-action="DeleteGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>&nbsp;&nbsp;
-                                <a asp-action="ActionGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>@Data.NAME</td>
+                                <td>@Data.SALE_TAG</td>
+                                <td>@Data.GO_DOWN_TYPE</td>
+                                <td>
+                                    <a asp-action="EditGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
+                                        <i class="fas fa-user-edit"></i>
+                                    </a>&nbsp;&nbsp;
+                                    <a asp-action="DeleteGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>&nbsp;&nbsp;
+                                    <a asp-action="ActionGoDown" asp-controller="GoDown" asp-route-id="@Data.ID">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        @if (ViewBag.Message != null)
+                        {
+                            <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+                            </script>
                         }
                     </tbody>
                 </table>

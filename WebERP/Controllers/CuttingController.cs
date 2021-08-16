@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WebERP.Data;
 using WebERP.Helpers;
 using WebERP.Models;
@@ -32,13 +33,13 @@ namespace WebERP.Controllers
         public IActionResult CuttingDetail()
         {
             List<V_CuttingDetail> cut = new List<V_CuttingDetail>();
-            cut = dbContext.V_CuttingDetail.ToList();
+            cut = dbContext.V_CuttingDetail.OrderByDescending(a => a.DOC_DATE).AsNoTracking().ToList();
             return View(cut);
         }
         public int GetFinYear()
         {
             string FinYear = "";
-            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            DateTime date = DateTime.Now;
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;
@@ -53,7 +54,7 @@ namespace WebERP.Controllers
         public IActionResult AddCutting()
         {
             Cutting_Order cut = new Cutting_Order();
-            cut.DOC_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            cut.DOC_DATE = DateTime.Now;
             cut.DOC_FINYEAR = GetFinYear();
             cut.EmpDropDown = Emplists();
             int DoC_No = dbContext.Cutting_Orders
@@ -75,10 +76,10 @@ namespace WebERP.Controllers
             {
                 int DoC_No = dbContext.Cutting_Orders
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
-                CuttingOrder.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                CuttingOrder.INS_DATE = DateTime.Now;
                 CuttingOrder.INS_UID = userManager.GetUserName(HttpContext.User);
                 CuttingOrder.DOC_NO = DoC_No + 1;
-                CuttingOrder.DOC_DATE = Helper.DateFormatDate(Convert.ToString(CuttingOrder.DOC_DATE));
+                CuttingOrder.DOC_DATE = CuttingOrder.DOC_DATE;
                 dbContext.Cutting_Orders.Add(CuttingOrder);
 
                 dbContext.SaveChanges();
@@ -86,6 +87,7 @@ namespace WebERP.Controllers
             }
             else
             {
+                CuttingOrder.Type = "Add";
                 CuttingOrder.EmpDropDown = Emplists();
                 CuttingOrder.ArticalDropDown = Articallists();
                 CuttingOrder.ContEmpDropDown = ContEmplists();
@@ -130,7 +132,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                obj.UDT_DATE = DateTime.Now;
                 obj.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Cutting_Orders.Update(obj);
                 dbContext.SaveChanges();
@@ -138,12 +140,20 @@ namespace WebERP.Controllers
             }
             else
             {
-                return View(obj);
+                obj.EmpDropDown = Emplists();
+                obj.ArticalDropDown = Articallists();
+                obj.ContEmpDropDown = ContEmplists();
+                obj.ItemDropDown = Itemlists();
+                obj.ProcDropDown = Proclists();
+                obj.SizeDropDown = Sizelists();
+                obj.Type = "Edit";
+                return View("AddCutting",obj);
             }
         }
         [HttpGet]
         public IActionResult DeleteCutting(int ID)
         {
+
             var data = dbContext.Cutting_Orders.Find(ID);
             dbContext.Cutting_Orders.Remove(data);
             dbContext.SaveChanges();
@@ -234,7 +244,7 @@ namespace WebERP.Controllers
             var EmpList = (from Emp in dbContext.Employee_Masters.Where(e => e.EMP_TYPE == "P").ToList()
                            select new SelectListItem()
                            {
-                               Text = Emp.EMP_NAME,
+                               Text = Emp.EMP_NAME + " / " + Emp.EMP_CODE,
                                Value = Convert.ToString(Emp.EMP_CODE),
                            }).ToList();
 
@@ -251,7 +261,7 @@ namespace WebERP.Controllers
             var EmpList = (from Emp in dbContext.Employee_Masters.Where(e => e.EMP_TYPE == "C").ToList()
                            select new SelectListItem()
                            {
-                               Text = Emp.EMP_NAME,
+                               Text = Emp.EMP_NAME + " / " + Emp.EMP_CODE,
                                Value = Convert.ToString(Emp.EMP_CODE),
                            }).ToList();
 

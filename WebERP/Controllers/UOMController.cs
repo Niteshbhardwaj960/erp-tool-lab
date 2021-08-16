@@ -34,6 +34,7 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult UOM_Master()
         {
+            ViewBag.Message = null;
             return View(dbContext.UOM_MASTER.ToList());
         }
         [HttpGet]
@@ -44,15 +45,15 @@ namespace WebERP.Controllers
         [HttpPost]
         public async Task<IActionResult> SAVEUOM(UOM_MASTER objUOM)
         {
-            var NAME = dbContext.UOM_MASTER.FirstOrDefault(x => x.NAME == objUOM.NAME);
+            var NAME = dbContext.UOM_MASTER.FirstOrDefault(x => x.NAME == objUOM.NAME && x.ABV == objUOM.ABV);
 
             if (NAME != null)
             {
-                ModelState.AddModelError("NAME", "Name Already Exists.");
+                ModelState.AddModelError("NAME", "Name and Abv Already Exists.");
             }
             if (ModelState.IsValid)
             {
-                objUOM.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objUOM.INS_DATE = DateTime.Now;
                 objUOM.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.UOM_MASTER.Add(objUOM);
                 var result = await dbContext.SaveChangesAsync();
@@ -86,9 +87,9 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult EditUOM(UOM_MASTER objUOM)
         {
-            if (ModelState.IsValid)
+           if (ModelState.IsValid)
             {
-                objUOM.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objUOM.UDT_DATE = DateTime.Now;
                 objUOM.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.UOM_MASTER.Update(objUOM);
                 dbContext.SaveChanges();
@@ -102,9 +103,19 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteUOM(int ID)
         {
-            var data = dbContext.UOM_MASTER.Find(ID);
-            dbContext.UOM_MASTER.Remove(data);
-            dbContext.SaveChanges();
+            var dupl = dbContext.Item_Master.Where(p => p.UOM_CODE == ID).FirstOrDefault();
+            
+            if (dupl == null)
+            {
+                var data = dbContext.UOM_MASTER.Find(ID);
+                dbContext.UOM_MASTER.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Item Master");
+                return View("UOM_Master", dbContext.UOM_MASTER.ToList());
+            }
             return RedirectToAction("UOM_MASTER");
         }
         [HttpGet]

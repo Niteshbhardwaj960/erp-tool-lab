@@ -57,7 +57,6 @@
 
                                 }
                             </div>
-                            <span asp-validation-for="NAME" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -92,7 +91,6 @@
 
                                 }
                             </div>
-                            <span asp-validation-for="NAME" class="text-danger"></span>
                         </div>
                     </div>
                     @if ((Model.Type == "Edit") || (Model.Type == "Action"))
@@ -101,7 +99,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Insert Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="INS_DATE" />
                                 </div>
                             </div>
                         </div>
@@ -117,7 +115,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Update Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
                                 </div>
                             </div>
                         </div>

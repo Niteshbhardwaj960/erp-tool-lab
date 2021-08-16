@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label for="branch_id">Abbreviation</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" asp-for="ABV" />
+                                <input type="text" class="form-control" asp-for="ABV" readonly="readonly" />
                             </div>
                             <span asp-validation-for="ABV" class="text-danger"></span>
                         </div>
@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label for="branch_id">Insert Date</label>
                             <div class="input-group">
-                                <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                                <input type="datetime-local" readonly="readonly" class="form-control" asp-for="INS_DATE" />
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         <div class="form-group">
                             <label for="branch_id">Update Date</label>
                             <div class="input-group">
-                                <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                                <input type="datetime-local" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
                             </div>
                         </div>
                     </div>

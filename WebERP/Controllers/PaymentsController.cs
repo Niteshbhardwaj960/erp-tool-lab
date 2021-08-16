@@ -34,23 +34,62 @@ namespace WebERP.Controllers
         {
             Payments payments = new Payments();
             payments.Type = "Add";
+            payments.DOC_DATE = DateTime.Now;
+            payments.PAY_DOC_DATE = DateTime.Now;
+            payments.DOC_FN_YEAR = GetFinYear();
             payments.ACCDropDown = Acclists();
+            payments.CBACCDropDown = CBAcclists("4");
             return View(payments);
+        }
+        public string GetFinYear()
+        {
+            string FinYear = "";
+            DateTime date = DateTime.Now;
+            if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
+            {
+                FinYear = (date.Year - 1) + "" + date.Year;
+            }
+            else
+            {
+                FinYear = date.Year + "" + (date.Year + 1);
+            }
+            return FinYear;
         }
         [HttpPost]
         public IActionResult Payments_Master(Payments payments)
         {
+            if (payments.PAYMENT_MODE == 1)
+            {
+                ModelState.AddModelError("PAYMENT_MODE", "Please select some value");
+            }
+            if (payments.CB_ACC_CODE == null || payments.CB_ACC_CODE == 0)
+            {
+                ModelState.AddModelError("CB_ACC_CODE", "Please select some value");
+            }
+            if (ModelState.IsValid)
+            { 
             int Doc_Number = dbContext.Payments
                 .Where(x => x.DOC_FN_YEAR == payments.DOC_FN_YEAR)
                 .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
             
             payments.DOC_NO = Doc_Number + 1;
-            payments.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            payments.INS_DATE = DateTime.Now;
             payments.INS_UID = userManager.GetUserName(HttpContext.User);
             dbContext.Payments.Add(payments);
             dbContext.SaveChanges();
             
             return RedirectToAction("Payments_Details");
+            }
+            else
+            {
+                payments.Type = "Add";
+                payments.CBACCDropDown = CBAcclists(payments.PAYMENT_MODE.ToString());
+                payments.DOC_DATE = DateTime.Now;
+                payments.PAY_DOC_DATE = DateTime.Now;
+                payments.DOC_FN_YEAR = GetFinYear();
+                payments.ACCDropDown = Acclists();
+                return View(payments);
+            }
         }
         [HttpGet]
         public IActionResult Payments_Details()
@@ -75,6 +114,8 @@ namespace WebERP.Controllers
                 {
                     pay.PAY_TAG = "Receipt";
                 }
+                pay.ACC_NAME = dbContext.Account_Masters.Where(a => a.ID == pay.ACC_CODE).Select(aa => aa.NAME).FirstOrDefault();
+                pay.CB_ACC_NAME = dbContext.Account_Masters.Where(a => a.ID == pay.CB_ACC_CODE).Select(aa => aa.NAME).FirstOrDefault();
             }
             return View(payments);
         }
@@ -146,7 +187,7 @@ namespace WebERP.Controllers
                 var result = dbContext.Payments.SingleOrDefault(b => b.ID == payments.ID);
                 if (result != null)
                 {
-                    result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                    result.UDT_DATE = DateTime.Now;
                     result.UDT_UID = userManager.GetUserName(HttpContext.User);
                     result.CB_ACC_CODE = payments.CB_ACC_CODE;
                     result.ACC_CODE = payments.ACC_CODE;
@@ -162,6 +203,9 @@ namespace WebERP.Controllers
             }
             else
             {
+                payments.Type = "Edit";
+                payments.ACCDropDown = Acclists();
+                payments.CBACCDropDown = CBAcclists(payments.PAYMENT_MODE.ToString());
                 return View("Payments_Master", payments);
             }
         }

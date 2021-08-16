@@ -21,28 +21,36 @@
                             <th>Doc Date</th>
                             <th>Doc No</th>
                             <th>Employee Name</th>
+                            <th>Order No</th>
+                            <th>Artical</th>
+                            <th>Process</th>
+                            <th>Qty</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var Data in Model)
                         {
-                            <tr>
-                                <td>@Data.INS_DATE</td>
-                                <td>@Data.DOC_NO</td>
-                                <td>@Data.EMP_NAME</td>
-                                <td>
-                                    <a asp-action="EditMFG" asp-controller="MFGReceipt" asp-route-id="@Data.ID">
-                                        <i class="fas fa-user-edit"></i>
-                                    </a>&nbsp;&nbsp;
-                                    <a asp-action="DeleteMFG" asp-controller="MFGReceipt" asp-route-id="@Data.ID">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>&nbsp;&nbsp;
-                                    <a asp-action="ActionMFG" asp-controller="MFGReceipt" asp-route-id="@Data.ID">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>@Data.DOC_DATE.Value.Day-@Data.DOC_DATE.Value.Month-@Data.DOC_DATE.Value.Year</td>
+                            <td>@Data.DOC_NO</td>
+                            <td>@Data.EMP_NAME</td>
+                            <td>@Data.CUT_DOC_NO</td>
+                            <td>@Data.ART_NAME</td>
+                            <td>@Data.PROC_NAME</td>
+                            <td>@Data.RECEIPT_QTY</td>
+                            <td>
+                                <a asp-action="EditMFG" asp-controller="MFGReceipt" asp-route-id="@Data.ID">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="DeleteMFG" asp-controller="MFGReceipt" asp-route-id="@Data.ID">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>&nbsp;&nbsp;
+                                <a asp-action="ActionMFG" asp-controller="MFGReceipt" asp-route-id="@Data.ID">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

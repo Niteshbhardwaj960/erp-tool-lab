@@ -11,18 +11,23 @@ namespace WebERP.Models
     public class Payments
     {
         public int ID { get; set; }
-        public int COMP_CODE { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(HtmlEncode = false, DataFormatString = "{0:dd-MM-yyyy}")]
+        public int COMP_CODE { get; set; }       
         public DateTime? DOC_DATE { get; set; }
         public string DOC_FN_YEAR { get; set; }
         public int DOC_NO { get; set; }
+        [Required(ErrorMessage ="Please select some value")]
         public int ACC_CODE { get; set; }
+        [NotMapped]        
+        public string ACC_NAME { get; set; }
+        [NotMapped]        
+        public string CB_ACC_NAME{ get; set; }
+        [Required]
         public int CB_ACC_CODE { get; set; }
-        public int PAYMENT_TAG { get; set; }
+        public int PAYMENT_TAG { get; set; }      
         public int PAYMENT_MODE  { get; set; }
         public int PAY_DOC_NO { get; set; }
         public DateTime? PAY_DOC_DATE { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than 0")]
         public decimal AMOUNT { get; set; }
         public string REMARKS { get; set; }
         public DateTime? INS_DATE { get; set; }

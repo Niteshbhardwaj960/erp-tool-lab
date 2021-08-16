@@ -22,7 +22,8 @@
                         <div class="form-group">
                             <label for="branch_id">Document Date</label>
                             <div class="input-group">
-                                @Html.TextBoxFor(a => a.RM_HDRs.Doc_Date, new { @ID = "Doc_Date", @class = "form-control", @readOnly = "readonly" })
+                                <input asp-for="RM_HDRs.Doc_Date" type="date" class="form-control" readOnly="readonly" />
+                                @Html.HiddenFor(a => a.RM_HDRs.Doc_Date, new { @ID = "Doc_Date", @class = "form-control", @readOnly = "readonly" })
                             </div>
                         </div>
                     </div>

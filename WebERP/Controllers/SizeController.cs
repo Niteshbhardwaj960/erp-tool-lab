@@ -53,7 +53,7 @@ namespace WebERP.Controllers
 
             if (ModelState.IsValid)
             {
-                objSize.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objSize.INS_DATE = DateTime.Now;
                 objSize.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Size_Master.Add(objSize);
                 var result = await dbContext.SaveChangesAsync();
@@ -91,7 +91,7 @@ namespace WebERP.Controllers
         {           
             if (ModelState.IsValid)
             {
-                objSize.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objSize.UDT_DATE = DateTime.Now;
                 objSize.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Size_Master.Update(objSize);
                 dbContext.SaveChanges();
@@ -105,9 +105,19 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteSize(int ID)
         {
-            var data = dbContext.Size_Master.Find(ID);
-            dbContext.Size_Master.Remove(data);
-            dbContext.SaveChanges();
+            var dupl = dbContext.Cutting_Orders.Where(p => p.SIZE_CODE == ID).FirstOrDefault();
+
+            if (dupl == null)
+            {
+                var data = dbContext.Size_Master.Find(ID);
+                dbContext.Size_Master.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Cutting order");
+                return View("Size_Master", dbContext.Size_Master.ToList());
+            }
             return RedirectToAction("Size_Master");
         }
         [HttpGet]

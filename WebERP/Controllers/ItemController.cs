@@ -60,7 +60,7 @@ namespace WebERP.Controllers
             }
             if (ModelState.IsValid)
             {
-                objItem.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objItem.INS_DATE = DateTime.Now;
                 objItem.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Item_Master.Add(objItem);
                 var result = await dbContext.SaveChangesAsync();
@@ -92,7 +92,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                objItem.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objItem.UDT_DATE = DateTime.Now;
                 objItem.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Item_Master.Update(objItem);
                 dbContext.SaveChanges();
@@ -106,9 +106,25 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteItem(int ID)
         {
-            var data = dbContext.Item_Master.Find(ID);
-            dbContext.Item_Master.Remove(data);
-            dbContext.SaveChanges();
+            var duplPurchaseOrder = dbContext.PODetail_Master.Where(p => p.ITEM_CODE == ID).FirstOrDefault();
+            var duplCutting = dbContext.Cutting_Orders.Where(p => p.ITEM_CODE == ID).FirstOrDefault();
+         
+            var duplJobWork = dbContext.JobWorkIssue_Details.Where(p => p.ITEM_CODE == ID).FirstOrDefault();            
+            var duplSaleInv = dbContext.SalesHeader.Where(p => p.ItemCode == ID).FirstOrDefault();
+
+            if (duplJobWork == null && duplCutting == null && duplPurchaseOrder == null && duplSaleInv == null)
+            {
+                var data = dbContext.Item_Master.Find(ID);
+                dbContext.Item_Master.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                var ItemMaster = dbContext.Item_Master.ToList();
+                ViewBag.Message = string.Format("Can not delete entry. Record present either in Purchase order OR Payment OR JobWork OR Sale Invoice.");
+                ViewBag.Color = "red";
+                return View("Item_Master", ItemMaster);
+            }
             return RedirectToAction("Item_Master");
         }
         [HttpGet]

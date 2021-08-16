@@ -58,6 +58,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="table-responsive">
+                           
                             @if (Model.Worktype == "1")
                             {
                                 <table class="table table-bordered" Name="dataTa" id="dataTable" width="100%" cellspacing="0">
@@ -86,9 +87,13 @@
                                                         @Html.HiddenFor(a => a.v_GateEntryDetails[j].pod_pk, new { @class = "form-control" })
                                                         @Html.TextBoxFor(a => a.v_GateEntryDetails[j].order_no, new { @class = "form-control", @readOnly = "readonly" })
                                                     </td>
-                                                    <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_NO, new { @class = "form-control" })</td>
                                                     <td>
-                                                        @*<input type="date" class="form-control" asp-for="v_GateEntryDetails[j].CHL_DATE" name="CHL_DATE[j]" id="CHL_DATE">*@
+                                                        @Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_NO, new { @class = "form-control" })
+                                                    <span asp-validation-for="v_GateEntryDetails[j].CHL_NO" class="text-danger"></span>
+                                                </td>
+
+                                                <td>
+                                                    @*<input type="date" class="form-control" asp-for="v_GateEntryDetails[j].CHL_DATE" name="CHL_DATE[j]" id="CHL_DATE">*@
                                                     @Html.TextBoxFor(a => a.v_GateEntryDetails[j].CHL_DATE, "{0:yyyy-MM-dd}", new { @class = "form-control fc-datepicker", @type = "date" })
                                                 </td>
                                                 @*<td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_NO, new { @class = "form-control" })</td>
@@ -104,8 +109,9 @@
                                                 </td>
 
                                                 <td>
-                                                    @Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bal_Qty, new { @class = "form-control", @type = "number" })
+                                                    @Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bal_Qty_stk, new { @class = "form-control", @type = "decimal" })
                                                     @Html.HiddenFor(a => a.v_GateEntryDetails[j].Gate_Entry_qty, new { @class = "form-control" })
+                                                    <span asp-validation-for="v_GateEntryDetails[j].Bal_Qty_stk" class="text-danger"></span>
                                                 </td>
                                                 <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bal_Qty, new { @class = "form-control", @readOnly = "readonly" })</td>
 
@@ -139,50 +145,53 @@
                                             int j = 0;
                                             foreach (var i in Model.V_JW_DTLs)
                                             {
-                                        <tr style="border:1px solid black">
-                                            <td>
-                                                @Html.HiddenFor(a => a.V_JW_DTLs[j].JWD_PK, new { @class = "form-control" })
-                                                @Html.TextBoxFor(a => a.V_JW_DTLs[j].DOC_NO, new { @class = "form-control", @readOnly = "readonly" })
-                                            </td>
-                                            <td>@Html.TextBoxFor(a => a.V_JW_DTLs[j].CHL_NO, new { @class = "form-control" ,@type="number"})</td>
-                                            <td>
-                                                @*<input type="date" class="form-control" asp-for="v_GateEntryDetails[j].CHL_DATE" name="CHL_DATE[j]" id="CHL_DATE">*@
-                                                @Html.TextBoxFor(a => a.V_JW_DTLs[j].CHL_DATE, "{0:yyyy-MM-dd}", new { @class = "form-control fc-datepicker", @type = "date" })
-                                            </td>
-                                            @*<td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_NO, new { @class = "form-control" })</td>
-        <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_Date, new { @class = "form-control fc-datepicker", @type = "date" })</td>*@
-                                            <td>
-                                                @Html.HiddenFor(a => a.V_JW_DTLs[j].ITEM_CODE, new { @class = "form-control" })
-                                                @Html.TextBoxFor(a => a.V_JW_DTLs[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                            </td>
-                                            <td>
-                                                @Html.HiddenFor(a => a.V_JW_DTLs[j].ARTICAL_CODE, new { @class = "form-control" })
-                                                @Html.TextBoxFor(a => a.V_JW_DTLs[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                            </td>
-                                            <td>
-                                                @Html.HiddenFor(a => a.V_JW_DTLs[j].SIZE_CODE, new { @class = "form-control" })
-                                                @Html.TextBoxFor(a => a.V_JW_DTLs[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                            </td>
-                                            <td>
-                                                @Html.HiddenFor(a => a.V_JW_DTLs[j].PROC_CODE, new { @class = "form-control" })
-                                                @Html.TextBoxFor(a => a.V_JW_DTLs[j].PROC_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                            </td>
-                                            <td>@Html.TextBoxFor(a => a.V_JW_DTLs[j].QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
-                                            @*<td>
-                                                @Html.TextBoxFor(a => a.V_JW_DTLs[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
-                                                @Html.HiddenFor(a => a.V_JW_DTLs[j]._CODE, new { @class = "form-control" })
-                                            </td>*@
+                                                <tr style="border:1px solid black">
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.V_JW_DTLs[j].JWD_PK, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(a => a.V_JW_DTLs[j].DOC_NO, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
+                                                    <td>@Html.TextBoxFor(a => a.V_JW_DTLs[j].CHL_NO, new { @class = "form-control", @type = "number" })
+                                                        <span asp-validation-for="V_JW_DTLs[j].CHL_NO" class="text-danger"></span></td>
+                                                    
+                                                    <td>
+                                                        @*<input type="date" class="form-control" asp-for="v_GateEntryDetails[j].CHL_DATE" name="CHL_DATE[j]" id="CHL_DATE">*@
+                                                        @Html.TextBoxFor(a => a.V_JW_DTLs[j].CHL_DATE, "{0:yyyy-MM-dd}", new { @class = "form-control fc-datepicker", @type = "date" })
+                                                    </td>
+                                                    @*<td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_NO, new { @class = "form-control" })</td>
+                                <td>@Html.TextBoxFor(a => a.v_GateEntryDetails[j].Bill_Date, new { @class = "form-control fc-datepicker", @type = "date" })</td>*@
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.V_JW_DTLs[j].ITEM_CODE, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(a => a.V_JW_DTLs[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.V_JW_DTLs[j].ARTICAL_CODE, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(a => a.V_JW_DTLs[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.V_JW_DTLs[j].SIZE_CODE, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(a => a.V_JW_DTLs[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.HiddenFor(a => a.V_JW_DTLs[j].PROC_CODE, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(a => a.V_JW_DTLs[j].PROC_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                                    </td>
+                                                    <td>@Html.TextBoxFor(a => a.V_JW_DTLs[j].QTY, new { @class = "form-control", @readOnly = "readonly", @type = "decimal", @step = ".001" })</td>
+                                                    @*<td>
+                                    @Html.TextBoxFor(a => a.V_JW_DTLs[j].QTY_UOM, new { @class = "form-control", @readOnly = "readonly" })
+                                    @Html.HiddenFor(a => a.V_JW_DTLs[j]._CODE, new { @class = "form-control" })
+                                </td>*@
 
-                                            <td>
-                                                @Html.TextBoxFor(a => a.V_JW_DTLs[j].BAL_QTY, new { @class = "form-control", @type = "number" })
-                                                @Html.HiddenFor(a => a.V_JW_DTLs[j].GATE_ENTRY_QTY, new { @class = "form-control" })
-                                            </td>
-                                            <td>@Html.TextBoxFor(a => a.V_JW_DTLs[j].BAL_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
+                                                    <td>
+                                                        @Html.TextBoxFor(a => a.V_JW_DTLs[j].Bal_Qty_stk, new { @class = "form-control", @type = "decimal" })
+                                                        @Html.HiddenFor(a => a.V_JW_DTLs[j].GATE_ENTRY_QTY, new { @class = "form-control" })
+                                                        <span asp-validation-for="V_JW_DTLs[j].Bal_Qty_stk" class="text-danger"></span>
+                                                    </td>
+                                                    <td>@Html.TextBoxFor(a => a.V_JW_DTLs[j].BAL_QTY, new { @class = "form-control", @readOnly = "readonly" })</td>
 
-                                        </tr>
-                                            j++;
+                                                </tr>
+                                                j++;
+                                            }
                                         }
-                                    }
                                     </tbody>
                                 </table>
                             }

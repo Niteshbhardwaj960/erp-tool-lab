@@ -35,11 +35,12 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult GoDown_Master()
         {
-            List<Godown_Master> gd = new List<Godown_Master>();
+            ViewBag.Message = null;
+            List <Godown_Master> gd = new List<Godown_Master>();
             gd = dbContext.Godown_Master.ToList();
             foreach (var obj in gd)
             {
-                if (obj.SALE_TAG == "0")
+                if (obj.SALE_TAG == "2")
                 {
                     obj.SALE_TAG = "Yes";
                 }
@@ -75,7 +76,7 @@ namespace WebERP.Controllers
             }
             if (ModelState.IsValid)
             {
-                objGoDown.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objGoDown.INS_DATE = DateTime.Now;
                 objGoDown.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Godown_Master.Add(objGoDown);
                 var result = await dbContext.SaveChangesAsync();
@@ -113,7 +114,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                obj.UDT_DATE = DateTime.Now;
                 obj.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Godown_Master.Update(obj);
                 dbContext.SaveChanges();
@@ -127,9 +128,25 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteGoDown(int ID)
         {
-            var data = dbContext.Godown_Master.Find(ID);
-            dbContext.Godown_Master.Remove(data);
-            dbContext.SaveChanges();
+            var duplart = dbContext.Artical_Merge_HDR.Where(p => p.GDW_CODE == ID).FirstOrDefault();
+            var duplstock = dbContext.StockDTL_Models.Where(p => p.GDW_CODE == ID).FirstOrDefault();
+            var duplGate = dbContext.gateEntryDetails.Where(p => p.GDW_NO == ID).FirstOrDefault();
+            var duplCUtting = dbContext.Cutting_Receipt.Where(p => p.GDW_CODE == ID).FirstOrDefault();
+            var dupljob = dbContext.JobWorkIssue_Details.Where(p => p.GODOWN_CODE == ID).FirstOrDefault();
+            var duplSale = dbContext.SalesHeader.Where(p => p.GoDownCode == ID).FirstOrDefault();
+            var duplrawmaterreturn = dbContext.RMR_DTL.Where(p => p.GDW_Code == ID).FirstOrDefault();
+
+            if (duplart == null && duplstock == null && duplGate == null && duplCUtting == null && dupljob == null && duplSale == null && duplrawmaterreturn == null)
+            {
+                var data = dbContext.Godown_Master.Find(ID);
+                dbContext.Godown_Master.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record used somewhere");
+                return View("GoDown_Master", dbContext.Godown_Master.ToList());
+            }
             return RedirectToAction("Godown_Master");
         }
         [HttpGet]
@@ -189,6 +206,10 @@ namespace WebERP.Controllers
                 var itemName = dbContext.Item_Master.Where(e => e.ID == entry.Item_Name).Select(ee => ee.NAME).FirstOrDefault();
 
                 entry.ITEM_NAMEs = itemName;
+
+                entry.ART_NAMEs = dbContext.Artical_Master.Where(e => e.ID == entry.Art_Name).Select(ee => ee.NAME).FirstOrDefault();
+                entry.PROC_NAMEs = dbContext.Process_Master.Where(e => e.ID == entry.Proc_Name).Select(ee => ee.NAME).FirstOrDefault();
+                entry.SIZE_NAMEs = dbContext.Size_Master.Where(e => e.ID == entry.Size_Name).Select(ee => ee.NAME).FirstOrDefault();
             }
             return View(GED);
         }
@@ -229,7 +250,7 @@ namespace WebERP.Controllers
                     {
                         StkDTL.Add(new StockDTL_Model()
                         {
-                            INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now)),
+                            INS_DATE = DateTime.Now,
                             INS_UID = userManager.GetUserName(HttpContext.User),
                             COMP_CODE = 0,
                             Tran_Table = "Gate Entry",

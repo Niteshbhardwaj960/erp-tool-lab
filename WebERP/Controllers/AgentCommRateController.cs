@@ -75,13 +75,33 @@ namespace WebERP.Controllers
         [HttpPost]
         public IActionResult AgentCommRate_Master(AgentCommRate agentCommRate)
         {
+            //var duplicateAccFrom = dbContext.AgentCommRate.Where(a => a.ACC_CODE == agentCommRate.ACC_CODE && 
+            //a.FROM_DATE >= agentCommRate.FROM_DATE).FirstOrDefault();
+
+            //var duplicateAccTO = dbContext.AgentCommRate.Where(a => a.ACC_CODE == agentCommRate.ACC_CODE &&
+            //a.TO_DATE < agentCommRate.FROM_DATE).FirstOrDefault();
+
+            //if (duplicateAccFrom != null && duplicateAccTO != null)
+            //{
+
+            //}
+            //else { 
+            if (ModelState.IsValid)
+            {
             var accname = dbContext.Account_Masters.Where(a => a.ID == agentCommRate.ACC_CODE).Select(aa => aa.NAME).FirstOrDefault();
-            agentCommRate.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            agentCommRate.INS_DATE = DateTime.Now;
             agentCommRate.INS_UID = userManager.GetUserName(HttpContext.User);
             agentCommRate.ACC_CODE = agentCommRate.ACC_CODE;
             agentCommRate.ACC_NAME = accname;
             dbContext.AgentCommRate.Add(agentCommRate);
             dbContext.SaveChanges();
+            }
+            else
+            {
+                agentCommRate.Type = "Add";
+                agentCommRate.ACCDropDown = ACClists();
+                return View(agentCommRate);
+            }
             return RedirectToAction("AgentCommRateDetails");
         }
         [HttpGet]
@@ -100,12 +120,22 @@ namespace WebERP.Controllers
             var result = dbContext.AgentCommRate.SingleOrDefault(b => b.ID == agentCommRate.ID);
             if (result != null)
             {
-                result.UDT_DATE = DateTime.Now; Helper.DateFormatDate(Convert.ToString(DateTime.Now)); result.UDT_UID = userManager.GetUserName(HttpContext.User);
-                result.ACC_CODE = agentCommRate.ACC_CODE;
-                result.ACC_NAME = accname;
-                result.COMM_RATE = agentCommRate.COMM_RATE;
-                result.QTY_AMOUNT_TAG = agentCommRate.QTY_AMOUNT_TAG;
-                dbContext.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    result.UDT_DATE = DateTime.Now;
+                    result.UDT_UID = userManager.GetUserName(HttpContext.User);
+                    result.ACC_CODE = agentCommRate.ACC_CODE;
+                    result.ACC_NAME = accname;
+                    result.COMM_RATE = agentCommRate.COMM_RATE;
+                    result.QTY_AMOUNT_TAG = agentCommRate.QTY_AMOUNT_TAG;
+                    dbContext.SaveChanges();
+                }
+                else
+                {
+                    agentCommRate.Type = "Edit";
+                    agentCommRate.ACCDropDown = ACClists();
+                    return View("AgentCommRate_Master",agentCommRate);
+                }
             }
             return RedirectToAction("AgentCommRateDetails");
         }

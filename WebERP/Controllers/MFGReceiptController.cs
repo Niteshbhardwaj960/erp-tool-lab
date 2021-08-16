@@ -32,7 +32,7 @@ namespace WebERP.Controllers
         public int GetFinYear()
         {
             string FinYear = "";
-            DateTime date = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+            DateTime date = DateTime.Now;
             if ((date.Month) == 1 || (date.Month) == 2 || (date.Month) == 3)
             {
                 FinYear = (date.Year - 1) + "" + date.Year;
@@ -62,7 +62,7 @@ namespace WebERP.Controllers
                            select new SelectListItem()
                            {
                                Text = Cut.DOC_NO.ToString() + '/' + Cut.EMP_NAME + '/' + Cut.Item_NAME + '/' + Cut.ARTICAL_NAME + '/' + Cut.SIZE_NAME + '/' + Cut.PROC_NAME,
-                               Value = Cut.EMP_NAME + '^' + Cut.Item_NAME + '^' + Cut.ARTICAL_NAME + '^' + Cut.SIZE_NAME + '^' + Cut.PROC_NAME + '^' + Cut.ID,
+                               Value = Cut.EMP_NAME + '^' + Cut.Item_NAME + '^' + Cut.ARTICAL_NAME + '^' + Cut.SIZE_NAME + '^' + Cut.PROC_NAME + '^' + Cut.ID + '^' + Cut.DOC_NO.ToString() + '^' + Cut.ORDER_QTY,
                            }).ToList();
 
             CutList.Insert(0, new SelectListItem()
@@ -78,7 +78,7 @@ namespace WebERP.Controllers
             var empList = (from emp in dbContext.Employee_Masters.Where(e => e.EMP_TYPE == "S").ToList()
                            select new SelectListItem()
                            {
-                               Text = emp.EMP_NAME,
+                               Text = emp.EMP_NAME + " / " + emp.EMP_CODE,
                                Value = emp.EMP_CODE.ToString(),
                            }).ToList();
 
@@ -111,7 +111,7 @@ namespace WebERP.Controllers
             var CutList = (from emp in dbContext.Employee_Masters.Where(e => e.EMP_TYPE == "C").ToList()
                            select new SelectListItem()
                            {
-                               Text = emp.EMP_NAME,
+                               Text = emp.EMP_NAME + " / " + emp.EMP_CODE,
                                Value = emp.EMP_CODE.ToString(),
                            }).ToList();
 
@@ -128,28 +128,52 @@ namespace WebERP.Controllers
         {
             List<MGF_RECEIPT> mGF_RECEIPTs = new List<MGF_RECEIPT>();
             mGF_RECEIPTs = dbContext.MGF_RECEIPT.AsNoTracking().ToList();
+            foreach(var mGF in mGF_RECEIPTs)
+            {
+                mGF.PROC_NAME = dbContext.Process_Master.Where(m => m.ID == mGF.PROC_CODE).Select(mm => mm.NAME).FirstOrDefault();
+            }
             return View("MFG_Details", mGF_RECEIPTs);
         }
         [HttpPost]
-        public IActionResult MFG_Receipt_Master(MFGReceiptViewModel mFGReceiptViewModel, string EMPDropDown, string CONEMPDropDown, string PROCDropDown)
+        public IActionResult MFG_Receipt_Master(MFGReceiptViewModel mFGReceiptViewModel, int EMP_CODE, int CONT_EMP_CODE, int PROC_CODE)
         {
-            var emps =  dbContext.Employee_Masters.Where(e => e.EMP_CODE == Convert.ToInt32(EMPDropDown)).Select(ee => ee.EMP_NAME).FirstOrDefault();
-            //var cemps = dbContext.Employee_Masters.Where(e => e.EMP_CODE == mFGReceiptViewModel.MGF_RECEIPTs.CONT_EMP_CODE).Select(ee => ee.EMP_NAME).FirstOrDefault();
-            int Doc_Number = dbContext.MGF_RECEIPT
-                .Where(x => x.DOC_FINYEAR == mFGReceiptViewModel.DOC_FINYEARS)
-                .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
-            mFGReceiptViewModel.MGF_RECEIPTs.DOC_NO = Doc_Number + 1;
-            mFGReceiptViewModel.MGF_RECEIPTs.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
-            mFGReceiptViewModel.MGF_RECEIPTs.EMP_CODE = Convert.ToInt32(EMPDropDown);
-            mFGReceiptViewModel.MGF_RECEIPTs.CONT_EMP_CODE = Convert.ToInt32(CONEMPDropDown);
-            mFGReceiptViewModel.MGF_RECEIPTs.EMP_NAME = emps;
-            mFGReceiptViewModel.MGF_RECEIPTs.DOC_DATE = mFGReceiptViewModel.DOC_DATES;
-            mFGReceiptViewModel.MGF_RECEIPTs.DOC_FINYEAR = mFGReceiptViewModel.DOC_FINYEARS;
-            mFGReceiptViewModel.MGF_RECEIPTs.INS_UID = userManager.GetUserName(HttpContext.User);
-            mFGReceiptViewModel.MGF_RECEIPTs.PROC_CODE = Convert.ToInt32(PROCDropDown);
-            dbContext.MGF_RECEIPT.Add(mFGReceiptViewModel.MGF_RECEIPTs);
-            dbContext.SaveChanges();
-            return RedirectToAction("MFGReceiptDetail");
+            if (mFGReceiptViewModel.MGF_RECEIPTs.RECEIPT_QTY <= 0 || mFGReceiptViewModel.MGF_RECEIPTs.RECEIPT_QTY == null)
+            {
+                mFGReceiptViewModel.error = "Value Receipt Qty should be greater than 0";
+            }
+            if (mFGReceiptViewModel.MGF_RECEIPTs.RECEIPT_QTY > mFGReceiptViewModel.MGF_RECEIPTs.ORDER_QTY)
+            {
+                mFGReceiptViewModel.errorOrder = "Recipt Qty can not be greater than cutting Order Qty";
+            }
+            if (mFGReceiptViewModel.error == null && mFGReceiptViewModel.errorOrder == null)
+            {
+                var emps = dbContext.Employee_Masters.Where(e => e.EMP_CODE == EMP_CODE).Select(ee => ee.EMP_NAME).FirstOrDefault();
+                //var cemps = dbContext.Employee_Masters.Where(e => e.EMP_CODE == mFGReceiptViewModel.MGF_RECEIPTs.CONT_EMP_CODE).Select(ee => ee.EMP_NAME).FirstOrDefault();
+                int Doc_Number = dbContext.MGF_RECEIPT
+                    .Where(x => x.DOC_FINYEAR == mFGReceiptViewModel.DOC_FINYEARS)
+                    .Select(p => Convert.ToInt32(p.DOC_NO)).DefaultIfEmpty(0).Max();
+                mFGReceiptViewModel.MGF_RECEIPTs.DOC_NO = Doc_Number + 1;
+                mFGReceiptViewModel.MGF_RECEIPTs.INS_DATE = DateTime.Now;
+                mFGReceiptViewModel.MGF_RECEIPTs.EMP_CODE = EMP_CODE;
+                mFGReceiptViewModel.MGF_RECEIPTs.CONT_EMP_CODE = CONT_EMP_CODE;
+                mFGReceiptViewModel.MGF_RECEIPTs.EMP_NAME = emps;
+                mFGReceiptViewModel.MGF_RECEIPTs.DOC_DATE = mFGReceiptViewModel.DOC_DATES;
+                mFGReceiptViewModel.MGF_RECEIPTs.DOC_FINYEAR = mFGReceiptViewModel.DOC_FINYEARS;
+                mFGReceiptViewModel.MGF_RECEIPTs.INS_UID = userManager.GetUserName(HttpContext.User);
+                mFGReceiptViewModel.MGF_RECEIPTs.PROC_CODE = PROC_CODE;
+                dbContext.MGF_RECEIPT.Add(mFGReceiptViewModel.MGF_RECEIPTs);
+                dbContext.SaveChanges();
+                return RedirectToAction("MFGReceiptDetail");
+            }
+            else
+            {
+                mFGReceiptViewModel.Type = "Add";
+                mFGReceiptViewModel.CUTDropDown = CUTlists();
+                mFGReceiptViewModel.EMPDropDown = EMPlists();
+                mFGReceiptViewModel.CONEMPDropDown = CoEmplists();
+                mFGReceiptViewModel.PROCDropDown = PROClists();
+                return View(mFGReceiptViewModel);
+            }
         }
         [HttpGet]
         public IActionResult EditMFG(int id)
@@ -163,20 +187,44 @@ namespace WebERP.Controllers
             return View("MFG_Receipt_Master", mFGReceiptViewModel);
         }
         [HttpPost]
-        public IActionResult SAVEMFG(MFGReceiptViewModel mFGReceiptViewModel)
+        public IActionResult SAVEMFG(MFGReceiptViewModel mFGReceiptViewModel,int EMP_CODE,int CONT_EMP_CODE,int PROC_CODE)
         {
-            var result = dbContext.MGF_RECEIPT.SingleOrDefault(b => b.ID == mFGReceiptViewModel.MGF_RECEIPTs.ID);
-            if (result != null)
+            var order_Qty = dbContext.Cutting_Orders.Where(c => c.DOC_NO == Convert.ToInt32(mFGReceiptViewModel.MGF_RECEIPTs.CUT_DOC_NO)).Select(l => l.ORDER_QTY).FirstOrDefault();
+            if (mFGReceiptViewModel.MGF_RECEIPTs.RECEIPT_QTY <= 0 || mFGReceiptViewModel.MGF_RECEIPTs.RECEIPT_QTY == null)
             {
-                result.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
-                result.UDT_UID = userManager.GetUserName(HttpContext.User);
-                result.EMP_CODE = mFGReceiptViewModel.MGF_RECEIPTs.EMP_CODE;
-                result.CONT_EMP_CODE = mFGReceiptViewModel.MGF_RECEIPTs.CONT_EMP_CODE;
-                result.PROC_CODE = mFGReceiptViewModel.MGF_RECEIPTs.PROC_CODE;
-                result.RECEIPT_QTY = mFGReceiptViewModel.MGF_RECEIPTs.RECEIPT_QTY;
-                dbContext.SaveChanges();
+                mFGReceiptViewModel.error = "Value Receipt Qty should be greater than 0";
             }
-            return RedirectToAction("MFGReceiptDetail");
+            if (mFGReceiptViewModel.MGF_RECEIPTs.RECEIPT_QTY > order_Qty)
+            {
+                mFGReceiptViewModel.errorOrder = "Recipt Qty can not be greater than cutting Order Qty";
+            }
+            if (mFGReceiptViewModel.error == null && mFGReceiptViewModel.errorOrder == null)
+            {
+                var result = dbContext.MGF_RECEIPT.SingleOrDefault(b => b.ID == mFGReceiptViewModel.MGF_RECEIPTs.ID);
+                var emps = dbContext.Employee_Masters.Where(e => e.EMP_CODE == EMP_CODE).Select(ee => ee.EMP_NAME).FirstOrDefault();
+
+                if (result != null)
+                {
+                    result.UDT_DATE = DateTime.Now;
+                    result.UDT_UID = userManager.GetUserName(HttpContext.User);
+                    result.EMP_CODE = EMP_CODE;
+                    result.CONT_EMP_CODE = CONT_EMP_CODE;
+                    result.PROC_CODE = PROC_CODE;
+                    result.EMP_NAME = emps;
+                    result.CUT_DOC_NO = mFGReceiptViewModel.MGF_RECEIPTs.CUT_DOC_NO;
+                    result.RECEIPT_QTY = mFGReceiptViewModel.MGF_RECEIPTs.RECEIPT_QTY;
+                    dbContext.SaveChanges();
+                }
+                return RedirectToAction("MFGReceiptDetail");
+            }
+            else
+            {
+                mFGReceiptViewModel.Type = "Edit";
+                mFGReceiptViewModel.CONEMPDropDown = CoEmplists();
+                mFGReceiptViewModel.EMPDropDown = EMPlists();
+                mFGReceiptViewModel.PROCDropDown = PROClists();
+                return View("MFG_Receipt_Master", mFGReceiptViewModel);
+            }
         }
         [HttpGet]
         public IActionResult ActionMFG(int id)

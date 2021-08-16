@@ -34,7 +34,7 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Employee_Master()
         {
-
+            ViewBag.Message = null;
             return View(dbContext.Employee_Masters.ToList());
         }
         [HttpGet]
@@ -60,7 +60,7 @@ namespace WebERP.Controllers
                 .Select(p => Convert.ToInt32(p.EMP_CODE)).DefaultIfEmpty(0).Max();
                 objEmp.EMP_CODE = Emp_No + 1;
                 objEmp.Dep_Name = objEmp.DEP_CODE.ToString();
-                objEmp.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objEmp.INS_DATE = DateTime.Now;
                 objEmp.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Employee_Masters.Add(objEmp);
                 var result = await dbContext.SaveChangesAsync();
@@ -102,7 +102,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                obj.UDT_DATE = DateTime.Now;
                 obj.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Employee_Masters.Update(obj);
                 dbContext.SaveChanges();
@@ -116,9 +116,21 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteEmployee(int ID)
         {
-            var data = dbContext.Employee_Masters.Find(ID);
-            dbContext.Employee_Masters.Remove(data);
-            dbContext.SaveChanges();
+            var emp_code = dbContext.Employee_Masters.Where(p => p.ID == ID).Select(e => e.EMP_CODE).FirstOrDefault();
+            var dupladv = dbContext.Employee_Advance.Where(p => p.EMP_CODE == emp_code).FirstOrDefault();
+            var duplaTT = dbContext.Employee_Attandance.Where(p => p.EMP_CODE == emp_code).FirstOrDefault();
+
+            if (dupladv == null && duplaTT == null)
+            {
+                var data = dbContext.Employee_Masters.Find(ID);
+                dbContext.Employee_Masters.Remove(data);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Employee Advance or Employee Attndance");
+                return View("Employee_Master", dbContext.Employee_Masters.ToList());
+            }
             return RedirectToAction("Employee_Master");
         }
         [HttpGet]

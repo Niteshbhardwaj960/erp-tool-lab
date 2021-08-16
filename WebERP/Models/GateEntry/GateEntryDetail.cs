@@ -20,10 +20,13 @@ namespace WebERP.Models.GateEntry
         public int Art_Name { get; set; }
         public int Size_Name { get; set; }
         public int Proc_Name { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than 0")]
         public int CHL_NO { get; set; }
         public DateTime? CHL_DATE { get; set; }
         public string Bill_NO { get; set; }
         public DateTime? Bill_Date { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
+        [RegularExpression(@"\d+(\.\d{1,3})?", ErrorMessage = "Upto 3 decimal place is allowed")]
         public decimal Stk_Qty { get; set; }
         public int Stk_UOM { get; set; }
         public decimal Fin_Qty { get; set; }
@@ -40,7 +43,7 @@ namespace WebERP.Models.GateEntry
         public string Doc_No { get; set; }
         [NotMapped]
         public Decimal PO_QTY { get; set; }
-        [NotMapped]
+        [NotMapped]        
         public Decimal BAL_QTY { get; set; }
         [NotMapped]
         public string ITEM_NAMEs {get; set;}

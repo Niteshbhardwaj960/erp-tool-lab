@@ -33,11 +33,11 @@
                             <div class="input-group">
                                 @if (Model.Type == "Add")
                                 {
-                                    @Html.TextBoxFor(a => a.DOC_DATE, new { @ID = "DOC_DATE", @class = "form-control dat fc-datepicker", @type = "date" })
+                                <input asp-for="DOC_DATE" type="date" class="form-control" id="DOC_DATE" name="DOC_DATE" />
                                 }
                                 @if (Model.Type == "Edit" || Model.Type == "Action")
                                 {
-                                    @Html.TextBoxFor(a => a.DOC_DATE, new { @ID = "DOC_FN_YEAR", @class = "form-control", @readOnly = "readonly" })
+                                    <input asp-for="DOC_DATE" type="date" class="form-control" id="DOC_DATE" name="DOC_DATE" readOnly = "readonly" />
                                 }
                             </div>
                         </div>
@@ -54,12 +54,12 @@
                         <div class="form-group">
                             <label for="branch_id">Payment Mode</label>
                             <div class="custom-radio">
-                                <select class="form-control" asp-for="PAYMENT_MODE" id="PAYMENT_MODE">
-                                    <option value="1">Select Payment Mode</option>
+                                <select class="form-control" asp-for="PAYMENT_MODE" id="PAYMENT_MODE">                                   
                                     <option value="4">Bank</option>
                                     <option value="5">Cash</option>
                                 </select>
                             </div>
+                            <span asp-validation-for="PAYMENT_MODE" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -77,15 +77,11 @@
                         <div class="form-group">
                             <label for="branch_id">Cash/Bank Account Name</label>
                             <div class="custom-radio">
-                                @if (Model.Type == "Add")
-                                {
-                                    <select asp-for="CB_ACC_CODE" id="ddlCBACC" class="form-control Select2DropDown" asp-items="@(new SelectList(string.Empty, "Value", "Text"))"></select>
-                                }
-                                @if (Model.Type == "Edit" || Model.Type == "Action")
-                                {
+                                
                                     <select asp-for="CB_ACC_CODE" id="ddlCBACC" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.CBACCDropDown,"Value", "Text"))"></select>
-                                }
+                                
                             </div>
+                            <span asp-validation-for="CB_ACC_CODE" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -94,6 +90,7 @@
                             <div class="custom-radio">
                                 <select asp-for="ACC_CODE" id="ddlACC" class="form-control Select2DropDown" asp-items="@(new SelectList(Model.ACCDropDown,"Value", "Text"))"></select>
                             </div>
+                            <span asp-validation-for="ACC_CODE" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -108,8 +105,7 @@
                         <div class="form-group">
                             <label for="branch_id">Payment Document Date</label>
                             <div class="input-group">
-                                <input asp-for="PAY_DOC_DATE" type="date" class="form-control" id="PAY_DOC_DATE" name="PAY_DOC_DATE" />
-                                @*@Html.HiddenFor(a => a.PAY_DOC_DATE, new {@ID = "PAY_DOC_DATE", @class = "form-control", @type = "date"})*@
+                                <input asp-for="PAY_DOC_DATE" type="date" class="form-control" id="PAY_DOC_DATE" name="PAY_DOC_DATE" />                         
                             </div>
                         </div>
                     </div>
@@ -118,7 +114,9 @@
                             <label for="branch_id">Amount</label>
                             <div class="input-group">
                                 @Html.TextBoxFor(a => a.AMOUNT, new { @ID = "AMOUNT", @class = "form-control", @type = "decimal" })
+                                
                             </div>
+                            <span asp-validation-for="AMOUNT" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -135,7 +133,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Insert Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="INS_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="INS_DATE" />
                                 </div>
                             </div>
                         </div>
@@ -151,7 +149,7 @@
                             <div class="form-group">
                                 <label for="branch_id">Update Date</label>
                                 <div class="input-group">
-                                    <input type="text" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
+                                    <input type="datetime-local" readonly="readonly" class="form-control" asp-for="UDT_DATE" />
                                 </div>
                             </div>
                         </div>

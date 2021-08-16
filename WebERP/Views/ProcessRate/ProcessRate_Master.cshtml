@@ -37,15 +37,12 @@
                             <td>@Data.Rate</td>
                             <td>@Data.Comm_Rate</td>
                             <td>@Data.UOM_Name</td>
-                            <td>@Data.From_DATE</td>
-                            <td>@Data.To_DATE</td>
+                            <td>@Data.From_DATE.Value.Day-@Data.From_DATE.Value.Month-@Data.From_DATE.Value.Year</td>
+                            <td>@Data.To_DATE.Value.Day-@Data.To_DATE.Value.Month-@Data.To_DATE.Value.Year</td>
                             <td>
                                 <a asp-action="EditProcessRate" asp-controller="ProcessRate" asp-route-id="@Data.ID">
                                     <i class="fas fa-user-edit"></i>
-                                </a>&nbsp;&nbsp;
-                                <a asp-action="DeleteProcessRate" asp-controller="ProcessRate" asp-route-id="@Data.ID">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>&nbsp;&nbsp;
+                                </a>&nbsp;&nbsp;                                
                                 <a asp-action="ActionProcessRate" asp-controller="ProcessRate" asp-route-id="@Data.ID">
                                     <i class="fas fa-eye"></i>
                                 </a>

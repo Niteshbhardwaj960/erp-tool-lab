@@ -33,6 +33,7 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult Term_Master()
         {
+            ViewBag.Message = null;
             List<Term_Master> tm = new List<Term_Master>();
             tm = dbContext.Term_Master.ToList();
             foreach (var term in tm)
@@ -72,7 +73,7 @@ namespace WebERP.Controllers
             }
             if (ModelState.IsValid)
             {
-                objTerm.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objTerm.INS_DATE = DateTime.Now;
                 objTerm.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Term_Master.Add(objTerm);
                 var result = await dbContext.SaveChangesAsync();
@@ -109,7 +110,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                objTerm.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objTerm.UDT_DATE = DateTime.Now;
                 objTerm.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.Term_Master.Update(objTerm);
                 dbContext.SaveChanges();
@@ -123,9 +124,21 @@ namespace WebERP.Controllers
         [HttpGet]
         public IActionResult DeleteTerm(int ID)
         {
-            var data = dbContext.Term_Master.Find(ID);
-            dbContext.Term_Master.Remove(data);
-            dbContext.SaveChanges();
+            var duplPurchaseOrder = dbContext.POTerm_Master.Where(p => p.TERMS_CODE == ID).FirstOrDefault();
+           // var duplJobWork = dbContext.JobWorkIssue_Header.Where(p => p. == ID).FirstOrDefault();
+            
+            if (duplPurchaseOrder == null )
+            {
+                var data = dbContext.Term_Master.Find(ID);
+                dbContext.Term_Master.Remove(data);
+                dbContext.SaveChanges();
+
+            }
+            else
+            {
+                ViewBag.Message = string.Format("Can not delete entry. Record present in Purchase order");
+                return View("Term_Master", dbContext.Term_Master.ToList());
+            }
             return RedirectToAction("Term_Master");
         }
         [HttpGet]

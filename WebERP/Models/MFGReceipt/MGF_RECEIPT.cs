@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,9 +23,12 @@ namespace WebERP.Models
         public string ART_NAME { get; set; }
         public string SIZE_NAME { get; set; }
         public string PROC_NAME { get; set; }
+        public string CUT_DOC_NO { get; set; }
         public DateTime? INS_DATE { get; set; }
         public string INS_UID { get; set; }
         public DateTime? UDT_DATE { get; set; }
         public string UDT_UID { get; set; }
+        [NotMapped]
+        public decimal ORDER_QTY { get; set; }
     }
 }

@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label class="form-label">Godown Name</label>
                             <div class="input-group">
-                                <select id="ddlGDW" name="ddlGDW" asp-for="artical_Merge_HDR.GDW_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.GDWDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlGDW" name="ddlGDW" asp-for="artical_Merge_HDR.GDW_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.GDWDropDown ,"Value", "Text"))"></select>
                             </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
                         </div>
@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label class="form-label">Item Name</label>
                             <div class="input-group">
-                                <select id="ddlITEM" name="ddlITEM" asp-for="artical_Merge_HDR.ITEM_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ITEMDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlITEM" name="ddlITEM" asp-for="artical_Merge_HDR.ITEM_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ITEMDropDown ,"Value", "Text"))"></select>
                             </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
                         </div>
@@ -54,7 +54,7 @@
                         <div class="form-group">
                             <label class="form-label">Artical Name</label>
                             <div class="input-group">
-                                <select id="ddlART" name="ddlART" asp-for="artical_Merge_HDR.ARTICAL_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ARTDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlART" name="ddlART" asp-for="artical_Merge_HDR.ARTICAL_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.ARTDropDown ,"Value", "Text"))"></select>
                             </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
                         </div>
@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <label class="form-label">Size Name</label>
                             <div class="input-group">
-                                <select id="ddlSize" name="ddlSize" asp-for="artical_Merge_HDR.SIZE_NAME" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.SIZEDropDown ,"Value", "Text"))"></select>
+                                <select id="ddlSize" name="ddlSize" asp-for="artical_Merge_HDR.SIZE_CODE" class="form-control Select2DropDown" asp-items="@(new SelectList( Model.SIZEDropDown ,"Value", "Text"))"></select>
                             </div>
                             @*<span asp-validation-for="NAME" class="text-danger"></span>*@
                         </div>

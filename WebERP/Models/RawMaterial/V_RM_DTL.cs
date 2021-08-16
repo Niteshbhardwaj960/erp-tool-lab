@@ -21,7 +21,7 @@ namespace WebERP.Models
         public int SIZE_CODE { get; set; }
         public string SIZE_NAME { get; set; }
         public decimal STK_QTY_IN { get; set; }
-        public decimal STK_QTY_OUT { get; set; }
+        public decimal STK_QTY_OUT { get; set; }        
         public decimal STK_QTY { get; set; }
         [NotMapped]
         public bool CHK { get; set; }

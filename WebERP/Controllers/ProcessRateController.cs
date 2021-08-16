@@ -51,8 +51,6 @@ namespace WebERP.Controllers
             obj.UOMDropDown = UOMlists();
             obj.ArticalDropDown = Articallists();
             obj.ProcDropDown = Processlists();
-            //obj.From_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
-            //obj.To_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
             obj.Type = "Add";
             return View("AddProcessRate", obj);
         }
@@ -63,13 +61,13 @@ namespace WebERP.Controllers
 
             //if (NAME != null)
             //{
-                ModelState.AddModelError("Proc_Code", "Proc Name Already Exists.");
+            //  ModelState.AddModelError("Proc_Code", "Proc Name Already Exists.");
             //}
             if (ModelState.IsValid)
             {
-                objProcessRate.To_DATE = Helper.DateFormatDate(Convert.ToString(objProcessRate.To_DATE));
-                objProcessRate.From_DATE = Helper.DateFormatDate(Convert.ToString(objProcessRate.From_DATE));
-                objProcessRate.INS_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                objProcessRate.To_DATE = objProcessRate.To_DATE;
+                objProcessRate.From_DATE = objProcessRate.From_DATE;
+                objProcessRate.INS_DATE = DateTime.Now;
                 objProcessRate.INS_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.ProcessRate_Master.Add(objProcessRate);
                 var result = await dbContext.SaveChangesAsync();
@@ -110,7 +108,7 @@ namespace WebERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.UDT_DATE = Helper.DateFormatDate(Convert.ToString(DateTime.Now));
+                obj.UDT_DATE = DateTime.Now;
                 obj.UDT_UID = userManager.GetUserName(HttpContext.User);
                 dbContext.ProcessRate_Master.Update(obj);
                 dbContext.SaveChanges();
