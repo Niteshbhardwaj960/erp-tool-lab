@@ -1,6 +1,10 @@
 // Call the dataTables jQuery plugin
 $(document).ready(function () {    
     $('#dataTable').DataTable();    
+
+    $('#poodataTable').DataTable({
+        "order": [[1, "asc"]]
+    });    
 });
 
 (function ($) {

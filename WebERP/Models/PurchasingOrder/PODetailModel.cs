@@ -19,13 +19,15 @@ namespace WebERP.Models
 
         public virtual POHeaderModel POHeaderModel { get; set; }
 
+        [Required]
         public int ITEM_CODE { get; set; }
 
         [NotMapped]
         public IEnumerable<SelectListItem> GetItems { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,3}$")]
-        [Range(0, 999999999999.999)]
+        //[RegularExpression(@"^\d+\.\d{0,3}$")]
+        //[Range(0, 999999999999.999)]
+        [Required]
         public decimal QTY { get; set; }
 
         public string QTY_UOM { get; set; }
@@ -33,23 +35,23 @@ namespace WebERP.Models
         [NotMapped]
         public string QTYUOMNAME { get; set; }
 
-        [DataType(DataType.Currency)]
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999999999999.99)]
+        //[DataType(DataType.Currency)]
+        //[RegularExpression(@"^\d+\.\d{0,2}$")]
+        //[Range(0, 9999999999999.99)]      
         public decimal RATE { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999.99)]
+        //[RegularExpression(@"^\d+\.\d{0,2}$")]
+        //[Range(0, 9999.99)]
         public decimal DISC_PER { get; set; }
 
-        [DataType(DataType.Currency)]
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999999999999.99)]
+        //[DataType(DataType.Currency)]
+        //[RegularExpression(@"^\d+\.\d{0,2}$")]
+        //[Range(0, 9999999999999.99)]
         public decimal DISC_RATE { get; set; }
 
-        [DataType(DataType.Currency)]
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999999999999.99)]
+        //[DataType(DataType.Currency)]
+        //[RegularExpression(@"^\d+\.\d{0,2}$")]
+        //[Range(0, 9999999999999.99)]
         public decimal NET_RATE { get; set; }
 
         public int RATE_UOM { get; set; }
@@ -77,6 +79,9 @@ namespace WebERP.Models
         public string ITEM_NAME { get; set; }
         [NotMapped]
         public string RATEUOM_NAME { get; set; }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> GetTempRateuom { get; set; }
 
     }
 }
