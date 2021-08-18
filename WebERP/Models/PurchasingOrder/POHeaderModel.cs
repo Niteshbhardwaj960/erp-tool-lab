@@ -19,7 +19,7 @@ namespace WebERP.Models
         public string ORDER_FINYEAR { get; set; }
         public int ORDER_NO { get; set; }
 
-        [Required(ErrorMessage = "Please select Acc Name")]
+        [Required]
         public int ACC_CODE { get; set; }
 
         [StringLength(100)]
@@ -39,5 +39,10 @@ namespace WebERP.Models
         public List<SelectListItem> companyDropDown { get; set; }
         [NotMapped]
         public List<SelectListItem> accDropDown { get; set; }
+
+        [NotMapped]
+        public string TotalQuant { get; set; }
+        [NotMapped]
+        public string TotalAmount { get; set; }
     }
 }

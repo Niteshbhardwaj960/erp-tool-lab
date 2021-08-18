@@ -23,6 +23,17 @@
             <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                 <b>PO Header Details</b>
             </h4>
+            @if (ViewBag.DidValidationFail == "Yes")
+            {
+                <div class="alert alert-danger" id="errorMsg" role="alert">
+                    <a href="#" class="alert-link">
+                        Please fill The Required Fields values below like <br />
+                        *Party Name <br />
+                        *Item, Qty, Amount, Rate etc. <br />
+                        *Terms & Condition(Select None\Not Applicable instead Unselected)
+                    </a>
+                </div>
+            }
             <div class="row">
                 <input class="form-control" style="display:none;" asp-for="POHeader.POH_PK">
                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -30,7 +41,7 @@
                         <label>Company</label>
                         <select asp-for="POHeader.COMP_CODE" class="form-control"
                                 asp-items="@(new SelectList(Model.POHeader.companyDropDown,"Value", "Text"))" readonly></select>
-                       
+
                     </div>
                 </div>
             </div>
@@ -68,37 +79,42 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="form-group">
-                        <label>Party Name</label>
+                        <label>*Party Name</label>
                         <select asp-for="POHeader.ACC_CODE" class="form-control Select2DropDown"
                                 asp-items="@(new SelectList(Model.POHeader.accDropDown, "Value", "Text"))"></select>
                         <span asp-validation-for="POHeader.ACC_CODE" class="text-danger"></span>
                         @*@Html.DropDownListFor(m=>m.POHeader.ACC_CODE,
-                                         new SelectList(Model.POHeader.accDropDown, "Value", "Text"),
-                                         new { @class="form-control"})*@
+                    new SelectList(Model.POHeader.accDropDown, "Value", "Text"),
+                    new { @class="form-control"})*@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <input type="text" class="form-control" asp-for="POHeader.REMARKS"  placeholder="Place order remarks here">
+                        <input type="text" class="form-control" asp-for="POHeader.REMARKS" placeholder="Place order remarks here">
                     </div>
-                    @Html.HiddenFor(a => a.POHeader.INS_DATE, new { @class = "form-control"})
-                    @Html.HiddenFor(a => a.POHeader.INS_UID, new { @class = "form-control"})
+                    @Html.HiddenFor(a => a.POHeader.INS_DATE, new { @class = "form-control" })
+                    @Html.HiddenFor(a => a.POHeader.INS_UID, new { @class = "form-control" })
                 </div>
             </div>
 
             <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>PO Item Details</b><b style="margin-left: auto;font-size: 12px;">Info: Below Status as(A-Active, C-Cancelled, F-Finished)</b></h4>
-
+            @if (ViewBag.DidQorTEmpty == "Yes")
+            {
+                <div class="alert alert-danger" id="errorMsg1" role="alert">
+                    <a href="#" class="alert-link">Total Calculated Quantity or Total Calculated Amount Can't be Zero or Empty</a>
+                </div>
+            }
             <div class="row" style="font-size:small;">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="table-responsive-sm">
                         <table class="table table-sm d-sm-table-cell table-bordered" id="poDtlTable" width="100%" cellspacing="0">
                             <thead class="thead-light">
                                 <tr style="text-align:center;">
-                                    <th style="width: 300px;">Item</th>
+                                    <th style="width: 300px;">*Item</th>
                                     <th style="width: 100px;">Qty UOM</th>
                                     <th style="width: 170px;">Rate UOM</th>
-                                    <th style="width: 310px;">Qty</th>
+                                    <th style="width: 310px;">*Qty</th>
                                     <th style="width: 310px;">Rate Per</th>
                                     <th style="width: 165px;">Disc Per%</th>
                                     <th style="width: 150px;">Disc Rate</th>
@@ -117,86 +133,95 @@
                             <tbody>
                                 @for (int j = 0; j < Model.PODetails.Count(); j++)
                                 {
-                                <tr class="template">
+                                    <tr class="template">
 
-                                    @Html.HiddenFor(m => m.PODetails[j].POD_PK, new { @class = "form-control", @readOnly = "readonly" })
+                                        @Html.HiddenFor(m => m.PODetails[j].POD_PK, new { @class = "form-control", @readOnly = "readonly" })
 
-                                    <td>
-                                        @Html.DropDownListFor(m=>m.PODetails[j].ITEM_CODE,
-                                          new SelectList(Model.PODetails[j].GetItems, "Value", "Text"),
-                                          new { @class= "form-control Select2DropDown" , style = "width:265px; " })
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(a => a.PODetails[j].QTY_UOM, new { @class = "form-control" })
-                                        @Html.TextBoxFor(m => m.PODetails[j].QTYUOMNAME, new { @class = "form-control", @readOnly = "readonly" })
-                                    </td>
-                                    <td>
-                                        @Html.DropDownListFor(m=>m.PODetails[j].RATE_UOM,
-                                          new SelectList(string.Empty, "Value", "Text"),
-                                          new { @class= "form-control" })
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => m.PODetails[j].QTY, new { @class = "form-control poRowQty", @type = "number", @step = ".001" })
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => m.PODetails[j].RATE, new { @class = "form-control", @type = "number", @step = ".01" })
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => m.PODetails[j].DISC_PER, new { @class = "form-control", @type = "number", @step = ".001" })
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => m.PODetails[j].DISC_RATE, new { @class = "form-control", @readOnly = "readonly" })
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => m.PODetails[j].NET_RATE, new { @class = "form-control", @readOnly = "readonly" })
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => m.PODetails[j].AMOUNT, new { @class = "form-control", @readOnly = "readonly" })
-                                    </td>
-                                    <td>
-                                        <input class="form-control fc-datepicker" type="date" asp-for="PODetails[j].DELV_DATE" style="width:140px;">
-                                        @*@Html.TextBoxFor(m => m.PODetails[j].DELV_DATE, new { @class = "form-control fc-datepicker", @type = "date" })*@
-                                    </td>
-                                    <td>
-                                        @if (Model.PODetails[j].POD_PK_STATUS == "A")
-                                        {
-                                            @Html.DropDownListFor(m=>m.PODetails[j].POD_PK_STATUS,
-                                                                                        new SelectList(new List<Object>{
-                                                                                                                         new { value = "A" , text = "A"  },
-                                                                                                                         new { value = "C" , text = "C" },
-                                                                                                                         new { value = "F" , text = "F"}}, "value", "text", 0),
-                                                                                        new { @class="form-control"})
-                                        }
-                                        @if (Model.PODetails[j].POD_PK_STATUS == "F")
-                                        {
-                                            @Html.DropDownListFor(m=>m.PODetails[j].POD_PK_STATUS,
-                                                                                        new SelectList(new List<Object>{
-                                                                                                                         new { value = "A" , text = "A"  },
-                                                                                                                         new { value = "C" , text = "C" },
-                                                                                                                         new { value = "F" , text = "F"}}, "value", "text", 2),
-                                                                                        new { @class="form-control"})
-                                        }
-                                        @if (Model.PODetails[j].POD_PK_STATUS == "C")
-                                        {
-                                            @Html.DropDownListFor(m=>m.PODetails[j].POD_PK_STATUS,
-                                                                                        new SelectList(new List<Object>{
-                                                                                                                         new { value = "A" , text = "A"  },
-                                                                                                                         new { value = "C" , text = "C" },
-                                                                                                                         new { value = "F" , text = "F"}}, "value", "text", 1),
-                                                                                        new { @class="form-control"})
-                                        }
-                                    </td>
-                                    @*<td>
+                                        <td>
+                                            @Html.DropDownListFor(m=>m.PODetails[j].ITEM_CODE,
+                                              new SelectList(Model.PODetails[j].GetItems, "Value", "Text"),
+                                              new { @class= "form-control Select2DropDown" , style = "width:265px; " })
+                                        </td>
+                                        <td>
+                                            @Html.HiddenFor(a => a.PODetails[j].QTY_UOM, new { @class = "form-control" })
+                                            @Html.TextBoxFor(m => m.PODetails[j].QTYUOMNAME, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>
+                                        <td>
+                                            @if (Model.PODetails[j].RATE_UOM == 0)
+                                            {
+                                                @Html.DropDownListFor(m => m.PODetails[j].RATE_UOM,
+                                                           new SelectList(string.Empty, "Value", "Text"),
+                                                           new { @class = "form-control" })
+                                            }
+                                            else
+                                            {
+                                                @Html.DropDownListFor(m => m.PODetails[j].RATE_UOM,
+                                                      new SelectList(Model.PODetails[j].GetTempRateuom, "Value", "Text"),
+                                                      new { @class = "form-control" })
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.PODetails[j].QTY, new { @class = "form-control poRowQty", @type = "number", @step = ".001" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.PODetails[j].RATE, new { @class = "form-control", @type = "number", @step = ".01" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.PODetails[j].DISC_PER, new { @class = "form-control", @type = "number", @step = ".001" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.PODetails[j].DISC_RATE, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.PODetails[j].NET_RATE, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.PODetails[j].AMOUNT, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>
+                                        <td>
+                                            <input class="form-control fc-datepicker" type="date" asp-for="PODetails[j].DELV_DATE" style="width:140px;">
+                                            @*@Html.TextBoxFor(m => m.PODetails[j].DELV_DATE, new { @class = "form-control fc-datepicker", @type = "date" })*@
+                                        </td>
+                                        <td>
+                                            @if (Model.PODetails[j].POD_PK_STATUS == "A")
+                                            {
+                                                @Html.DropDownListFor(m=>m.PODetails[j].POD_PK_STATUS,
+                                                                                            new SelectList(new List<Object>{
+                                                                                                                             new { value = "A" , text = "A"  },
+                                                                                                                             new { value = "C" , text = "C" },
+                                                                                                                             new { value = "F" , text = "F"}}, "value", "text", 0),
+                                                                                            new { @class="form-control"})
+                                            }
+                                            @if (Model.PODetails[j].POD_PK_STATUS == "F")
+                                            {
+                                                @Html.DropDownListFor(m=>m.PODetails[j].POD_PK_STATUS,
+                                                                                            new SelectList(new List<Object>{
+                                                                                                                             new { value = "A" , text = "A"  },
+                                                                                                                             new { value = "C" , text = "C" },
+                                                                                                                             new { value = "F" , text = "F"}}, "value", "text", 2),
+                                                                                            new { @class="form-control"})
+                                            }
+                                            @if (Model.PODetails[j].POD_PK_STATUS == "C")
+                                            {
+                                                @Html.DropDownListFor(m=>m.PODetails[j].POD_PK_STATUS,
+                                                                                            new SelectList(new List<Object>{
+                                                                                                                             new { value = "A" , text = "A"  },
+                                                                                                                             new { value = "C" , text = "C" },
+                                                                                                                             new { value = "F" , text = "F"}}, "value", "text", 1),
+                                                                                            new { @class="form-control"})
+                                            }
+                                        </td>
+                                        @*<td>
                                         @Html.TextAreaFor(m => m.PODetails[j].REMARKS, new { @class = "form-control" })
                                     </td>*@
-                                    <td style="text-align:center;">
-                                        <a href="#" class="btn btn-danger" id="deleteRow">
-                                            <i class="fa fa-minus-circle"></i>
-                                        </a>
-                                    </td>
-                                    @Html.HiddenFor(a => a.PODetails[j].INS_DATE, new { @class = "form-control" })
-                                    @Html.HiddenFor(a => a.PODetails[j].INS_UID, new { @class = "form-control" })
-                                </tr>
+                                        <td style="text-align:center;">
+                                            <a href="#" class="btn btn-danger" id="deleteRow">
+                                                <i class="fa fa-minus-circle"></i>
+                                            </a>
+                                        </td>
+                                        @Html.HiddenFor(a => a.PODetails[j].INS_DATE, new { @class = "form-control" })
+                                        @Html.HiddenFor(a => a.PODetails[j].INS_UID, new { @class = "form-control" })
+                                    </tr>
                                 }
                             </tbody>
                             <tfoot>
@@ -230,7 +255,7 @@
                         <table class="table table-sm table-hover table-bordered" id="poTermDtlTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th style="width: 50px;">Terms & Conditions</th>
+                                    <th style="width: 50px;">*Terms & Conditions</th>
                                     <th style="width: 200px;">Remarks</th>
                                     <th style="text-align:center;width: 50px;">
                                         <a href="#" class="btn btn-info" id="addTermRow">
@@ -242,25 +267,25 @@
                             <tbody>
                                 @for (int i = 0; i < Model.POTerms.Count(); i++)
                                 {
-                                <tr class="termtemplate">
-                                    <td style="display:none;">
-                                        @Html.HiddenFor(m => m.POTerms[i].POT_PK, new { @class = "form-control", @readOnly = "readonly" })
-                                    </td>
-                                    <td>
-                                        @Html.DropDownListFor(m=>m.POTerms[i].TERMS_CODE,
-                                         new SelectList(Model.POTerms[i].termDropDown, "Value", "Text"),
-                                         new { @class= "form-control" })
+                                    <tr class="termtemplate">
+                                        <td style="display:none;">
+                                            @Html.HiddenFor(m => m.POTerms[i].POT_PK, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>
+                                        <td>
+                                            @Html.DropDownListFor(m=>m.POTerms[i].TERMS_CODE,
+                                             new SelectList(Model.POTerms[i].termDropDown, "Value", "Text"),
+                                             new { @class= "form-control" })
 
-                                    </td>
-                                    <td>
-                                        @Html.TextAreaFor(m => m.POTerms[i].REMARKS, new { @class = "form-control" })
-                                    </td>
-                                    <td style="text-align:center;">
-                                        <a href="#" class="btn btn-danger" id="deleteTermRow">
-                                            <i class="fa fa-minus-circle"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            @Html.TextAreaFor(m => m.POTerms[i].REMARKS, new { @class = "form-control" })
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <a href="#" class="btn btn-danger" id="deleteTermRow">
+                                                <i class="fa fa-minus-circle"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

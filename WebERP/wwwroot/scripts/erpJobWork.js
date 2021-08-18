@@ -10,7 +10,7 @@ $('#jwComDropDown').change(function (e) {
         var row = $(this);
         var qtyFilled = row.find("td:eq(7) input[type='number']").val();
         if (qtyFilled == null || typeof qtyFilled === "undefined" || qtyFilled=="") {
-            currentRow.find('[name*="PROC_CODE"]').val("0");
+            row.find('[name*="PROC_CODE"]').val("0");
         }
         else {
             row.find('[name*="PROC_CODE"]').val(gridProc);
