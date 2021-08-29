@@ -22,16 +22,34 @@
             <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                 <b>Job-Work Header</b>
             </h4>
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="form-group">
-                        <label>Company</label>
-                        <select asp-for="JobWorkIssHeader.COMP_CODE" class="form-control"
-                                asp-items="@(new SelectList(Model.JobWorkIssHeader.companyDropDown,"Value", "Text"))" readonly></select>
-                    </div>
+            @*<div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label>Company</label>
+                    <select asp-for="JobWorkIssHeader.COMP_CODE" class="form-control"
+                            asp-items="@(new SelectList(Model.JobWorkIssHeader.companyDropDown,"Value", "Text"))" readonly></select>
                 </div>
             </div>
-
+        </div>*@
+            @if (ViewBag.DidValidationFail == "Yes")
+            {
+                <div class="alert alert-danger" id="errorMsg" role="alert">
+                    <a href="#" class="alert-link">
+                        Please fill The Required Fields values below like <br />
+                        *Party Name <br />
+                        *Proccess, Proc Qty<br />
+                        *Select atleast one value from grid
+                    </a>
+                </div>
+            }
+            @if (ViewBag.jwDelete == "Yes")
+            {
+                <div class="alert alert-danger" id="errorMsg" role="alert">
+                    <a href="#" class="alert-link">
+                        !!Canot delete, GateEntry Detail Present.
+                    </a>
+                </div>
+            }
             <div class="row">
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <label>Document Date</label>
@@ -74,88 +92,107 @@
                         <label>Remarks</label>
                         <input type="text" class="form-control" asp-for="JobWorkIssHeader.REMARKS">
                     </div>
+                    @Html.HiddenFor(a => a.JobWorkIssHeader.JWH_PK, new { @class = "form-control", @readOnly = "readonly" })
                     @Html.HiddenFor(a => a.JobWorkIssHeader.INS_DATE, new { @class = "form-control", @readOnly = "readonly" })
                     @Html.HiddenFor(a => a.JobWorkIssHeader.INS_UID, new { @class = "form-control", @readOnly = "readonly" })
                 </div>
             </div>
 
             <h4 class="mb-4 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><b>Job-Work Details</b></h4>
-            <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-3">
-                    <div class="form-group">
-                        <select class="form-control" id="jwComDropDown"
-                            asp-items="@(new SelectList(Model.JobWorkIssHeader.GetProcess, "Value", "Text"))"></select>                        
-                    </div>
+            @*<div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="form-group">
+                    <select class="form-control" id="jwComDropDown"
+                        asp-items="@(new SelectList(Model.JobWorkIssHeader.GetProcess, "Value", "Text"))"></select>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-2">
-                    <a href="#" class="btn btn-dark" data-toggle="tooltip" data-placement="right"
-                       title="Select the process name to enable grid">
-                        <i class="fa fa-info-circle"></i>
-                    </a>
-                </div>
-              
             </div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <a href="#" class="btn btn-dark" data-toggle="tooltip" data-placement="right"
+                   title="Select the process name to enable grid">
+                    <i class="fa fa-info-circle"></i>
+                </a>
+            </div>
+
+        </div>*@
             <div class="row" style="font-size:small;">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered jwDt" id="jwDtlTable" width="100%" cellspacing="0">
                             <thead class="thead-light">
-                                <tr style="text-align:center;">                                    
-                                    <th style="width: 40px;" >GDW</th>
-                                    <th style="width: 40px;">Item</th>
-                                    <th style="width: 40px;">Artical</th>
-                                    <th style="width: 40px;">Size</th>
-                                    <th style="width: 40px;">HSN</th>
-                                    <th style="width: 40px;">Process</th>
-                                    <th style="width: 40px;">Stock Qty</th>
-                                    <th style="width: 40px;">Proc Qty</th>                                   
-                                    <th style="width: 40px;">Remarks</th>
+                                <tr style="text-align:center;">
+                                    <th></th>
+                                    <th style="width: 150px;">GDW</th>
+                                    <th style="width: 100px;">Item</th>
+                                    <th style="width: 100px;">Artical</th>
+                                    <th style="width: 100px;">Size</th>
+                                    <th style="width: 128px;">HSN</th>
+                                    <th style="width: 150px;">Process</th>
+                                    @*
+                                <th style="width: 100px;">Stock Qty</th>
+                                    *@
+                                    <th style="width: 100px;">Proc Qty</th>
+                                    <th style="width: 150px;">Remarks</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @for (int j = 0; j < Model.JobWorkIssueDetails.Count(); j++)
                                 {
-                                <tr>                                    
-                                    <td>
-                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].GODOWN_CODE, new { @class = "form-control" })
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].GODOWN_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].ITEM_CODE, new { @class = "form-control" })
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ITEM_NAME, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].ARTICAL_CODE, new { @class = "form-control" })
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].SIZE_CODE, new { @class = "form-control" })
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].HSN_CODE, new { @class = "form-control", @type = "text" })
-                                    </td>
+                                    <tr>
+                                        <td>
+                                            @Html.HiddenFor(a => a.JobWorkIssueDetails[j].JWD_PK, new { @class = "form-control", @readOnly = "readonly" })
+                                            @Html.CheckBoxFor(a => a.JobWorkIssueDetails[j].chk, new { @class = "form-control", @readOnly = "readonly" })
+                                        </td>
+                                        <td>
+                                            @Html.HiddenFor(a => a.JobWorkIssueDetails[j].GODOWN_CODE, new { @class = "form-control" })
+                                            @Html.HiddenFor(m => m.JobWorkIssueDetails[j].GODOWN_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                            @Model.JobWorkIssueDetails[j].GODOWN_NAME
+                                        </td>
+                                        <td>
+                                            @Html.HiddenFor(a => a.JobWorkIssueDetails[j].ITEM_CODE, new { @class = "form-control" })
+                                            @Html.HiddenFor(m => m.JobWorkIssueDetails[j].ITEM_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                            @Model.JobWorkIssueDetails[j].ITEM_NAME
+                                        </td>
+                                        <td>
+                                            @Html.HiddenFor(a => a.JobWorkIssueDetails[j].ARTICAL_CODE, new { @class = "form-control" })
+                                            @Html.HiddenFor(m => m.JobWorkIssueDetails[j].ARTICAL_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                            @Model.JobWorkIssueDetails[j].ARTICAL_NAME
+                                        </td>
+                                        <td>
+                                            @Html.HiddenFor(a => a.JobWorkIssueDetails[j].SIZE_CODE, new { @class = "form-control" })
+                                            @Html.HiddenFor(m => m.JobWorkIssueDetails[j].SIZE_NAME, new { @class = "form-control", @readOnly = "readonly" })
+                                            @Model.JobWorkIssueDetails[j].SIZE_NAME
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].HSN_CODE, new { @class = "form-control", @type = "number" })
+                                        </td>
 
-                                    <td>
-                                        @Html.DropDownListFor(m=>m.JobWorkIssueDetails[j].PROC_CODE,
-                                          new SelectList(Model.JobWorkIssueDetails[j].GetProcess, "Value", "Text"),
-                                          new { @class= "form-control" })
-                                    </td>
+                                        <td>
+                                            @Html.DropDownListFor(m=>m.JobWorkIssueDetails[j].PROC_CODE,
+                                              new SelectList(Model.JobWorkIssueDetails[j].GetProcess, "Value", "Text"),
+                                              new { @class= "form-control" })
+                                        </td>
+                                        @*
                                     <td>
                                         @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY_UOM, new { @class = "form-control", @type = "text", @readOnly = "readonly" })
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control jwUserFilledQty", @type = "number",@step=".001" })
-                                    </td>
-                                    <td>
-                                        @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control" })
-                                    </td>
-                                    @Html.HiddenFor(a => a.JobWorkIssueDetails[j].INS_DATE, new { @class = "form-control" })
-                                    @Html.HiddenFor(a => a.JobWorkIssueDetails[j].INS_UID, new { @class = "form-control" })
-                                </tr>
+                                    </td>*@
+                                        <td>
+                                            @Html.TextBoxFor(m => m.JobWorkIssueDetails[j].QTY, new { @class = "form-control", @type = "number", @step = ".001" })
+                                        </td>
+                                        <td>
+                                            @Html.TextAreaFor(m => m.JobWorkIssueDetails[j].REMARKS, new { @class = "form-control" })
+                                        </td>
+                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].INS_DATE, new { @class = "form-control" })
+                                        @Html.HiddenFor(a => a.JobWorkIssueDetails[j].INS_UID, new { @class = "form-control" })
+                                        <td>
+                                            <a asp-action="DeleteJobWork" asp-controller="JobWork" asp-route-id="@Model.JobWorkIssueDetails[j].JWD_PK">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
-                            
+
                         </table>
                     </div>
                 </div>

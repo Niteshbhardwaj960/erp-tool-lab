@@ -1078,6 +1078,8 @@ namespace WebERP.Data.Migrations
 
                     b.Property<string>("UDT_UID");
 
+                    b.Property<bool>("chk");
+
                     b.HasKey("JWD_PK");
 
                     b.HasIndex("JWH_FK");

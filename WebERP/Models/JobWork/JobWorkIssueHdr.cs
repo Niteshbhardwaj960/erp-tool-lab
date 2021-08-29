@@ -12,11 +12,7 @@ namespace WebERP.Models
     {
         [Key]
         public int JWH_PK { get; set; }
-
-        [Required(ErrorMessage = "Please select Company Name")]
         public int COMP_CODE { get; set; }
-
-        [Required(ErrorMessage = "Please select Acc Name")]
         public int ACC_CODE { get; set; }
 
         [NotMapped]
